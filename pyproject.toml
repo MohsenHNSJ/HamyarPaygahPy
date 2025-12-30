@@ -34,7 +34,7 @@ dependencies = ["aiohttp == 3.13.2"]
 
 
 [project.urls]
-Documentation = "HTTPS://TODO.COM"
+Documentation = "HTTPS://TODO.IO"
 Bug = "https://github.com/MohsenHNSJ/HamyarPaygahPy/issues"
 Changelog = "https://github.com/MohsenHNSJ/HamyarPaygahPy/releases"
 Repository = "https://github.com/MohsenHNSJ/HamyarPaygahPy"

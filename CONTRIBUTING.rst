@@ -291,5 +291,5 @@ Continued contributions constitute acceptance of the current version.
 
 ..
     Ignore-in-readthedocs
-.. _Documentation: https://TODO.COM
+.. _Documentation: https://TODO.IO
 .. _Code of Conduct: https://github.com/MohsenHNSJ/HamyarPaygahPy/blob/main/CODE_OF_CONDUCT.rst
