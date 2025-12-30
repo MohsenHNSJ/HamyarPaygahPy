@@ -1,0 +1,42 @@
+{
+  "build": {
+    "context": "..",
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "almenon.arepl",
+        "charliermarsh.ruff",
+        "codezombiech.gitignore",
+        "davidanson.vscode-markdownlint",
+        "donjayamanne.githistory",
+        "github.copilot",
+        "github.copilot-chat",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "gruntfuggly.todo-tree",
+        "michelemelluso.gitignore",
+        "ms-azuretools.vscode-containers",
+        "ms-python.mypy-type-checker",
+        "ms-python.pylint",
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "tamasfe.even-better-toml",
+        "visualstudioexptteam.vscodeintellicode",
+        "visualstudioexptteam.vscodeintellicode-completions"
+      ],
+      "settings": {
+        "autoDocstring.docstringFormat": "google",
+        "autopep8.showNotifications": "onError"
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers-extra/features/poetry:2": {}
+  },
+  "name": "Hamyar Paygah Dev Container",
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
+}
