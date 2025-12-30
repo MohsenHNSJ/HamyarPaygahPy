@@ -1,0 +1,73 @@
+---
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    assignees:
+      - "MohsenHNSJ"
+    directory: "/"
+    labels:
+      - "ci"
+    open-pull-requests-limit: 2000
+    schedule:
+      interval: daily
+    target-branch: "test"
+
+  - package-ecosystem: pip
+    assignees:
+      - "MohsenHNSJ"
+    directory: "/.github/workflows"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 2000
+    schedule:
+      interval: daily
+    target-branch: "test"
+    versioning-strategy: increase
+
+  - package-ecosystem: pip
+    assignees:
+      - "MohsenHNSJ"
+    directory: "/docs"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 2000
+    schedule:
+      interval: daily
+    target-branch: "test"
+    versioning-strategy: increase
+
+  - package-ecosystem: pip
+    allow:
+      - dependency-type: "all"
+    assignees:
+      - "MohsenHNSJ"
+    directory: "/"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 2000
+    schedule:
+      interval: daily
+    target-branch: "test"
+    versioning-strategy: increase
+
+  - package-ecosystem: docker
+    assignees:
+      - "MohsenHNSJ"
+    directory: /.devcontainer
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 2000
+    schedule:
+      interval: daily
+    target-branch: "test"
+
+  - package-ecosystem: devcontainers
+    assignees:
+      - "MohsenHNSJ"
+    directory: /.devcontainer
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 2000
+    schedule:
+      interval: daily
+    target-branch: "test"
