@@ -22,7 +22,7 @@
     },
     "cSpell.ignorePaths": [
         "**/*CODEOWNERS",
-        "**/*gdlintrc",
+        "**/*gdlintrc"
     ],
     "cSpell.mergeCSpellSettings": true,
     "cSpell.words": [
