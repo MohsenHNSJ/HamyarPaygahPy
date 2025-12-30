@@ -99,6 +99,7 @@
         "pipenv",
         "Pipfile",
         "pipx",
+        "posargs",
         "pybuilder",
         "pycache",
         "Pydantic",
