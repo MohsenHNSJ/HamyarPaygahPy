@@ -1,0 +1,28 @@
+---
+name: DustiLock Scanner
+
+on:
+  push: # Run on every Push
+  pull_request: # Run on every PR
+
+permissions:
+  contents: read
+
+jobs:
+  dustilock:
+    name: Run DustiLock
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout the repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Run DustiLock to check for dependency confusion attacks
+        uses: checkmarx/dustilock@9a0cc4fe3da93f7efb38679896c074dc94d60ac6 # v1.2.0
+        with:
+          recursive: true
