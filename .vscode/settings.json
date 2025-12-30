@@ -1,15 +1,22 @@
 {
+    "cSpell.ignorePaths": [
+    "**/*CODEOWNERS",
+    "**/*gdlintrc",
+    ],
     "cSpell.words": [
         "almenon",
         "arepl",
         "autopep",
         "charliermarsh",
+        "CODEOWNERS",
         "codezombiech",
         "davidanson",
         "donjayamanne",
+        "gdlintrc",
         "githistory",
         "gruntfuggly",
         "Hamyar",
+        "jkiviluoto",
         "michelemelluso",
         "MohsenHNSJ",
         "mypy",
@@ -20,5 +27,7 @@
         "tamasfe",
         "visualstudioexptteam",
         "vscodeintellicode"
-    ]
+    ],
+    "tws.trimOnSave": true,
+    "tws.highlightTrailingWhiteSpace": true,
 }
