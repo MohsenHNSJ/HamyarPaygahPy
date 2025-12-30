@@ -1,8 +1,30 @@
 {
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "cSpell.enabledFileTypes": {
+        "csv": true
+    },
     "cSpell.ignorePaths": [
-    "**/*CODEOWNERS",
-    "**/*gdlintrc",
+        "**/*CODEOWNERS",
+        "**/*gdlintrc",
     ],
+    "cSpell.mergeCSpellSettings": true,
     "cSpell.words": [
         "almenon",
         "arepl",
@@ -11,6 +33,7 @@
         "CODEOWNERS",
         "codezombiech",
         "davidanson",
+        "debugpy",
         "donjayamanne",
         "gdlintrc",
         "githistory",
@@ -24,10 +47,42 @@
         "Paygah",
         "pylint",
         "pyproject",
+        "pytest",
+        "PYTHONPATH",
         "tamasfe",
         "visualstudioexptteam",
         "vscodeintellicode"
     ],
     "tws.trimOnSave": true,
     "tws.highlightTrailingWhiteSpace": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "files.associations": {
+        ".trivyignore": "plaintext",
+        "CODEOWNERS": "plaintext",
+        "LICENSE": "plaintext"
+    },
+    "pylint.args": [
+        "--max-line-length=100",
+        "--disable=fixme"
+    ],
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/"
+    ],
+    "python.analysis.inlayHints.callArgumentNames": "all",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.pytestParameters": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.languageServerMode": "full",
+    "python.analysis.typeCheckingMode": "standard",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
 }
