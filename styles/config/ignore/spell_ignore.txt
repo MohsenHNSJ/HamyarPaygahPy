@@ -1,0 +1,13 @@
+aiohttp
+async
+dev
+Dev
+docstrings
+Nox
+pydantic
+Pydantic
+Pylint
+pytest
+stackoverflow
+Synk
+Typecheck
