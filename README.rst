@@ -1,3 +1,10 @@
+HamyarPaygahPy
+==============
+
+.. image:: https://img.shields.io/badge/CodSpeed-Performance_Monitored-blue?logo=github
+   :target: https://codspeed.io/MohsenHNSJ/HamyarPaygahPy?utm_source=badge
+   :alt: CodSpeed
+
 TODO:
 -----
 

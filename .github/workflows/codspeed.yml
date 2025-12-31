@@ -2,7 +2,9 @@
 name: CodSpeed Benchmarks
 
 on:
-  push: # Run on every Push
+  push:
+    branches:
+      - "main"
   pull_request: # Run on every PR
   # `workflow_dispatch` allows CodSpeed to trigger back-test
   # performance analysis in order to generate initial data.
@@ -10,8 +12,7 @@ on:
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
+  id-token: write # for OpenID Connect authentication with CodSpeed
 
 jobs:
   codspeed:
@@ -67,8 +68,7 @@ jobs:
           pydantic: true
 
       - name: Run benchmark
-        uses: CodSpeedHQ/action@972e3437949c89e1357ebd1a2dbc852fcbc57245 # v4.5.1
+        uses: CodSpeedHQ/action@v4
         with:
-          mode: "simulation"
+          mode: simulation
           run: pytest tests/ --codspeed -rA
-          token: ${{ secrets.CODSPEED_TOKEN }}
