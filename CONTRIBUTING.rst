@@ -126,6 +126,9 @@ Install pre-commit_ hooks after cloning, run:
 
 Using pre-commit_ ensures PRs match the linting requirements of the codebase.
 
+Install vcxsrv_ on your local machine to enable GUI applications from the dev container.
+
+
 Possible issues
 ---------------
 
@@ -286,8 +289,8 @@ Continued contributions constitute acceptance of the current version.
 .. _Ruff: https://docs.astral.sh/ruff/
 .. _MyPy: https://www.mypy-lang.org/
 .. _Nox: https://nox.thea.codes/en/stable/index.html
-.. _pull request: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/pulls
-
+.. _pull request: https://github.com/MohsenHNSJ/HamyarPaygahPy/pulls
+.. _vcxsrv: https://github.com/marchaesen/vcxsrv
 
 ..
     Ignore-in-readthedocs

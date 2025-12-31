@@ -31,3 +31,10 @@ echo "Syncing Poetry environment..."
 poetry sync
 
 echo "Poetry environment setup complete."
+
+# Set up X11 for GUI applications
+echo "Setting up X11 for GUI applications..."
+# Install x11-apps if not already installed
+apt-get update && apt-get install -y x11-apps
+
+echo "X11 setup complete."
