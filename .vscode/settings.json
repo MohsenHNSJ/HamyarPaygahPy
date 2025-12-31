@@ -118,6 +118,8 @@
     "NOXSESSION",
     "openssf",
     "ossf",
+    "padx",
+    "pady",
     "pathlib",
     "Paygah",
     "perflint",

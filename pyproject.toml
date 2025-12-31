@@ -33,7 +33,7 @@ dependencies = []
 
 
 [project.urls]
-Documentation = "HTTPS://TODO.IO"
+Documentation = "https://hamyarpaygahpy.readthedocs.io/en/latest/"
 Bug = "https://github.com/MohsenHNSJ/HamyarPaygahPy/issues"
 Changelog = "https://github.com/MohsenHNSJ/HamyarPaygahPy/releases"
 Repository = "https://github.com/MohsenHNSJ/HamyarPaygahPy"
