@@ -8,7 +8,7 @@ requires = ["poetry-core==2.2.1"]
 [project]
 name = "HamyarPaygahPy"
 version = "0.1.0" # Base version
-description = "A Package for EMS overseers to gather information from EMS servers."
+description = "Application for EMS overseers to gather information from EMS servers."
 license = "MIT"
 readme = "README.rst"
 requires-python = ">=3.12" # Upper-bound is set in the tool.poetry.dependencies section

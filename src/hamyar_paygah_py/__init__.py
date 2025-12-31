@@ -1,7 +1,7 @@
 """Hamyar Paygah.
 --------------------------
 
-A Package for EMS overseers to gather information from EMS servers.
+Application for EMS overseers to gather information from EMS servers.
 
 :copyright: (c) 2026-present MohsenHNSJ
 :license: MIT, see LICENSE for more details
