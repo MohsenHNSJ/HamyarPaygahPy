@@ -30,7 +30,7 @@ classifiers = [
     "Natural Language :: Persian",
     "Typing :: Typed",
 ]
-dependencies = ["aiohttp == 3.13.2", "pre-commit == 4.5.1"]
+dependencies = ["aiohttp == 3.13.2"]
 
 
 [project.urls]
