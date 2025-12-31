@@ -14,7 +14,7 @@ sys.path.insert(0, (root_path.absolute()).as_uri())
 # Extract version from __init__ file
 version = ""
 
-init_file_path = Path("../src/HamyarPaygahPy/__init__.py")
+init_file_path = Path("../src/hamyar_paygah_py/__init__.py")
 with init_file_path.open(encoding="utf-8") as file:
     match: re.Match[str] | None = re.search(
         pattern=r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',

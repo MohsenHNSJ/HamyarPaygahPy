@@ -12,6 +12,7 @@ permissions:
   contents: read
   issues: write
   pull-requests: write
+  id-token: write # For OpenID Connect authentication with CodSpeed
 
 jobs:
   codspeed:
@@ -69,6 +70,5 @@ jobs:
       - name: Run benchmark
         uses: CodSpeedHQ/action@972e3437949c89e1357ebd1a2dbc852fcbc57245 # v4.5.1
         with:
-          mode: "simulation"
+          mode: simulation
           run: pytest tests/ --codspeed -rA
-          token: ${{ secrets.CODSPEED_TOKEN }}

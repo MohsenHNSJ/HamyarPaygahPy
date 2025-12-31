@@ -10,7 +10,7 @@ component_management:
     - component_id: src # This is an identifier that should not be changed
       name: Source # This is a display name, and can be changed freely
       paths:
-        - src/HamyarPaygahPy/**
+        - src/hamyar_paygah_py/**
     - component_id: tests
       name: Tests
       paths:

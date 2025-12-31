@@ -1,4 +1,3 @@
----
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 minimum_pre_commit_version: "4.2.0"
@@ -13,13 +12,13 @@ repos:
 
     # Check and update pre-commit hooks.
   - repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
-    rev: v0.8.0
+    rev: v0.9.0
     hooks:
       - id: pre-commit-update
 
     # Detect secrets like passwords, API keys, and tokens
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.28.0
+    rev: v8.30.0
     hooks:
       - id: gitleaks
         # Also scan archives
@@ -27,25 +26,25 @@ repos:
 
     # Upgrade syntax for newer versions of the language.
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+    rev: v3.21.2
     hooks:
       - id: pyupgrade
 
     # Add trailing commas to calls and literals.
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v3.2.0
+    rev: v4.0.0
     hooks:
       - id: add-trailing-comma
 
     # Finds bugs in your shell scripts.
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.10.0.1
+    rev: v0.11.0.1
     hooks:
       - id: shellcheck
 
     # A set of pre-commit hooks for jsonschema validation.
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.2
+    rev: 0.36.0
     hooks:
       # Validate Dependabot Config (v2)
       - id: check-dependabot
@@ -55,16 +54,20 @@ repos:
       - id: check-readthedocs
         # Validate Github Actions
       - id: check-github-actions
+        # Validate Codecov config
+      - id: check-codecov
+        # Validate GitHub Issue config
+      - id: check-github-issue-config
 
     # Static checker for GitHub Actions workflow files
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.7
+    rev: v1.7.10
     hooks:
       - id: actionlint
 
     # A handful of language-agnostic hooks which are universally useful.
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       # Prevent giant files from being committed.
       - id: check-added-large-files
@@ -127,7 +130,7 @@ repos:
 
     # Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.5
+    rev: v0.14.10
     hooks:
       # Run the linter
       - id: ruff
@@ -138,13 +141,13 @@ repos:
 
     # Identify unused dependencies and avoid a bloated virtual environment.
   - repo: https://github.com/fredrikaverpil/creosote.git
-    rev: v4.0.3
+    rev: v4.1.0
     hooks:
       - id: creosote
 
     # Poetry
   - repo: https://github.com/python-poetry/poetry
-    rev: 2.1.3
+    rev: 2.2.1
     hooks:
       # Make sure the poetry configuration does not get committed in a broken state.
       - id: poetry-check
@@ -163,13 +166,13 @@ repos:
 
   # A fast, flexible, configuration-based command-line interface for linting Markdown/CommonMark files with the markdownlint library
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.18.1
+    rev: v0.20.0
     hooks:
       - id: markdownlint-cli2
 
   # Checks all of the hyperlinks in a markdown text to determine if they are alive or dead
   - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.13.7
+    rev: v3.14.2
     hooks:
       - id: markdown-link-check
         # Displays errors only
