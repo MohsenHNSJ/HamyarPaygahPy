@@ -15,7 +15,7 @@ Hamyar Paygah
     * - Stats
       - |contributors| |stars| |issues| |pull-requests| |sonar-lines-of-code| |repository-size|
     * - Tests
-      - |nox| |codspeed| |pre-commit-ci| |types| |codecov| |scorecard|
+      - |nox| |codspeed| |pre-commit-ci| |codecov| |scorecard|
     * - Security
       - |synk| |sonar-security| |sonar-vulnerabilities| |openssf|
     * - Linters
@@ -202,11 +202,11 @@ See the ``LICENSE`` file for full license text and terms.
     :target: Pre-commit_
     :alt: pre-commit
 
-.. |pre-commit-ci| image:: https://results.pre-commit.ci/badge/github/MohsenHNSJ/unofficial_tabdeal_api/main.svg
+.. |pre-commit-ci| image:: https://results.pre-commit.ci/badge/github/MohsenHNSJ/HamyarPaygahPy/main.svg
     :target: Pre-commit-ci_
     :alt: pre-commit.ci status
 
-.. |pull-requests| image:: https://img.shields.io/github/issues-pr/MohsenHNSJ/unofficial_tabdeal_api
+.. |pull-requests| image:: https://img.shields.io/github/issues-pr/MohsenHNSJ/HamyarPaygahPy
     :target: `Pull Requests`_
     :alt: GitHub Pull Requests
 
@@ -218,7 +218,7 @@ See the ``LICENSE`` file for full license text and terms.
     :target: `Release to PyPI`_
     :alt: Release to PyPI status
 
-.. |repository-size| image:: https://img.shields.io/github/repo-size/MohsenHNSJ/unofficial_tabdeal_api?color=BE81F7
+.. |repository-size| image:: https://img.shields.io/github/repo-size/MohsenHNSJ/HamyarPaygahPy?color=BE81F7
     :alt: Repository Size
 
 .. |ruff| image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json&style=flat-square
@@ -269,17 +269,13 @@ See the ``LICENSE`` file for full license text and terms.
     :target: sonar-qube-page_
     :alt: SonarQube Vulnerabilities
 
-.. |stars| image:: https://img.shields.io/github/stars/MohsenHNSJ/unofficial_tabdeal_api?style=social
+.. |stars| image:: https://img.shields.io/github/stars/MohsenHNSJ/HamyarPaygahPy?style=social
     :target: Stars_
     :alt: Stars
 
 .. |synk| image:: https://img.shields.io/badge/Synk-white?logo=snyk&color=4C4A73
     :target: synk-website_
     :alt: Analyzed with Synk
-
-.. |types| image:: https://img.shields.io/pypi/types/unofficial-tabdeal-api
-    :alt: PyPI - Types
-
 
 ..
     Links
