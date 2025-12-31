@@ -95,7 +95,7 @@ the use of this application in activities including, but not limited to:
 Any use of this application for malicious, abusive, unethical, or illegal
 purposes is **strictly forbidden**, falls entirely outside the intended
 scope of the project, and is undertaken
-**solely at the user’s own risk and responsibility**.
+**solely at the user's own risk and responsibility**.
 
 The developer bears **no responsibility or liability** for damages, losses,
 or legal consequences arising from misuse, abuse, or unlawful deployment

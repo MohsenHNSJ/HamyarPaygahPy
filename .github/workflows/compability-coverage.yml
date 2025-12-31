@@ -108,7 +108,7 @@ jobs:
 
       - name: Move coverage files to root folder
         run: |
-          find ~/ -type f -name '.coverage.*' -exec mv -t /home/runner/work/HamyarPaygahPy/hamyar_paygah/ {} +
+          find ~/ -type f -name '.coverage.*' -exec mv -t /home/runner/work/HamyarPaygahPy/HamyarPaygahPy/ {} +
 
       - name: Combine coverage data and report
         run: |
