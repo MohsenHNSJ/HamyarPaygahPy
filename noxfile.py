@@ -100,7 +100,7 @@ def ruff_fix(session: nox.sessions.Session) -> None:
         session (nox.sessions.Session): An environment and a set of commands to run.
     """
     # Run ruff_check session with autofix
-    session.notify("ruff_check", "--fix")
+    session.notify("ruff-check", "--fix")
 
 
 @nox.session(name="docs-build", python="3.13", tags=["docs"])
