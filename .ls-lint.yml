@@ -27,6 +27,7 @@ ignore:
   - DISCLAIMER.rst
   - README.rst
   - SECURITY.md
+  - SECURITY.rst
   - .devcontainer
   - .git
   - .github
