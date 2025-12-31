@@ -126,8 +126,16 @@ Install pre-commit_ hooks after cloning, run:
 
 Using pre-commit_ ensures PRs match the linting requirements of the codebase.
 
-Install vcxsrv_ on your local machine to enable GUI applications from the dev container.
+Install vcxsrv_ on your local machine to enable GUI applications
+from the dev container.
 
+Open vcxsrv_ and configure it with the following settings:
+
+* Multiple windows
+* Start no client
+* Disable access control
+
+Or load it with ``config.xlaunch`` file from ``.devcontainer/vcxsrv/`` directory.
 
 Possible issues
 ---------------
