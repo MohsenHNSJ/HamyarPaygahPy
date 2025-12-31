@@ -299,8 +299,8 @@ See the ``LICENSE`` file for full license text and terms.
 .. _Read-The-Docs: https://hamyarpaygahpy.readthedocs.io/en/latest/?badge=latest
 .. _Pull Requests: https://github.com/MohsenHNSJ/HamyarPaygahPy/pulls
 .. _Pre-commit-ci: https://results.pre-commit.ci/latest/github/MohsenHNSJ/HamyarPaygahPy/main
+.. _openssf-status: https://www.bestpractices.dev/projects/11675/
+.. _scorecard-rating: https://scorecard.dev/viewer/?uri=github.com/MohsenHNSJ/HamyarPaygahPy
 
-.. _openssf-status: https://www.bestpractices.dev/projects/10685
 .. _Release to PyPI: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions
-.. _scorecard-rating: https://scorecard.dev/viewer/?uri=github.com/MohsenHNSJ/unofficial_tabdeal_api
 .. _sonar-qube-page: https://sonarcloud.io/summary/new_code?id=MohsenHNSJ_unofficial_tabdeal_api
