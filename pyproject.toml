@@ -22,7 +22,6 @@ classifiers = [
     "Framework :: Pydantic :: 2",
     "Topic :: Internet :: WWW/HTTP :: Session",
     "Development Status :: 3 - Alpha",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Intended Audience :: End Users/Desktop",
@@ -30,7 +29,7 @@ classifiers = [
     "Natural Language :: Persian",
     "Typing :: Typed",
 ]
-dependencies = ["aiohttp == 3.13.2"]
+dependencies = []
 
 
 [project.urls]
