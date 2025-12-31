@@ -9,23 +9,21 @@ Hamyar Paygah
     :stub-columns: 1
 
     * - Package
-      - |version| |status| |supported-python-versions| |poetry| |release-to-pypi| |implementation| |wheel| |pydantic-badge|
+      - |poetry| |release-to-pypi|
     * - Quality Assurance
       - |sonar-quality-gate| |sonar-reliability| |sonar-maintainability| |sonar-technical-debt| |sonar-bugs| |sonar-code-smells|
     * - Stats
       - |contributors| |stars| |issues| |pull-requests| |sonar-lines-of-code| |repository-size|
     * - Tests
-      - |nox| |codspeed| |pre-commit-ci| |types| |codecov| |scorecard|
+      - |nox| |codspeed| |pre-commit-ci| |codecov| |scorecard|
     * - Security
       - |synk| |sonar-security| |sonar-vulnerabilities| |openssf|
     * - Linters
       - |ruff| |pre-commit| |megalinter| |mypy| |pylint|
     * - Activity
-      - |maintenance| |commit-activity|
+      - |commit-activity|
     * - Documentation
       - |documentation|
-    * - License
-      - |license|
 
 
 Overview
@@ -172,26 +170,15 @@ See the ``LICENSE`` file for full license text and terms.
     :target: Contributors_
     :alt: Contributors
 
-.. |documentation| image:: https://readthedocs.org/projects/unofficial-tabdeal-api/badge/?version=latest
+.. |documentation| image:: https://hamyarpaygahpy.readthedocs.io/en/latest/?version=latest
     :target: Read-The-Docs_
     :alt: Documentation Status
 
-.. |implementation| image:: https://img.shields.io/pypi/implementation/unofficial-tabdeal_api?logo=python
-    :alt: PyPI - Implementation
-
-.. |issues| image:: https://img.shields.io/github/issues/MohsenHNSJ/unofficial_tabdeal_api
+.. |issues| image:: https://img.shields.io/github/issues/MohsenHNSJ/HamyarPaygahPy
     :target: Issues-link_
     :alt: GitHub Issues
 
-.. |license| image:: https://img.shields.io/pypi/l/unofficial-tabdeal-api
-    :target: `MIT License`_
-    :alt: License
-
-.. |maintenance| image:: http://unmaintained.tech/badge.svg
-    :target: Unmaintained_
-    :alt: No Maintenance Intended
-
-.. |megalinter| image:: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions/workflows/mega-linter.yml/badge.svg?branch=main
+.. |megalinter| image:: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions/workflows/mega-linter.yml/badge.svg?branch=main
     :target: MegaLinter-Status_
     :alt: MegaLinter status
 
@@ -203,7 +190,7 @@ See the ``LICENSE`` file for full license text and terms.
     :target: Nox_
     :alt: Nox
 
-.. |openssf| image:: https://www.bestpractices.dev/projects/10685/badge
+.. |openssf| image:: https://www.bestpractices.dev/projects/11675/badge
     :target: openssf-status_
     :alt: Open Source Security Foundation Best Practices Badge
 
@@ -215,17 +202,13 @@ See the ``LICENSE`` file for full license text and terms.
     :target: Pre-commit_
     :alt: pre-commit
 
-.. |pre-commit-ci| image:: https://results.pre-commit.ci/badge/github/MohsenHNSJ/unofficial_tabdeal_api/main.svg
+.. |pre-commit-ci| image:: https://results.pre-commit.ci/badge/github/MohsenHNSJ/HamyarPaygahPy/main.svg
     :target: Pre-commit-ci_
     :alt: pre-commit.ci status
 
-.. |pull-requests| image:: https://img.shields.io/github/issues-pr/MohsenHNSJ/unofficial_tabdeal_api
+.. |pull-requests| image:: https://img.shields.io/github/issues-pr/MohsenHNSJ/HamyarPaygahPy
     :target: `Pull Requests`_
     :alt: GitHub Pull Requests
-
-.. |pydantic-badge| image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pydantic/pydantic/main/docs/badge/v2.json
-    :target: pydantic_
-    :alt: Pydantic
 
 .. |pylint| image:: https://img.shields.io/badge/linting-pylint-yellowgreen
     :target: pylint-website_
@@ -235,7 +218,7 @@ See the ``LICENSE`` file for full license text and terms.
     :target: `Release to PyPI`_
     :alt: Release to PyPI status
 
-.. |repository-size| image:: https://img.shields.io/github/repo-size/MohsenHNSJ/unofficial_tabdeal_api?color=BE81F7
+.. |repository-size| image:: https://img.shields.io/github/repo-size/MohsenHNSJ/HamyarPaygahPy?color=BE81F7
     :alt: Repository Size
 
 .. |ruff| image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json&style=flat-square
@@ -286,32 +269,13 @@ See the ``LICENSE`` file for full license text and terms.
     :target: sonar-qube-page_
     :alt: SonarQube Vulnerabilities
 
-.. |stars| image:: https://img.shields.io/github/stars/MohsenHNSJ/unofficial_tabdeal_api?style=social
+.. |stars| image:: https://img.shields.io/github/stars/MohsenHNSJ/HamyarPaygahPy?style=social
     :target: Stars_
     :alt: Stars
-
-.. |status| image:: https://img.shields.io/pypi/status/unofficial-tabdeal-api.svg
-    :target: package-url_
-    :alt: Status
-
-.. |supported-python-versions| image:: https://img.shields.io/pypi/pyversions/unofficial-tabdeal-api?logo=python
-    :target: package-url_
-    :alt: Python Version
 
 .. |synk| image:: https://img.shields.io/badge/Synk-white?logo=snyk&color=4C4A73
     :target: synk-website_
     :alt: Analyzed with Synk
-
-.. |types| image:: https://img.shields.io/pypi/types/unofficial-tabdeal-api
-    :alt: PyPI - Types
-
-.. |version| image:: https://img.shields.io/pypi/v/unofficial-tabdeal-api.svg?logo=pypi
-    :target: package-url_
-    :alt: PyPI
-
-.. |wheel| image:: https://img.shields.io/pypi/wheel/unofficial-tabdeal-api
-    :alt: PyPI - Wheel
-
 
 ..
     Links
@@ -322,28 +286,21 @@ See the ``LICENSE`` file for full license text and terms.
 .. _CodSpeed: https://codspeed.io/MohsenHNSJ/HamyarPaygahPy?utm_source=badge
 .. _Commit Activity: https://github.com/MohsenHNSJ/HamyarPaygahPy/graphs/commit-activity
 .. _Contributors: https://github.com/MohsenHNSJ/HamyarPaygahPy/graphs/contributors
-
-.. _Issues-link: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/issues
-.. _MegaLinter-Status: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions?query=workflow%3AMegaLinter+branch%3Amain
+.. _Issues-link: https://github.com/MohsenHNSJ/HamyarPaygahPy/issues
+.. _MegaLinter-Status: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions?query=workflow%3AMegaLinter+branch%3Amain
 .. _Nox: https://github.com/wntrblm/nox
-.. _openssf-status: https://www.bestpractices.dev/projects/10685
-.. _package-url: https://pypi.org/project/unofficial-tabdeal-api/
-.. _poetry-website: https://python-poetry.org/
-.. _Pre-commit: https://github.com/pre-commit/pre-commit
-.. _Pre-commit-ci: https://results.pre-commit.ci/latest/github/MohsenHNSJ/unofficial_tabdeal_api/main
-.. _Pull Requests: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/pulls
-.. _pydantic: https://pydantic.dev
-.. _pylint-website: https://github.com/pylint-dev/pylint
-.. _Read-The-Docs: https://unofficial-tabdeal-api.readthedocs.io/en/latest/?badge=latest
-.. _Release to PyPI: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions
-.. _Ruff: https://github.com/astral-sh/ruff
-.. _scorecard-rating: https://scorecard.dev/viewer/?uri=github.com/MohsenHNSJ/unofficial_tabdeal_api
-.. _sonar-qube-page: https://sonarcloud.io/summary/new_code?id=MohsenHNSJ_unofficial_tabdeal_api
-.. _Stars: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/stargazers
 .. _synk-website: https://snyk.io/
-.. _Unmaintained: http://unmaintained.tech/
+.. _Stars: https://github.com/MohsenHNSJ/HamyarPaygahPy/stargazers
 .. _mypy-docs: https://mypy.readthedocs.io/en/stable/
+.. _Pre-commit: https://github.com/pre-commit/pre-commit
+.. _pylint-website: https://github.com/pylint-dev/pylint
+.. _Ruff: https://github.com/astral-sh/ruff
+.. _poetry-website: https://python-poetry.org/
+.. _Read-The-Docs: https://hamyarpaygahpy.readthedocs.io/en/latest/?badge=latest
+.. _Pull Requests: https://github.com/MohsenHNSJ/HamyarPaygahPy/pulls
+.. _Pre-commit-ci: https://results.pre-commit.ci/latest/github/MohsenHNSJ/HamyarPaygahPy/main
+.. _openssf-status: https://www.bestpractices.dev/projects/11675/
+.. _scorecard-rating: https://scorecard.dev/viewer/?uri=github.com/MohsenHNSJ/HamyarPaygahPy
 
-..
-    Ignore-in-readthedocs
-.. _MIT License: https://github.com/MohsenHNSJ/HamyarPaygahPy/blob/main/LICENSE
+.. _Release to PyPI: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions
+.. _sonar-qube-page: https://sonarcloud.io/summary/new_code?id=MohsenHNSJ_unofficial_tabdeal_api

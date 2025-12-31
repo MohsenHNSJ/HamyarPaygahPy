@@ -7,7 +7,7 @@ import nox
 import nox.sessions
 
 # Package name
-package_name: str = "HamyarPaygahPy"
+package_name: str = "hamyar_paygah"
 # Python version for environments
 python_version: list[str] = ["3.12", "3.13"]
 
@@ -100,7 +100,7 @@ def ruff_fix(session: nox.sessions.Session) -> None:
         session (nox.sessions.Session): An environment and a set of commands to run.
     """
     # Run ruff_check session with autofix
-    session.notify("ruff_check", "--fix")
+    session.notify("ruff-check", "--fix")
 
 
 @nox.session(name="docs-build", python="3.13", tags=["docs"])
