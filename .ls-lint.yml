@@ -26,7 +26,6 @@ ignore:
   - CONTRIBUTING.rst
   - README.rst
   - SECURITY.md
-  - src/HamyarPaygahPy
   - .devcontainer
   - .git
   - .github
