@@ -190,7 +190,7 @@ See the ``LICENSE`` file for full license text and terms.
     :target: Nox_
     :alt: Nox
 
-.. |openssf| image:: https://www.bestpractices.dev/projects/10685/badge
+.. |openssf| image:: https://www.bestpractices.dev/projects/11675/badge
     :target: openssf-status_
     :alt: Open Source Security Foundation Best Practices Badge
 
