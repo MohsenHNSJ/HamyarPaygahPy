@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core==2.2.1"]
 
 [project]
-name = "HamyarPaygahPy"
+name = "hamyar_paygah" # PyPI package name
 version = "0.1.0" # Base version
 description = "Application for EMS overseers to gather information from EMS servers."
 license = "MIT"
@@ -174,9 +174,6 @@ max-complexity = 10
 # Documentation style
 convention = "google"
 
-[tool.ruff.lint.pep8-naming]
-ignore-names = ["HamyarPaygahPy"]
-
 # MyPy settings
 [tool.mypy]
 # Enable limited checking of dynamically typed functions
@@ -238,7 +235,7 @@ omit = ["noxfile.py"]
 parallel = true
 # A list of packages, the source to measure during execution.
 # Operates the same as source, but only names packages, for resolving ambiguities between packages and directories.
-source_pkgs = ["HamyarPaygahPy"]
+source_pkgs = ["hamyar_paygah"]
 # A list of directories, the source to measure during execution.
 # Operates the same as source, but only names directories, for resolving ambiguities between packages and directories.
 source_dirs = ["tests"]

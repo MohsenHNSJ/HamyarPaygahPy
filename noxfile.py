@@ -7,7 +7,7 @@ import nox
 import nox.sessions
 
 # Package name
-package_name: str = "HamyarPaygahPy"
+package_name: str = "hamyar_paygah"
 # Python version for environments
 python_version: list[str] = ["3.12", "3.13"]
 
