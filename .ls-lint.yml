@@ -24,9 +24,9 @@ ignore:
   - CODE_OF_CONDUCT.md
   - CODE_OF_CONDUCT.rst
   - CONTRIBUTING.rst
+  - DISCLAIMER.rst
   - README.rst
   - SECURITY.md
-  - src/HamyarPaygahPy
   - .devcontainer
   - .git
   - .github
