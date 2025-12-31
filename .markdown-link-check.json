@@ -7,7 +7,7 @@
   ],
   "ignorePatterns": [
     {
-      "pattern": "^mailto:mohsenhasannezhad@outlook.com"
+      "pattern": "^mailto:MohsenHasanNezhad@outlook.com"
     }
   ],
   "retryCount": 5,
