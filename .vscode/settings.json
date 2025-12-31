@@ -22,7 +22,8 @@
     },
     "cSpell.ignorePaths": [
         "**/*CODEOWNERS",
-        "**/*gdlintrc"
+        "**/*gdlintrc",
+        "**/*poetry.lock"
     ],
     "cSpell.mergeCSpellSettings": true,
     "cSpell.words": [
