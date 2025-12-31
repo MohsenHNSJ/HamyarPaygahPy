@@ -1,11 +1,11 @@
 .. include:: ../README.rst
-    :end-before: Ignore-in-readthedocs
-
 
 .. _Documentation: index.html
 .. _MIT License: license.html
 .. _Contributor Guide: contributing.html
 .. _Code of Conduct: codeofconduct.html
+.. _Disclaimer: disclaimer.html
+.. _Security Policy: security.html
 
 .. toctree::
     :hidden:
@@ -14,6 +14,8 @@
     Home <self>
     Contributing <contributing>
     Code of Conduct <codeofconduct>
+    Disclaimer <disclaimer>
     FAQ <faq>
     License <license>
     Changelog <https://github.com/MohsenHNSJ/HamyarPaygahPy/releases>
+    Security Policy <security>
