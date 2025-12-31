@@ -38,11 +38,7 @@
   "name": "Hamyar Paygah Dev Container",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "runArgs": [
-    "--env",
-    "DISPLAY=${env:DISPLAY}",
-    "--volume",
-    "/tmp/.X11-unix:/tmp/.X11-unix",
-    "--env",
-    "XAUTHORITY=${env:XAUTHORITY}"
+    "-e",
+    "DISPLAY=host.docker.internal:0.0"
   ]
 }
