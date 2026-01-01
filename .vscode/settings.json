@@ -20,6 +20,7 @@
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
+  "autoDocstring.docstringFormat": "google",
   "cSpell.enabledFileTypes": {
     "csv": true
   },
@@ -125,6 +126,7 @@
     "ossf",
     "padx",
     "pady",
+    "passsword",
     "pathlib",
     "Paygah",
     "perflint",
@@ -166,6 +168,7 @@
     "refurb",
     "ropeproject",
     "rstcheck",
+    "rtype",
     "ruamel",
     "rubocop",
     "sarif",

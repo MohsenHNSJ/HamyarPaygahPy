@@ -27,5 +27,5 @@ def test_list_comprehension() -> None:
     This is a placeholder benchmark that demonstrates the setup.
     Real benchmarks should be added as the codebase grows.
     """
-    data = [i * 2 for i in range(1000)]
-    _ = [x for x in data if x % 4 == 0]
+    data: list[int] = [i * 2 for i in range(1000)]
+    _: list[int] = [x for x in data if x % 4 == 0]

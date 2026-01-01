@@ -265,3 +265,4 @@ styles/write-good
 
 # Private files/folders
 .private_tests/
+private_info.py
