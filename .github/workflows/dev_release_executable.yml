@@ -25,13 +25,33 @@ jobs:
           fetch-depth: 2
 
       - name: Ensure Poetry cache directory exists
-        run: mkdir -p ~/.cache/pypoetry
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $cacheDir = Join-Path $env:RUNNER_TEMP "pypoetry-cache"
+
+          if (-not (Test-Path $cacheDir)) {
+              New-Item -ItemType Directory -Path $cacheDir | Out-Null
+          }
+
+          # Export for later steps
+          Add-Content $env:GITHUB_ENV "POETRY_CACHE_DIR=$cacheDir"
+
+          Write-Host "Poetry cache dir set to: $cacheDir"
+
+      - name: Get pip cache dir
+        id: pip-cache-dir
+        shell: powershell
+        run: |
+          $dir = python -m pip cache dir
+          "dir=$dir" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Cache pip
         id: cache-pip
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
-          path: ~/.cache/pip
+          path: ${{ steps.pip-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
@@ -40,11 +60,22 @@ jobs:
         run: |
           echo "pip cache hit: ${{ steps.cache-pip.outputs.cache-hit }}"
 
+      - name: Get Poetry cache dir
+        id: poetry-cache-dir
+        shell: powershell
+        run: |
+          # Use Poetry's own cache path
+          $dir = if ($env:POETRY_CACHE_DIR) { $env:POETRY_CACHE_DIR } else { Join-Path $env:LOCALAPPDATA "pypoetry\Cache" }
+          # Ensure directory exists
+          if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
+          # Expose it as a GitHub Actions output
+          "dir=$dir" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
       - name: Cache Poetry
         id: cache-poetry
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
-          path: ~/.cache/pypoetry
+          path: ${{ steps.poetry-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
@@ -61,8 +92,12 @@ jobs:
 
       - name: Check if there is a parent commit
         id: check-parent-commit
+        shell: powershell
         run: |
-          echo "{sha}={$(git rev-parse --verify --quiet HEAD^)}" >> "$GITHUB_ENV"
+          $parentSha = git rev-parse --verify --quiet HEAD^
+          Write-Host "Parent commit SHA: $parentSha"
+          # Save to GitHub environment
+          Add-Content $env:GITHUB_ENV ("sha=$parentSha")
 
       - name: Detect and tag new version
         id: check-version
@@ -70,12 +105,28 @@ jobs:
         uses: salsify/action-detect-and-tag-new-version@b1778166f13188a9d478e2d1198f993011ba9864 # v2.0.3
         with:
           version-command: |
-            bash -o pipefail -c "poetry version | awk '{ print \$2}'"
+            powershell -Command "
+              $versionLine = poetry version
+              # poetry version outputs e.g.: 'my-package 1.2.3'
+              $version = $versionLine.Split(' ')[1]
+              Write-Output $version
+            "
 
       - name: Bump version for development release
+        shell: powershell
         run: |
-          version="$(poetry version | awk '{ print $2 }')" &&
-          poetry version "$version.dev.$(date +%s)"
+          # Get current version from poetry
+          $versionLine = poetry version
+          # poetry version outputs e.g.: 'my-package 1.2.3'
+          $version = $versionLine.Split(' ')[1]
+
+          # Get current Unix timestamp
+          $timestamp = [int][double]::Parse((Get-Date -UFormat %s))
+
+          # Set development version
+          $devVersion = "$version.dev.$timestamp"
+          Write-Host "Bumping version to $devVersion"
+          poetry version $devVersion
 
       - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
         shell: powershell
