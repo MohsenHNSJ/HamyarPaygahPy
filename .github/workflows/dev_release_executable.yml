@@ -113,6 +113,7 @@ jobs:
             "
 
       - name: Bump version for development release
+        id: bump-dev-version
         shell: powershell
         run: |
           # Get current version from poetry
@@ -127,6 +128,9 @@ jobs:
           $devVersion = "$version.dev.$timestamp"
           Write-Host "Bumping version to $devVersion"
           poetry version $devVersion
+
+          # Expose as step output
+          "dev-version=$devVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
         shell: powershell
@@ -174,7 +178,7 @@ jobs:
         with:
           prerelease: true
           publish: true
-          tag: ${{ steps.check-version.outputs.tag }}
+          tag: ${{ steps.bump-dev-version.outputs.dev-version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
