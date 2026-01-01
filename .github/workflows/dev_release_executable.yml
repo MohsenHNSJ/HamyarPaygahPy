@@ -132,7 +132,7 @@ jobs:
           # Expose as step output
           "dev-version=$devVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
-      - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
+      - name: Build single-file windowed EXE with PyInstaller (UPX compression, INFO log)
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
