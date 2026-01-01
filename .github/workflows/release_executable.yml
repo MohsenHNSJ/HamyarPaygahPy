@@ -96,8 +96,9 @@ jobs:
         run: |
           $parentSha = git rev-parse --verify --quiet HEAD^
           Write-Host "Parent commit SHA: $parentSha"
-          # Save to GitHub environment
-          Add-Content $env:GITHUB_ENV ("sha=$parentSha")
+          if ($parentSha) {
+            "sha=$parentSha" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          }
 
       - name: Detect and tag new version
         id: check-version
