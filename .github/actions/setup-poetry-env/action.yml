@@ -170,5 +170,8 @@ runs:
       shell: powershell
       if: ${{ inputs.upx == 'true' }}
       run: |
+        $ErrorActionPreference = "Stop"
         choco install upx -y
+
+        Write-Host "UPX location:"
         Get-Command upx | Select-Object -Property Source

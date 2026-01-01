@@ -80,24 +80,36 @@ jobs:
       - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
         shell: powershell
         run: |
-          # detect UPX dir to pass to PyInstaller
+          $ErrorActionPreference = "Stop"
+
+          # Verify PyInstaller exists
+          if (-not (Get-Command pyinstaller -ErrorAction SilentlyContinue)) {
+              Write-Error "PyInstaller is not available on PATH."
+              exit 1
+          }
+
+          # Detect UPX directory
           $upxCmd = (Get-Command upx -ErrorAction Stop).Source
           $upxDir = Split-Path $upxCmd
           Write-Host "Using UPX dir: $upxDir"
 
-          # ensure entrypoint exists
-          if (-not (Test-Path -Path "./src/hamyar_paygah/main.py")) {
-            Write-Error "main.py not found at src/hamyar_paygah. Update the path in the workflow if your entrypoint is elsewhere."
-            exit 1
+          # Ensure entrypoint exists
+          $entry = "./src/hamyar_paygah/main.py"
+          if (-not (Test-Path $entry)) {
+              Write-Error "Entrypoint not found: $entry"
+              exit 1
           }
 
-          # Run PyInstaller:
-          # --onefile  -> single exe
-          # --windowed -> no console (GUI app)
-          # --name HamyarPaygah -> output exe name
-          # --upx-dir "$upxDir" -> use UPX to compress
-          # --log-level DEBUG -> verbose build logs
-          pyinstaller --onefile --windowed --name HamyarPaygah --upx-dir "$upxDir" --log-level DEBUG ./src/hamyar_paygah/main.py
+          # Run PyInstaller
+          pyinstaller `
+            --onefile `
+            --windowed `
+            --clean `
+            --noconfirm `
+            --name HamyarPaygah `
+            --upx-dir "$upxDir" `
+            --log-level DEBUG `
+            $entry
 
       - name: Upload build artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
