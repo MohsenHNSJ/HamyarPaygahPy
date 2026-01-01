@@ -140,6 +140,7 @@ runs:
 
     - name: Install UPX
       shell: powershell
+      if: ${{ inputs.upx == 'true' }}
       run: |
         choco install upx -y
         # refreshenv is part of Chocolatey profile to refresh PATH
