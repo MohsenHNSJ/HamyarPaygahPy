@@ -159,7 +159,7 @@ jobs:
             --noconfirm `
             --name HamyarPaygah `
             --upx-dir "$upxDir" `
-            --log-level DEBUG `
+            --log-level INFO `
             $entry
 
       - name: Upload build artifact
