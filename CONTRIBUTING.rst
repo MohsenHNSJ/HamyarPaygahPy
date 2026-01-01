@@ -273,7 +273,20 @@ Your pull request needs to meet the following guidelines for acceptance:
 Feel free to submit early, iteration and improvement can happen as needed.
 
 It's recommended to open an issue before starting work on anything.
-This will allow a chance to discuss your approach with the owners and confirm it fits the project's direction.
+This will allow a chance to discuss your approach with the owners and confirm
+it fits the project's direction.
+
+Versioning and Release Process
+------------------------------
+
+The flow of the versioning and release process is as follows:
+
+* All changes are made in the ``test`` branch.
+* When a feature or bug-fix is complete, a `pull request`_ is opened to
+  merge into ``dev`` branch. This will trigger a draft release
+  (if not already created), Bump the version number and update the changelog.
+* When the ``dev`` branch is stable and ready for release, a `pull request`_
+  is opened to merge into ``main`` branch. This will publish the release.
 
 Amendments
 ----------
