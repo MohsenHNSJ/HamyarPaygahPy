@@ -53,7 +53,7 @@ updates:
   - package-ecosystem: docker
     assignees:
       - "MohsenHNSJ"
-    directory: /.devcontainer
+    directory: "/.devcontainer"
     labels:
       - "dependencies"
     open-pull-requests-limit: 2000
@@ -64,7 +64,7 @@ updates:
   - package-ecosystem: devcontainers
     assignees:
       - "MohsenHNSJ"
-    directory: /.devcontainer
+    directory: "/.devcontainer"
     labels:
       - "dependencies"
     open-pull-requests-limit: 2000
