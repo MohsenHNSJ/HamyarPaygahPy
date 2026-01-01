@@ -5,8 +5,6 @@ on:
   push: # Run on every Push
   pull_request: # Run on every PR
 
-permissions: read-all
-
 jobs:
   compatibility-tests:
     name: Compatibility with Python ${{ matrix.python-version }}

@@ -5,8 +5,6 @@ on:
   push: # Run on every Push
   pull_request: # Run on every PR
 
-permissions: read-all
-
 jobs:
   build-tests:
     name: ${{ matrix.session }}
@@ -17,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { session: "pre-commit"}
+          - { session: "pre-commit" }
           - { session: "ruff-check" }
           - { session: "docs-build" }
           - { session: "mypy-type" }

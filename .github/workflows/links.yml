@@ -5,9 +5,7 @@ on:
   repository_dispatch:
   workflow_dispatch:
   push: # Run on every Push
-  pull_request:  # Run on every PR
-
-permissions: read-all
+  pull_request: # Run on every PR
 
 jobs:
   link-checker:
@@ -21,7 +19,6 @@ jobs:
       # Git Checkout
       - name: Checkout the repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-
 
       - name: Link Checker
         id: lychee
