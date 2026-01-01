@@ -118,6 +118,12 @@ jobs:
               Write-Output $version
             "
 
+      - name: Debug detected version
+        run: |
+          echo "Detected tag: ${{ steps.check-version.outputs.tag }}"
+          echo "Detected current version: ${{ steps.check-version.outputs.current-version }}"
+          echo "Detected version: ${{ steps.check-version.outputs.version }}"
+
       - name: Build single-file windowed EXE with PyInstaller (UPX compression, INFO log)
         shell: powershell
         run: |
