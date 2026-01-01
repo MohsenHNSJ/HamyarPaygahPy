@@ -1,0 +1,190 @@
+---
+name: Build development Windows exe (PyInstaller) and pre-release
+
+on:
+  push:
+    branches:
+      - dev
+permissions:
+  contents: write # Needed to create releases and upload assets
+
+jobs:
+  build-windows:
+    name: Build Windows executable with PyInstaller
+    runs-on: windows-latest
+
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        with:
+          egress-policy: audit
+
+      - name: Check out the repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 2
+
+      - name: Ensure Poetry cache directory exists
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $cacheDir = Join-Path $env:RUNNER_TEMP "pypoetry-cache"
+
+          if (-not (Test-Path $cacheDir)) {
+              New-Item -ItemType Directory -Path $cacheDir | Out-Null
+          }
+
+          # Export for later steps
+          Add-Content $env:GITHUB_ENV "POETRY_CACHE_DIR=$cacheDir"
+
+          Write-Host "Poetry cache dir set to: $cacheDir"
+
+      - name: Get pip cache dir
+        id: pip-cache-dir
+        shell: powershell
+        run: |
+          $dir = python -m pip cache dir
+          "dir=$dir" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Cache pip
+        id: cache-pip
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        with:
+          path: ${{ steps.pip-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Print pip cache status
+        run: |
+          echo "pip cache hit: ${{ steps.cache-pip.outputs.cache-hit }}"
+
+      - name: Get Poetry cache dir
+        id: poetry-cache-dir
+        shell: powershell
+        run: |
+          # Use Poetry's own cache path
+          $dir = if ($env:POETRY_CACHE_DIR) { $env:POETRY_CACHE_DIR } else { Join-Path $env:LOCALAPPDATA "pypoetry\Cache" }
+          # Ensure directory exists
+          if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
+          # Expose it as a GitHub Actions output
+          "dir=$dir" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Cache Poetry
+        id: cache-poetry
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        with:
+          path: ${{ steps.poetry-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      - name: Print Poetry cache status
+        run: |
+          echo "poetry cache hit: ${{ steps.cache-poetry.outputs.cache-hit }}"
+
+      - name: Set up the environment
+        uses: ./.github/actions/setup-poetry-env
+        with:
+          py-installer: true
+          upx: true
+
+      - name: Check if there is a parent commit
+        id: check-parent-commit
+        shell: powershell
+        run: |
+          $parentSha = git rev-parse --verify --quiet HEAD^
+          Write-Host "Parent commit SHA: $parentSha"
+          # Save to GitHub environment
+          Add-Content $env:GITHUB_ENV ("sha=$parentSha")
+
+      - name: Detect and tag new version
+        id: check-version
+        if: steps.check-parent-commit.outputs.sha
+        uses: salsify/action-detect-and-tag-new-version@b1778166f13188a9d478e2d1198f993011ba9864 # v2.0.3
+        with:
+          version-command: |
+            powershell -Command "
+              $versionLine = poetry version
+              # poetry version outputs e.g.: 'my-package 1.2.3'
+              $version = $versionLine.Split(' ')[1]
+              Write-Output $version
+            "
+
+      - name: Bump version for development release
+        id: bump-dev-version
+        shell: powershell
+        run: |
+          # Get current version from poetry
+          $versionLine = poetry version
+          # poetry version outputs e.g.: 'my-package 1.2.3'
+          $version = $versionLine.Split(' ')[1]
+
+          # Get current Unix timestamp
+          $timestamp = [int][double]::Parse((Get-Date -UFormat %s))
+
+          # Set development version
+          $devVersion = "$version.dev.$timestamp"
+          Write-Host "Bumping version to $devVersion"
+          poetry version $devVersion
+
+          # Expose as step output
+          "dev-version=$devVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Build single-file windowed EXE with PyInstaller (UPX compression, INFO log)
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          # Verify PyInstaller exists
+          if (-not (Get-Command pyinstaller -ErrorAction SilentlyContinue)) {
+              Write-Error "PyInstaller is not available on PATH."
+              exit 1
+          }
+
+          # Detect UPX directory
+          $upxCmd = (Get-Command upx -ErrorAction Stop).Source
+          $upxDir = Split-Path $upxCmd
+          Write-Host "Using UPX dir: $upxDir"
+
+          # Ensure entrypoint exists
+          $entry = "./src/hamyar_paygah/main.py"
+          if (-not (Test-Path $entry)) {
+              Write-Error "Entrypoint not found: $entry"
+              exit 1
+          }
+
+          # Run PyInstaller
+          pyinstaller `
+            --onefile `
+            --windowed `
+            --clean `
+            --noconfirm `
+            --name HamyarPaygah `
+            --upx-dir "$upxDir" `
+            --log-level INFO `
+            $entry
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: HamyarPaygah-exe
+          path: dist\HamyarPaygah.exe
+
+      - name: Publish the pre-release notes
+        id: create_pre_release
+        uses: release-drafter/release-drafter@b1476f6e6eb133afa41ed8589daba6dc69b4d3f5 # v6.1.0
+        with:
+          prerelease: true
+          publish: true
+          tag: ${{ steps.bump-dev-version.outputs.dev-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Assets to pre-release
+        uses: csexton/release-asset-action@3567794e918fa3068116688122a76cdeb57b5f09 # v3
+        with:
+          file: dist\HamyarPaygah.exe
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-url: ${{ steps.create_pre_release.outputs.upload_url }}

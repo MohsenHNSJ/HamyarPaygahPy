@@ -9,7 +9,7 @@ Hamyar Paygah
     :stub-columns: 1
 
     * - Package
-      - |poetry| |release-to-pypi|
+      - |poetry| |dev-release| |stable-release|
     * - Quality Assurance
       - |sonar-quality-gate| |sonar-reliability| |sonar-maintainability| |sonar-technical-debt| |sonar-bugs| |sonar-code-smells|
     * - Stats
@@ -214,9 +214,13 @@ See the ``LICENSE`` file for full license text and terms.
     :target: pylint-website_
     :alt: Linting with Pylint
 
-.. |release-to-pypi| image:: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions/workflows/release-packge.yml/badge.svg
-    :target: `Release to PyPI`_
-    :alt: Release to PyPI status
+.. |dev-release| image:: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions/workflows/dev_release_executable.yml/badge.svg
+    :target: `Dev Release`_
+    :alt: Development Release
+
+.. |stable-release| image:: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions/workflows/release_executable.yml/badge.svg
+    :target: `Stable Release`_
+    :alt: Stable Release
 
 .. |repository-size| image:: https://img.shields.io/github/repo-size/MohsenHNSJ/HamyarPaygahPy?color=BE81F7
     :alt: Repository Size
@@ -225,27 +229,27 @@ See the ``LICENSE`` file for full license text and terms.
     :target: Ruff_
     :alt: Ruff
 
-.. |scorecard| image:: https://api.scorecard.dev/projects/github.com/MohsenHNSJ/unofficial_tabdeal_api/badge
+.. |scorecard| image:: https://api.scorecard.dev/projects/github.com/MohsenHNSJ/HamyarPaygahPy/badge
     :target: scorecard-rating_
     :alt: OpenSSF Scorecard
 
-.. |sonar-bugs| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=bugs
+.. |sonar-bugs| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=bugs
     :target: sonar-qube-page_
     :alt: SonarQube Bugs
 
-.. |sonar-code-smells| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=code_smells
+.. |sonar-code-smells| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=code_smells
     :target: sonar-qube-page_
     :alt: SonarQube Code Smells
 
-.. |sonar-lines-of-code| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=ncloc
+.. |sonar-lines-of-code| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=ncloc
     :target: sonar-qube-page_
     :alt: SonarQube Lines of Code
 
-.. |sonar-maintainability| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=sqale_rating
+.. |sonar-maintainability| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=sqale_rating
     :target: sonar-qube-page_
     :alt: SonarQube Maintainability Rating
 
-.. |sonar-quality-gate| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=alert_status
+.. |sonar-quality-gate| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=alert_status
     :target: sonar-qube-page_
     :alt: SonarQube Quality Gate
 
@@ -253,19 +257,19 @@ See the ``LICENSE`` file for full license text and terms.
     :target: sonar-qube-page_
     :alt: SonarQube Cloud
 
-.. |sonar-reliability| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=reliability_rating
+.. |sonar-reliability| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=reliability_rating
     :target: sonar-qube-page_
     :alt: SonarQube Reliability Rating
 
-.. |sonar-security| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=security_rating
+.. |sonar-security| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=security_rating
     :target: sonar-qube-page_
     :alt: SonarQube Security Rating
 
-.. |sonar-technical-debt| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=sqale_index
+.. |sonar-technical-debt| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=sqale_index
     :target: sonar-qube-page_
     :alt: SonarQube Technical Debt
 
-.. |sonar-vulnerabilities| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_unofficial_tabdeal_api&metric=vulnerabilities
+.. |sonar-vulnerabilities| image:: https://sonarcloud.io/api/project_badges/measure?project=MohsenHNSJ_HamyarPaygahPy&metric=vulnerabilities
     :target: sonar-qube-page_
     :alt: SonarQube Vulnerabilities
 
@@ -301,6 +305,6 @@ See the ``LICENSE`` file for full license text and terms.
 .. _Pre-commit-ci: https://results.pre-commit.ci/latest/github/MohsenHNSJ/HamyarPaygahPy/main
 .. _openssf-status: https://www.bestpractices.dev/projects/11675/
 .. _scorecard-rating: https://scorecard.dev/viewer/?uri=github.com/MohsenHNSJ/HamyarPaygahPy
-
-.. _Release to PyPI: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions
-.. _sonar-qube-page: https://sonarcloud.io/summary/new_code?id=MohsenHNSJ_unofficial_tabdeal_api
+.. _Dev Release: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions
+.. _Stable Release: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions
+.. _sonar-qube-page: https://sonarcloud.io/summary/new_code?id=MohsenHNSJ_HamyarPaygahPy
