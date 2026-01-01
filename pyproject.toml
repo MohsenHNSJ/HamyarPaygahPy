@@ -70,11 +70,12 @@ safety = "3.7.0"
 # Other requirements constraints to keep dependencies up-to-date
 # These are not directly required by the project
 # But only required by the above packages
+ruamel-yaml = "0.19.0"
 
 # Requirements for documentation
 [tool.poetry.group.docs.dependencies]
 furo = "2025.12.19"
-sphinx = "9.0.4"
+sphinx = "9.1.0"
 sphinx-autoapi = "3.6.1"
 sphinx-autobuild = "2025.8.25"
 sphinx-copybutton = "0.5.2"

@@ -114,6 +114,7 @@
     "mypy",
     "nitpicky",
     "njpwerner",
+    "noconfirm",
     "noqa",
     "nosetests",
     "noxfile",
