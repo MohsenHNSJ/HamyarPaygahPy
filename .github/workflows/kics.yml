@@ -5,6 +5,8 @@ on:
   pull_request: # Run on every pull request
   push: # Run on every Push
 
+permissions: read-all
+
 jobs:
   kics:
     runs-on: ubuntu-latest
