@@ -22,7 +22,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
-          fetch-depth: 2
+          fetch-depth: 0 # Fetch all history for version detection
 
       - name: Ensure Poetry cache directory exists
         shell: powershell
@@ -99,6 +99,11 @@ jobs:
           if ($parentSha) {
             "sha=$parentSha" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           }
+
+      - name: Debug tags
+        shell: powershell
+        run: |
+          git tag --list
 
       - name: Detect and tag new version
         id: check-version
