@@ -43,6 +43,14 @@ inputs:
     required: false
     description: "Whether to install Checkov"
     default: "false"
+  py-installer:
+    required: false
+    description: "Whether to install PyInstaller"
+    default: "false"
+  upx:
+    required: false
+    description: "Whether to install UPX"
+    default: "false"
 
 runs:
   using: "composite"
@@ -123,3 +131,18 @@ runs:
       if: ${{ inputs.checkov == 'true' }}
       run: |
         pip install --constraint=.github/workflows/constraints.txt checkov
+
+    - name: Install PyInstaller
+      shell: bash
+      if: ${{ inputs.py-installer == 'true' }}
+      run: |
+        pip install --constraint=.github/workflows/constraints.txt pyinstaller
+
+    - name: Install UPX
+      shell: powershell
+      run: |
+        choco install upx -y
+        # refreshenv is part of Chocolatey profile to refresh PATH
+        refreshenv || Write-Host "refreshenv not available; continuing"
+        Write-Host "UPX location:"
+        Get-Command upx | Select-Object -Property Source
