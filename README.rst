@@ -9,7 +9,7 @@ Hamyar Paygah
     :stub-columns: 1
 
     * - Package
-      - |poetry| |release-to-pypi|
+      - |poetry| |dev-release| |stable-release|
     * - Quality Assurance
       - |sonar-quality-gate| |sonar-reliability| |sonar-maintainability| |sonar-technical-debt| |sonar-bugs| |sonar-code-smells|
     * - Stats
@@ -214,9 +214,13 @@ See the ``LICENSE`` file for full license text and terms.
     :target: pylint-website_
     :alt: Linting with Pylint
 
-.. |release-to-pypi| image:: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions/workflows/release-packge.yml/badge.svg
-    :target: `Release to PyPI`_
-    :alt: Release to PyPI status
+.. |dev-release| image:: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions/workflows/dev_release_executable.yml/badge.svg
+    :target: `Dev Release`_
+    :alt: Development Release
+
+.. |stable-release| image:: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions/workflows/release_executable.yml/badge.svg
+    :target: `Stable Release`_
+    :alt: Stable Release
 
 .. |repository-size| image:: https://img.shields.io/github/repo-size/MohsenHNSJ/HamyarPaygahPy?color=BE81F7
     :alt: Repository Size
@@ -225,7 +229,7 @@ See the ``LICENSE`` file for full license text and terms.
     :target: Ruff_
     :alt: Ruff
 
-.. |scorecard| image:: https://api.scorecard.dev/projects/github.com/MohsenHNSJ/unofficial_tabdeal_api/badge
+.. |scorecard| image:: https://api.scorecard.dev/projects/github.com/MohsenHNSJ/HamyarPaygahPy/badge
     :target: scorecard-rating_
     :alt: OpenSSF Scorecard
 
@@ -301,6 +305,7 @@ See the ``LICENSE`` file for full license text and terms.
 .. _Pre-commit-ci: https://results.pre-commit.ci/latest/github/MohsenHNSJ/HamyarPaygahPy/main
 .. _openssf-status: https://www.bestpractices.dev/projects/11675/
 .. _scorecard-rating: https://scorecard.dev/viewer/?uri=github.com/MohsenHNSJ/HamyarPaygahPy
+.. _Dev Release: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions
+.. _Stable Release: https://github.com/MohsenHNSJ/HamyarPaygahPy/actions
 
-.. _Release to PyPI: https://github.com/MohsenHNSJ/unofficial_tabdeal_api/actions
 .. _sonar-qube-page: https://sonarcloud.io/summary/new_code?id=MohsenHNSJ_unofficial_tabdeal_api
