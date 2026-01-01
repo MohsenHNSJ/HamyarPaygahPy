@@ -1,5 +1,5 @@
 ---
-name: Build Windows exe (PyInstaller) and release
+name: Build Windows and release
 
 on:
   push:
