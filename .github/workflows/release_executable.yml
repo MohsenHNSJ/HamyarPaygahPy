@@ -25,13 +25,33 @@ jobs:
           fetch-depth: 2
 
       - name: Ensure Poetry cache directory exists
-        run: mkdir -p ~/.cache/pypoetry
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $cacheDir = Join-Path $env:RUNNER_TEMP "pypoetry-cache"
+
+          if (-not (Test-Path $cacheDir)) {
+              New-Item -ItemType Directory -Path $cacheDir | Out-Null
+          }
+
+          # Export for later steps
+          Add-Content $env:GITHUB_ENV "POETRY_CACHE_DIR=$cacheDir"
+
+          Write-Host "Poetry cache dir set to: $cacheDir"
+
+      - name: Get pip cache dir
+        id: pip-cache-dir
+        shell: powershell
+        run: |
+          $dir = python -m pip cache dir
+          "dir=$dir" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Cache pip
         id: cache-pip
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
-          path: ~/.cache/pip
+          path: ${{ steps.pip-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
@@ -40,11 +60,22 @@ jobs:
         run: |
           echo "pip cache hit: ${{ steps.cache-pip.outputs.cache-hit }}"
 
+      - name: Get Poetry cache dir
+        id: poetry-cache-dir
+        shell: powershell
+        run: |
+          # Use Poetry's own cache path
+          $dir = if ($env:POETRY_CACHE_DIR) { $env:POETRY_CACHE_DIR } else { Join-Path $env:LOCALAPPDATA "pypoetry\Cache" }
+          # Ensure directory exists
+          if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
+          # Expose it as a GitHub Actions output
+          "dir=$dir" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
       - name: Cache Poetry
         id: cache-poetry
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
-          path: ~/.cache/pypoetry
+          path: ${{ steps.poetry-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
@@ -61,8 +92,12 @@ jobs:
 
       - name: Check if there is a parent commit
         id: check-parent-commit
+        shell: powershell
         run: |
-          echo "{sha}={$(git rev-parse --verify --quiet HEAD^)}" >> "$GITHUB_ENV"
+          $parentSha = git rev-parse --verify --quiet HEAD^
+          Write-Host "Parent commit SHA: $parentSha"
+          # Save to GitHub environment
+          Add-Content $env:GITHUB_ENV ("sha=$parentSha")
 
       - name: Detect and tag new version
         id: check-version
@@ -70,29 +105,46 @@ jobs:
         uses: salsify/action-detect-and-tag-new-version@b1778166f13188a9d478e2d1198f993011ba9864 # v2.0.3
         with:
           version-command: |
-            bash -o pipefail -c "poetry version | awk '{ print \$2}'"
+            powershell -Command "
+              $versionLine = poetry version
+              # poetry version outputs e.g.: 'my-package 1.2.3'
+              $version = $versionLine.Split(' ')[1]
+              Write-Output $version
+            "
 
-      - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
+      - name: Build single-file windowed EXE with PyInstaller (UPX compression, INFO log)
         shell: powershell
         run: |
-          # detect UPX dir to pass to PyInstaller
+          $ErrorActionPreference = "Stop"
+
+          # Verify PyInstaller exists
+          if (-not (Get-Command pyinstaller -ErrorAction SilentlyContinue)) {
+              Write-Error "PyInstaller is not available on PATH."
+              exit 1
+          }
+
+          # Detect UPX directory
           $upxCmd = (Get-Command upx -ErrorAction Stop).Source
           $upxDir = Split-Path $upxCmd
           Write-Host "Using UPX dir: $upxDir"
 
-          # ensure entrypoint exists
-          if (-not (Test-Path -Path "./src/hamyar_paygah/main.py")) {
-            Write-Error "main.py not found at src/hamyar_paygah. Update the path in the workflow if your entrypoint is elsewhere."
-            exit 1
+          # Ensure entrypoint exists
+          $entry = "./src/hamyar_paygah/main.py"
+          if (-not (Test-Path $entry)) {
+              Write-Error "Entrypoint not found: $entry"
+              exit 1
           }
 
-          # Run PyInstaller:
-          # --onefile  -> single exe
-          # --windowed -> no console (GUI app)
-          # --name HamyarPaygah -> output exe name
-          # --upx-dir "$upxDir" -> use UPX to compress
-          # --log-level DEBUG -> verbose build logs
-          pyinstaller --onefile --windowed --name HamyarPaygah --upx-dir "$upxDir" --log-level DEBUG ./src/hamyar_paygah/main.py
+          # Run PyInstaller
+          pyinstaller `
+            --onefile `
+            --windowed `
+            --clean `
+            --noconfirm `
+            --name HamyarPaygah `
+            --upx-dir "$upxDir" `
+            --log-level INFO `
+            $entry
 
       - name: Upload build artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
