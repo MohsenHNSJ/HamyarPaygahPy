@@ -62,7 +62,7 @@ runs:
         check-latest: true
 
     - name: Configure pipx paths on windows
-      if: runner.os != 'Windows'
+      if: runner.os == 'Windows'
       shell: bash
       run: |
         echo "PIPX_HOME=$RUNNER_TEMP/pipx" >> $GITHUB_ENV
