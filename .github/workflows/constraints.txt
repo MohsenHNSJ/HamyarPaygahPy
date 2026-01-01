@@ -6,6 +6,7 @@ mypy==1.19.1
 nox==2025.11.12
 nox-poetry==1.2.0
 pip==25.3
+pipx==1.8.0
 poetry==2.2.1
 pre-commit==4.5.1
 pydantic==2.12.5 # Although a newer version is available, but "safety" and "safety-schemas" strictly require pydantic ">=2.6.0,<2.10.0", so we had to stick to 2.9.2

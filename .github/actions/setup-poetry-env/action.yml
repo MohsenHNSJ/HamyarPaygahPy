@@ -61,20 +61,42 @@ runs:
         python-version: ${{ inputs.python-version }}
         check-latest: true
 
+    - name: Configure pipx paths on windows
+      if: runner.os != 'Windows'
+      shell: bash
+      run: |
+        echo "PIPX_HOME=$RUNNER_TEMP/pipx" >> $GITHUB_ENV
+        echo "PIPX_BIN_DIR=$RUNNER_TEMP/pipx/bin" >> $GITHUB_ENV
+
     - name: Upgrade pip if necessary
       shell: bash
       run: |
         pip install --constraint=.github/workflows/constraints.txt pip
         pip --version
 
+    - name: Upgrade pipx if necessary
+      shell: bash
+      run: |
+        pip install --constraint=.github/workflows/constraints.txt pipx
+        pipx --version
+
     - name: Capture Python version
       shell: bash
       run: echo "PYTHON_VERSION=$(python --version | awk '{print $2}')" >> "$GITHUB_ENV"
 
-    - name: Install Poetry
+    - name: Install Poetry (Linux)
+      if: runner.os == 'Linux'
       shell: bash
       run: |
         pipx install --pip-args=--constraint=.github/workflows/constraints.txt --python ${{ env.PYTHON_VERSION }} poetry
+        pipx inject poetry poetry-plugin-export
+        poetry --version
+
+    - name: Install Poetry (Windows)
+      if: runner.os == 'Windows'
+      shell: bash
+      run: |
+        pipx install --pip-args=--constraint=.github/workflows/constraints.txt --python python poetry
         pipx inject poetry poetry-plugin-export
         poetry --version
 
