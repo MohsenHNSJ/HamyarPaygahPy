@@ -1,5 +1,5 @@
 ---
-name: Build Windows exe (PyInstaller) and release
+name: Build Windows and release
 
 on:
   push:
@@ -14,15 +14,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
-        with:
-          egress-policy: audit
-
       - name: Check out the repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
-          fetch-depth: 2
+          fetch-depth: 0 # Fetch all history for version detection
 
       - name: Ensure Poetry cache directory exists
         shell: powershell
@@ -96,8 +91,14 @@ jobs:
         run: |
           $parentSha = git rev-parse --verify --quiet HEAD^
           Write-Host "Parent commit SHA: $parentSha"
-          # Save to GitHub environment
-          Add-Content $env:GITHUB_ENV ("sha=$parentSha")
+          if ($parentSha) {
+            "sha=$parentSha" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          }
+
+      - name: Debug tags
+        shell: powershell
+        run: |
+          git tag --list
 
       - name: Detect and tag new version
         id: check-version
@@ -111,6 +112,12 @@ jobs:
               $version = $versionLine.Split(' ')[1]
               Write-Output $version
             "
+
+      - name: Debug detected version
+        run: |
+          echo "Detected tag: ${{ steps.check-version.outputs.tag }}"
+          echo "Detected current version: ${{ steps.check-version.outputs.current-version }}"
+          echo "Detected version: ${{ steps.check-version.outputs.version }}"
 
       - name: Build single-file windowed EXE with PyInstaller (UPX compression, INFO log)
         shell: powershell

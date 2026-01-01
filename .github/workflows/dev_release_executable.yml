@@ -1,5 +1,5 @@
 ---
-name: Build development Windows exe (PyInstaller) and pre-release
+name: Test Build Windows
 
 on:
   push:
@@ -14,15 +14,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
-        with:
-          egress-policy: audit
-
       - name: Check out the repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
-          fetch-depth: 2
+          fetch-depth: 0 # Fetch all history for version detection
 
       - name: Ensure Poetry cache directory exists
         shell: powershell
@@ -96,8 +91,14 @@ jobs:
         run: |
           $parentSha = git rev-parse --verify --quiet HEAD^
           Write-Host "Parent commit SHA: $parentSha"
-          # Save to GitHub environment
-          Add-Content $env:GITHUB_ENV ("sha=$parentSha")
+          if ($parentSha) {
+            "sha=$parentSha" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          }
+
+      - name: Debug tags
+        shell: powershell
+        run: |
+          git tag --list
 
       - name: Detect and tag new version
         id: check-version
@@ -112,25 +113,11 @@ jobs:
               Write-Output $version
             "
 
-      - name: Bump version for development release
-        id: bump-dev-version
-        shell: powershell
+      - name: Debug detected version
         run: |
-          # Get current version from poetry
-          $versionLine = poetry version
-          # poetry version outputs e.g.: 'my-package 1.2.3'
-          $version = $versionLine.Split(' ')[1]
-
-          # Get current Unix timestamp
-          $timestamp = [int][double]::Parse((Get-Date -UFormat %s))
-
-          # Set development version
-          $devVersion = "$version.dev.$timestamp"
-          Write-Host "Bumping version to $devVersion"
-          poetry version $devVersion
-
-          # Expose as step output
-          "dev-version=$devVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          echo "Detected tag: ${{ steps.check-version.outputs.tag }}"
+          echo "Detected current version: ${{ steps.check-version.outputs.current-version }}"
+          echo "Detected version: ${{ steps.check-version.outputs.version }}"
 
       - name: Build single-file windowed EXE with PyInstaller (UPX compression, INFO log)
         shell: powershell
@@ -166,25 +153,11 @@ jobs:
             --log-level INFO `
             $entry
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
-        with:
-          name: HamyarPaygah-exe
-          path: dist\HamyarPaygah.exe
-
-      - name: Publish the pre-release notes
-        id: create_pre_release
+      - name: Publish the draft notes
+        id: create_draft_release
         uses: release-drafter/release-drafter@b1476f6e6eb133afa41ed8589daba6dc69b4d3f5 # v6.1.0
         with:
-          prerelease: true
-          publish: true
-          tag: ${{ steps.bump-dev-version.outputs.dev-version }}
+          publish: false
+          tag: ${{ steps.check-version.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Assets to pre-release
-        uses: csexton/release-asset-action@3567794e918fa3068116688122a76cdeb57b5f09 # v3
-        with:
-          file: dist\HamyarPaygah.exe
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          release-url: ${{ steps.create_pre_release.outputs.upload_url }}

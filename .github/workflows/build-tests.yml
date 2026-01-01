@@ -12,12 +12,12 @@ jobs:
     name: ${{ matrix.session }}
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { session: "pre-commit"}
+          - { session: "pre-commit" }
           - { session: "ruff-check" }
           - { session: "docs-build" }
           - { session: "mypy-type" }
