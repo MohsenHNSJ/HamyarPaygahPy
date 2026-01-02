@@ -5,6 +5,8 @@ This module provides functions to parse SOAP XML responses from the EMS server
 and convert them into Python data models.
 """
 
+from typing import cast
+
 from lxml import etree
 
 from .models import Mission
@@ -53,9 +55,12 @@ def parse_missions(xml_text: str) -> list[Mission]:
 
     missions: list[Mission] = []
 
-    document_list: list[etree._Element] = root.xpath(
-        ".//a:DocumentReport",
-        namespaces=ns,
+    document_list: list[etree._Element] = cast(
+        "list[etree._Element]",  # noqa: SLF001
+        root.xpath(
+            ".//a:DocumentReport",
+            namespaces=ns,
+        ),
     )
 
     for document in document_list:
