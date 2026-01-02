@@ -5,6 +5,8 @@ This module provides functions to parse SOAP XML responses from the EMS server
 and convert them into Python data models.
 """
 
+from typing import cast
+
 from lxml import etree
 
 from .models import Mission
@@ -54,22 +56,31 @@ def parse_missions(xml_text: str) -> list[Mission]:
     missions: list[Mission] = []
 
     for doc in root.xpath(".//a:DocumentReport", namespaces=ns):
-        missions.append(  # noqa: PERF401
+        # Tell MyPy this is an _Element
+        doc_element = cast("etree._Element", doc)  # noqa: SLF001, pylint: disable=W0212
+
+        missions.append(
             Mission(
-                address=get_text(doc, "Address", ns) or "",
+                address=get_text(doc_element, "Address", ns) or "",
                 ambulance_code=get_int(
-                    get_text(doc, "AmbulanceCode", ns),
+                    get_text(doc_element, "AmbulanceCode", ns),
                 )
                 or 0,
-                code=get_int(get_text(doc, "MissionCode", ns)) or 0,
-                date=get_text(doc, "Date", ns) or "",
-                hospital_id=get_int(get_text(doc, "HospitalId", ns)) or 0,
-                hospital_name=get_text(doc, "Hospital", ns),
-                id=get_int(get_text(doc, "MissionId", ns)) or 0,
-                patient_id=get_int(get_text(doc, "PatientId", ns)) or 0,
-                patient_name=get_text(doc, "Name", ns) or "",
-                persian_date=get_text(doc, "PersianDate", ns) or "",
-                result=get_text(doc, "Result", ns) or "",
+                code=get_int(get_text(doc_element, "MissionCode", ns)) or 0,
+                date=get_text(doc_element, "Date", ns) or "",
+                hospital_id=get_int(
+                    get_text(doc_element, "HospitalId", ns),
+                )
+                or 0,
+                hospital_name=get_text(doc_element, "Hospital", ns),
+                id=get_int(get_text(doc_element, "MissionId", ns)) or 0,
+                patient_id=get_int(
+                    get_text(doc_element, "PatientId", ns),
+                )
+                or 0,
+                patient_name=get_text(doc_element, "Name", ns) or "",
+                persian_date=get_text(doc_element, "PersianDate", ns) or "",
+                result=get_text(doc_element, "Result", ns) or "",
             ),
         )
 
