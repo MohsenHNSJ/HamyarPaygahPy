@@ -119,7 +119,7 @@ jobs:
           echo "Detected current version: ${{ steps.check-version.outputs.current-version }}"
           echo "Detected version: ${{ steps.check-version.outputs.version }}"
 
-      - name: Build single-file windowed EXE with PyInstaller (UPX compression, INFO log)
+      - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
@@ -135,24 +135,13 @@ jobs:
           $upxDir = Split-Path $upxCmd
           Write-Host "Using UPX dir: $upxDir"
 
-          # Ensure entrypoint exists
-          $entry = "./src/hamyar_paygah/main.py"
-          if (-not (Test-Path $entry)) {
-              Write-Error "Entrypoint not found: $entry"
-              exit 1
-          }
-
           # Run PyInstaller
           pyinstaller `
-            --onefile `
-            --windowed `
             --clean `
             --noconfirm `
-            --name HamyarPaygah `
             --upx-dir "$upxDir" `
-            --log-level INFO `
-            --optimize 2 `
-            $entry
+            --log-level DEBUG `
+            HamyarPaygah.spec
 
       - name: Publish the draft notes
         id: create_draft_release
