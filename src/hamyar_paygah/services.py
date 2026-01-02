@@ -16,9 +16,9 @@ async def get_missions_list(
     :param server_url: URL of the server to send requests.
     :type server_url: str
     :param from_date: Starting date of the time frame in Gregorian calendar. Don't use persian.
-    :type from_date: datetime
+    :type from_date: datetime.datetime
     :param to_date: Ending date of the time frame in Gregorian calendar. Don't use persian.
-    :type to_date: datetime
+    :type to_date: datetime.datetime
     :param region_id: ID of the requested region.
     :type region_id: int
     :return: Raw string response from server.
