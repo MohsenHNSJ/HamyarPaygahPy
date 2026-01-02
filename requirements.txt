@@ -1,1 +1,4 @@
 aiohttp==3.13.2
+arabic-reshaper==3.0.0
+lxml==6.0.2
+tkcalendar==1.6.1
