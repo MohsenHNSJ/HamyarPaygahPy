@@ -1,62 +1,77 @@
-"""Simple Tkinter UI with buttons that do nothing.
+"""Main application window for the Hamyar Paygah project.
 
-This module creates a basic graphical user interface (GUI) using Tkinter.
+This module defines a simple Tkinter main window that serves as the
+entry point of the application.
+
+Classes:
+    MainWindow: The primary Tkinter window of the application.
 """
 
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox, ttk
+
+from hamyar_paygah.missions_list import MissionsListApp
+from hamyar_paygah.server_config import ServerConfigDialog
 
 
-def main() -> None:
-    """Main function."""
-    root = tk.Tk()
-    root.title("Simple Tkinter UI")
+class MainWindow(tk.Tk):
+    """Main Tkinter window of the application."""
 
-    root.geometry("400x200")
-    root.resizable(width=False, height=False)
+    def __init__(self, input_server_url: str) -> None:
+        """Initialize the main window."""
+        super().__init__()
+        self.title("Main Window")
+        self.geometry("400x200")
+        self.input_server_url: str = input_server_url
 
-    frame = ttk.Frame(root, padding=12)
-    frame.pack(fill="both", expand=True)
+        ttk.Label(self, text="Welcome!").pack(pady=20)
 
-    ttk.Label(
-        frame,
-        text="Buttons that do nothing",
-        font=("Segoe UI", 12),
-    ).pack(pady=(0, 10))
+        self._missions_window: MissionsListApp | None = None
 
-    btn_frame = ttk.Frame(frame)
-    btn_frame.pack()
+        open_btn = ttk.Button(
+            self,
+            text="Open Missions List",
+            command=self.open_missions_list_window,
+        )
+        open_btn.pack(pady=10)
 
-    # Buttons intentionally do nothing when clicked (command=lambda: None)
-    ttk.Button(btn_frame, text="Button 1", command=lambda: None).grid(
-        row=0,
-        column=0,
-        padx=6,
-        pady=6,
-    )
-    ttk.Button(btn_frame, text="Button 2", command=lambda: None).grid(
-        row=0,
-        column=1,
-        padx=6,
-        pady=6,
-    )
-    ttk.Button(btn_frame, text="Button 3", command=lambda: None).grid(
-        row=1,
-        column=0,
-        padx=6,
-        pady=6,
-    )
-    ttk.Button(btn_frame, text="Button 4", command=lambda: None).grid(
-        row=1,
-        column=1,
-        padx=6,
-        pady=6,
-    )
+    def open_missions_list_window(self) -> None:
+        """Opens the Missions List window if it is not already open.
 
-    ttk.Button(frame, text="Exit", command=root.quit).pack(pady=(12, 0))
+        If the window already exists, brings it to the front.
+        """
+        if self._missions_window and self._missions_window.winfo_exists():
+            # Window already exists
+            return
 
-    root.mainloop()
+        # Create a new Missions List window
+        try:
+            self._missions_window = MissionsListApp(
+                server_url=self.input_server_url,
+                master=self,
+            )
+        except tk.TclError as e:
+            messagebox.showerror(
+                "Error",
+                f"Could not open Missions List window:\n{e}",
+            )
+            self._missions_window = None
 
 
 if __name__ == "__main__":
-    main()
+    # Load server URL from disk or ask user
+    server_url = ServerConfigDialog.load_from_disk()
+    root = tk.Tk()
+    root.withdraw()  # hide main window while config dialog opens
+
+    if not server_url:
+        dialog = ServerConfigDialog(master=root)  # type: ignore[arg-type]
+        root.wait_window(dialog)
+        server_url = dialog.server_url
+
+    if not server_url:
+        messagebox.showerror("Error", "No server address provided. Exiting.")
+    else:
+        root.destroy()  # close the hidden root
+        app = MainWindow(server_url)
+        app.mainloop()

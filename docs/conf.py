@@ -55,6 +55,9 @@ nitpick_ignore: set[tuple[str, str]] = {
     (PY_CLASS, "ClientResponse"),  # aiohttp
     (PY_CLASS, "optional"),  # Documentation
     ("py:exc", "exc_class"),  # Exceptions
+    ("py:class", "_Element"),  # C extension and not documented in Python.
+    ("py:class", "tkinter.Misc"),  # Built-in C extension module
+    ("py:obj", "tkinter.Toplevel"),  # Built-in C extension module
 }
 # Project name
 project = "Hamyar Paygah"
@@ -94,7 +97,6 @@ extensions += ["sphinx.ext.intersphinx"]
 intersphinx_mapping: dict[str, tuple[str, None]] = {
     "python": ("https://docs.python.org/3/", None),
     "aiohttp": ("https://docs.aiohttp.org/en/stable/", None),
-    "pydantic": ("https://docs.pydantic.dev/latest", None),
 }
 
 # Add support for nice Not Found 404 pages
