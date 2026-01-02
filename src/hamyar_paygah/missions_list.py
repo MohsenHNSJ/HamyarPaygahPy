@@ -1,4 +1,4 @@
-"""EMS Missions Application.
+"""EMS Missions List Application.
 
 This module provides a Tkinter-based GUI application for Emergency Medical
 Services (EMS) mission management. It allows users to fetch mission data
@@ -16,7 +16,7 @@ Key Features:
     - Error handling for network and data issues.
 
 Classes:
-    EMSApp (tk.Tk): Main application window. Handles UI initialization,
+    MissionsListApp (tk.Tk): Main application window. Handles UI initialization,
         user interactions, async data fetching, table population, and
         column sorting.
 
@@ -48,15 +48,14 @@ from tkcalendar import DateEntry  # type: ignore[import-untyped]
 
 from hamyar_paygah.models import Mission
 from hamyar_paygah.parsers import parse_missions
-from hamyar_paygah.private_info import SERVER_URL
 from hamyar_paygah.services import get_missions_list
 
 
-class EMSApp(tk.Tk):
-    """Main EMS Missions application window with async fetching and sortable table."""
+class MissionsListApp(tk.Toplevel):
+    """Main Missions List application window with async fetching and sortable table."""
 
-    def __init__(self) -> None:
-        """Initialize the main EMS Missions application window.
+    def __init__(self, server_url: str, master: tk.Misc | None = None) -> None:
+        """Initialize the main EMS Missions List application window.
 
         This constructor sets up the entire user interface and initial state
         of the application. It creates a large main window containing:
@@ -93,11 +92,12 @@ class EMSApp(tk.Tk):
             option to ensure smooth scrolling.
 
         """
-        super().__init__()
-        self.title("EMS Missions")
+        super().__init__(master=master)
+        self.title("Missions List")
         self.geometry("1200x700")  # large window
         self.sort_column: str | None = None
         self.sort_reverse = False
+        self.server_url: str = server_url
 
         # --- Input Frame ---
         input_frame = ttk.Frame(self)
@@ -336,7 +336,7 @@ class EMSApp(tk.Tk):
         """Fetch missions data and populate the table asynchronously."""
         try:
             xml_response = await get_missions_list(
-                SERVER_URL,
+                self.server_url,
                 from_dt,
                 to_dt,
                 region_id,
@@ -382,11 +382,3 @@ class EMSApp(tk.Tk):
             return ""
         reshaped = arabic_reshaper.reshape(text)  # correct letter connections
         return str(get_display(reshaped))  # apply RTL bidi reordering
-
-
-if __name__ == "__main__":
-    # Start Tkinter app with a running asyncio loop
-    app = EMSApp()
-
-    # Start Tkinter
-    app.mainloop()

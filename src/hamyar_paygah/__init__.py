@@ -14,15 +14,14 @@ __license__ = "MIT"
 __copyright__ = "Copyright 2026-present MohsenHNSJ"
 __version__ = "0.1.1"
 
-from . import main, missions_list, models, parsers, services, utils
-from .private_info import SERVER_URL
+from . import main, missions_list, models, parsers, server_config, services, utils
 
 __all__: list[str] = [
-    "SERVER_URL",
     "main",
     "missions_list",
     "models",
     "parsers",
+    "server_config",
     "services",
     "utils",
 ]

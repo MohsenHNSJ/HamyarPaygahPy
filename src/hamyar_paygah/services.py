@@ -19,7 +19,7 @@ async def get_missions_list(
     :type from_date: datetime
     :param to_date: Ending date of the time frame in Gregorian calendar. Don't use persian.
     :type to_date: datetime
-    :param region_id: ID of the requested region. More information in "private_info.py"
+    :param region_id: ID of the requested region.
     :type region_id: int
     :return: Raw string response from server.
     :rtype: str
