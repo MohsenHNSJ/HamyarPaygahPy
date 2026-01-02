@@ -25,14 +25,14 @@ class Mission:
         result (str): Mission result or status description.
     """
 
-    address: str  # :no-index:
-    ambulance_code: int  # :no-index::no-index:
-    code: int  # :no-index:
-    date: str  # :no-index:
-    hospital_id: int | None  # :no-index:
-    hospital_name: str | None  # :no-index:
-    id: int  # :no-index:
-    patient_id: int  # :no-index:
-    patient_name: str  # :no-index:
-    persian_date: str  # :no-index:
-    result: str  # :no-index:
+    address: str  #: :no-index:
+    ambulance_code: int  #: :no-index::no-index:
+    code: int  #: :no-index:
+    date: str  #: :no-index:
+    hospital_id: int | None  #: :no-index:
+    hospital_name: str | None  #: :no-index:
+    id: int  #: :no-index:
+    patient_id: int  #: :no-index:
+    patient_name: str  #: :no-index:
+    persian_date: str  #: :no-index:
+    result: str  #: :no-index:
