@@ -7,7 +7,7 @@ requires = ["poetry-core==2.2.1"]
 
 [project]
 name = "hamyar_paygah" # PyPI package name
-version = "0.1.0" # Base version
+version = "0.1.1" # Base version
 description = "Application for EMS overseers to gather information from EMS servers."
 license = "MIT"
 readme = "README.rst"
@@ -29,7 +29,7 @@ classifiers = [
     "Natural Language :: Persian",
     "Typing :: Typed",
 ]
-dependencies = []
+dependencies = ["aiohttp == 3.13.2", "lxml == 6.0.2", "tkcalendar == 1.6.1", "arabic-reshaper == 3.0.0", "python-bidi == 0.6.7"]
 
 
 [project.urls]
@@ -67,6 +67,7 @@ pytest-codspeed = "4.2.0"
 rst2html = "2020.7.4"
 ruff = "0.14.10"
 safety = "3.7.0"
+types-lxml = "2026.1.1"
 # Other requirements constraints to keep dependencies up-to-date
 # These are not directly required by the project
 # But only required by the above packages
@@ -256,6 +257,10 @@ paths = ["src"]
 sections = ["project.dependencies"]
 # The path(s) to your virtual environment or site-packages folder.
 venvs = [".venv"]
+# Dependencies you wish to not scan for.
+exclude-deps =[
+  "python-bidi",
+]
 
 # Configure the output of pre-commit-update resulting YAML
 [tool.pre-commit-update.yaml]
