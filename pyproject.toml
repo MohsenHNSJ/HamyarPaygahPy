@@ -71,7 +71,10 @@ types-lxml = "2026.1.1"
 # Other requirements constraints to keep dependencies up-to-date
 # These are not directly required by the project
 # But only required by the above packages
+librt = "0.7.7"
 ruamel-yaml = "0.19.0"
+ruamel-yaml-clibz = "0.3.7"
+
 
 # Requirements for documentation
 [tool.poetry.group.docs.dependencies]

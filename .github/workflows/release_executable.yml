@@ -135,24 +135,13 @@ jobs:
           $upxDir = Split-Path $upxCmd
           Write-Host "Using UPX dir: $upxDir"
 
-          # Ensure entrypoint exists
-          $entry = "./src/hamyar_paygah/main.py"
-          if (-not (Test-Path $entry)) {
-              Write-Error "Entrypoint not found: $entry"
-              exit 1
-          }
-
           # Run PyInstaller
           pyinstaller `
-            --onefile `
-            --windowed `
             --clean `
             --noconfirm `
-            --name HamyarPaygah `
             --upx-dir "$upxDir" `
             --log-level INFO `
-            --optimize 2 `
-            $entry
+            HamyarPaygah.spec
 
       - name: Upload build artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
