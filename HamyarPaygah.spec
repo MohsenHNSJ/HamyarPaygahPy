@@ -9,8 +9,7 @@ a = Analysis(
     datas=[],
     hiddenimports=[
         "arabic_reshaper",
-        collect_submodules("arabic_reshaper"),
-        collect_submodules("bidi"),
+        "bidi",
     ],
     hookspath=[],
     hooksconfig={},
