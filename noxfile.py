@@ -264,3 +264,26 @@ def safety_cli(session: nox.sessions.Session) -> None:
     )
     # Run Safety scan
     session.run("safety", "scan", "--detailed-output")
+
+
+@nox.session(name="build", python=python_version, tags=["build"])
+def build(session: nox.sessions.Session) -> None:
+    """Build the application using PyInstaller.
+
+    Args:
+        session (nox.sessions.Session): An environment and a set of commands to run.
+    """
+    # Install requirements
+    session.run(*pip_install, constraint, "pyinstaller", silent=True)
+    # Clean previous builds
+    session.run("rm", "-rf", "build", "dist", external=True)
+
+    # Build using spec file
+    session.run(
+        "pyinstaller",
+        "--clean",
+        "--noconfirm",
+        "--log-level",
+        "INFO",
+        "HamyarPaygah.spec",
+    )
