@@ -9,6 +9,8 @@ a = Analysis(
     datas=[],
     hiddenimports=[
         "arabic_reshaper",
+        collect_submodules("arabic_reshaper"),
+        collect_submodules("bidi"),
     ],
     hookspath=[],
     hooksconfig={},
@@ -17,9 +19,6 @@ a = Analysis(
     noarchive=False,
     optimize=2,
 )
-
-# Optional but recommended if you later add bidi support
-hiddenimports += collect_submodules("arabic_reshaper")
 
 pyz = PYZ(a.pure)
 
