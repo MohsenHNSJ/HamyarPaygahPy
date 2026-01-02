@@ -38,8 +38,14 @@ docs_build_path = Path("docs", "_build")
 # endregion SPHINX
 
 # region MYPY
-# MyPy default check locations
-mypy_commands: list[str] = ["src", "tests", "docs/conf.py"]
+# MyPy default options and check locations
+mypy_commands: list[str] = [
+    "--install-types",
+    "--non-interactive",
+    "src",
+    "tests",
+    "docs/conf.py",
+]
 # MyPy requirements
 mypy_requirements: list[str] = ["mypy", "pytest", "pydantic"]
 # endregion MYPY
