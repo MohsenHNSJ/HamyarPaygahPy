@@ -18,7 +18,7 @@ class Mission:
     code: int
     """Mission code (unique identifier from server)."""
     date: str
-    """Mission timestamp in ISO format (yyyy-mm-ddThh:mm:ss)."""
+    """Mission timestamp in ISO format (``yyyy-mm-ddThh:mm:ss``)."""
     hospital_id: int | None
     """Optional hospital ID (None if patient is not transported)."""
     hospital_name: str | None
