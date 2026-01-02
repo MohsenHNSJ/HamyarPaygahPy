@@ -234,6 +234,12 @@ Run pre-commit_ hooks:
 
     nox -t pre-commit
 
+Build the project using PyInstaller_:
+
+.. code-block:: sh
+
+    nox -t build
+
 List the available Nox_ sessions:
 
 .. code-block:: sh
@@ -242,6 +248,15 @@ List the available Nox_ sessions:
 
 Unit tests are located in the *tests* directory,
 and are written using the pytest_ testing framework.
+
+In order to create the initial ``.spec`` file for PyInstaller_, temporary
+replace the ``build`` Nox_ session with the following command:
+
+.. code-block:: python
+
+    session.run("pyi-makespec", "--onefile", "--windowed", "--name",
+            "HamyarPaygah", "--log-level", "INFO", "--optimize", "2",
+            "src/hamyar_paygah/main.py")
 
 Coding style
 ------------
@@ -312,6 +327,7 @@ Continued contributions constitute acceptance of the current version.
 .. _Nox: https://nox.thea.codes/en/stable/index.html
 .. _pull request: https://github.com/MohsenHNSJ/HamyarPaygahPy/pulls
 .. _vcxsrv: https://github.com/marchaesen/vcxsrv
+.. _PyInstaller: https://pyinstaller.org/en/stable/index.html
 
 ..
     Ignore-in-readthedocs
