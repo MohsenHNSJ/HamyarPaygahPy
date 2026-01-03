@@ -5,14 +5,20 @@ from pathlib import Path
 
 project_root = Path.cwd()
 
-arabic_reshaper_data = collect_all('arabic_reshaper')
+ar_datas, ar_bins, ar_hiddenimports = collect_all('arabic_reshaper')
+
+# Normalize for single-module packages
+if not ar_bins:
+    ar_bins = []
+if not ar_datas:
+    ar_datas = []
 
 a = Analysis(
     ['src/hamyar_paygah/main.py'],
-    pathex=[],
+    pathex=[str(project_root / "src")],
     binaries=[],
     datas=[],
-    hiddenimports=arabic_reshaper_data.hiddenimports,
+    hiddenimports=ar_hiddenimports,
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
