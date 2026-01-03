@@ -42,7 +42,7 @@ from tkinter import messagebox, ttk
 
 import arabic_reshaper  # type: ignore[import-untyped]
 from aiohttp import ClientError
-from bidi import get_display  # type: ignore[import-untyped]
+from bidi.algorithm import get_display  # type: ignore[import-untyped]
 from lxml import etree
 from tkcalendar import DateEntry  # type: ignore[import-untyped]
 
