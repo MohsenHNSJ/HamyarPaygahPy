@@ -14,12 +14,6 @@ application restarts.
 Classes:
     LanguageManager: Centralized manager for loading, setting, and
         retrieving UI translations.
-
-Constants:
-    CONFIG_FILE (Path): Path to the JSON file storing language configuration.
-    LANG_MAP (dict[str, Translations]): Maps language codes to
-        corresponding translation sets.
-    RTL_LANGS (set[str]): Set of language codes that use right-to-left text.
 """
 
 import json
@@ -32,7 +26,7 @@ from hamyar_paygah.localization.fa import FA
 from hamyar_paygah.utils.text_utils import reshape_rtl
 
 CONFIG_FILE = Path("language_config.json")
-"""Path to UI language config file"""
+"""Path to the JSON file storing language configuration."""
 
 LANG_MAP: dict[str, Translations] = {
     "English": EN,
@@ -41,6 +35,7 @@ LANG_MAP: dict[str, Translations] = {
 """Map of all available languages and their name presentation in options window"""
 
 RTL_LANGS: set[str] = {"Persian"}
+"""Set of language codes that use Right-to-Left text"""
 
 
 class LanguageManager:
