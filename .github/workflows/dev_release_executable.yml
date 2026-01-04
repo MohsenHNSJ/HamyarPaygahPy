@@ -84,6 +84,7 @@ jobs:
         with:
           py-installer: true
           upx: true
+          install-package: true
 
       - name: Check if there is a parent commit
         id: check-parent-commit
@@ -94,11 +95,6 @@ jobs:
           if ($parentSha) {
             "sha=$parentSha" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           }
-
-      - name: Debug tags
-        shell: powershell
-        run: |
-          git tag --list
 
       - name: Detect and tag new version
         id: check-version
@@ -112,12 +108,6 @@ jobs:
               $version = $versionLine.Split(' ')[1]
               Write-Output $version
             "
-
-      - name: Debug detected version
-        run: |
-          echo "Detected tag: ${{ steps.check-version.outputs.tag }}"
-          echo "Detected current version: ${{ steps.check-version.outputs.current-version }}"
-          echo "Detected version: ${{ steps.check-version.outputs.version }}"
 
       - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
         shell: powershell
@@ -138,10 +128,22 @@ jobs:
           # Run PyInstaller
           pyinstaller `
             --clean `
+            --console `
             --noconfirm `
-            --upx-dir "$upxDir" `
+            --onedir `
             --log-level DEBUG `
-            HamyarPaygah.spec
+            --name HamyarPaygah.exe `
+            --debug all `
+            --optimize 2 `
+            src\hamyar_paygah\main.py
+
+      - name: Upload build artifact (Folder)
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: HamyarPaygah
+          path: dist\
+          compression-level: 9
+          if-no-files-found: error
 
       - name: Publish the draft notes
         id: create_draft_release

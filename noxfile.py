@@ -273,6 +273,8 @@ def build(session: nox.sessions.Session) -> None:
     Args:
         session (nox.sessions.Session): An environment and a set of commands to run.
     """
+    # Install the package
+    session.install(".", silent=True)
     # Install requirements
     session.run(*pip_install, constraint, "pyinstaller", silent=True)
     # Clean previous builds
@@ -282,8 +284,17 @@ def build(session: nox.sessions.Session) -> None:
     session.run(
         "pyinstaller",
         "--clean",
+        "--console",
+        "--onedir",
+        "--noupx",
         "--noconfirm",
         "--log-level",
-        "INFO",
-        "HamyarPaygah.spec",
+        "DEBUG",
+        "--name",
+        "HamyarPaygah",
+        "--debug",
+        "all",
+        "--optimize",
+        "2",
+        "src/hamyar_paygah/main.py",
     )
