@@ -1,24 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-from PyInstaller.utils.hooks import collect_all
-from pathlib import Path
-
-project_root = Path.cwd()
-
-ar_datas, ar_bins, ar_hiddenimports = collect_all('arabic_reshaper')
-
-# Normalize for single-module packages
-if not ar_bins:
-    ar_bins = []
-if not ar_datas:
-    ar_datas = []
-
 a = Analysis(
     ['src/hamyar_paygah/main.py'],
-    pathex=[str(project_root / "src")],
+    pathex=['src'],
     binaries=[],
     datas=[],
-    hiddenimports=ar_hiddenimports,
+    hiddenimports=[
+        "arabic_reshaper",
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
