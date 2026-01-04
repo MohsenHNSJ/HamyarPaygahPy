@@ -34,13 +34,15 @@ from hamyar_paygah.localization.fa import FA
 from hamyar_paygah.utils.text_utils import reshape_rtl
 
 CONFIG_FILE = Path("language_config.json")
+"""Path to UI language config file"""
 
 LANG_MAP: dict[str, Translations] = {
-    "en": EN,
-    "fa": FA,
+    "English": EN,
+    "Persian": FA,
 }
+"""Map of all available languages and their name presentation in options window"""
 
-RTL_LANGS: set[str] = {"fa"}
+RTL_LANGS: set[str] = {"Persian"}
 
 
 class LanguageManager:
@@ -52,7 +54,7 @@ class LanguageManager:
             to the current language.
     """
 
-    _lang_code: str = "fa"
+    _lang_code: str = "Persian"
     _translations: Translations = FA
 
     @classmethod
@@ -65,9 +67,9 @@ class LanguageManager:
         if CONFIG_FILE.exists():
             try:
                 data = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
-                cls._lang_code = data.get("language", "fa")
+                cls._lang_code = data.get("language", "Persian")
             except (OSError, json.JSONDecodeError):
-                cls._lang_code = "fa"
+                cls._lang_code = "Persian"
 
         cls._translations = (
             LANG_MAP.get(
@@ -111,7 +113,7 @@ class LanguageManager:
                              Defaults to Persian/Farsi if the code is invalid.
         """
         if lang_code not in LANG_MAP:
-            lang_code = "fa"
+            lang_code = "Persian"
 
         cls._lang_code = lang_code
         cls._translations = LANG_MAP[lang_code]

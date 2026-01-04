@@ -3,7 +3,7 @@
 from hamyar_paygah.localization.base import Translations
 
 FA = Translations(
-    main_window_title="ناظر اورژانس",
+    main_window_title="Hamyar Paygah",
     missions_window_load_missions_button="بارگذاری ماموریت‌ها",  # noqa: RUF001
     main_window_options_button="تنظیمات",
     options_window_title="تنظیمات",
@@ -15,3 +15,4 @@ FA = Translations(
     server_config_empty_error_title="خطای ورودی",
     server_config_empty_error_msg="آدرس سرور نمی‌تواند خالی باشد!",
 )
+"""Persian language translations."""
