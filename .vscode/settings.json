@@ -29,6 +29,7 @@
     "**/*gdlintrc",
     "**/*poetry.lock"
   ],
+  "cSpell.language": "en,fa",
   "cSpell.mergeCSpellSettings": true,
   "cSpell.words": [
     "addopts",

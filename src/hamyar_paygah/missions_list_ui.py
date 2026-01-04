@@ -40,15 +40,14 @@ from collections.abc import Callable
 from datetime import datetime
 from tkinter import messagebox, ttk
 
-import arabic_reshaper  # type: ignore[import-untyped]
 from aiohttp import ClientError
-from bidi import get_display  # type: ignore[import-untyped]
 from lxml import etree
 from tkcalendar import DateEntry  # type: ignore[import-untyped]
 
-from hamyar_paygah.models import Mission
+from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.parsers import parse_missions
-from hamyar_paygah.services import get_missions_list
+from hamyar_paygah.services.missions_list_service import get_missions_list
+from hamyar_paygah.utils.text_utils import reshape_rtl
 
 
 class MissionsListApp(tk.Toplevel):
@@ -243,14 +242,14 @@ class MissionsListApp(tk.Toplevel):
                 "end",
                 values=(
                     m.id,
-                    self.reshape_rtl(m.patient_name),
+                    reshape_rtl(m.patient_name),
                     m.patient_id,
                     m.ambulance_code,
-                    self.reshape_rtl(m.hospital_name or ""),
+                    reshape_rtl(m.hospital_name or ""),
                     m.date,
                     m.persian_date,
-                    self.reshape_rtl(m.address),
-                    self.reshape_rtl(m.result),
+                    reshape_rtl(m.address),
+                    reshape_rtl(m.result),
                 ),
                 tags=(tag,),
             )
@@ -375,10 +374,3 @@ class MissionsListApp(tk.Toplevel):
         """Reset loading indicator and enable the search button."""
         self.loading_label.config(text="")
         self.search_btn.config(state="normal")
-
-    def reshape_rtl(self, text: str | None) -> str:
-        """Reshape Persian/Arabic text for correct display in Tkinter Treeview."""
-        if not text:
-            return ""
-        reshaped = arabic_reshaper.reshape(text)  # correct letter connections
-        return str(get_display(reshaped))  # apply RTL bidi reordering

@@ -280,7 +280,7 @@ def build(session: nox.sessions.Session) -> None:
     # Clean previous builds
     session.run("rm", "-rf", "build", "dist", external=True)
 
-    # Build using spec file
+    # Build using PyInstaller
     session.run(
         "pyinstaller",
         "--clean",

@@ -17,46 +17,89 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import messagebox, ttk
 
+from hamyar_paygah.localization.language_manager import LanguageManager
+
+# Path to the server configuration file
 CONFIG_FILE = Path("server_config.json")
 
 
 class ServerConfigDialog(tk.Toplevel):
-    """Dialog to request the EMS server address from the user."""
+    """Modal dialog for configuring and persisting the server address.
+
+    This dialog allows the user to enter the base URL of the EMS server.
+    The value is validated, saved to disk, and made available to the
+    calling code after the dialog is closed.
+
+    The dialog is modal (grabs focus) and centered relative to its master
+    window when provided.
+    """
 
     def __init__(self, master: tk.Tk | None = None) -> None:
-        """Initialize the server configuration dialog."""
-        super().__init__(master)
-        self.title("Server Configuration")
-        self.geometry("400x150")
+        """Initialize the server configuration dialog.
+
+        Args:
+            master: Optional parent Tkinter window. If provided, the dialog
+                will be centered relative to it and behave modally.
+        """
+        super().__init__(master=master)
+        # Configure the dialog window
+        self.title(string=LanguageManager.t(lambda t: t.server_config_title))
+        self.geometry(newGeometry="400x150")
         self.resizable(width=False, height=False)
+
+        # Initialize server_url attribute
         self.server_url: str | None = None
 
-        ttk.Label(self, text="Please enter server address:").pack(pady=10)
+        # UI Elements
+        # Prompt label
+        ttk.Label(
+            master=self,
+            text=LanguageManager.t(
+                lambda t: t.server_config_prompt,
+            ),
+        ).pack(pady=10)
+        # Entry field for server address
         self.entry_var = tk.StringVar()
-        entry = ttk.Entry(self, textvariable=self.entry_var, width=40)
+        entry = ttk.Entry(master=self, textvariable=self.entry_var, width=40)
         entry.pack(pady=5)
         entry.focus()
 
-        ok_btn = ttk.Button(self, text="OK", command=self.on_ok)
+        # OK button
+        ok_btn = ttk.Button(
+            master=self,
+            text=LanguageManager.t(
+                lambda t: t.save_button,
+            ),
+            command=self.on_ok,
+        )
         ok_btn.pack(pady=10)
 
         # Center window relative to master
         self.update_idletasks()
         if master:
-            x = master.winfo_rootx() + (master.winfo_width() - self.winfo_width()) // 2
-            y = master.winfo_rooty() + (master.winfo_height() - self.winfo_height()) // 2
-            self.geometry(f"+{x}+{y}")
+            x: int = master.winfo_rootx() + (master.winfo_width() - self.winfo_width()) // 2
+            y: int = master.winfo_rooty() + (master.winfo_height() - self.winfo_height()) // 2
+            self.geometry(newGeometry=f"+{x}+{y}")
 
         self.grab_set()
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
     def on_ok(self) -> None:
-        """Handle OK button click."""
-        url = self.entry_var.get().strip()
+        """Validate the input, persist it, and close the dialog.
+
+        If the server URL field is empty, a warning message is shown and
+        the dialog remains open. On success, the URL is saved to disk and
+        the dialog is closed.
+        """
+        url: str = self.entry_var.get().strip()
         if not url:
             messagebox.showwarning(
-                "Input Error",
-                "Server address cannot be empty!",
+                title=LanguageManager.t(
+                    lambda t: t.server_config_empty_error_title,
+                ),
+                message=LanguageManager.t(
+                    lambda t: t.server_config_empty_error_msg,
+                ),
             )
             return
 
@@ -65,19 +108,33 @@ class ServerConfigDialog(tk.Toplevel):
         self.destroy()
 
     def on_close(self) -> None:
-        """Handle user closing the dialog without entering a URL."""
+        """Handle dialog close without saving.
+
+        This method is invoked when the user closes the window using the
+        window manager controls. The stored server URL is cleared and the
+        dialog is destroyed.
+        """
         self.server_url = None
         self.destroy()
 
     @staticmethod
     def save_to_disk(url: str) -> None:
-        """Save server address to local disk."""
+        """Persist the server URL to the configuration file.
+
+        Args:
+            url: Server base URL to store on disk.
+        """
         with CONFIG_FILE.open("w", encoding="utf-8") as f:
             json.dump({"server_url": url}, f)
 
     @staticmethod
     def load_from_disk() -> str | None:
-        """Load server address from local disk if it exists."""
+        """Load the server URL from the configuration file.
+
+        Returns:
+            The stored server URL if present and valid, otherwise ``None``.
+            Returns ``None`` if the file does not exist or cannot be read.
+        """
         if CONFIG_FILE.exists():
             try:
                 with CONFIG_FILE.open("r", encoding="utf-8") as f:
