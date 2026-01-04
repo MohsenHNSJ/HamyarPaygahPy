@@ -1,4 +1,4 @@
-"""Application core to communicate with server."""
+"""Services to get missions list from server."""
 
 from datetime import datetime
 
@@ -11,18 +11,34 @@ async def get_missions_list(
     to_date: datetime,
     region_id: int,
 ) -> str:
-    """Returns the list of missions in the defined time frame.
+    """Fetch a list of missions for a specific region from the EMS SOAP service.
 
-    :param server_url: URL of the server to send requests.
-    :type server_url: str
-    :param from_date: Starting date of the time frame in Gregorian calendar. Don't use persian.
-    :type from_date: datetime.datetime
-    :param to_date: Ending date of the time frame in Gregorian calendar. Don't use persian.
-    :type to_date: datetime.datetime
-    :param region_id: ID of the requested region.
-    :type region_id: int
-    :return: Raw string response from server.
-    :rtype: str
+    This function sends an asynchronous SOAP request to the EMS reporting
+    service and retrieves the raw XML response containing mission data for
+    the given date range and region.
+
+    The request uses a legacy SOAP endpoint with strict field names.
+    In particular, the XML field named ``passsword`` is intentionally
+    misspelled and must not be corrected, as changing it results in a
+    ``BAD REQUEST`` response from the server.
+
+    Args:
+        server_url: Base URL of the EMS server (without trailing slash).
+        from_date: Start date of the report range. The time component is
+            automatically set to ``00:00:00``.
+        to_date: End date of the report range. The time component is
+            automatically set to ``23:59:59``.
+        region_id: Numeric identifier of the region for which the report
+            is requested.
+
+    Returns:
+        The raw SOAP response body as a string. The returned value is
+        unparsed XML and must be processed by the caller if structured
+        data is required.
+
+    Raises:
+        aiohttp.ClientError: If the HTTP request fails due to a network
+            or connection error.
     """
     url: str = f"{server_url}/Report.svc"
     soap_action: str = "http://tempuri.org/IReport/GetDocumentReportRegion"
@@ -50,7 +66,7 @@ async def get_missions_list(
         </s:Body>
     </s:Envelope>
     """
-
+    # Create HTTP headers
     headers: dict[str, str] = {
         "Content-Type": "text/xml; charset=utf-8",
         "SOAPAction": f'"{soap_action}"',

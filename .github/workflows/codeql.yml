@@ -16,10 +16,10 @@ on:
   push: # Run on every Push
   pull_request: # Run on every PR
   schedule:
-    - cron: "42 22 * * 2"
+    - cron: "42 22 * * 2" # Weekly on Tuesdays at 22:42 UTC
 
 permissions:
-  contents: read
+  contents: read # Read access to the repository contents
 
 jobs:
   analyze-code:
@@ -43,7 +43,7 @@ jobs:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
         with:
-          egress-policy: audit
+          egress-policy: audit # Monitor outbound connections
 
       - name: Checkout repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1

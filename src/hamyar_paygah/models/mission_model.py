@@ -1,8 +1,4 @@
-"""This module defines the core data models for Hamyar Paygah.
-
-This module is designed to be IDE-friendly: all fields are documented
-so hovering over them shows explanations.
-"""
+"""Defines the Mission data model used in the Hamyar Paygah EMS client."""
 
 from dataclasses import dataclass
 

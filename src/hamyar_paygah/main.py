@@ -10,7 +10,8 @@ Classes:
 import tkinter as tk
 from tkinter import messagebox, ttk
 
-from hamyar_paygah.missions_list import MissionsListApp
+from hamyar_paygah.localization.language_manager import LANG_MAP, LanguageManager
+from hamyar_paygah.missions_list_ui import MissionsListApp
 from hamyar_paygah.server_config import ServerConfigDialog
 
 
@@ -20,20 +21,38 @@ class MainWindow(tk.Tk):
     def __init__(self, input_server_url: str) -> None:
         """Initialize the main window."""
         super().__init__()
-        self.title("Main Window")
+        LanguageManager.load_language()  # Load the chosen language
+        self.title(LanguageManager.t(lambda t: t.main_window_title))
         self.geometry("400x200")
         self.input_server_url: str = input_server_url
 
-        ttk.Label(self, text="Welcome!").pack(pady=20)
+        ttk.Label(
+            self,
+            text=LanguageManager.t(
+                lambda t: t.welcome_label,
+            ),
+        ).pack(pady=20)
 
         self._missions_window: MissionsListApp | None = None
 
         open_btn = ttk.Button(
             self,
-            text="Open Missions List",
+            text=LanguageManager.t(
+                lambda t: t.missions_window_load_missions_button,
+            ),
             command=self.open_missions_list_window,
         )
         open_btn.pack(pady=10)
+
+        # Options button for changing UI language
+        options_btn = ttk.Button(
+            self,
+            text=LanguageManager.t(
+                lambda t: t.main_window_options_button,
+            ),
+            command=self.open_options_window,
+        )
+        options_btn.pack(pady=10)
 
     def open_missions_list_window(self) -> None:
         """Opens the Missions List window if it is not already open.
@@ -56,6 +75,54 @@ class MainWindow(tk.Tk):
                 f"Could not open Missions List window:\n{e}",
             )
             self._missions_window = None
+
+    def open_options_window(self) -> None:
+        """Open the Options window."""
+        OptionsWindow(self)
+
+
+class OptionsWindow(tk.Toplevel):
+    """Window for changing application settings (currently only language)."""
+
+    def __init__(self, parent: tk.Tk) -> None:
+        """Initializer."""
+        super().__init__(parent)
+        self.title(LanguageManager.t(lambda t: t.options_window_title))
+        self.resizable(width=False, height=False)
+
+        tk.Label(self, text=LanguageManager.t(lambda t: t.options_window_language_label)).grid(
+            row=0,
+            column=0,
+            padx=10,
+            pady=10,
+        )
+
+        self.lang_var = tk.StringVar(value=LanguageManager._lang_code)  # noqa: SLF001
+        lang_dropdown = ttk.Combobox(
+            self,
+            textvariable=self.lang_var,
+            values=list(LANG_MAP.keys()),
+            state="readonly",
+        )
+        lang_dropdown.grid(row=0, column=1, padx=10, pady=10)
+
+        save_button = tk.Button(
+            self,
+            text=LanguageManager.t(
+                lambda t: t.save_button,
+            ),
+            command=self.save_and_restart,
+        )
+        save_button.grid(row=1, column=0, columnspan=2, pady=10)
+
+    def save_and_restart(self) -> None:
+        """Shows a message box."""
+        LanguageManager.set_language(self.lang_var.get())
+        messagebox.showinfo(
+            "Info",
+            "Language saved. Please restart the application.",
+        )
+        self.destroy()
 
 
 if __name__ == "__main__":
