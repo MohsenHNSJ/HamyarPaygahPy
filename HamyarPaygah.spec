@@ -1,20 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 from PyInstaller.utils.hooks import collect_submodules
-from pathlib import Path
-
-project_root = Path.cwd()
-
-hidden = []
-hidden += collect_submodules('arabic_reshaper')
-hidden += collect_submodules('bidi.algorithm')
 
 a = Analysis(
     ['src/hamyar_paygah/main.py'],
-    pathex=[],
+    pathex=['src'],
     binaries=[],
     datas=[],
-    hiddenimports=hidden,
+    hiddenimports=[
+        "arabic_reshaper",
+        "bidi",
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

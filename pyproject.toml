@@ -7,7 +7,7 @@ requires = ["poetry-core==2.2.1"]
 
 [project]
 name = "hamyar_paygah" # PyPI package name
-version = "0.1.1" # Base version
+version = "0.1.3" # Base version
 description = "Application for EMS overseers to gather information from EMS servers."
 license = "MIT"
 readme = "README.rst"

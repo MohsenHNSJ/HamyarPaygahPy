@@ -284,6 +284,6 @@ def build(session: nox.sessions.Session) -> None:
         "--clean",
         "--noconfirm",
         "--log-level",
-        "INFO",
+        "DEBUG",
         "HamyarPaygah.spec",
     )
