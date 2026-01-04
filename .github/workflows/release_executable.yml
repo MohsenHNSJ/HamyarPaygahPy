@@ -136,7 +136,6 @@ jobs:
             --name HamyarPaygah.exe `
             --optimize 2 `
             src\hamyar_paygah\main.py
-            HamyarPaygah.spec
 
       - name: Upload build artifact File
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
