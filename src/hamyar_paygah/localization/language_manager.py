@@ -49,6 +49,7 @@ class LanguageManager:
         If the configuration file is missing or invalid, defaults to Persian/Farsi.
         Updates the internal `_translations` attribute to match the loaded language.
         """
+        # If there is a config file, try to read the language code from it, on error load Persian
         if CONFIG_FILE.exists():
             try:
                 data = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
@@ -56,6 +57,7 @@ class LanguageManager:
             except (OSError, json.JSONDecodeError):
                 cls._lang_code = "Persian"
 
+        # Set translations to language code, on error set to Persian
         cls._translations = (
             LANG_MAP.get(
                 cls._lang_code,
@@ -81,9 +83,14 @@ class LanguageManager:
         Example:
             LanguageManager.t(lambda t: t.main_window_title)
         """
-        text = getter(cls._translations)
+        # Get the current translation of the requested text
+        text: str = getter(cls._translations)
+
+        # If it's Right-to-Left, reshape it
         if cls._lang_code in RTL_LANGS:
             return reshape_rtl(text)
+
+        # Return the translated text
         return text
 
     @classmethod
@@ -97,12 +104,16 @@ class LanguageManager:
             lang_code (str): The language code to set (e.g., "en" or "fa").
                              Defaults to Persian/Farsi if the code is invalid.
         """
+        # If new language code is not in language map, ignore and set to Persian
         if lang_code not in LANG_MAP:
             lang_code = "Persian"
 
+        # Set language code
         cls._lang_code = lang_code
+        # Set translations
         cls._translations = LANG_MAP[lang_code]
 
+        # Write selected language into config file
         CONFIG_FILE.write_text(
             json.dumps({"language": lang_code}, ensure_ascii=False),
             encoding="utf-8",

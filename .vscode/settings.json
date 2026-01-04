@@ -238,7 +238,8 @@
     "XDMCP",
     "xlaunch",
     "yarl",
-    "yscrollcommand"
+    "yscrollcommand",
+    "همیار"
   ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"

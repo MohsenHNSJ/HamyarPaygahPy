@@ -1,10 +1,11 @@
 """Persian language translations."""
 
+# ruff: noqa: RUF001
 from hamyar_paygah.localization.base import Translations
 
 FA = Translations(
-    main_window_title="Hamyar Paygah",
-    missions_window_load_missions_button="بارگذاری ماموریت‌ها",  # noqa: RUF001
+    main_window_title="همیار پایگاه",
+    missions_window_load_missions_button="بارگذاری ماموریت‌ها",
     main_window_options_button="تنظیمات",
     options_window_title="تنظیمات",
     options_window_language_label="زبان رابط کاربری",
