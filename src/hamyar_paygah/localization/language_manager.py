@@ -10,10 +10,6 @@ and autocompletion.
 The current language setting is persisted in a JSON configuration file
 (`language_config.json`) so that user preferences are retained across
 application restarts.
-
-Classes:
-    LanguageManager: Centralized manager for loading, setting, and
-        retrieving UI translations.
 """
 
 import json
@@ -39,12 +35,7 @@ RTL_LANGS: set[str] = {"Persian"}
 
 
 class LanguageManager:
-    """Manages the application's UI translations and language settings.
-
-    Attributes:
-        _translations (Translations): The translations corresponding
-            to the current language.
-    """
+    """Manages the application's UI translations and language settings."""
 
     _lang_code: str = "Persian"
     """Currently active language code"""
