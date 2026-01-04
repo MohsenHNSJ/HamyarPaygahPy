@@ -49,13 +49,14 @@ class LanguageManager:
     """Manages the application's UI translations and language settings.
 
     Attributes:
-        _lang_code (str): The currently active language code.
         _translations (Translations): The translations corresponding
             to the current language.
     """
 
     _lang_code: str = "Persian"
+    """Currently active language code"""
     _translations: Translations = FA
+    """Translations corresponding to the current language"""
 
     @classmethod
     def load_language(cls) -> None:
