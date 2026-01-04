@@ -1,5 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+from PyInstaller.utils.hooks import collect_submodules
+
 a = Analysis(
     ['src/hamyar_paygah/main.py'],
     pathex=['src'],
@@ -7,6 +9,7 @@ a = Analysis(
     datas=[],
     hiddenimports=[
         "arabic_reshaper",
+        "bidi",
     ],
     hookspath=[],
     hooksconfig={},
