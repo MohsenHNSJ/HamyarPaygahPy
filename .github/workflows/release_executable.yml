@@ -127,14 +127,14 @@ jobs:
 
           # Run PyInstaller
           pyinstaller `
-            --clean ` # Clean PyInstaller cache and remove temporary files before building.
-            --windowed ` #  Do not provide a console window for standard i/o.
-            --noconfirm ` # Replace output directory without asking for confirmation
-            --onefile ` # Create a one-file bundled executable.
-            --upx-dir "$upxDir" ` # Amount of detail in build-time console messages.
-            --log-level INFO ` # Amount of detail in build-time console messages.
-            --name HamyarPaygah.exe ` # Name to assign to the bundled app and spec file.
-            --optimize 2 ` # Bytecode optimization level used for collected python modules and scripts.
+            --clean `
+            --windowed `
+            --noconfirm `
+            --onefile `
+            --upx-dir "$upxDir" `
+            --log-level INFO `
+            --name HamyarPaygah.exe `
+            --optimize 2 `
             src\hamyar_paygah\main.py
             HamyarPaygah.spec
 

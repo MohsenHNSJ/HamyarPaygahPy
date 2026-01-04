@@ -127,14 +127,14 @@ jobs:
 
           # Run PyInstaller
           pyinstaller `
-            --clean ` # Clean PyInstaller cache and remove temporary files before building.
-            --console ` # Open a console window for standard i/o (default).
-            --noconfirm ` # Replace output directory without asking for confirmation
-            --onedir ` # Create a one-folder bundle containing an executable (default)
-            --log-level DEBUG ` # Amount of detail in build-time console messages.
-            --name HamyarPaygah.exe ` # Name to assign to the bundled app and spec file.
-            --debug all ` # Provide assistance with debugging a frozen application.
-            --optimize 2 ` # Bytecode optimization level used for collected python modules and scripts.
+            --clean `
+            --console `
+            --noconfirm `
+            --onedir `
+            --log-level DEBUG `
+            --name HamyarPaygah.exe `
+            --debug all `
+            --optimize 2 `
             src\hamyar_paygah\main.py
 
       - name: Upload build artifact (Folder)
