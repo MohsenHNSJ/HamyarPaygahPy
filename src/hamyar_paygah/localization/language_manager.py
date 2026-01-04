@@ -4,11 +4,9 @@ This module provides the `LanguageManager` class, which handles loading,
 storing, and retrieving translations for the application's user interface.
 It supports multiple languages (currently English and Persian/Farsi) and
 ensures proper handling of right-to-left (RTL) languages.
-
 Translations are defined in dedicated modules (`en.py` and `fa.py`) as
 immutable `Translations` dataclass instances, enabling IDE type checking
 and autocompletion.
-
 The current language setting is persisted in a JSON configuration file
 (`language_config.json`) so that user preferences are retained across
 application restarts.
