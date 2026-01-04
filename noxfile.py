@@ -282,8 +282,15 @@ def build(session: nox.sessions.Session) -> None:
     session.run(
         "pyinstaller",
         "--clean",
+        "--console",
+        "--onedir",
+        "--noupx",
         "--noconfirm",
         "--log-level",
         "DEBUG",
-        "HamyarPaygah.spec",
+        "--name",
+        "HamyarPaygah.exe",
+        "--debug",
+        "all",
+        "src/hamyar_paygah/main.py",
     )
