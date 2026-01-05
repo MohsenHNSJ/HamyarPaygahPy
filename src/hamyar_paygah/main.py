@@ -11,9 +11,10 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 
 from hamyar_paygah.config.server_config import load_server_address
-from hamyar_paygah.localization.language_manager import LANG_MAP, LanguageManager
+from hamyar_paygah.localization.language_manager import LanguageManager
 from hamyar_paygah.missions_list_ui import MissionsListApp
 from hamyar_paygah.ui.dialogs.server_config_dialog import ServerConfigDialog
+from hamyar_paygah.ui.options_window import OptionsWindow
 
 
 class MainWindow(tk.Tk):
@@ -80,52 +81,6 @@ class MainWindow(tk.Tk):
     def open_options_window(self) -> None:
         """Open the Options window."""
         OptionsWindow(self)
-
-
-class OptionsWindow(tk.Toplevel):
-    """Window for changing application settings (currently only language)."""
-
-    def __init__(self, parent: tk.Tk) -> None:
-        """Initializer."""
-        super().__init__(parent)
-        self.title(LanguageManager.t(lambda t: t.options_window_title))
-        self.resizable(width=False, height=False)
-
-        tk.Label(self, text=LanguageManager.t(lambda t: t.options_window_language_label)).grid(
-            row=0,
-            column=0,
-            padx=10,
-            pady=10,
-        )
-
-        self.lang_var = tk.StringVar(
-            value=LanguageManager.current_language_code,
-        )
-        lang_dropdown = ttk.Combobox(
-            self,
-            textvariable=self.lang_var,
-            values=list(LANG_MAP.keys()),
-            state="readonly",
-        )
-        lang_dropdown.grid(row=0, column=1, padx=10, pady=10)
-
-        save_button = tk.Button(
-            self,
-            text=LanguageManager.t(
-                lambda t: t.save_button,
-            ),
-            command=self.save_and_restart,
-        )
-        save_button.grid(row=1, column=0, columnspan=2, pady=10)
-
-    def save_and_restart(self) -> None:
-        """Shows a message box."""
-        LanguageManager.set_language(self.lang_var.get())
-        messagebox.showinfo(
-            "Info",
-            "Language saved. Please restart the application.",
-        )
-        self.destroy()
 
 
 if __name__ == "__main__":
