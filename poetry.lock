@@ -1186,6 +1186,33 @@ files = [
 ]
 
 [[package]]
+name = "jalali-core"
+version = "1.0.0"
+description = "a Gregorian to Jalali and inverse date convertor"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "jalali_core-1.0.0-py3-none-any.whl", hash = "sha256:84e6f5090eadfb35234f24fad084be831d00da3c0b238ee001e8a1fd49bf7924"},
+    {file = "jalali_core-1.0.0.tar.gz", hash = "sha256:f4287c70c630323dcf0a3ab26df905ba4d451e230ac1f65b3bb2f77797894a2b"},
+]
+
+[[package]]
+name = "jdatetime"
+version = "5.2.0"
+description = "Jalali datetime binding for python"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "jdatetime-5.2.0-py3-none-any.whl", hash = "sha256:d4aa73543e4e6c0e6122b58743773168edee5efe5c5acf05d1dc8c90524ca71c"},
+    {file = "jdatetime-5.2.0.tar.gz", hash = "sha256:c81d5898717b82b609a3ce2a73f8b8d3230b0c757e5c0de9d6b1acfdc224f551"},
+]
+
+[package.dependencies]
+jalali-core = ">=1.0"
+
+[[package]]
 name = "jinja2"
 version = "3.1.6"
 description = "A very fast and expressive template engine."
@@ -3761,4 +3788,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4.0"
-content-hash = "5941b206f99eff9bd9042533f97fd99d2ab0df839a75e6d199d4e3d6f98e6d80"
+content-hash = "a5bf31363ec806c6b51bbd3585657f3298fe512e49eda95800b0e396b957f1a7"

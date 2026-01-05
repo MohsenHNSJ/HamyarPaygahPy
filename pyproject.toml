@@ -29,7 +29,7 @@ classifiers = [
     "Natural Language :: Persian",
     "Typing :: Typed",
 ]
-dependencies = ["aiohttp == 3.13.3", "lxml == 6.0.2", "tkcalendar == 1.6.1", "arabic-reshaper == 3.0.0", "python-bidi == 0.6.7"]
+dependencies = ["aiohttp == 3.13.3", "lxml == 6.0.2", "tkcalendar == 1.6.1", "arabic-reshaper == 3.0.0", "python-bidi == 0.6.7", "jdatetime == 5.2.0" ]
 
 
 [project.urls]

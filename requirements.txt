@@ -1,5 +1,6 @@
 aiohttp==3.13.3
 arabic-reshaper==3.0.0
+jdatetime==5.2.0
 lxml==6.0.2
 python-bidi==0.6.7
 tkcalendar==1.6.1

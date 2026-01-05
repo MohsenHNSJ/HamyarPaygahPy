@@ -38,6 +38,7 @@ from datetime import datetime
 from tkinter import messagebox, ttk
 from typing import TYPE_CHECKING
 
+import jdatetime
 from tkcalendar import DateEntry  # type: ignore[import-untyped]
 
 from hamyar_paygah.localization.language_manager import (
@@ -87,7 +88,10 @@ class MissionsListFilters(ttk.Frame):
         # From date label and date picker
         ttk.Label(
             self,
-            text=LanguageManager.t(lambda t: t.missions_list_from_date_label) + ":",
+            text=LanguageManager.t(
+                lambda t: t.missions_list_from_date_label,
+            )
+            + ":",
         ).grid(
             row=0,
             column=0,
@@ -100,7 +104,10 @@ class MissionsListFilters(ttk.Frame):
         # To date label and date picker
         ttk.Label(
             self,
-            text=LanguageManager.t(lambda t: t.missions_list_to_date_label) + ":",
+            text=LanguageManager.t(
+                lambda t: t.missions_list_to_date_label,
+            )
+            + ":",
         ).grid(
             row=0,
             column=2,
@@ -113,7 +120,10 @@ class MissionsListFilters(ttk.Frame):
         # Region ID label and entry field
         ttk.Label(
             self,
-            text=LanguageManager.t(lambda t: t.missions_list_region_id_label) + ":",
+            text=LanguageManager.t(
+                lambda t: t.missions_list_region_id_label,
+            )
+            + ":",
         ).grid(
             row=0,
             column=4,
@@ -140,6 +150,37 @@ class MissionsListFilters(ttk.Frame):
             command=self._on_load_clicked,
         )
         self.load_button.grid(row=0, column=6, padx=10, pady=5)
+
+        # --- Jalali date labels (only for Persian language) ---
+        self._show_jalali = LanguageManager.current_language_code == ("Persian")
+
+        # Show only when Persian language is selected
+        if self._show_jalali:
+            # From date label
+            self.from_jalali_label = ttk.Label(self, text="")
+            self.from_jalali_label.grid(
+                row=1,
+                column=1,
+                padx=5,
+                pady=(0, 5),
+                sticky="w",
+            )
+            # To date label
+            self.to_jalali_label = ttk.Label(self, text="")
+            self.to_jalali_label.grid(
+                row=1,
+                column=3,
+                padx=5,
+                pady=(0, 5),
+                sticky="w",
+            )
+
+            # Initial update
+            self._update_jalali_labels()
+
+            # Update when date changes
+            self.from_date.bind("<<DateEntrySelected>>", self._on_date_changed)
+            self.to_date.bind("<<DateEntrySelected>>", self._on_date_changed)
 
         # Align nicely
         self.grid_columnconfigure(6, weight=1)
@@ -226,3 +267,31 @@ class MissionsListFilters(ttk.Frame):
         to_date = datetime.strptime(self.to_date.get(), "%Y-%m-%d")  # noqa: DTZ007
 
         return from_date, to_date, region_id
+
+    # ------------------------------------------------------------------
+    # Jalali calendar
+    # ------------------------------------------------------------------
+
+    def _on_date_changed(self) -> None:
+        """Handle date picker changes for jalali representation."""
+        self._update_jalali_labels()
+
+    def _update_jalali_labels(self) -> None:
+        """Update Jalali date labels based on selected Gregorian dates."""
+        try:
+            from_dt = datetime.strptime(self.from_date.get(), "%Y-%m-%d")  # noqa: DTZ007
+            to_dt = datetime.strptime(self.to_date.get(), "%Y-%m-%d")  # noqa: DTZ007
+        except ValueError:
+            # Date not fully selected yet
+            return
+
+        from_jalali = jdatetime.date.fromgregorian(date=from_dt.date())
+        to_jalali = jdatetime.date.fromgregorian(date=to_dt.date())
+
+        self.from_jalali_label.config(
+            text=from_jalali.strftime("%Y/%m/%d"),
+        )
+
+        self.to_jalali_label.config(
+            text=to_jalali.strftime("%Y/%m/%d"),
+        )
