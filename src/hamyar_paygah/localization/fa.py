@@ -11,9 +11,11 @@ FA = Translations(
     options_window_language_label="زبان رابط کاربری",
     save_button="ذخیره",
     welcome_label="خوش آمدید!",
+    error_label="خطا",
     server_config_title="پیکربندی سرور",
     server_config_prompt="لطفاً آدرس سرور را وارد کنید:",
     server_config_empty_error_title="خطای ورودی",
     server_config_empty_error_msg="آدرس سرور نمی‌تواند خالی باشد!",
+    server_address_not_provided_error_message="آدرس سرور وارد نشد! در حال خروج از برنامه...",
 )
 """Persian language translations."""

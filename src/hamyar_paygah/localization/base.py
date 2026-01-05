@@ -38,6 +38,8 @@ class Translations:
     """Generic label for save button"""
     welcome_label: str
     """Welcome message displayed in the main window"""
+    error_label: str
+    """Title of an error message box"""
     server_config_title: str
     """Title of the server configuration dialog"""
     server_config_prompt: str
@@ -46,3 +48,5 @@ class Translations:
     """Title of the error dialog shown when server address is empty"""
     server_config_empty_error_msg: str
     """Message of the error dialog shown when server address is empty"""
+    server_address_not_provided_error_message: str
+    """Message of the error when server address is not provided and dialog is closed"""

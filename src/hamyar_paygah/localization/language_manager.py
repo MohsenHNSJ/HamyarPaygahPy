@@ -23,20 +23,24 @@ from hamyar_paygah.utils.text_utils import reshape_rtl
 
 LANG_MAP: dict[str, Translations] = {
     "English": EN,
-    "Persian": FA,
+    "فارسی": FA,
 }
 """Map of all available languages and their name presentation in options window"""
 
-RTL_LANGS: set[str] = {"Persian"}
+RTL_LANGS: set[str] = {"فارسی"}
 """Set of language codes that use Right-to-Left text"""
 
 _APP_LANGUAGE_KEY: Final[str] = "app_language"
+"""Key for saving app language in JSON file"""
+
+_DEFAULT_LANGUAGE_CODE: str = "فارسی"
+"""Language code of default language"""
 
 
 class LanguageManager:
     """Manages the application's UI translations and language settings."""
 
-    current_language_code: str = "Persian"
+    current_language_code: str = _DEFAULT_LANGUAGE_CODE
     """Currently active language code"""
     current_translations: Translations = FA
     """Translations corresponding to the current language"""
@@ -50,7 +54,7 @@ class LanguageManager:
         """
         cls.current_language_code = get_config_value(
             _APP_LANGUAGE_KEY,
-            "Persian",
+            _DEFAULT_LANGUAGE_CODE,
         )
 
         # Set translations to language code, on error set to Persian
@@ -102,7 +106,7 @@ class LanguageManager:
         """
         # If new language code is not in language map, ignore and set to Persian
         if lang_code not in LANG_MAP:
-            lang_code = "Persian"
+            lang_code = _DEFAULT_LANGUAGE_CODE
 
         # Set language code
         cls.current_language_code = lang_code

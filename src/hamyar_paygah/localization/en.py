@@ -10,9 +10,11 @@ EN = Translations(
     options_window_language_label="Interface Language",
     save_button="Save",
     welcome_label="Welcome!",
+    error_label="Error",
     server_config_title="Server Configuration",
     server_config_prompt="Please enter server address:",
     server_config_empty_error_title="Input Error",
     server_config_empty_error_msg="Server address cannot be empty!",
+    server_address_not_provided_error_message="No server address provided! Exiting...",
 )
 """English language translations"""
