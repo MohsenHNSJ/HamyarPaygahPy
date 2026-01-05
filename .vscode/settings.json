@@ -123,6 +123,7 @@
     "metacharacters",
     "michelemelluso",
     "minversion",
+    "minwidth",
     "mkdocs",
     "MohsenHNSJ",
     "msix",
@@ -238,6 +239,7 @@
     "xcalc",
     "XDMCP",
     "xlaunch",
+    "xscrollcommand",
     "yarl",
     "yscrollcommand",
     "همیار"

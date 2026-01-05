@@ -36,12 +36,16 @@ from __future__ import annotations
 import tkinter as tk
 from datetime import datetime
 from tkinter import messagebox, ttk
+from typing import TYPE_CHECKING
 
 from tkcalendar import DateEntry  # type: ignore[import-untyped]
 
 from hamyar_paygah.localization.language_manager import (
     LanguageManager,  # type: ignore[import-untyped]
 )
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class MissionsListFilters(ttk.Frame):
@@ -55,13 +59,16 @@ class MissionsListFilters(ttk.Frame):
     - Returning parsed filter values
     """
 
-    def __init__(self, master: tk.Misc) -> None:
+    def __init__(self, master: tk.Misc, on_load_clicked: Callable[[], None]) -> None:
         """Initialize the filters panel.
 
         Args:
             master: Parent Tkinter widget.
+            on_load_clicked: Callable to call when load button is clicked.
         """
         super().__init__(master)
+        # Set up the connection for load button function
+        self._on_load_clicked = on_load_clicked
         # Build and lay out all UI elements
         self._build_ui()
 
@@ -115,6 +122,19 @@ class MissionsListFilters(ttk.Frame):
             validatecommand=(self.register(self._validate_int), "%P"),
         )
 
+        # Load button
+        self.load_button = ttk.Button(
+            self,
+            text=LanguageManager.t(
+                lambda t: t.missions_list_load_missions_button,
+            ),
+            command=self._on_load_clicked,
+        )
+        self.load_button.grid(row=0, column=6, padx=10, pady=5)
+
+        # Align nicely
+        self.grid_columnconfigure(6, weight=1)
+
     # ------------------------------------------------------------------
     # Validation & data extraction
     # ------------------------------------------------------------------
@@ -150,7 +170,9 @@ class MissionsListFilters(ttk.Frame):
                 LanguageManager.t(
                     lambda t: t.error_label,
                 ),
-                LanguageManager.t(lambda t: t.missions_list_from_date_is_required_error_message),
+                LanguageManager.t(
+                    lambda t: t.missions_list_from_date_is_required_error_message,
+                ),
             )
             return None
 
@@ -159,7 +181,9 @@ class MissionsListFilters(ttk.Frame):
                 LanguageManager.t(
                     lambda t: t.error_label,
                 ),
-                LanguageManager.t(lambda t: t.missions_list_to_date_is_required_error_message),
+                LanguageManager.t(
+                    lambda t: t.missions_list_to_date_is_required_error_message,
+                ),
             )
             return None
 
@@ -168,7 +192,9 @@ class MissionsListFilters(ttk.Frame):
                 LanguageManager.t(
                     lambda t: t.error_label,
                 ),
-                LanguageManager.t(lambda t: t.missions_list_region_id_is_required_error_message),
+                LanguageManager.t(
+                    lambda t: t.missions_list_region_id_is_required_error_message,
+                ),
             )
             return None
 
@@ -180,7 +206,9 @@ class MissionsListFilters(ttk.Frame):
                 LanguageManager.t(
                     lambda t: t.error_label,
                 ),
-                LanguageManager.t(lambda t: t.missions_list_region_id_invalid_error_message),
+                LanguageManager.t(
+                    lambda t: t.missions_list_region_id_invalid_error_message,
+                ),
             )
             return None
 

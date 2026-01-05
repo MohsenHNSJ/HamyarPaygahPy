@@ -83,9 +83,13 @@ class MissionsListTable(ttk.Frame):
     # ------------------------------------------------------------------
 
     def _build_ui(self) -> None:
-        """Create and arrange the Treeview and its scrollbars."""
+        """Create and arrange the Treeview with vertical and horizontal scrollbars."""
+        # Outer frame for tree + scrollbars
+        container = ttk.Frame(self)
+        container.pack(expand=True, fill="both")
+
         self.tree = ttk.Treeview(
-            self,
+            container,
             columns=self._columns,
             show="headings",
             style="Missions.Treeview",
@@ -109,7 +113,9 @@ class MissionsListTable(ttk.Frame):
             self.tree.column(
                 column,
                 width=self._column_widths.get(column, 120),
+                minwidth=50,  # Prevent shrinking to zero
                 anchor="center",
+                stretch=True,  # Allow resizing, but not below minwidth
             )
 
         # Alternating row colors for readability
@@ -117,14 +123,24 @@ class MissionsListTable(ttk.Frame):
         self.tree.tag_configure("even", background="#f0f0ff")
 
         # Vertical scrollbar
-        scrollbar = ttk.Scrollbar(
-            self,
+        v_scrollbar = ttk.Scrollbar(
+            container,
             orient="vertical",
             command=self.tree.yview,
         )
-        self.tree.configure(yscrollcommand=scrollbar.set)
+        self.tree.configure(yscrollcommand=v_scrollbar.set)
+        v_scrollbar.pack(side="right", fill="y")
 
-        scrollbar.pack(side="right", fill="y")
+        # Horizontal scrollbar
+        h_scrollbar = ttk.Scrollbar(
+            container,
+            orient="horizontal",
+            command=self.tree.xview,
+        )
+        self.tree.configure(xscrollcommand=h_scrollbar.set)
+        h_scrollbar.pack(side="bottom", fill="x")
+
+        # Pack the treeview to fill remaining space
         self.tree.pack(expand=True, fill="both")
 
     # ------------------------------------------------------------------

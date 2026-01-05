@@ -58,7 +58,7 @@ class MissionsListWindow(tk.Toplevel):
 
         # --- UI components ---
         # Filter panel for inputting date range and region
-        self.filters_panel = MissionsListFilters(self)
+        self.filters_panel = MissionsListFilters(self, self.on_load_clicked)
         self.filters_panel.pack(fill="x", padx=10, pady=5)
 
         # Table for displaying missions
@@ -68,16 +68,6 @@ class MissionsListWindow(tk.Toplevel):
         # Status label for showing messages like "Loading..."
         self.status_label = ttk.Label(self, text="")
         self.status_label.pack(anchor="w", padx=10, pady=5)
-
-        # Load button to trigger fetching missions
-        self.load_button = ttk.Button(
-            self,
-            text=LanguageManager.t(
-                lambda t: t.missions_list_load_missions_button,
-            ),
-            command=self.on_load_clicked,
-        )
-        self.load_button.pack(pady=5)
 
     # ------------------------------------------------------------------
     # Button callback
@@ -156,13 +146,13 @@ class MissionsListWindow(tk.Toplevel):
                 lambda t: t.missions_list_loading_status_message,
             ),
         )
-        self.load_button.config(state="disabled")
+        self.filters_panel.load_button.config(state="disabled")
         self.table.clear()
 
     def _on_loading_done(self) -> None:
         """Reset UI state after loading is complete."""
         self.status_label.config(text="")
-        self.load_button.config(state="normal")
+        self.filters_panel.load_button.config(state="normal")
 
     def _on_error(self, exception: Exception) -> None:
         """Handle errors by showing a message box.
