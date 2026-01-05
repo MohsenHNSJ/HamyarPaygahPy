@@ -91,8 +91,8 @@ class ServerConfigDialog(tk.Toplevel):
             return
 
         # Persist valid server address
-        save_server_address(input_address)
         self.server_address = input_address.strip()
+        save_server_address(self.server_address)
         self.destroy()
 
     def _on_close(self) -> None:
