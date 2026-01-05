@@ -85,7 +85,10 @@ class MissionsListFilters(ttk.Frame):
         - Region ID entry with numeric validation
         """
         # From date label and date picker
-        ttk.Label(self, text="From Date:").grid(
+        ttk.Label(
+            self,
+            text=LanguageManager.t(lambda t: t.missions_list_from_date_label) + ":",
+        ).grid(
             row=0,
             column=0,
             padx=5,
@@ -95,7 +98,10 @@ class MissionsListFilters(ttk.Frame):
         self.from_date.grid(row=0, column=1, padx=5, pady=5)
 
         # To date label and date picker
-        ttk.Label(self, text="To Date:").grid(
+        ttk.Label(
+            self,
+            text=LanguageManager.t(lambda t: t.missions_list_to_date_label) + ":",
+        ).grid(
             row=0,
             column=2,
             padx=5,
@@ -105,7 +111,10 @@ class MissionsListFilters(ttk.Frame):
         self.to_date.grid(row=0, column=3, padx=5, pady=5)
 
         # Region ID label and entry field
-        ttk.Label(self, text="Region ID:").grid(
+        ttk.Label(
+            self,
+            text=LanguageManager.t(lambda t: t.missions_list_region_id_label) + ":",
+        ).grid(
             row=0,
             column=4,
             padx=5,

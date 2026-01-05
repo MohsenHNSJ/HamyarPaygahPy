@@ -42,6 +42,8 @@ class Translations:
     """Date of the mission in missions list table"""
     missions_list_from_date_is_required_error_message: str
     """Message of the error when (From Date) is not provided"""
+    missions_list_from_date_label: str
+    """From date label in missions list table"""
     missions_list_hospital_name_label: str
     """Hospital name in missions list table"""
     missions_list_load_missions_button: str
@@ -58,10 +60,14 @@ class Translations:
     """Message of the error when (Region ID) is not valid"""
     missions_list_region_id_is_required_error_message: str
     """Message of the error when (Region ID) is not provided"""
+    missions_list_region_id_label: str
+    """Region ID label in missions list table"""
     missions_list_result_label: str
     """Result of the mission in missions list table"""
     missions_list_to_date_is_required_error_message: str
     """Message of the error when (To Date) is not provided"""
+    missions_list_to_date_label: str
+    """To date label in missions list table"""
     missions_list_window_title: str
     """Title of the missions list window"""
     missions_list_loading_status_message: str

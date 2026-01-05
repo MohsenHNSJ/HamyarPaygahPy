@@ -33,5 +33,8 @@ EN = Translations(
     missions_list_persian_date_label="Persian Date",
     missions_list_address_label="Address",
     missions_list_result_label="Result",
+    missions_list_region_id_label="Region ID",
+    missions_list_to_date_label="To Date",
+    missions_list_from_date_label="From Date",
 )
 """English language translations"""
