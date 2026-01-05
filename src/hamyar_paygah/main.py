@@ -10,9 +10,10 @@ Classes:
 import tkinter as tk
 from tkinter import messagebox, ttk
 
+from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.localization.language_manager import LANG_MAP, LanguageManager
 from hamyar_paygah.missions_list_ui import MissionsListApp
-from hamyar_paygah.server_config import ServerConfigDialog
+from hamyar_paygah.ui.dialogs.server_config_dialog import ServerConfigDialog
 
 
 class MainWindow(tk.Tk):
@@ -97,7 +98,9 @@ class OptionsWindow(tk.Toplevel):
             pady=10,
         )
 
-        self.lang_var = tk.StringVar(value=LanguageManager.language_code)
+        self.lang_var = tk.StringVar(
+            value=LanguageManager.current_language_code,
+        )
         lang_dropdown = ttk.Combobox(
             self,
             textvariable=self.lang_var,
@@ -127,14 +130,14 @@ class OptionsWindow(tk.Toplevel):
 
 if __name__ == "__main__":
     # Load server URL from disk or ask user
-    server_url = ServerConfigDialog.load_from_disk()
+    server_url: str | None = load_server_address()
     root = tk.Tk()
     root.withdraw()  # hide main window while config dialog opens
 
     if not server_url:
         dialog = ServerConfigDialog(master=root)  # type: ignore[arg-type]
         root.wait_window(dialog)
-        server_url = dialog.server_url
+        server_url = dialog.server_address
 
     if not server_url:
         messagebox.showerror("Error", "No server address provided. Exiting.")

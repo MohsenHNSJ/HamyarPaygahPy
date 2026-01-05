@@ -12,10 +12,10 @@ The current language setting is persisted in a JSON configuration file
 application restarts.
 """
 
-import json
 from collections.abc import Callable
+from typing import Final
 
-from hamyar_paygah.app.paths import CONFIG_FILE_PATH
+from hamyar_paygah.config.config_manager import get_config_value, set_config_value
 from hamyar_paygah.localization.base import Translations
 from hamyar_paygah.localization.en import EN
 from hamyar_paygah.localization.fa import FA
@@ -30,13 +30,15 @@ LANG_MAP: dict[str, Translations] = {
 RTL_LANGS: set[str] = {"Persian"}
 """Set of language codes that use Right-to-Left text"""
 
+_APP_LANGUAGE_KEY: Final[str] = "app_language"
+
 
 class LanguageManager:
     """Manages the application's UI translations and language settings."""
 
-    language_code: str = "Persian"
+    current_language_code: str = "Persian"
     """Currently active language code"""
-    _translations: Translations = FA
+    current_translations: Translations = FA
     """Translations corresponding to the current language"""
 
     @classmethod
@@ -44,20 +46,17 @@ class LanguageManager:
         """Load the user's preferred language from the configuration file.
 
         If the configuration file is missing or invalid, defaults to Persian/Farsi.
-        Updates the internal `_translations` attribute to match the loaded language.
+        Updates the `current_translations` attribute to match the loaded language.
         """
-        # If there is a config file, try to read the language code from it, on error load Persian
-        if CONFIG_FILE_PATH.exists():
-            try:
-                data = json.loads(CONFIG_FILE_PATH.read_text(encoding="utf-8"))
-                cls.language_code = data.get("language", "Persian")
-            except (OSError, json.JSONDecodeError):
-                cls.language_code = "Persian"
+        cls.current_language_code = get_config_value(
+            _APP_LANGUAGE_KEY,
+            "Persian",
+        )
 
         # Set translations to language code, on error set to Persian
-        cls._translations = (
+        cls.current_translations = (
             LANG_MAP.get(
-                cls.language_code,
+                cls.current_language_code,
                 FA,
             )
             or FA
@@ -81,10 +80,10 @@ class LanguageManager:
             LanguageManager.t(lambda t: t.main_window_title)
         """
         # Get the current translation of the requested text
-        text: str = getter(cls._translations)
+        text: str = getter(cls.current_translations)
 
         # If it's Right-to-Left, reshape it
-        if cls.language_code in RTL_LANGS:
+        if cls.current_language_code in RTL_LANGS:
             return reshape_rtl(text)
 
         # Return the translated text
@@ -94,7 +93,7 @@ class LanguageManager:
     def set_language(cls, lang_code: str) -> None:
         """Set the application's language and save the preference to disk.
 
-        Updates the `_lang_code` and `_translations` attributes, and writes
+        Updates the `current_language_code` and `current_translations` attributes, and writes
         the selected language code to the configuration file (`language_config.json`).
 
         Args:
@@ -106,12 +105,9 @@ class LanguageManager:
             lang_code = "Persian"
 
         # Set language code
-        cls.language_code = lang_code
+        cls.current_language_code = lang_code
         # Set translations
-        cls._translations = LANG_MAP[lang_code]
+        cls.current_translations = LANG_MAP[lang_code]
 
         # Write selected language into config file
-        CONFIG_FILE_PATH.write_text(
-            json.dumps({"language": lang_code}, ensure_ascii=False),
-            encoding="utf-8",
-        )
+        set_config_value(_APP_LANGUAGE_KEY, lang_code)
