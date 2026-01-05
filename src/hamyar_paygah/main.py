@@ -97,7 +97,7 @@ class OptionsWindow(tk.Toplevel):
             pady=10,
         )
 
-        self.lang_var = tk.StringVar(value=LanguageManager._lang_code)  # noqa: SLF001
+        self.lang_var = tk.StringVar(value=LanguageManager.language_code)
         lang_dropdown = ttk.Combobox(
             self,
             textvariable=self.lang_var,

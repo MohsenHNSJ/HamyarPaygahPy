@@ -37,7 +37,7 @@ RTL_LANGS: set[str] = {"Persian"}
 class LanguageManager:
     """Manages the application's UI translations and language settings."""
 
-    _lang_code: str = "Persian"
+    language_code: str = "Persian"
     """Currently active language code"""
     _translations: Translations = FA
     """Translations corresponding to the current language"""
@@ -53,14 +53,14 @@ class LanguageManager:
         if CONFIG_FILE.exists():
             try:
                 data = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
-                cls._lang_code = data.get("language", "Persian")
+                cls.language_code = data.get("language", "Persian")
             except (OSError, json.JSONDecodeError):
-                cls._lang_code = "Persian"
+                cls.language_code = "Persian"
 
         # Set translations to language code, on error set to Persian
         cls._translations = (
             LANG_MAP.get(
-                cls._lang_code,
+                cls.language_code,
                 FA,
             )
             or FA
@@ -87,7 +87,7 @@ class LanguageManager:
         text: str = getter(cls._translations)
 
         # If it's Right-to-Left, reshape it
-        if cls._lang_code in RTL_LANGS:
+        if cls.language_code in RTL_LANGS:
             return reshape_rtl(text)
 
         # Return the translated text
@@ -109,7 +109,7 @@ class LanguageManager:
             lang_code = "Persian"
 
         # Set language code
-        cls._lang_code = lang_code
+        cls.language_code = lang_code
         # Set translations
         cls._translations = LANG_MAP[lang_code]
 

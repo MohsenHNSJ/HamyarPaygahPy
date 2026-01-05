@@ -14,10 +14,10 @@ __license__ = "MIT"
 __copyright__ = "Copyright 2026-present MohsenHNSJ"
 __version__ = "0.1.4"
 
-from . import main, missions_list_ui, parsers, server_config
+from . import main, missions_list_ui, server_config
 from .localization import language_manager
 from .models import mission_model
-from .services import missions_list_service
+from .services import missions_list_service, parsers
 from .utils import text_utils
 
 __all__: list[str] = [

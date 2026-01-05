@@ -45,8 +45,8 @@ from lxml import etree
 from tkcalendar import DateEntry  # type: ignore[import-untyped]
 
 from hamyar_paygah.models.mission_model import Mission
-from hamyar_paygah.parsers import parse_missions
 from hamyar_paygah.services.missions_list_service import get_missions_list
+from hamyar_paygah.services.parsers import parse_to_missions_list
 from hamyar_paygah.utils.text_utils import reshape_rtl
 
 
@@ -340,7 +340,7 @@ class MissionsListApp(tk.Toplevel):
                 to_dt,
                 region_id,
             )
-            missions = parse_missions(xml_response)
+            missions = parse_to_missions_list(xml_response)
             # UI updates must happen in main thread
             self.after(0, lambda: self.populate_table(missions))
 
