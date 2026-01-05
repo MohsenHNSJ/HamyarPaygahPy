@@ -90,6 +90,7 @@ sphinx-version-warning = "1.1.2"
 # Other requirements constraints to keep dependencies up-to-date
 # These are not directly required by the project
 # But only required by the above packages
+astroid = "4.0.3"
 
 # Ruff general settings
 [tool.ruff]
