@@ -71,6 +71,7 @@ types-lxml = "2026.1.1"
 # Other requirements constraints to keep dependencies up-to-date
 # These are not directly required by the project
 # But only required by the above packages
+certifi = "2026.1.4"
 filelock = "3.20.2"
 librt = "0.7.7"
 marshmallow = "4.2.0"
