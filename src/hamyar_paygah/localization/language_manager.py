@@ -14,15 +14,12 @@ application restarts.
 
 import json
 from collections.abc import Callable
-from pathlib import Path
 
+from hamyar_paygah.app.paths import CONFIG_FILE_PATH
 from hamyar_paygah.localization.base import Translations
 from hamyar_paygah.localization.en import EN
 from hamyar_paygah.localization.fa import FA
 from hamyar_paygah.utils.text_utils import reshape_rtl
-
-CONFIG_FILE = Path("language_config.json")
-"""Path to the JSON file storing language configuration."""
 
 LANG_MAP: dict[str, Translations] = {
     "English": EN,
@@ -50,9 +47,9 @@ class LanguageManager:
         Updates the internal `_translations` attribute to match the loaded language.
         """
         # If there is a config file, try to read the language code from it, on error load Persian
-        if CONFIG_FILE.exists():
+        if CONFIG_FILE_PATH.exists():
             try:
-                data = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
+                data = json.loads(CONFIG_FILE_PATH.read_text(encoding="utf-8"))
                 cls.language_code = data.get("language", "Persian")
             except (OSError, json.JSONDecodeError):
                 cls.language_code = "Persian"
@@ -114,7 +111,7 @@ class LanguageManager:
         cls._translations = LANG_MAP[lang_code]
 
         # Write selected language into config file
-        CONFIG_FILE.write_text(
+        CONFIG_FILE_PATH.write_text(
             json.dumps({"language": lang_code}, ensure_ascii=False),
             encoding="utf-8",
         )
