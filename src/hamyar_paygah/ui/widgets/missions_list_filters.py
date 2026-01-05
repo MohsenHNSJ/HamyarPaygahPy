@@ -1,0 +1,191 @@
+"""Missions List Filters UI Module.
+
+This module provides the `MissionsListFilters` widget, a reusable
+Tkinter panel for collecting and validating mission search filters.
+
+Responsibilities:
+    - Rendering filter input fields for querying missions:
+        - From Date
+        - To Date
+        - Region ID
+    - Performing live input validation (numeric check for Region ID)
+    - Converting user input into strongly-typed Python values
+    - Displaying error dialogs for invalid or missing input
+    - Integrating seamlessly with other UI components without
+      performing any data fetching
+
+Typical Usage:
+    from hamyar_paygah.ui.widgets.missions_list_filters import MissionsListFilters
+
+    root = tk.Tk()
+    filters_panel = MissionsListFilters(root)
+    filters_panel.pack()
+
+    # Later, retrieve validated filter values
+    result = filters_panel.get_filters()
+    if result is not None:
+        from_date, to_date, region_id = result
+
+Notes:
+    - This widget is UI-only and does not handle networking.
+    - Error messages are localized via LanguageManager.
+"""
+
+from __future__ import annotations
+
+import tkinter as tk
+from datetime import datetime
+from tkinter import messagebox, ttk
+
+from tkcalendar import DateEntry  # type: ignore[import-untyped]
+
+from hamyar_paygah.localization.language_manager import (
+    LanguageManager,  # type: ignore[import-untyped]
+)
+
+
+class MissionsListFilters(ttk.Frame):
+    """UI panel for collecting mission search filters.
+
+    This widget encapsulates all filter-related UI elements used to
+    query missions. It is responsible only for:
+
+    - Rendering filter input fields
+    - Validating user input
+    - Returning parsed filter values
+    """
+
+    def __init__(self, master: tk.Misc) -> None:
+        """Initialize the filters panel.
+
+        Args:
+            master: Parent Tkinter widget.
+        """
+        super().__init__(master)
+        # Build and lay out all UI elements
+        self._build_ui()
+
+    # ------------------------------------------------------------------
+    # UI construction
+    # ------------------------------------------------------------------
+
+    def _build_ui(self) -> None:
+        """Create and arrange filter input widgets.
+
+        This method constructs:
+        - From date picker
+        - To date picker
+        - Region ID entry with numeric validation
+        """
+        # From date label and date picker
+        ttk.Label(self, text="From Date:").grid(
+            row=0,
+            column=0,
+            padx=5,
+            pady=5,
+        )
+        self.from_date = DateEntry(self, date_pattern="yyyy-mm-dd")
+        self.from_date.grid(row=0, column=1, padx=5, pady=5)
+
+        # To date label and date picker
+        ttk.Label(self, text="To Date:").grid(
+            row=0,
+            column=2,
+            padx=5,
+            pady=5,
+        )
+        self.to_date = DateEntry(self, date_pattern="yyyy-mm-dd")
+        self.to_date.grid(row=0, column=3, padx=5, pady=5)
+
+        # Region ID label and entry field
+        ttk.Label(self, text="Region ID:").grid(
+            row=0,
+            column=4,
+            padx=5,
+            pady=5,
+        )
+        self.region_id_var = tk.StringVar()
+
+        region_entry = ttk.Entry(self, textvariable=self.region_id_var)
+        region_entry.grid(row=0, column=5, padx=5, pady=5)
+
+        # Validate input on each keystroke to allow only digits
+        region_entry.config(
+            validate="key",
+            validatecommand=(self.register(self._validate_int), "%P"),
+        )
+
+    # ------------------------------------------------------------------
+    # Validation & data extraction
+    # ------------------------------------------------------------------
+
+    def _validate_int(self, value: str) -> bool:
+        """Validate that a string contains only digits.
+
+        Args:
+            value: Current contents of the entry field.
+
+        Returns:
+            True if the value is empty or numeric, False otherwise.
+        """
+        return value.isdigit() or value == ""
+
+    def get_filters(self) -> tuple[datetime, datetime, int] | None:
+        """Return validated filter values entered by the user.
+
+        This method performs final validation and converts UI input
+        into strongly-typed Python values suitable for business logic.
+
+        Displays error dialogs for invalid or missing fields.
+
+        Returns:
+            A tuple containing:
+                - from_date (datetime)
+                - to_date (datetime)
+                - region_id (int)
+        """
+        # Ensure required fields are present
+        if not self.from_date.get():
+            messagebox.showerror(
+                LanguageManager.t(
+                    lambda t: t.error_label,
+                ),
+                LanguageManager.t(lambda t: t.missions_list_from_date_is_required_error_message),
+            )
+            return None
+
+        if not self.to_date.get():
+            messagebox.showerror(
+                LanguageManager.t(
+                    lambda t: t.error_label,
+                ),
+                LanguageManager.t(lambda t: t.missions_list_to_date_is_required_error_message),
+            )
+            return None
+
+        if not self.region_id_var.get():
+            messagebox.showerror(
+                LanguageManager.t(
+                    lambda t: t.error_label,
+                ),
+                LanguageManager.t(lambda t: t.missions_list_region_id_is_required_error_message),
+            )
+            return None
+
+        # Convert region ID to integer
+        try:
+            region_id = int(self.region_id_var.get())
+        except ValueError:
+            messagebox.showerror(
+                LanguageManager.t(
+                    lambda t: t.error_label,
+                ),
+                LanguageManager.t(lambda t: t.missions_list_region_id_invalid_error_message),
+            )
+            return None
+
+        # Parse dates from string input
+        from_date = datetime.strptime(self.from_date.get(), "%Y-%m-%d")  # noqa: DTZ007
+        to_date = datetime.strptime(self.to_date.get(), "%Y-%m-%d")  # noqa: DTZ007
+
+        return from_date, to_date, region_id

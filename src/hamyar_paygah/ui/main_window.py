@@ -12,7 +12,7 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 
 from hamyar_paygah.localization.language_manager import LanguageManager
-from hamyar_paygah.missions_list_ui import MissionsListApp
+from hamyar_paygah.ui.missions_list_window import MissionsListWindow
 from hamyar_paygah.ui.options_window import OptionsWindow
 
 
@@ -51,14 +51,14 @@ class MainWindow(tk.Tk):
         ).pack(pady=20)
 
         # Reference to windows window (None if not open)
-        self._missions_window: MissionsListApp | None = None
+        self._missions_window: MissionsListWindow | None = None
         self._options_window: OptionsWindow | None = None
 
         # Button to open Missions List window
         open_btn = ttk.Button(
             self,
             text=LanguageManager.t(
-                lambda t: t.missions_window_load_missions_button,
+                lambda t: t.main_window_missions_list_button,
             ),
             command=self.open_missions_list_window,
         )
@@ -86,8 +86,8 @@ class MainWindow(tk.Tk):
 
         # Create a new Missions List window
         try:
-            self._missions_window = MissionsListApp(
-                server_url=self.input_server_address,
+            self._missions_window = MissionsListWindow(
+                server_address=self.input_server_address,
                 master=self,
             )
         except tk.TclError as e:

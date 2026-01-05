@@ -14,7 +14,7 @@ __license__ = "MIT"
 __copyright__ = "Copyright 2026-present MohsenHNSJ"
 __version__ = "0.1.4"
 
-from . import main, missions_list_ui
+from . import main
 from .app import paths
 from .localization import language_manager
 from .models import mission_model
@@ -27,7 +27,6 @@ __all__: list[str] = [
     "main",
     "mission_model",
     "missions_list_service",
-    "missions_list_ui",
     "parsers",
     "paths",
     "server_config_dialog",

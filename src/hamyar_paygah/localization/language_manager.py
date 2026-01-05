@@ -23,17 +23,17 @@ from hamyar_paygah.utils.text_utils import reshape_rtl
 
 LANG_MAP: dict[str, Translations] = {
     "English": EN,
-    "فارسی": FA,
+    "Persian": FA,
 }
 """Map of all available languages and their name presentation in options window"""
 
-RTL_LANGS: set[str] = {"فارسی"}
+RTL_LANGS: set[str] = {"Persian"}
 """Set of language codes that use Right-to-Left text"""
 
 _APP_LANGUAGE_KEY: Final[str] = "app_language"
 """Key for saving app language in JSON file"""
 
-_DEFAULT_LANGUAGE_CODE: str = "فارسی"
+_DEFAULT_LANGUAGE_CODE: str = "Persian"
 """Language code of default language"""
 
 

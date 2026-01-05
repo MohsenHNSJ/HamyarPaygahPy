@@ -50,7 +50,9 @@ def main() -> None:
             LanguageManager.t(
                 lambda t: t.error_label,
             ),
-            LanguageManager.t(lambda t: t.server_address_not_provided_error_message),
+            LanguageManager.t(
+                lambda t: t.server_address_not_provided_error_message,
+            ),
         )
     else:
         # Close hidden root and launch main application window
