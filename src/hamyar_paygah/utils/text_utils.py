@@ -1,5 +1,7 @@
 """Utility functions related to text."""
 
+from urllib.parse import urlparse
+
 import arabic_reshaper  # type: ignore[import-untyped]
 from bidi import get_display  # type: ignore[import-untyped]
 
@@ -41,3 +43,35 @@ def reshape_rtl(text: str | None) -> str:
     reshaped_text = arabic_reshaper.reshape(text)
     # Apply RTL bidi reordering
     return str(get_display(reshaped_text))
+
+
+def is_valid_server_address(server_address: str | None) -> bool:
+    """Validate the server address format.
+
+    The address must:
+    - Be a non-empty string
+    - Start with ``http://`` or ``https://``
+    - Contain a valid network location (host)
+
+    Args:
+        server_address: Server address entered by the user.
+
+    Returns:
+        ``True`` if the address appears valid, otherwise ``False``.
+    """
+    # If server address is empty return False
+    if not server_address:
+        return False
+
+    # Strip empty spaces
+    address: str = server_address.strip()
+
+    # Must explicitly specify scheme
+    if not (address.startswith(("http://", "https://"))):
+        return False
+
+    # Parse the URL
+    parsed = urlparse(address)
+
+    # Ensure scheme and hostname exist
+    return not (not parsed.scheme or not parsed.netloc)

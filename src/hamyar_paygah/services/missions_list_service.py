@@ -4,9 +4,12 @@ from datetime import datetime
 
 import aiohttp
 
+from hamyar_paygah.models.mission_model import Mission
+from hamyar_paygah.services.parsers import parse_to_missions_list
 
-async def get_missions_list(
-    server_url: str,
+
+async def _fetch_missions_list(
+    server_address: str,
     from_date: datetime,
     to_date: datetime,
     region_id: int,
@@ -23,7 +26,7 @@ async def get_missions_list(
     ``BAD REQUEST`` response from the server.
 
     Args:
-        server_url: Base URL of the EMS server (without trailing slash).
+        server_address: Base address of the EMS server (without trailing slash).
         from_date: Start date of the report range. The time component is
             automatically set to ``00:00:00``.
         to_date: End date of the report range. The time component is
@@ -40,7 +43,7 @@ async def get_missions_list(
         aiohttp.ClientError: If the HTTP request fails due to a network
             or connection error.
     """
-    url: str = f"{server_url}/Report.svc"
+    url: str = f"{server_address}/Report.svc"
     soap_action: str = "http://tempuri.org/IReport/GetDocumentReportRegion"
 
     # Convert dates to strings in yyyy-MM-dd format
@@ -83,3 +86,33 @@ async def get_missions_list(
     ):
         response_text: str = await response.text()
         return response_text
+
+
+async def get_missions_list(
+    server_address: str,
+    from_date: datetime,
+    to_date: datetime,
+    region_id: int,
+) -> list[Mission]:
+    """Fetch and parse a list of missions from the server.
+
+    This function handles the complete flow of retrieving missions data
+    from the server for a given date range and region, and converting
+    it into `Mission` objects suitable for use in the UI or business logic.
+
+    Args:
+        server_address (str): The base address of the missions server.
+        from_date (datetime.datetime): The start date of the missions query.
+        to_date (datetime.datetime): The end date of the missions query.
+        region_id (int): The region ID to filter missions by.
+
+    Returns:
+        list[Mission]: A list of `Mission` objects parsed from the server response.
+    """
+    # Fetch raw mission data asynchronously from the server
+    raw_data: str = await _fetch_missions_list(server_address, from_date, to_date, region_id)
+
+    # Parse the raw XML/JSON response into a list of Mission objects
+    missions_list: list[Mission] = parse_to_missions_list(raw_data)
+
+    return missions_list
