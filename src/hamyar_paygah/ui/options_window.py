@@ -21,11 +21,6 @@ class OptionsWindow(tk.Toplevel):
     This window provides a dropdown to select the interface language and a
     button to save the change. It uses OptionsConfig as the controller to
     handle logic separate from the UI.
-
-    Attributes:
-        controller (OptionsConfig): The logic handler for application options.
-        lang_var (tk.StringVar): Holds the currently selected language code
-            in the dropdown.
     """
 
     def __init__(self, parent: tk.Tk) -> None:
@@ -37,6 +32,7 @@ class OptionsWindow(tk.Toplevel):
         # Instantiate the logic controller
         super().__init__(parent)
         self.controller: OptionsConfig = OptionsConfig()
+        """The logic handler for application options."""
 
         # Window configuration
         self.title(string=LanguageManager.t(lambda t: t.options_window_title))
@@ -50,6 +46,7 @@ class OptionsWindow(tk.Toplevel):
 
         # Dropdown for selecting language
         self.lang_var = tk.StringVar(value=self.controller.current_language)
+        """Holds the currently selected language code in the dropdown."""
         lang_dropdown = ttk.Combobox(
             self,
             textvariable=self.lang_var,

@@ -5,9 +5,6 @@ Tkinter panel for collecting and validating mission search filters.
 
 Responsibilities:
     - Rendering filter input fields for querying missions:
-        - From Date
-        - To Date
-        - Region ID
     - Performing live input validation (numeric check for Region ID)
     - Converting user input into strongly-typed Python values
     - Displaying error dialogs for invalid or missing input

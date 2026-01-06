@@ -3,10 +3,6 @@
 This module contains the startup routine for the application. It ensures
 that the EMS server address is loaded from disk or provided by the user
 before launching the main Tkinter window.
-
-Functions:
-    main: Initializes the application, ensures server configuration is
-          present, and launches the main window.
 """
 
 import tkinter as tk

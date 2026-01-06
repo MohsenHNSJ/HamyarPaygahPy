@@ -33,13 +33,6 @@ class MissionsListWindow(tk.Toplevel):
 
     This window encapsulates all UI elements, user interactions,
     and orchestrates async data fetching while keeping the UI responsive.
-
-    Attributes:
-        server_address (str): Base URL of the EMS server to fetch missions from.
-        filters_panel (MissionsListFilters): Widget panel for inputting query filters.
-        table (MissionsListTable): Widget for displaying mission data.
-        status_label (ttk.Label): Label showing status messages.
-        load_button (ttk.Button): Button to trigger mission loading.
     """
 
     _MISSIONS_LIST_STARTING_WINDOW_SIZE: str = "1200x700"
@@ -54,19 +47,23 @@ class MissionsListWindow(tk.Toplevel):
         super().__init__(master)
         self.title(LanguageManager.t(lambda t: t.missions_list_window_title))
         self.geometry(_MISSIONS_LIST_STARTING_WINDOW_SIZE)
-        self.server_address = server_address
+        self.server_address: str = server_address
+        """Base URL of the EMS server to fetch missions from."""
 
         # --- UI components ---
         # Filter panel for inputting date range and region
         self.filters_panel = MissionsListFilters(self, self.on_load_clicked)
+        """Widget panel for inputting query filters."""
         self.filters_panel.pack(fill="x", padx=10, pady=5)
 
         # Table for displaying missions
         self.table = MissionsListTable(self)
+        """Widget for displaying mission data."""
         self.table.pack(fill="both", expand=True, padx=10, pady=5)
 
         # Status label for showing messages like "Loading..."
         self.status_label = ttk.Label(self, text="")
+        """Label showing status messages."""
         self.status_label.pack(anchor="w", padx=10, pady=5)
 
     # ------------------------------------------------------------------

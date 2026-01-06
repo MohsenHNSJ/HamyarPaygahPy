@@ -14,10 +14,6 @@ class OptionsConfig:
     """Logic handler for application options.
 
     This class manages the application's configurable options.
-
-    Attributes:
-        available_languages (list[str]): List of all valid language codes
-            supported by the application.
     """
 
     def __init__(self) -> None:
@@ -27,6 +23,7 @@ class OptionsConfig:
         """
         # Extract all supported language codes from the language map
         self.available_languages: list[str] = list(LANG_MAP.keys())
+        """List of all valid language codes supported by the application."""
 
     @property
     def current_language(self) -> str:
