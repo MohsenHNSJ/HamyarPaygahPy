@@ -38,7 +38,7 @@ from datetime import datetime
 from tkinter import messagebox, ttk
 from typing import TYPE_CHECKING
 
-import jdatetime
+import jdatetime  # type: ignore[import-untyped]
 from tkcalendar import DateEntry  # type: ignore[import-untyped]
 
 from hamyar_paygah.localization.language_manager import (
@@ -271,8 +271,8 @@ class MissionsListFilters(ttk.Frame):
     # ------------------------------------------------------------------
     # Jalali calendar
     # ------------------------------------------------------------------
-
-    def _on_date_changed(self) -> None:
+    # pylint: disable=W0613
+    def _on_date_changed(self, event: object) -> None:  # noqa: ARG002
         """Handle date picker changes for jalali representation."""
         self._update_jalali_labels()
 
