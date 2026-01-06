@@ -266,3 +266,4 @@ styles/write-good
 # Private files/folders
 .private_tests/
 server_config.json
+app_config.json

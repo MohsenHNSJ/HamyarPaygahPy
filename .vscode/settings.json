@@ -29,6 +29,7 @@
     "**/*gdlintrc",
     "**/*poetry.lock"
   ],
+  "cSpell.language": "en,fa",
   "cSpell.mergeCSpellSettings": true,
   "cSpell.words": [
     "addopts",
@@ -81,7 +82,9 @@
     "esktop",
     "evenrow",
     "exploitability",
+    "filelock",
     "flynt",
+    "fromgregorian",
     "frozenlist",
     "fseventsd",
     "FURB",
@@ -103,6 +106,8 @@
     "ipynb",
     "ipython",
     "isort",
+    "Jalali",
+    "jdatetime",
     "jkiviluoto",
     "joblib",
     "Joblint",
@@ -121,6 +126,7 @@
     "metacharacters",
     "michelemelluso",
     "minversion",
+    "minwidth",
     "mkdocs",
     "MohsenHNSJ",
     "msix",
@@ -145,6 +151,7 @@
     "passsword",
     "pathex",
     "pathlib",
+    "pathspec",
     "Paygah",
     "perflint",
     "pipefail",
@@ -236,8 +243,10 @@
     "xcalc",
     "XDMCP",
     "xlaunch",
+    "xscrollcommand",
     "yarl",
-    "yscrollcommand"
+    "yscrollcommand",
+    "همیار"
   ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"

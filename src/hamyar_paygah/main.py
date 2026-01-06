@@ -1,77 +1,59 @@
-"""Main application window for the Hamyar Paygah project.
+"""Application entry point for Hamyar Paygah.
 
-This module defines a simple Tkinter main window that serves as the
-entry point of the application.
-
-Classes:
-    MainWindow: The primary Tkinter window of the application.
+This module contains the startup routine for the application. It ensures
+that the EMS server address is loaded from disk or provided by the user
+before launching the main Tkinter window.
 """
 
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import messagebox
 
-from hamyar_paygah.missions_list import MissionsListApp
-from hamyar_paygah.server_config import ServerConfigDialog
-
-
-class MainWindow(tk.Tk):
-    """Main Tkinter window of the application."""
-
-    def __init__(self, input_server_url: str) -> None:
-        """Initialize the main window."""
-        super().__init__()
-        self.title("Main Window")
-        self.geometry("400x200")
-        self.input_server_url: str = input_server_url
-
-        ttk.Label(self, text="Welcome!").pack(pady=20)
-
-        self._missions_window: MissionsListApp | None = None
-
-        open_btn = ttk.Button(
-            self,
-            text="Open Missions List",
-            command=self.open_missions_list_window,
-        )
-        open_btn.pack(pady=10)
-
-    def open_missions_list_window(self) -> None:
-        """Opens the Missions List window if it is not already open.
-
-        If the window already exists, brings it to the front.
-        """
-        if self._missions_window and self._missions_window.winfo_exists():
-            # Window already exists
-            return
-
-        # Create a new Missions List window
-        try:
-            self._missions_window = MissionsListApp(
-                server_url=self.input_server_url,
-                master=self,
-            )
-        except tk.TclError as e:
-            messagebox.showerror(
-                "Error",
-                f"Could not open Missions List window:\n{e}",
-            )
-            self._missions_window = None
+from hamyar_paygah.config.server_config import load_server_address
+from hamyar_paygah.localization.language_manager import LanguageManager
+from hamyar_paygah.ui.dialogs.server_config_dialog import ServerConfigDialog
+from hamyar_paygah.ui.main_window import MainWindow
 
 
-if __name__ == "__main__":
-    # Load server URL from disk or ask user
-    server_url = ServerConfigDialog.load_from_disk()
+def main() -> None:
+    """Application startup routine.
+
+    This function handles the following tasks:
+    1. Attempt to load the EMS server address from persistent storage.
+    2. If no server address exists, open a modal dialog for the user to enter one.
+    3. If a server address is provided launch the main application window.
+    4. If no server address is available, show an error message and exit.
+
+    The function uses a hidden Tkinter root window to manage modal dialogs
+    without displaying an unnecessary main window during configuration.
+    """
+    # Attempt to load the server URL from the saved configuration
+    server_url: str | None = load_server_address()
+    # Create a hidden Tkinter root for modal dialogs
     root = tk.Tk()
-    root.withdraw()  # hide main window while config dialog opens
+    root.withdraw()  # Hide main window while config dialog is active
 
     if not server_url:
+        # Ask the user to input server address via a modal dialog
         dialog = ServerConfigDialog(master=root)  # type: ignore[arg-type]
         root.wait_window(dialog)
-        server_url = dialog.server_url
+        server_url = dialog.server_address  # Retrieve the entered server URL
 
     if not server_url:
-        messagebox.showerror("Error", "No server address provided. Exiting.")
+        # No server URL provided, show error and exit
+        messagebox.showerror(
+            LanguageManager.t(
+                lambda t: t.error_label,
+            ),
+            LanguageManager.t(
+                lambda t: t.server_address_not_provided_error_message,
+            ),
+        )
     else:
+        # Close hidden root and launch main application window
         root.destroy()  # close the hidden root
         app = MainWindow(server_url)
         app.mainloop()
+
+
+if __name__ == "__main__":
+    main()

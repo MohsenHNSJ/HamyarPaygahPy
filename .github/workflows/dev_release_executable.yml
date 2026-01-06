@@ -109,7 +109,7 @@ jobs:
               Write-Output $version
             "
 
-      - name: Build single-file windowed EXE with PyInstaller (UPX compression, DEBUG log)
+      - name: Build separated windowed EXE with PyInstaller (NO compression, DEBUG log)
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
@@ -140,12 +140,12 @@ jobs:
       - name: Upload build artifact (Folder)
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
-          name: HamyarPaygah
-          path: dist\
+          name: HamyarPaygah # Artifact name
+          path: dist\ # Path to collect
           compression-level: 9
-          if-no-files-found: error
+          if-no-files-found: error # Fail if nothing is found
 
-      - name: Publish the draft notes
+      - name: Publish or edit the draft notes
         id: create_draft_release
         uses: release-drafter/release-drafter@b1476f6e6eb133afa41ed8589daba6dc69b4d3f5 # v6.1.0
         with:
