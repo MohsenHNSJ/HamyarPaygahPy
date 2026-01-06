@@ -8,8 +8,7 @@ Responsibilities:
     - Performing live input validation (numeric check for Region ID)
     - Converting user input into strongly-typed Python values
     - Displaying error dialogs for invalid or missing input
-    - Integrating seamlessly with other UI components without
-      performing any data fetching
+    - Integrating seamlessly with other UI components without performing any data fetching
 
 Typical Usage:
     from hamyar_paygah.ui.widgets.missions_list_filters import MissionsListFilters
@@ -205,11 +204,7 @@ class MissionsListFilters(ttk.Frame):
 
         Displays error dialogs for invalid or missing fields.
 
-        Returns:
-            A tuple containing:
-                - from_date (datetime)
-                - to_date (datetime)
-                - region_id (int)
+        Returns: tuple: A tuple containing: from_date (datetime) to_date (datetime) region_id (int)
         """
         # Ensure required fields are present
         if not self.from_date.get():
