@@ -19,10 +19,8 @@ def main() -> None:
 
     This function handles the following tasks:
     1. Attempt to load the EMS server address from persistent storage.
-    2. If no server address exists, open a modal dialog for the user to
-       enter one.
-    3. If a server address is provided (either loaded or entered by the user),
-       launch the main application window.
+    2. If no server address exists, open a modal dialog for the user to enter one.
+    3. If a server address is provided launch the main application window.
     4. If no server address is available, show an error message and exit.
 
     The function uses a hidden Tkinter root window to manage modal dialogs

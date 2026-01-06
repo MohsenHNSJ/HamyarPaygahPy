@@ -102,16 +102,12 @@ async def get_missions_list(
 
     Args:
         server_address (str): The base address of the missions server.
-        from_date (datetime): The start date of the missions query.
-        to_date (datetime): The end date of the missions query.
+        from_date (datetime.datetime): The start date of the missions query.
+        to_date (datetime.datetime): The end date of the missions query.
         region_id (int): The region ID to filter missions by.
 
     Returns:
         list[Mission]: A list of `Mission` objects parsed from the server response.
-
-    Raises:
-        Any exceptions raised by the underlying `_fetch_missions_list` function
-        (e.g., network errors, timeout errors) are propagated to the caller.
     """
     # Fetch raw mission data asynchronously from the server
     raw_data: str = await _fetch_missions_list(server_address, from_date, to_date, region_id)
