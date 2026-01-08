@@ -79,6 +79,7 @@ marshmallow = "4.2.0"
 pathspec = "1.0.1"
 ruamel-yaml = "0.19.1"
 ruamel-yaml-clibz = "0.3.7"
+typer = "0.21.1"
 
 
 # Requirements for documentation
