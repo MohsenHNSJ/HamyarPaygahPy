@@ -222,6 +222,7 @@
     "tkcalendar",
     "Tkinter",
     "toctree",
+    "tomlkit",
     "tryceratops",
     "typehints",
     "typer",
