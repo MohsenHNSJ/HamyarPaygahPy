@@ -175,8 +175,14 @@ class MissionsListFilters(ttk.Frame):
             self._update_jalali_labels()
 
             # Update when date changes
-            self.from_date.bind("<<DateEntrySelected>>", self._on_date_changed)
-            self.to_date.bind("<<DateEntrySelected>>", self._on_date_changed)
+            self.from_date.bind(
+                "<<DateEntrySelected>>",
+                self._on_date_changed,
+            )
+            self.to_date.bind(
+                "<<DateEntrySelected>>",
+                self._on_date_changed,
+            )
 
         # Align nicely
         self.grid_columnconfigure(6, weight=1)
@@ -264,9 +270,15 @@ class MissionsListFilters(ttk.Frame):
     # Jalali calendar
     # ------------------------------------------------------------------
     # pylint: disable=W0613
-    def _on_date_changed(self, event: object) -> None:  # noqa: ARG002
-        """Handle date picker changes for jalali representation."""
-        self._update_jalali_labels()
+    def _on_date_changed(self, _: DateEntry) -> None:
+        # Release dangling grab First
+        self._release_any_grab()
+
+        # Restore focus to the main window, not the DateEntry
+        self.focus_set()
+
+        if self._show_jalali:
+            self._update_jalali_labels()
 
     def _update_jalali_labels(self) -> None:
         """Update Jalali date labels based on selected Gregorian dates."""
@@ -287,3 +299,11 @@ class MissionsListFilters(ttk.Frame):
         self.to_jalali_label.config(
             text=to_jalali.strftime("%Y/%m/%d"),
         )
+
+    def _release_any_grab(self) -> None:
+        try:
+            current = self.grab_current()  # type: ignore[no-untyped-call]
+            if current is not None:
+                current.grab_release()
+        except tk.TclError:
+            pass
