@@ -1,31 +1,4 @@
-"""Missions List Filters UI Module.
-
-This module provides the `MissionsListFilters` widget, a reusable
-Tkinter panel for collecting and validating mission search filters.
-
-Responsibilities:
-    - Rendering filter input fields for querying missions:
-    - Performing live input validation (numeric check for Region ID)
-    - Converting user input into strongly-typed Python values
-    - Displaying error dialogs for invalid or missing input
-    - Integrating seamlessly with other UI components without performing any data fetching
-
-Typical Usage:
-    from hamyar_paygah.ui.widgets.missions_list_filters import MissionsListFilters
-
-    root = tk.Tk()
-    filters_panel = MissionsListFilters(root)
-    filters_panel.pack()
-
-    # Later, retrieve validated filter values
-    result = filters_panel.get_filters()
-    if result is not None:
-        from_date, to_date, region_id = result
-
-Notes:
-    - This widget is UI-only and does not handle networking.
-    - Error messages are localized via LanguageManager.
-"""
+"""Missions List Filters UI Module."""
 
 from __future__ import annotations
 
