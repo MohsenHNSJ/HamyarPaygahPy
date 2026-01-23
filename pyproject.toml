@@ -80,6 +80,7 @@ pathspec = "1.0.1"
 ruamel-yaml = "0.19.1"
 ruamel-yaml-clibz = "0.3.7"
 typer = "0.21.1"
+virtualenv = "20.36.1"
 urllib3 = "2.6.3"
 
 
