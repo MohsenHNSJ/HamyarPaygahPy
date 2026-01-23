@@ -167,6 +167,7 @@
     "pybuilder",
     "pycache",
     "pycodestyle",
+    "pycparser",
     "Pydantic",
     "pydoclint",
     "pydocstyle",
