@@ -26,14 +26,14 @@ jobs:
           egress-policy: audit # Monitor outbound connections
 
       - name: Checkout the repository
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Ensure Poetry cache directory exists
         run: mkdir -p ~/.cache/pypoetry
 
       - name: Cache pip
         id: cache-pip
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
@@ -46,7 +46,7 @@ jobs:
 
       - name: Cache Poetry
         id: cache-poetry
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ~/.cache/pypoetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -68,7 +68,7 @@ jobs:
           pydantic: true
 
       - name: Run benchmark
-        uses: CodSpeedHQ/action@dbda7111f8ac363564b0c51b992d4ce76bb89f2f # v4.5.2
+        uses: CodSpeedHQ/action@e736f0d2aeb36da38e9f08eca4dff7967408d154 # v4.8.2
         with:
           mode: simulation # Run the benchmarks with CPU simulation measurements.
           run: pytest tests/ --codspeed -rA
