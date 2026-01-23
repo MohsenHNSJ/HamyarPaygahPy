@@ -73,7 +73,7 @@ types-lxml = "2026.1.1"
 # But only required by the above packages
 anyio = "4.12.1"
 certifi = "2026.1.4"
-filelock = "3.20.2"
+filelock = "3.20.3"
 librt = "0.7.7"
 marshmallow = "4.2.0"
 pathspec = "1.0.1"
