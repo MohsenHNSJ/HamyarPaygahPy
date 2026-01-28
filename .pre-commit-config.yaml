@@ -44,7 +44,7 @@ repos:
 
     # A set of pre-commit hooks for jsonschema validation.
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.0
+    rev: 0.36.1
     hooks:
       # Validate Dependabot Config (v2)
       - id: check-dependabot
@@ -141,7 +141,7 @@ repos:
 
     # Identify unused dependencies and avoid a bloated virtual environment.
   - repo: https://github.com/fredrikaverpil/creosote.git
-    rev: v4.1.0
+    rev: v4.2.0
     hooks:
       - id: creosote
 
