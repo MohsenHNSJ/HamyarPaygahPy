@@ -68,7 +68,7 @@ jobs:
           pydantic: true
 
       - name: Run benchmark
-        uses: CodSpeedHQ/action@e736f0d2aeb36da38e9f08eca4dff7967408d154 # v4.8.2
+        uses: CodSpeedHQ/action@ac0b0207a067aeb38de75cda57d2662345cac92a # v4.10.0
         with:
           mode: simulation # Run the benchmarks with CPU simulation measurements.
           run: pytest tests/ --codspeed -rA
