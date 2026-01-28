@@ -1,4 +1,5 @@
 """Simple Qt application that creates and shows a widget."""
+# pylint: disable=E0611
 
 from PySide6.QtWidgets import QApplication, QWidget
 
