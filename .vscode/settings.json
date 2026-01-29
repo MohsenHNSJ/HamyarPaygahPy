@@ -286,7 +286,8 @@
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.extraPaths": [
-    "${workspaceFolder}/"
+    "${workspaceFolder}/",
+    "./src"
   ],
   "python.analysis.inlayHints.callArgumentNames": "all",
   "python.analysis.inlayHints.functionReturnTypes": true,
