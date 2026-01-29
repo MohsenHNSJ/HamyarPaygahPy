@@ -203,6 +203,7 @@
     "pytype",
     "pyupgrade",
     "pyupio",
+    "QLCD",
     "qube",
     "refreshenv",
     "refurb",
