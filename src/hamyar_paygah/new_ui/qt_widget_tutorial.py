@@ -1,13 +1,15 @@
 """Simple Qt application that creates and shows a widget."""
 
 # pylint: disable=E0611,R0903
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QAction
 from PySide6.QtWidgets import (
     QApplication,
+    QLabel,
     QMainWindow,
-    QTabWidget,
+    QStatusBar,
+    QToolBar,
 )
-
-from hamyar_paygah.new_ui.color_widget import Color
 
 
 # Subclass QMainWindow to customize your application's main window.
@@ -20,14 +22,25 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        tabs = QTabWidget()
-        tabs.setTabPosition(QTabWidget.West)  # type: ignore[attr-defined]
-        tabs.setMovable(True)
+        label = QLabel("Hello!")
+        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        for color in ["red", "green", "blue", "yellow"]:
-            tabs.addTab(Color(color), color)
+        self.setCentralWidget(label)
 
-        self.setCentralWidget(tabs)
+        toolbar = QToolBar("My main toolbar")
+        self.addToolBar(toolbar)
+
+        button_action = QAction("Your button", self)
+        button_action.setStatusTip("This is your button")
+        button_action.triggered.connect(self.toolbar_button_clicked)
+        button_action.setCheckable(True)
+        toolbar.addAction(button_action)
+
+        self.setStatusBar(QStatusBar(self))
+
+    def toolbar_button_clicked(self, state: bool) -> None:  # noqa: FBT001
+        """Runs the function related to toolbar button click."""
+        print("click", state)
 
 
 # You need one (and only one) QApplication instance per application.
