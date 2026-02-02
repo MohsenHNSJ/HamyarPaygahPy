@@ -1,10 +1,10 @@
 """Test for qt."""
 
-# pylint: disable=C0114,I1101
-import PySide6.QtCore
+# pylint: disable=C0114,I1101,E0611
+from PySide6.QtWidgets import QApplication, QLabel
 
-# Prints PySide6 version
-print(PySide6.__version__)  # type: ignore[attr-defined]
-
-# Prints the Qt version used to compile PySide6
-print(PySide6.QtCore.__version__)
+app = QApplication([])
+# This HTML approach will be valid too!
+label = QLabel("<font color=red size=40>Hello World!</font>")
+label.show()
+app.exec()
