@@ -132,6 +132,8 @@
     "literalinclude",
     "LOCALAPPDATA",
     "logrus",
+    "lrelease",
+    "lupdate",
     "lxml",
     "lycheeverse",
     "maailma",
