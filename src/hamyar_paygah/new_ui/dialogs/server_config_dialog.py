@@ -92,86 +92,86 @@ class Ui_ServerConfigDialog:
         ServerConfigDialog.setModal(True)
         self.verticalLayout = QVBoxLayout(ServerConfigDialog)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.PromptLabel = QLabel(ServerConfigDialog)
-        self.PromptLabel.setObjectName("PromptLabel")
+        self.prompt_label = QLabel(ServerConfigDialog)
+        self.prompt_label.setObjectName("prompt_label")
         sizePolicy.setHeightForWidth(
-            self.PromptLabel.sizePolicy().hasHeightForWidth(),
+            self.prompt_label.sizePolicy().hasHeightForWidth(),
         )
-        self.PromptLabel.setSizePolicy(sizePolicy)
-        self.PromptLabel.setMinimumSize(QSize(400, 40))
-        self.PromptLabel.setMaximumSize(QSize(400, 40))
-        self.PromptLabel.setTextFormat(Qt.TextFormat.PlainText)
-        self.PromptLabel.setScaledContents(False)
-        self.PromptLabel.setWordWrap(True)
-        self.PromptLabel.setTextInteractionFlags(
+        self.prompt_label.setSizePolicy(sizePolicy)
+        self.prompt_label.setMinimumSize(QSize(400, 40))
+        self.prompt_label.setMaximumSize(QSize(400, 40))
+        self.prompt_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.prompt_label.setScaledContents(False)
+        self.prompt_label.setWordWrap(True)
+        self.prompt_label.setTextInteractionFlags(
             Qt.TextInteractionFlag.NoTextInteraction,
         )
 
-        self.verticalLayout.addWidget(self.PromptLabel)
+        self.verticalLayout.addWidget(self.prompt_label)
 
-        self.ServerAddressInput = QLineEdit(ServerConfigDialog)
-        self.ServerAddressInput.setObjectName("ServerAddressInput")
+        self.server_address_input = QLineEdit(ServerConfigDialog)
+        self.server_address_input.setObjectName("server_address_input")
         sizePolicy.setHeightForWidth(
-            self.ServerAddressInput.sizePolicy().hasHeightForWidth(),
+            self.server_address_input.sizePolicy().hasHeightForWidth(),
         )
-        self.ServerAddressInput.setSizePolicy(sizePolicy)
-        self.ServerAddressInput.setMinimumSize(QSize(380, 22))
-        self.ServerAddressInput.setMaximumSize(QSize(390, 22))
-        self.ServerAddressInput.setAutoFillBackground(False)
-        self.ServerAddressInput.setInputMethodHints(
+        self.server_address_input.setSizePolicy(sizePolicy)
+        self.server_address_input.setMinimumSize(QSize(380, 22))
+        self.server_address_input.setMaximumSize(QSize(390, 22))
+        self.server_address_input.setAutoFillBackground(False)
+        self.server_address_input.setInputMethodHints(
             Qt.InputMethodHint.ImhUrlCharactersOnly,
         )
-        self.ServerAddressInput.setMaxLength(512)
-        self.ServerAddressInput.setFrame(True)
-        self.ServerAddressInput.setCursorMoveStyle(
+        self.server_address_input.setMaxLength(512)
+        self.server_address_input.setFrame(True)
+        self.server_address_input.setCursorMoveStyle(
             Qt.CursorMoveStyle.VisualMoveStyle,
         )
-        self.ServerAddressInput.setClearButtonEnabled(True)
+        self.server_address_input.setClearButtonEnabled(True)
 
-        self.verticalLayout.addWidget(self.ServerAddressInput)
+        self.verticalLayout.addWidget(self.server_address_input)
 
-        self.InvalidInputLabel = QLabel(ServerConfigDialog)
-        self.InvalidInputLabel.setObjectName("InvalidInputLabel")
-        self.InvalidInputLabel.setEnabled(True)
+        self.invalid_input_label = QLabel(ServerConfigDialog)
+        self.invalid_input_label.setObjectName("invalid_input_label")
+        self.invalid_input_label.setEnabled(True)
         sizePolicy.setHeightForWidth(
-            self.InvalidInputLabel.sizePolicy().hasHeightForWidth(),
+            self.invalid_input_label.sizePolicy().hasHeightForWidth(),
         )
-        self.InvalidInputLabel.setSizePolicy(sizePolicy)
-        self.InvalidInputLabel.setMinimumSize(QSize(400, 15))
-        self.InvalidInputLabel.setMaximumSize(QSize(400, 15))
+        self.invalid_input_label.setSizePolicy(sizePolicy)
+        self.invalid_input_label.setMinimumSize(QSize(400, 15))
+        self.invalid_input_label.setMaximumSize(QSize(400, 15))
         font1 = QFont()
         font1.setFamilies(["Sans Serif"])
         font1.setBold(False)
         font1.setKerning(True)
         font1.setStyleStrategy(QFont.PreferAntialias)
-        self.InvalidInputLabel.setFont(font1)
-        self.InvalidInputLabel.setTextFormat(Qt.TextFormat.RichText)
+        self.invalid_input_label.setFont(font1)
+        self.invalid_input_label.setTextFormat(Qt.TextFormat.RichText)
 
-        self.verticalLayout.addWidget(self.InvalidInputLabel)
+        self.verticalLayout.addWidget(self.invalid_input_label)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.horizontalLayout.setSizeConstraint(
             QLayout.SizeConstraint.SetFixedSize,
         )
-        self.SaveButton = QPushButton(ServerConfigDialog)
-        self.SaveButton.setObjectName("SaveButton")
-        self.SaveButton.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
+        self.save_button = QPushButton(ServerConfigDialog)
+        self.save_button.setObjectName("save_button")
+        self.save_button.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
 
-        self.horizontalLayout.addWidget(self.SaveButton)
+        self.horizontalLayout.addWidget(self.save_button)
 
-        self.AbortButton = QPushButton(ServerConfigDialog)
-        self.AbortButton.setObjectName("AbortButton")
-        self.AbortButton.setMinimumSize(QSize(0, 0))
-        self.AbortButton.setAutoDefault(False)
+        self.abort_button = QPushButton(ServerConfigDialog)
+        self.abort_button.setObjectName("abort_button")
+        self.abort_button.setMinimumSize(QSize(0, 0))
+        self.abort_button.setAutoDefault(False)
 
-        self.horizontalLayout.addWidget(self.AbortButton)
+        self.horizontalLayout.addWidget(self.abort_button)
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.retranslateUi(ServerConfigDialog)
 
-        self.SaveButton.setDefault(True)
+        self.save_button.setDefault(True)
 
         QMetaObject.connectSlotsByName(ServerConfigDialog)
 
@@ -185,36 +185,36 @@ class Ui_ServerConfigDialog:
                 None,
             ),
         )
-        self.PromptLabel.setText(
+        self.prompt_label.setText(
             QCoreApplication.translate(
                 "ServerConfigDialog",
                 "No server address available.\nEnter server address to continue:",
                 None,
             ),
         )
-        self.ServerAddressInput.setText("")
-        self.ServerAddressInput.setPlaceholderText(
+        self.server_address_input.setText("")
+        self.server_address_input.setPlaceholderText(
             QCoreApplication.translate(
                 "ServerConfigDialog",
                 "http://xxx.xxx.xxx.xxx/AsayarService/",
                 None,
             ),
         )
-        self.InvalidInputLabel.setText(
+        self.invalid_input_label.setText(
             QCoreApplication.translate(
                 "ServerConfigDialog",
                 '<font color ="#FF0000">Server address invalid!</font>',
                 None,
             ),
         )
-        self.SaveButton.setText(
+        self.save_button.setText(
             QCoreApplication.translate(
                 "ServerConfigDialog",
                 "&Save",
                 None,
             ),
         )
-        self.AbortButton.setText(
+        self.abort_button.setText(
             QCoreApplication.translate(
                 "ServerConfigDialog",
                 "&Abort",

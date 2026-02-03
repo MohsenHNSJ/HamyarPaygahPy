@@ -12,15 +12,15 @@ class ServerConfigDialog(QDialog):
     """Dialog that asks user to input server address."""
 
     @Slot()
-    def on_save_clicked(self) -> None:
+    def on_save_button_clicked(self) -> None:
         """Handle save button click event."""
         # Strip the input from whitespace and save it
-        server_address: str = self.ui.ServerAddressInput.text().strip()
+        server_address: str = self.ui.server_address_input.text().strip()
 
         # Check if the input server address is valid
         if not is_valid_server_address(server_address):
             # Show a warning if the address is invalid
-            self.ui.InvalidInputLabel.show()
+            self.ui.invalid_input_label.show()
             # Do not close the dialog
             return
 
@@ -39,13 +39,12 @@ class ServerConfigDialog(QDialog):
         self.ui.setupUi(self)
 
         # Set button actions
-        self.ui.AbortButton.clicked.connect(self.reject)
-        self.ui.SaveButton.clicked.connect(self.on_save_clicked)
+        self.ui.abort_button.clicked.connect(self.reject)
 
         # Hide invalid input label initially
-        self.ui.InvalidInputLabel.hide()
+        self.ui.invalid_input_label.hide()
 
         # Connect input text changed signal to hide invalid input label on text change
-        self.ui.ServerAddressInput.textChanged.connect(
-            self.ui.InvalidInputLabel.hide,
+        self.ui.server_address_input.textChanged.connect(
+            self.ui.invalid_input_label.hide,
         )
