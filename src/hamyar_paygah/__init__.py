@@ -18,8 +18,8 @@ from . import main
 from .app import paths
 from .localization import language_manager
 from .models import mission_model
+from .new_ui.dialogs import server_config_dialog
 from .services import missions_list_service, parsers
-from .ui.dialogs import server_config_dialog
 from .utils import text_utils
 
 __all__: list[str] = [
