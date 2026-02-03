@@ -137,6 +137,14 @@ Open vcxsrv_ and configure it with the following settings:
 
 Or load it with ``config.xlaunch`` file from ``.devcontainer/vcxsrv/`` directory.
 
+PySide6_ is used for UI development, run :code:`pyside6-designer` from the dev container terminal to open the Qt Designer application.
+
+Convert the output ``.ui`` files to ``.py`` files using the following command:
+.. code-block:: sh
+
+    pyside6-uic path/to/input.ui -o path/to/output.py
+
+
 Possible issues
 ---------------
 
@@ -328,6 +336,7 @@ Continued contributions constitute acceptance of the current version.
 .. _pull request: https://github.com/MohsenHNSJ/HamyarPaygahPy/pulls
 .. _vcxsrv: https://github.com/marchaesen/vcxsrv
 .. _PyInstaller: https://pyinstaller.org/en/stable/index.html
+.. _PySide6: https://pypi.org/project/PySide6/
 
 ..
     Ignore-in-readthedocs

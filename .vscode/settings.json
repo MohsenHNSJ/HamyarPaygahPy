@@ -199,6 +199,7 @@
     "pypirc",
     "pypoetry",
     "pyproject",
+    "pyside",
     "pytest",
     "PYTHONPATH",
     "pytype",
