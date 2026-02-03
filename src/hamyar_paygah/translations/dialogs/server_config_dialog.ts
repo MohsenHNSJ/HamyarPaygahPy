@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fa_IR" sourcelanguage="en">
+<TS version="2.1" language="fa_IR" sourcelanguage="en_US">
 <context>
     <name>ServerConfigDialog</name>
     <message>
@@ -12,27 +12,28 @@
         <location filename="../../new_ui/dialogs/server_config_dialog.ui" line="75"/>
         <source>No server address available.
 Enter server address to continue:</source>
-        <translation type="unfinished"></translation>
+        <translation>آدرس سرور یافت نشد.
+آدرس سرور را وارد کنید:</translation>
     </message>
     <message>
         <location filename="../../new_ui/dialogs/server_config_dialog.ui" line="128"/>
         <source>http://xxx.xxx.xxx.xxx/AsayarService/</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../new_ui/dialogs/server_config_dialog.ui" line="170"/>
         <source>&lt;font color =&quot;#FF0000&quot;&gt;Server address invalid!&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>آدرس سرور اشتباه است!</translation>
     </message>
     <message>
         <location filename="../../new_ui/dialogs/server_config_dialog.ui" line="188"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;ذخیره</translation>
     </message>
     <message>
         <location filename="../../new_ui/dialogs/server_config_dialog.ui" line="204"/>
         <source>&amp;Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;انصراف</translation>
     </message>
 </context>
 </TS>
