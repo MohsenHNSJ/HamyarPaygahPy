@@ -8,14 +8,14 @@ before launching the main Qt window.
 # pylint: disable=E0611,I1101
 from typing import TYPE_CHECKING
 
-from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QApplication
 
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.controllers.dialogs.server_config_dialog_controller import ServerConfigDialog
+from hamyar_paygah.controllers.main_menu_controller import MainMenu
 
 if TYPE_CHECKING:
-    from PySide6.QtWidgets import QWidget
+    from PySide6.QtWidgets import QMainWindow
 
 
 def main() -> None:
@@ -30,25 +30,23 @@ def main() -> None:
     # Attempt to load the server URL from the saved configuration
     server_url: str | None = load_server_address()
 
-    # Create an instance of QUiLoader
-    loader = QUiLoader()
     # Create the QApplication instance
     app = QApplication([])
 
+    # Create initial UI elements
+    server_config_dialog = ServerConfigDialog()
+    main_menu: QMainWindow = MainMenu()
+
     # If server URL is not present, ask the user to input it
     if not server_url:
-        server_config_dialog = ServerConfigDialog()
-        server_config_dialog.open()
-        # Else, show the main window directly
-    else:
-        # Load the UI file
-        window: QWidget = loader.load(
-            "src/hamyar_paygah/new_ui/main_menu.ui",
-            None,
-        )
+        # Connect the dialog's accepted signal to load and show the main window
+        server_config_dialog.accepted.connect(main_menu.show)
 
-        # Show the main window
-        window.show()
+        # Show the prompt dialog to get server address from user
+        server_config_dialog.open()
+    else:
+        # Else, show the main window directly
+        main_menu.show()
 
     # Start the application's event loop
     app.exec()

@@ -4,8 +4,8 @@
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QDialog
 
+import hamyar_paygah.new_ui.dialogs.server_config_dialog as ui_scd
 from hamyar_paygah.config.server_config import is_valid_server_address, save_server_address
-from hamyar_paygah.new_ui.dialogs.server_config_dialog import Ui_ServerConfigDialog
 
 
 class ServerConfigDialog(QDialog):
@@ -35,7 +35,7 @@ class ServerConfigDialog(QDialog):
         super().__init__()
 
         # Set up the UI
-        self.ui = Ui_ServerConfigDialog()
+        self.ui = ui_scd.Ui_ServerConfigDialog()  # type: ignore[attr-defined]
         self.ui.setupUi(self)
 
         # Set button actions
