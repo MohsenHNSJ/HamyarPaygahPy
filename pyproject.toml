@@ -47,6 +47,7 @@ python = ">=3.12,<3.15"
 # Other requirements constraints to keep dependencies up-to-date
 # These are not directly required by the project
 # But only required by the above packages
+multidict = "6.7.1"
 
 # Poetry plugins
 [tool.poetry.requires-plugins]
