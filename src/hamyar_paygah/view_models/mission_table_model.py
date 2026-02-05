@@ -3,10 +3,12 @@
 # mypy: ignore-errors
 # ruff: noqa: ARG002, ANN001, N802, E501
 # pylint: disable=W0613,C0103,E0611,C0301
+
 from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
 from PySide6.QtWidgets import QWidget
 
 from hamyar_paygah.models.mission_model import Mission
+from hamyar_paygah.utils.date_utils import convert_string_iso_date_to_string_persian_date
 
 
 class MissionTableModel(QAbstractTableModel):
@@ -26,7 +28,7 @@ class MissionTableModel(QAbstractTableModel):
             ("شماره مددجو", lambda m: m.patient_id),
             ("کد آمبولانس", lambda m: m.ambulance_code),
             ("نام بیمارستان", lambda m: m.hospital_name),
-            ("تاریخ", lambda m: m.persian_date),
+            ("تاریخ", lambda m: convert_string_iso_date_to_string_persian_date(m.date)),
             ("آدرس", lambda m: m.address),
             ("نتیجه", lambda m: m.result),
         ]
