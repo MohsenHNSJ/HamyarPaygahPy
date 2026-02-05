@@ -109,6 +109,7 @@ sphinx-version-warning = "1.1.2"
 # These are not directly required by the project
 # But only required by the above packages
 astroid = "4.0.3"
+babel = "2.18.0"
 starlette = "0.52.1"
 websockets = "16.0"
 
