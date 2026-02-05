@@ -93,8 +93,10 @@ class MainMenu(QMainWindow):
         proxy_model.setSourceModel(source_model)
         # Set proxy model to be case insensitive
         proxy_model.setSortCaseSensitivity(
-            Qt.CaseInsensitive,
-        )  # type: ignore[attr-defined]
+            Qt.CaseInsensitive,  # type: ignore[attr-defined]
+        )
+        # Set proxy model to be local aware for sorting
+        proxy_model.setSortLocaleAware(True)
 
         # Set the model to table
         self.ui.missions_list_table.setModel(proxy_model)
