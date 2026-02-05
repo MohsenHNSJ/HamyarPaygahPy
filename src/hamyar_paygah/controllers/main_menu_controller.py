@@ -54,7 +54,7 @@ class MainMenu(QMainWindow):
             # If so, set the to date the same as from date
             self.ui.to_date_picker.setDate(new_date)
 
-    @asyncSlot()  # type: ignore[misc]
+    @asyncSlot()  # type: ignore[untyped-decorator,misc]
     async def on_load_button_clicked(self) -> None:
         """Loads the list of missions from server and populates the table."""
         # Convert from date and to date to normal pythonic dates

@@ -5,7 +5,10 @@ from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QDialog
 
 import hamyar_paygah.new_ui.dialogs.server_config_dialog as ui_scd
-from hamyar_paygah.config.server_config import is_valid_server_address, save_server_address
+from hamyar_paygah.config.server_config import (  # type: ignore[attr-defined]
+    is_valid_server_address,
+    save_server_address,
+)
 
 
 class ServerConfigDialog(QDialog):
