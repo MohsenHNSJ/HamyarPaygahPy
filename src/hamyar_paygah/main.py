@@ -2,58 +2,71 @@
 
 This module contains the startup routine for the application. It ensures
 that the EMS server address is loaded from disk or provided by the user
-before launching the main Tkinter window.
+before launching the main Qt window.
 """
 
-import tkinter as tk
-from tkinter import messagebox
+# pylint: disable=E0611,I1101
+import asyncio
+from typing import TYPE_CHECKING
+
+from PySide6.QtWidgets import QApplication
+from qasync import QEventLoop  # type: ignore[import-untyped]
 
 from hamyar_paygah.config.server_config import load_server_address
-from hamyar_paygah.localization.language_manager import LanguageManager
-from hamyar_paygah.ui.dialogs.server_config_dialog import ServerConfigDialog
-from hamyar_paygah.ui.main_window import MainWindow
+from hamyar_paygah.controllers.dialogs.server_config_dialog_controller import ServerConfigDialog
+from hamyar_paygah.controllers.main_menu_controller import MainMenu
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QMainWindow
 
 
-def main() -> None:
-    """Application startup routine.
+async def main(app: QApplication) -> None:
+    """Asynchronous entry point for the Qt application.
 
-    This function handles the following tasks:
-    1. Attempt to load the EMS server address from persistent storage.
-    2. If no server address exists, open a modal dialog for the user to enter one.
-    3. If a server address is provided launch the main application window.
-    4. If no server address is available, show an error message and exit.
+    This function integrates Qt's application lifecycle with Python's
+    asyncio event loop. It establishes a synchronization mechanism that
+    allows asynchronous tasks to detect when the Qt application is
+    about to shut down and perform a graceful cleanup.
 
-    The function uses a hidden Tkinter root window to manage modal dialogs
-    without displaying an unnecessary main window during configuration.
+    The function is designed to run inside an asyncio-compatible
+    event loop (e.g., ``qasync.QEventLoop``), enabling seamless
+    cooperation between Qt's event-driven architecture and asyncio's
+    coroutine-based concurrency model.
+
+    Args:
+        app (PySide6.QtWidgets.QApplication): The active Qt application instance whose
+            lifecycle is monitored for shutdown events.
     """
+    # Signal application shutdown.
+    app_close_event = asyncio.Event()
+    # Connect Qt's shutdown signal to the asyncio shutdown event.
+    app.aboutToQuit.connect(app_close_event.set)
+
     # Attempt to load the server URL from the saved configuration
     server_url: str | None = load_server_address()
-    # Create a hidden Tkinter root for modal dialogs
-    root = tk.Tk()
-    root.withdraw()  # Hide main window while config dialog is active
 
-    if not server_url:
-        # Ask the user to input server address via a modal dialog
-        dialog = ServerConfigDialog(master=root)  # type: ignore[arg-type]
-        root.wait_window(dialog)
-        server_url = dialog.server_address  # Retrieve the entered server URL
+    # Create initial UI elements
+    server_config_dialog = ServerConfigDialog()
+    main_menu: QMainWindow = MainMenu()
 
+    # If server URL is not present, ask the user to input it
     if not server_url:
-        # No server URL provided, show error and exit
-        messagebox.showerror(
-            LanguageManager.t(
-                lambda t: t.error_label,
-            ),
-            LanguageManager.t(
-                lambda t: t.server_address_not_provided_error_message,
-            ),
-        )
+        # Connect the dialog's accepted signal to load and show the main window
+        server_config_dialog.accepted.connect(main_menu.show)
+
+        # Show the prompt dialog to get server address from user
+        server_config_dialog.open()
     else:
-        # Close hidden root and launch main application window
-        root.destroy()  # close the hidden root
-        app = MainWindow(server_url)
-        app.mainloop()
+        # Else, show the main window directly
+        main_menu.show()
+
+    # Start the application's shared event loop and wait until closed
+    await app_close_event.wait()
 
 
 if __name__ == "__main__":
-    main()
+    # Create the QApplication instance
+    main_app = QApplication([])
+
+    # Call the main function to start the application event loop
+    asyncio.run(main(main_app), loop_factory=QEventLoop)

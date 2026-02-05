@@ -8,27 +8,15 @@ Application for EMS overseers to gather information from EMS servers.
 
 """  # noqa: D205
 
-__title__ = "HamyarPaygahPy"
+# ---- Package metadata (optional but professional) -----------------
+__application__ = True
+__app_name__ = "Hamyar Paygah"
 __author__ = "MohsenHNSJ"
-__license__ = "MIT"
+__description__ = "Desktop GUI application to access EMS server data."
 __copyright__ = "Copyright 2026-present MohsenHNSJ"
+__license__ = "MIT"
+__title__ = "HamyarPaygahPy"
 __version__ = "0.2.1"
 
-from . import main
-from .app import paths
-from .localization import language_manager
-from .models import mission_model
-from .services import missions_list_service, parsers
-from .ui.dialogs import server_config_dialog
-from .utils import text_utils
-
-__all__: list[str] = [
-    "language_manager",
-    "main",
-    "mission_model",
-    "missions_list_service",
-    "parsers",
-    "paths",
-    "server_config_dialog",
-    "text_utils",
-]
+# ---- Runtime flags (optional, but sometimes useful) ----------------
+__all__: tuple[str, ...] = ()  # Explicitly declare: no public API
