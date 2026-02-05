@@ -34,7 +34,7 @@ async def main(app: QApplication) -> None:
     coroutine-based concurrency model.
 
     Args:
-        app (QApplication): The active Qt application instance whose
+        app (PySide6.QtWidgets.QApplication): The active Qt application instance whose
             lifecycle is monitored for shutdown events.
     """
     # Signal application shutdown.

@@ -47,7 +47,7 @@ class MainMenu(QMainWindow):
         """Ensure from date is always equal or less than the to date.
 
         Args:
-            new_date (QDate): User input date when from date picker is changed.
+            new_date (PySide6.QtCore.QDate): User input date when from date picker is changed.
         """
         # Check if the new date is greater than to date
         if new_date > self.ui.to_date_picker.date():  # type: ignore[]
