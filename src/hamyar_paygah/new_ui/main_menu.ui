@@ -15,8 +15,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>500</height>
+    <width>800</width>
+    <height>600</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -103,7 +103,7 @@
               </date>
              </property>
              <property name="currentSection">
-              <enum>QDateTimeEdit::Section::DaySection</enum>
+              <enum>QDateTimeEdit::Section::YearSection</enum>
              </property>
              <property name="displayFormat">
               <string>dd/MM/yyyy</string>
@@ -164,7 +164,7 @@
               </date>
              </property>
              <property name="currentSection">
-              <enum>QDateTimeEdit::Section::DaySection</enum>
+              <enum>QDateTimeEdit::Section::YearSection</enum>
              </property>
              <property name="displayFormat">
               <string>dd/MM/yyyy</string>
@@ -277,6 +277,9 @@
           <property name="sortingEnabled">
            <bool>true</bool>
           </property>
+          <attribute name="horizontalHeaderMinimumSectionSize">
+           <number>80</number>
+          </attribute>
          </widget>
         </item>
        </layout>

@@ -1,8 +1,11 @@
 """Utilities related to date and time."""
 
+# ruff: noqa: DTZ001
+# pylint: disable=E0611
 from datetime import datetime
 
 import jdatetime  # type: ignore[import-untyped]
+from PySide6.QtCore import QDate
 
 
 def convert_string_iso_date_to_string_persian_date(string_iso_datetime: str) -> str:
@@ -22,3 +25,26 @@ def convert_string_iso_date_to_string_persian_date(string_iso_datetime: str) -> 
     )
 
     return str(persian_datetime)
+
+
+def convert_persian_q_date_to_gregorian_pythonic_date(persian_q_date: QDate) -> datetime:
+    """Converts Persian date in QDate format to Pythonic gregorian datetime object.
+
+    Args:
+        persian_q_date (QDate): Persian date in QDate format.
+
+    Returns:
+        datetime: Pythonic datetime object in gregorian format.
+    """
+    # Convert Persian QDate to gregorian QDate
+    gregorian_date: QDate = persian_q_date
+
+    # Convert QDate to normal pythonic datetime object
+    pythonic_datetime: datetime = datetime(
+        gregorian_date.year(),
+        gregorian_date.month(),
+        gregorian_date.day(),
+    )
+
+    # Return pythonic datetime
+    return pythonic_datetime

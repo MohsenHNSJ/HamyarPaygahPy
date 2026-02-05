@@ -74,7 +74,7 @@ class Ui_main_window:
             main_window.setObjectName("main_window")
         main_window.setWindowModality(Qt.WindowModality.NonModal)
         main_window.resize(800, 600)
-        main_window.setMinimumSize(QSize(500, 500))
+        main_window.setMinimumSize(QSize(800, 600))
         main_window.setAcceptDrops(False)
         main_window.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         main_window.setLocale(QLocale(QLocale.Persian, QLocale.Iran))
@@ -121,7 +121,7 @@ class Ui_main_window:
         self.from_date_picker.setMaximumDate(QDate(2100, 12, 31))
         self.from_date_picker.setMinimumDate(QDate(2000, 9, 14))
         self.from_date_picker.setCurrentSection(
-            QDateTimeEdit.Section.DaySection,
+            QDateTimeEdit.Section.YearSection,
         )
         self.from_date_picker.setCalendarPopup(True)
         self.from_date_picker.setTimeSpec(Qt.TimeSpec.LocalTime)
@@ -147,7 +147,9 @@ class Ui_main_window:
         )
         self.to_date_picker.setMaximumDate(QDate(2100, 12, 31))
         self.to_date_picker.setMinimumDate(QDate(2000, 9, 14))
-        self.to_date_picker.setCurrentSection(QDateTimeEdit.Section.DaySection)
+        self.to_date_picker.setCurrentSection(
+            QDateTimeEdit.Section.YearSection,
+        )
         self.to_date_picker.setCalendarPopup(True)
         self.to_date_picker.setTimeSpec(Qt.TimeSpec.LocalTime)
 
@@ -211,6 +213,7 @@ class Ui_main_window:
             QAbstractItemView.ScrollMode.ScrollPerPixel,
         )
         self.missions_list_table.setSortingEnabled(True)
+        self.missions_list_table.horizontalHeader().setMinimumSectionSize(80)
 
         self.verticalLayout_2.addWidget(self.missions_list_table)
 
