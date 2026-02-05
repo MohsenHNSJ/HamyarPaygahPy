@@ -5,7 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from PySide6.QtCore import QCalendar, QDate, Slot
+from PySide6.QtCore import QCalendar, QDate, QSortFilterProxyModel, Qt, Slot
 from PySide6.QtWidgets import QMainWindow
 from qasync import asyncSlot  # type: ignore[import-untyped]
 
@@ -86,10 +86,18 @@ class MainMenu(QMainWindow):
         )
 
         # Create the model for table view
-        model = MissionTableModel(missions_list)
+        source_model = MissionTableModel(missions_list)
+
+        # Proxy the model to enable sorting and filtering
+        proxy_model = QSortFilterProxyModel(self)
+        proxy_model.setSourceModel(source_model)
+        # Set proxy model to be case insensitive
+        proxy_model.setSortCaseSensitivity(
+            Qt.CaseInsensitive,
+        )  # type: ignore[attr-defined]
 
         # Set the model to table
-        self.ui.missions_list_table.setModel(model)
+        self.ui.missions_list_table.setModel(proxy_model)
 
     def populate_region_picker(self) -> None:
         """Populates the region picker with regions dictionary."""
