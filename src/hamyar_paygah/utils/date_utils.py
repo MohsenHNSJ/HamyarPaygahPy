@@ -31,10 +31,10 @@ def convert_persian_q_date_to_gregorian_pythonic_date(persian_q_date: QDate) -> 
     """Converts Persian date in QDate format to Pythonic gregorian datetime object.
 
     Args:
-        persian_q_date (QDate): Persian date in QDate format.
+        persian_q_date (PySide6.QtCore.QDate): Persian date in QDate format.
 
     Returns:
-        datetime: Pythonic datetime object in gregorian format.
+        datetime.datetime: Pythonic datetime object in gregorian format.
     """
     # Convert Persian QDate to gregorian QDate
     gregorian_date: QDate = persian_q_date
