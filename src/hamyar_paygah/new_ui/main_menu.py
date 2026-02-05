@@ -87,8 +87,12 @@ class Ui_main_window:
         self.tab_widget.setTabShape(QTabWidget.TabShape.Rounded)
         self.missions_list_tab = QWidget()
         self.missions_list_tab.setObjectName("missions_list_tab")
-        self.verticalLayout_2 = QVBoxLayout(self.missions_list_tab)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.missions_list_vertical_layout = QVBoxLayout(
+            self.missions_list_tab,
+        )
+        self.missions_list_vertical_layout.setObjectName(
+            "missions_list_vertical_layout",
+        )
         self.missions_list_search_filters = QWidget(self.missions_list_tab)
         self.missions_list_search_filters.setObjectName(
             "missions_list_search_filters",
@@ -193,7 +197,9 @@ class Ui_main_window:
 
         self.horizontalLayout.addWidget(self.load_button)
 
-        self.verticalLayout_2.addWidget(self.missions_list_search_filters)
+        self.missions_list_vertical_layout.addWidget(
+            self.missions_list_search_filters,
+        )
 
         self.missions_list_table = QTableView(self.missions_list_tab)
         self.missions_list_table.setObjectName("missions_list_table")
@@ -215,12 +221,9 @@ class Ui_main_window:
         self.missions_list_table.setSortingEnabled(True)
         self.missions_list_table.horizontalHeader().setMinimumSectionSize(80)
 
-        self.verticalLayout_2.addWidget(self.missions_list_table)
+        self.missions_list_vertical_layout.addWidget(self.missions_list_table)
 
         self.tab_widget.addTab(self.missions_list_tab, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.tab_widget.addTab(self.tab_2, "")
 
         self.vertical_layout.addWidget(self.tab_widget)
 
@@ -297,12 +300,6 @@ class Ui_main_window:
                 "\u0644\u06cc\u0633\u062a \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0647\u0627",
                 None,
             ),
-        )
-        self.tab_widget.setTabText(
-            self.tab_widget.indexOf(
-                self.tab_2,
-            ),
-            QCoreApplication.translate("main_window", "Tab 2", None),
         )
 
     # retranslateUi
