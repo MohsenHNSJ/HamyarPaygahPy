@@ -63,7 +63,7 @@ Technology Stack
 ----------------
 
 - Python 3.13
-- Tkinter (GUI framework)
+- Qt (GUI framework)
 
 The project is built and packaged by GitHub workflows and distributed as
 a Windows executable (``.exe``).

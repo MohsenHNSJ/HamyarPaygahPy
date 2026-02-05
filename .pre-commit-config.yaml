@@ -44,7 +44,7 @@ repos:
 
     # A set of pre-commit hooks for jsonschema validation.
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.0
+    rev: 0.36.1
     hooks:
       # Validate Dependabot Config (v2)
       - id: check-dependabot
@@ -130,24 +130,24 @@ repos:
 
     # Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.14
+    rev: v0.15.0
     hooks:
       # Run the linter
       - id: ruff
         # Also fix errors
-        args: [--fix]
+        args: [--fix, --color, always]
         # Run the formatter
       - id: ruff-format
 
     # Identify unused dependencies and avoid a bloated virtual environment.
   - repo: https://github.com/fredrikaverpil/creosote.git
-    rev: v4.1.0
+    rev: v4.2.0
     hooks:
       - id: creosote
 
     # Poetry
   - repo: https://github.com/python-poetry/poetry
-    rev: 2.3.1
+    rev: 2.3.2
     hooks:
       # Make sure the poetry configuration does not get committed in a broken state.
       - id: poetry-check
