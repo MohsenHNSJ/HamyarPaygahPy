@@ -95,6 +95,7 @@ extensions += ["sphinx.ext.intersphinx"]
 intersphinx_mapping: dict[str, tuple[str, None]] = {
     "python": ("https://docs.python.org/3/", None),
     "aiohttp": ("https://docs.aiohttp.org/en/stable/", None),
+    "pyside6": ("https://doc.qt.io/qtforpython-6", None),
 }
 
 # Add support for nice Not Found 404 pages
