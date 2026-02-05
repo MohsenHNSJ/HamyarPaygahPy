@@ -246,6 +246,7 @@
     "Tkinter",
     "toctree",
     "tomlkit",
+    "tqdm",
     "tryceratops",
     "typehints",
     "typer",
