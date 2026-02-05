@@ -793,14 +793,14 @@ test-randomorder = ["pytest-randomly"]
 
 [[package]]
 name = "cssselect"
-version = "1.3.0"
+version = "1.4.0"
 description = "cssselect parses CSS3 Selectors and translates them to XPath 1.0"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "cssselect-1.3.0-py3-none-any.whl", hash = "sha256:56d1bf3e198080cc1667e137bc51de9cadfca259f03c2d4e09037b3e01e30f0d"},
-    {file = "cssselect-1.3.0.tar.gz", hash = "sha256:57f8a99424cfab289a1b6a816a43075a4b00948c86b4dcf3ef4ee7e15f7ab0c7"},
+    {file = "cssselect-1.4.0-py3-none-any.whl", hash = "sha256:c0ec5c0191c8ee39fcc8afc1540331d8b55b0183478c50e9c8a79d44dbceb1d8"},
+    {file = "cssselect-1.4.0.tar.gz", hash = "sha256:fdaf0a1425e17dfe8c5cf66191d211b357cf7872ae8afc4c6762ddd8ac47fc92"},
 ]
 
 [[package]]
@@ -3754,4 +3754,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.15"
-content-hash = "4beafb2c8b6a17589dbc8f88c5243941b3fda7eb3dc8d9a8f74693e602fd5891"
+content-hash = "aa47f7337ec55c1327207724476817832fbd0ffedb828a415724ac40caf1d305"
