@@ -47,10 +47,18 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QAbstractScrollArea,
+    QAbstractSpinBox,
     QApplication,
+    QComboBox,
+    QDateEdit,
+    QDateTimeEdit,
+    QFrame,
+    QHBoxLayout,
     QHeaderView,
+    QLabel,
     QMainWindow,
     QMenuBar,
+    QPushButton,
     QSizePolicy,
     QStatusBar,
     QTableView,
@@ -68,6 +76,8 @@ class Ui_main_window:
         main_window.resize(800, 600)
         main_window.setMinimumSize(QSize(500, 500))
         main_window.setAcceptDrops(False)
+        main_window.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        main_window.setLocale(QLocale(QLocale.Persian, QLocale.Iran))
         self.central_widget = QWidget(main_window)
         self.central_widget.setObjectName("central_widget")
         self.vertical_layout = QVBoxLayout(self.central_widget)
@@ -79,6 +89,110 @@ class Ui_main_window:
         self.missions_list_tab.setObjectName("missions_list_tab")
         self.verticalLayout_2 = QVBoxLayout(self.missions_list_tab)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.missions_list_search_filters = QWidget(self.missions_list_tab)
+        self.missions_list_search_filters.setObjectName(
+            "missions_list_search_filters",
+        )
+        self.horizontalLayout = QHBoxLayout(self.missions_list_search_filters)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.from_date_label = QLabel(self.missions_list_search_filters)
+        self.from_date_label.setObjectName("from_date_label")
+        self.from_date_label.setMaximumSize(QSize(50, 16777215))
+        self.from_date_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.from_date_label.setAlignment(
+            Qt.AlignmentFlag.AlignLeading
+            | Qt.AlignmentFlag.AlignLeft
+            | Qt.AlignmentFlag.AlignVCenter,
+        )
+        self.from_date_label.setTextInteractionFlags(
+            Qt.TextInteractionFlag.NoTextInteraction,
+        )
+
+        self.horizontalLayout.addWidget(self.from_date_label)
+
+        self.from_date_picker = QDateEdit(self.missions_list_search_filters)
+        self.from_date_picker.setObjectName("from_date_picker")
+        self.from_date_picker.setMaximumSize(QSize(110, 16777215))
+        self.from_date_picker.setWrapping(False)
+        self.from_date_picker.setAccelerated(True)
+        self.from_date_picker.setCorrectionMode(
+            QAbstractSpinBox.CorrectionMode.CorrectToNearestValue,
+        )
+        self.from_date_picker.setMaximumDate(QDate(2100, 12, 31))
+        self.from_date_picker.setMinimumDate(QDate(2000, 9, 14))
+        self.from_date_picker.setCurrentSection(
+            QDateTimeEdit.Section.DaySection,
+        )
+        self.from_date_picker.setCalendarPopup(True)
+        self.from_date_picker.setTimeSpec(Qt.TimeSpec.LocalTime)
+
+        self.horizontalLayout.addWidget(self.from_date_picker)
+
+        self.to_date_label = QLabel(self.missions_list_search_filters)
+        self.to_date_label.setObjectName("to_date_label")
+        self.to_date_label.setMaximumSize(QSize(50, 16777215))
+        self.to_date_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.to_date_label.setTextInteractionFlags(
+            Qt.TextInteractionFlag.NoTextInteraction,
+        )
+
+        self.horizontalLayout.addWidget(self.to_date_label)
+
+        self.to_date_picker = QDateEdit(self.missions_list_search_filters)
+        self.to_date_picker.setObjectName("to_date_picker")
+        self.to_date_picker.setMaximumSize(QSize(110, 16777215))
+        self.to_date_picker.setAccelerated(True)
+        self.to_date_picker.setCorrectionMode(
+            QAbstractSpinBox.CorrectionMode.CorrectToNearestValue,
+        )
+        self.to_date_picker.setMaximumDate(QDate(2100, 12, 31))
+        self.to_date_picker.setMinimumDate(QDate(2000, 9, 14))
+        self.to_date_picker.setCurrentSection(QDateTimeEdit.Section.DaySection)
+        self.to_date_picker.setCalendarPopup(True)
+        self.to_date_picker.setTimeSpec(Qt.TimeSpec.LocalTime)
+
+        self.horizontalLayout.addWidget(self.to_date_picker)
+
+        self.line = QFrame(self.missions_list_search_filters)
+        self.line.setObjectName("line")
+        self.line.setMinimumSize(QSize(30, 0))
+        self.line.setFrameShape(QFrame.Shape.VLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout.addWidget(self.line)
+
+        self.region_label = QLabel(self.missions_list_search_filters)
+        self.region_label.setObjectName("region_label")
+        self.region_label.setMaximumSize(QSize(50, 16777215))
+        self.region_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.region_label.setTextInteractionFlags(
+            Qt.TextInteractionFlag.NoTextInteraction,
+        )
+
+        self.horizontalLayout.addWidget(self.region_label)
+
+        self.region_picker = QComboBox(self.missions_list_search_filters)
+        self.region_picker.setObjectName("region_picker")
+        self.region_picker.setMaximumSize(QSize(150, 16777215))
+
+        self.horizontalLayout.addWidget(self.region_picker)
+
+        self.line_2 = QFrame(self.missions_list_search_filters)
+        self.line_2.setObjectName("line_2")
+        self.line_2.setMinimumSize(QSize(30, 0))
+        self.line_2.setFrameShape(QFrame.Shape.VLine)
+        self.line_2.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout.addWidget(self.line_2)
+
+        self.load_button = QPushButton(self.missions_list_search_filters)
+        self.load_button.setObjectName("load_button")
+        self.load_button.setMaximumSize(QSize(150, 16777215))
+
+        self.horizontalLayout.addWidget(self.load_button)
+
+        self.verticalLayout_2.addWidget(self.missions_list_search_filters)
+
         self.missions_list_table = QTableView(self.missions_list_tab)
         self.missions_list_table.setObjectName("missions_list_table")
         self.missions_list_table.setSizeAdjustPolicy(
@@ -128,24 +242,58 @@ class Ui_main_window:
         main_window.setWindowTitle(
             QCoreApplication.translate(
                 "main_window",
-                "Main Menu",
+                "\u0647\u0645\u06cc\u0627\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647",
                 None,
             ),
         )
-        # if QT_CONFIG(statustip)
-        self.missions_list_tab.setStatusTip(
+        self.from_date_label.setText(
             QCoreApplication.translate(
                 "main_window",
-                "Missions list tab",
+                "\u0627\u0632 \u062a\u0627\u0631\u06cc\u062e:",
                 None,
             ),
         )
-        # endif // QT_CONFIG(statustip)
-        self.tab_widget.setTabText(
-            self.tab_widget.indexOf(
-                self.missions_list_tab,
+        self.from_date_picker.setDisplayFormat(
+            QCoreApplication.translate("main_window", "dd/MM/yyyy", None),
+        )
+        self.to_date_label.setText(
+            QCoreApplication.translate(
+                "main_window",
+                "\u062a\u0627 \u062a\u0627\u0631\u06cc\u062e:",
+                None,
             ),
-            QCoreApplication.translate("main_window", "Missions List", None),
+        )
+        self.to_date_picker.setDisplayFormat(
+            QCoreApplication.translate("main_window", "dd/MM/yyyy", None),
+        )
+        self.region_label.setText(
+            QCoreApplication.translate(
+                "main_window",
+                "\u0645\u0646\u0637\u0642\u0647:",
+                None,
+            ),
+        )
+        self.region_picker.setPlaceholderText(
+            QCoreApplication.translate(
+                "main_window",
+                "\u0639\u0628\u0627\u0633 \u0622\u0628\u0627\u062f",
+                None,
+            ),
+        )
+        self.load_button.setText(
+            QCoreApplication.translate(
+                "main_window",
+                "\u062f\u0631\u06cc\u0627\u0641\u062a",
+                None,
+            ),
+        )
+        self.tab_widget.setTabText(
+            self.tab_widget.indexOf(self.missions_list_tab),
+            QCoreApplication.translate(
+                "main_window",
+                "\u0644\u06cc\u0633\u062a \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0647\u0627",
+                None,
+            ),
         )
         self.tab_widget.setTabText(
             self.tab_widget.indexOf(

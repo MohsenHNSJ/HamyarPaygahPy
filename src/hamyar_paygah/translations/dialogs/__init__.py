@@ -1,1 +1,0 @@
-"""Translations related to dialogs."""

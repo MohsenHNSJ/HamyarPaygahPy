@@ -207,6 +207,7 @@
     "pytype",
     "pyupgrade",
     "pyupio",
+    "qasync",
     "QLCD",
     "qube",
     "refreshenv",
@@ -292,6 +293,7 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.extraPaths": [
     "${workspaceFolder}/",
+    "./src",
     "./src",
     "./src"
   ],
