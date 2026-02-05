@@ -75,6 +75,7 @@ types-lxml = "2026.1.1"
 # But only required by the above packages
 anyio = "4.12.1"
 certifi = "2026.1.4"
+cryptography = "46.0.4"
 filelock = "3.20.3"
 identify = "2.6.16"
 librt = "0.7.8"
