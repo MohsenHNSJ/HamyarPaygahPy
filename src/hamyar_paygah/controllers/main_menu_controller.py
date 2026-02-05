@@ -83,11 +83,29 @@ class MainMenu(QMainWindow):
         """Populates the region picker with regions dictionary."""
         # Define available regions
         available_regions: list[Region] = [
-            Region("1", 1),
-            Region("2", 2),
-            Region("3", 3),
-            Region("4", 4),
+            Region("ساری", 1),
+            Region("چالوس", 2),
+            Region("رامسر", 3),
+            Region("تنکابن", 4),
             Region("عباس آباد", 5),
+            Region("6", 6),
+            Region("7", 7),
+            Region("8", 8),
+            Region("9", 9),
+            Region("نوشهر", 10),
+            Region("11", 11),
+            Region("جویبار", 12),
+            Region("13", 13),
+            Region("14", 14),
+            Region("15", 15),
+            Region("گلوگاه", 16),
+            Region("17", 17),
+            Region("18", 18),
+            Region("19", 19),
+            Region("20", 20),
+            Region("21", 21),
+            Region("کلاردشت", 22),
+            Region("23", 23),
         ]
 
         # Populate the region picker
