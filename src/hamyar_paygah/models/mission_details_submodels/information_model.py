@@ -1,5 +1,7 @@
 """Information sub-model for Mission details model."""
+# pylint: disable=R0902
 
+import datetime
 from dataclasses import dataclass
 
 
@@ -43,13 +45,13 @@ class Information:
     """National code of the patient."""
     document_serial_number: str
     """Serial number of mission details"""
-    caller_number: int
+    caller_number: str
     """Number of the emergency caller"""
-    backup_number: int
+    backup_number: str
     """Backup number provided by emergency caller"""
     ambulance_code: int
     """Code of the ambulance responding to mission"""
-    document_request_time: str
+    document_request_time: datetime.datetime
     """Timestamp of the last update to the mission details"""
     province: str
     """Province the mission is located at"""
