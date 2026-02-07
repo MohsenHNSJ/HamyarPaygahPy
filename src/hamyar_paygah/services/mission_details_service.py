@@ -100,32 +100,32 @@ async def get_mission_details(
 
 async def test() -> None:
     """Temporary test function."""
-    test: MissionDetails = await get_mission_details(
+    test_m: MissionDetails = await get_mission_details(
         str(load_server_address()),
         6330344,
         1182628,
     )
 
     print("---Information---")
-    for field in fields(test.information):
+    for field in fields(test_m.information):
         print(
-            f"{field.name.replace('_', ' ').title():<30} {getattr(test.information, field.name)}",
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.information, field.name)}",
         )
-    print(f"{'Full Age':<30} {test.information.full_age}")
+    print(f"{'Full Age':<30} {test_m.information.full_age}")
 
     print("---Times and Distances---")
-    for field in fields(test.times_and_distances):
+    for field in fields(test_m.times_and_distances):
         print(
-            f"{field.name.replace('_', ' ').title():<30} {getattr(test.times_and_distances, field.name)}",  # noqa: E501
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.times_and_distances, field.name)}",  # noqa: E501 # pylint: disable=C0301
         )
     print(
-        f"{'Overall mission distance':<30} {test.times_and_distances.overall_mission_distance}",
+        f"{'Overall mission distance':<30} {test_m.times_and_distances.overall_mission_distance}",
     )
 
     print("---Location and Emergency---")
-    for field in fields(test.location_and_emergency):
+    for field in fields(test_m.location_and_emergency):
         print(
-            f"{field.name.replace('_', ' ').title():<30} {getattr(test.location_and_emergency, field.name)}",  # noqa: E501
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.location_and_emergency, field.name)}",  # noqa: E501 # pylint: disable=C0301
         )
 
 

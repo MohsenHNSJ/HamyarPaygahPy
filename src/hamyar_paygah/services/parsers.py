@@ -418,6 +418,10 @@ def _parse_location_and_emergency_sub_model(
             "VaziatMasdoomSayer",
             namespaces,
         ),
-        vehicle_type=get_enum_from_boolean_flags(document, namespaces, VehicleType),
+        vehicle_type=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            VehicleType,
+        ),
     )
     return lae_sub_model
