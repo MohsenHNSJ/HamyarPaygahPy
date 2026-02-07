@@ -3,6 +3,9 @@
 from dataclasses import dataclass
 
 from hamyar_paygah.models.mission_details_submodels.information_model import Information
+from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
+    LocationAndEmergency,
+)
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
@@ -16,3 +19,4 @@ class MissionDetails:
     """General information of the mission"""
     times_and_distances: TimesAndDistances
     """Times and distances information of the mission"""
+    location_and_emergency: LocationAndEmergency

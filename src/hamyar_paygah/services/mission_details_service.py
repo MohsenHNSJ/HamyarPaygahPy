@@ -100,19 +100,33 @@ async def get_mission_details(
 
 async def test() -> None:
     """Temporary test function."""
-    test_mission_details: MissionDetails = await get_mission_details(
+    test: MissionDetails = await get_mission_details(
         str(load_server_address()),
         6330344,
         1182628,
     )
 
     print("---Information---")
-    for field in fields(test_mission_details.information):
+    for field in fields(test.information):
         print(
-            f"{field.name.replace('_', ' ').title():<30} {getattr(test_mission_details.information, field.name)}",  # noqa: E501
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test.information, field.name)}",
         )
+    print(f"{'Full Age':<30} {test.information.full_age}")
 
-    print(f"{'Full Age':<30} {test_mission_details.information.full_age}")
+    print("---Times and Distances---")
+    for field in fields(test.times_and_distances):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test.times_and_distances, field.name)}",  # noqa: E501
+        )
+    print(
+        f"{'Overall mission distance':<30} {test.times_and_distances.overall_mission_distance}",
+    )
+
+    print("---Location and Emergency---")
+    for field in fields(test.location_and_emergency):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test.location_and_emergency, field.name)}",  # noqa: E501
+        )
 
 
 if __name__ == "__main__":

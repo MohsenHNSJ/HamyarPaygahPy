@@ -30,3 +30,15 @@ it's saved on multiple boolean states:
 - A simple yes or no question of wether the patient is an iranian
 or not is saved in two boolean variables:
 ```<a:IsIrani>``` ```<a:IsGheirIrani>```
+
+- ```<a:AfzayeshFesharKoon>``` Really? :/
+
+- ```<a:Haipogelesimi>``` What english class you have been?!
+
+- ```<a:Hipergelesimi>``` Hiper Market ...
+
+- The server cannot save ```Low blood pressure``` as the type of illness.
+This options is available in the client, but server ignores it
+and does not save it.
+
+- And many more that i don't want to care anymore...

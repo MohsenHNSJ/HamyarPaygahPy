@@ -12,6 +12,14 @@ from lxml import etree
 
 from hamyar_paygah.models.mission_details_model import MissionDetails
 from hamyar_paygah.models.mission_details_submodels.information_model import Information
+from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
+    AccidentType,
+    IllnessType,
+    InjuryRole,
+    LocationAndEmergency,
+    LocationType,
+    VehicleType,
+)
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
@@ -24,7 +32,7 @@ from hamyar_paygah.utils.text_utils import (
     convert_to_integer,
     convert_to_time,
 )
-from hamyar_paygah.utils.xml_utils import get_text
+from hamyar_paygah.utils.xml_utils import get_enum_from_boolean_flags, get_text
 
 
 def parse_to_missions_list(xml_text: str) -> list[Mission]:
@@ -140,11 +148,17 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         document,
         namespaces,
     )
+    # Create location and emergency sub-model
+    location_and_emergency: LocationAndEmergency = _parse_location_and_emergency_sub_model(
+        document,
+        namespaces,
+    )
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
         information=information,
         times_and_distances=times_and_distances,
+        location_and_emergency=location_and_emergency,
     )
 
     return mission_details
@@ -348,3 +362,62 @@ def _parse_times_and_distances_sub_model(
     )
 
     return tad_sub_model
+
+
+def _parse_location_and_emergency_sub_model(
+    document: etree._Element,
+    namespaces: dict[str, str],
+) -> LocationAndEmergency:
+    """Parses the location and emergency sub model and returns it.
+
+    Args:
+        document (etree._Element): XML SOAP document
+        namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+        LocationAndEmergency: Location and emergency sub model
+    """
+    lae_sub_model: LocationAndEmergency = LocationAndEmergency(
+        address=get_text(document, "Address", namespaces),
+        chief_complaint=get_text(document, "CC", namespaces),
+        location_type=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            LocationType,
+        ),
+        location_other_info=get_text(
+            document,
+            "MahalForiatSayer",
+            namespaces,
+        ),
+        accident_type=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            AccidentType,
+        ),
+        illness_type=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            IllnessType,
+        ),
+        is_vehicle_accident=convert_to_bool(
+            get_text(document, "Tasadofat", namespaces),
+        ),
+        emergency_type_other_info=get_text(
+            document,
+            "TashkhisAvaliyeSayer",
+            namespaces,
+        ),
+        role_in_accident=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            InjuryRole,
+        ),
+        role_in_accident_other_info=get_text(
+            document,
+            "VaziatMasdoomSayer",
+            namespaces,
+        ),
+        vehicle_type=get_enum_from_boolean_flags(document, namespaces, VehicleType),
+    )
+    return lae_sub_model
