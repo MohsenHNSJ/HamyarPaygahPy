@@ -6,6 +6,7 @@ from hamyar_paygah.models.mission_details_submodels.information_model import Inf
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
     LocationAndEmergency,
 )
+from hamyar_paygah.models.mission_details_submodels.symptoms_sub_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
@@ -20,3 +21,6 @@ class MissionDetails:
     times_and_distances: TimesAndDistances
     """Times and distances information of the mission"""
     location_and_emergency: LocationAndEmergency
+    """Location and emergency information of the mission"""
+    symptoms: Symptoms
+    """Symptoms of the patient"""

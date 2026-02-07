@@ -1,71 +1,9 @@
 """Utility functions related to text."""
 
 import datetime
-import re
 from urllib.parse import urlparse
 
 import jdatetime  # type: ignore[import-untyped]
-
-
-def convert_to_integer(text: str | None) -> int | None:
-    """Safely converts an optional string to an integer.
-
-    This function is useful when parsing XML fields that may be empty
-    or marked as nil.
-    If a field contains both alphabets and numbers, the alphabets will be ignored
-
-    Args:
-        text (str | None): A string representing an integer, or None.
-
-    Returns:
-        int | None: The integer value if `text` is not None, otherwise None.
-    """
-    result: int | None = None
-
-    # If input is empty, return None
-    if not text:
-        return result
-
-    # Try to extract the number regularly
-    try:
-        result = int(text)
-    # If the input is a mix of numbers and alphabets, extract numbers
-    except ValueError:
-        match = re.search(r"\d+", text)
-        result = int(match.group()) if match else None
-
-    return result
-
-
-def convert_to_bool(text: str | None) -> bool:
-    """Safely converts an optional string to a bool.
-
-    This function is useful when parsing XML fields that may be empty
-    or marked as nil.
-
-    Args:
-        text (str | None): A string representing a bool, or None.
-
-    Returns:
-        bool: The bool value if `text` is not None, otherwise `False`.
-    """
-    return text == "true"
-
-
-def convert_to_time(text: str | None) -> datetime.time | None:
-    """Converts the input text into a datetime.time object.
-
-    Args:
-        text (str): Time as string
-
-    Returns:
-        datetime.time | None: Time object or None if input is invalid
-    """
-    # If time is not provided by server, return None
-    if text == "-" or text is None:
-        return None
-    # Else, convert the string to time
-    return datetime.datetime.strptime(text, "%H:%M:%S").time()  # noqa: DTZ007
 
 
 def convert_date_to_datetime(date_string: str | None) -> datetime.datetime | None:

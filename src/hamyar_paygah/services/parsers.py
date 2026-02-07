@@ -20,6 +20,7 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
     LocationType,
     VehicleType,
 )
+from hamyar_paygah.models.mission_details_submodels.symptoms_sub_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
@@ -28,11 +29,14 @@ from hamyar_paygah.utils.math_utils import calculate_time_delta
 from hamyar_paygah.utils.text_utils import (
     convert_date_and_time_to_datetime,
     convert_date_to_datetime,
-    convert_to_bool,
-    convert_to_integer,
-    convert_to_time,
 )
-from hamyar_paygah.utils.xml_utils import get_enum_from_boolean_flags, get_text
+from hamyar_paygah.utils.xml_utils import (
+    get_bool,
+    get_enum_from_boolean_flags,
+    get_integer,
+    get_text,
+    get_time,
+)
 
 
 def parse_to_missions_list(xml_text: str) -> list[Mission]:
@@ -70,40 +74,27 @@ def parse_to_missions_list(xml_text: str) -> list[Mission]:
     for document in document_list:
         missions_list.append(  # noqa: PERF401
             Mission(
-                address=get_text(document, "Address", namespaces) or "",
-                ambulance_code=convert_to_integer(
-                    get_text(document, "AmbulanceCode", namespaces),
-                )
-                or 0,
-                code=convert_to_integer(
-                    get_text(document, "MissionCode", namespaces),
-                )
-                or 0,
-                date=get_text(document, "Date", namespaces) or "",
-                hospital_id=convert_to_integer(
-                    get_text(document, "HospitalId", namespaces),
-                )
-                or 0,
+                address=get_text(document, "Address", namespaces),
+                ambulance_code=get_integer(
+                    document,
+                    "AmbulanceCode",
+                    namespaces,
+                ),
+                code=get_integer(document, "MissionCode", namespaces),
+                date=get_text(document, "Date", namespaces),
+                hospital_id=get_integer(document, "HospitalId", namespaces),
                 hospital_name=get_text(document, "Hospital", namespaces),
-                id=convert_to_integer(
-                    get_text(document, "MissionId", namespaces),
-                )
-                or 0,
-                patient_id=convert_to_integer(
-                    get_text(document, "PatientId", namespaces),
-                )
-                or 0,
-                patient_name=get_text(document, "Name", namespaces) or "",
+                id=get_integer(document, "MissionId", namespaces),
+                patient_id=get_integer(document, "PatientId", namespaces),
+                patient_name=get_text(document, "Name", namespaces),
                 persian_date=get_text(
                     document,
                     "PersianDate",
                     namespaces,
-                )
-                or "",
-                result=get_text(document, "Result", namespaces) or "",
+                ),
+                result=get_text(document, "Result", namespaces),
             ),
         )
-
     return missions_list
 
 
@@ -153,12 +144,15 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         document,
         namespaces,
     )
+    # Create symptoms sub-model
+    symptoms: Symptoms = _parse_symptoms(document, namespaces)
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
         information=information,
         times_and_distances=times_and_distances,
         location_and_emergency=location_and_emergency,
+        symptoms=symptoms,
     )
 
     return mission_details
@@ -177,32 +171,16 @@ def _parse_information_sub_model(
     Returns:
         Information: Information sub model
     """
-    information_sub_model: Information = Information(
+    return Information(
         patient_name=get_text(document, "BimarName", namespaces),
-        years_of_age=convert_to_integer(
-            get_text(document, "Age", namespaces),
-        ),
-        months_of_age=convert_to_integer(
-            get_text(document, "AgeMonth", namespaces),
-        ),
-        iranian_nationality=convert_to_bool(
-            get_text(document, "IsIrani", namespaces),
-        ),
-        foreign_nationality=convert_to_bool(
-            get_text(document, "IsGheirIrani", namespaces),
-        ),
-        is_male_gender=convert_to_bool(
-            get_text(document, "IsMozakar", namespaces),
-        ),
-        is_female_gender=convert_to_bool(
-            get_text(document, "IsMoanas", namespaces),
-        ),
-        is_unknown_gender=convert_to_bool(
-            get_text(document, "IsNamoshakhas", namespaces),
-        ),
-        national_code=convert_to_integer(
-            get_text(document, "CodeMelli", namespaces),
-        ),
+        years_of_age=get_integer(document, "Age", namespaces),
+        months_of_age=get_integer(document, "AgeMonth", namespaces),
+        iranian_nationality=get_bool(document, "IsIrani", namespaces),
+        foreign_nationality=get_bool(document, "IsGheirIrani", namespaces),
+        is_male_gender=get_bool(document, "IsMozakar", namespaces),
+        is_female_gender=get_bool(document, "IsMoanas", namespaces),
+        is_unknown_gender=get_bool(document, "IsNamoshakhas", namespaces),
+        national_code=get_integer(document, "CodeMelli", namespaces),
         document_serial_number=get_text(
             document,
             "ShomareSerialParvade",
@@ -218,9 +196,7 @@ def _parse_information_sub_model(
             "TelPoshtibani",
             namespaces,
         ),
-        ambulance_code=convert_to_integer(
-            get_text(document, "AmbulanceCode", namespaces),
-        ),
+        ambulance_code=get_integer(document, "AmbulanceCode", namespaces),
         document_request_time=convert_date_and_time_to_datetime(
             str(
                 get_text(
@@ -243,8 +219,6 @@ def _parse_information_sub_model(
         ),
     )
 
-    return information_sub_model
-
 
 def _parse_times_and_distances_sub_model(
     document: etree._Element,
@@ -257,56 +231,74 @@ def _parse_times_and_distances_sub_model(
         mission_date=convert_date_to_datetime(
             get_text(document, "MamooriatDate", namespaces),
         ),
-        mission_received_time=convert_to_time(
-            get_text(document, "DaryaftMamooriat", namespaces),
+        mission_received_time=get_time(
+            document,
+            "DaryaftMamooriat",
+            namespaces,
         ),
-        depart_from_station_odometer=convert_to_integer(
-            get_text(document, "KMHarkat", namespaces),
+        depart_from_station_odometer=get_integer(
+            document,
+            "KMHarkat",
+            namespaces,
         ),
-        arrive_at_emergency_odometer=convert_to_integer(
-            get_text(document, "KMResidanBeForiat", namespaces),
+        arrive_at_emergency_odometer=get_integer(
+            document,
+            "KMResidanBeForiat",
+            namespaces,
         ),
-        arrive_at_hospital_odometer=convert_to_integer(
-            get_text(document, "KMResidanBeDarmani", namespaces),
+        arrive_at_hospital_odometer=get_integer(
+            document,
+            "KMResidanBeDarmani",
+            namespaces,
         ),
-        mission_complete_odometer=convert_to_integer(
-            get_text(document, "KMPayanMamooriat", namespaces),
+        mission_complete_odometer=get_integer(
+            document,
+            "KMPayanMamooriat",
+            namespaces,
         ),
-        arrive_at_station_odometer=convert_to_integer(
-            get_text(document, "KMesidanBePaygah", namespaces),
+        arrive_at_station_odometer=get_integer(
+            document,
+            "KMesidanBePaygah",
+            namespaces,
         ),
-        vehicle_refuel_odometer=convert_to_integer(
-            get_text(document, "KMSookhtgiri", namespaces),
+        vehicle_refuel_odometer=get_integer(
+            document,
+            "KMSookhtgiri",
+            namespaces,
         ),
-        senior_staff_code=convert_to_integer(
-            get_text(document, "StaffArshad", namespaces),
+        senior_staff_code=get_integer(document, "StaffArshad", namespaces),
+        first_staff_code=get_integer(document, "Staff1", namespaces),
+        second_staff_code=get_integer(document, "Staff2", namespaces),
+        depart_from_station_time=get_time(
+            document,
+            "HarkatAzPaygah",
+            namespaces,
         ),
-        first_staff_code=convert_to_integer(
-            get_text(document, "Staff1", namespaces),
+        arrive_at_emergency_time=get_time(
+            document,
+            "ResidanBeForiat",
+            namespaces,
         ),
-        second_staff_code=convert_to_integer(
-            get_text(document, "Staff2", namespaces),
+        depart_from_emergency_time=get_time(
+            document,
+            "HarkatAzForiat",
+            namespaces,
         ),
-        depart_from_station_time=convert_to_time(
-            get_text(document, "HarkatAzPaygah", namespaces),
+        arrive_at_hospital_time=get_time(
+            document,
+            "ResidanBeDarmani",
+            namespaces,
         ),
-        arrive_at_emergency_time=convert_to_time(
-            get_text(document, "ResidanBeForiat", namespaces),
+        deliver_to_hospital_time=get_time(
+            document,
+            "TahvilBedarmani",
+            namespaces,
         ),
-        depart_from_emergency_time=convert_to_time(
-            get_text(document, "HarkatAzForiat", namespaces),
-        ),
-        arrive_at_hospital_time=convert_to_time(
-            get_text(document, "ResidanBeDarmani", namespaces),
-        ),
-        deliver_to_hospital_time=convert_to_time(
-            get_text(document, "TahvilBedarmani", namespaces),
-        ),
-        mission_complete_time=convert_to_time(
-            get_text(document, "PayanMamooriat", namespaces),
-        ),
-        arrive_at_station_time=convert_to_time(
-            get_text(document, "ResidanBePaygah", namespaces),
+        mission_complete_time=get_time(document, "PayanMamooriat", namespaces),
+        arrive_at_station_time=get_time(
+            document,
+            "ResidanBePaygah",
+            namespaces,
         ),
         time_to_depart=zero_time_delta,
         time_to_arrive=zero_time_delta,
@@ -363,7 +355,7 @@ def _parse_location_and_emergency_sub_model(
     Returns:
         LocationAndEmergency: Location and emergency sub model
     """
-    lae_sub_model: LocationAndEmergency = LocationAndEmergency(
+    return LocationAndEmergency(
         address=get_text(document, "Address", namespaces),
         chief_complaint=get_text(document, "CC", namespaces),
         location_type=get_enum_from_boolean_flags(
@@ -386,9 +378,7 @@ def _parse_location_and_emergency_sub_model(
             namespaces,
             IllnessType,
         ),
-        is_vehicle_accident=convert_to_bool(
-            get_text(document, "Tasadofat", namespaces),
-        ),
+        is_vehicle_accident=get_bool(document, "Tasadofat", namespaces),
         emergency_type_other_info=get_text(
             document,
             "TashkhisAvaliyeSayer",
@@ -410,4 +400,47 @@ def _parse_location_and_emergency_sub_model(
             VehicleType,
         ),
     )
-    return lae_sub_model
+
+
+def _parse_symptoms(document: etree._Element, namespaces: dict[str, str]) -> Symptoms:
+    """Parses the symptoms sub model and returns it.
+
+    Args:
+         document (etree._Element): XML SOAP document
+         namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+         Symptoms: Symptoms sub model
+    """
+    return Symptoms(
+        has_abdominal_pain=get_bool(document, "DShekami", namespaces),
+        has_weakness=get_bool(document, "ZafBihali", namespaces),
+        has_bleeding=get_bool(document, "Khoonizi", namespaces),
+        has_diarrhea=get_bool(document, "Eshal", namespaces),
+        has_vomiting=get_bool(document, "Tahavoestefragh", namespaces),
+        has_altered_consciousness=get_bool(
+            document,
+            "EkhtelalHooshyari",
+            namespaces,
+        ),
+        has_headache=get_bool(document, "Sardard", namespaces),
+        has_fever_chills=get_bool(document, "TaboLarz", namespaces),
+        has_fainting=get_bool(document, "BihooshiGozara", namespaces),
+        has_blurred_vision=get_bool(document, "TariDid", namespaces),
+        has_double_vision=get_bool(document, "Dobini", namespaces),
+        has_sensory_motor_disturbance=get_bool(
+            document,
+            "EkhtelaHesiHarkati",
+            namespaces,
+        ),
+        has_memory_loss_post_trauma=get_bool(
+            document,
+            "FaramooshiBadAzZarbe",
+            namespaces,
+        ),
+        has_dizziness=get_bool(document, "Sargije", namespaces),
+        has_sweating=get_bool(document, "Tarigh", namespaces),
+        has_chest_pain=get_bool(document, "dardGhafaseSadra", namespaces),
+        has_shortness_of_breath=get_bool(document, "TangiNafas", namespaces),
+        other_symptoms=get_text(document, "AlaemHamrahSayer", namespaces),
+    )
