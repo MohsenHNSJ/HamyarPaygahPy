@@ -6,10 +6,11 @@ from hamyar_paygah.models.mission_details_submodels.information_model import Inf
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
     LocationAndEmergency,
 )
-from hamyar_paygah.models.mission_details_submodels.symptoms_sub_model import Symptoms
+from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
+from hamyar_paygah.models.mission_details_submodels.vital_signs_model import VitalSigns
 
 
 @dataclass(slots=True)
@@ -24,3 +25,4 @@ class MissionDetails:
     """Location and emergency information of the mission"""
     symptoms: Symptoms
     """Symptoms of the patient"""
+    vital_signs: list[VitalSigns]

@@ -128,6 +128,12 @@ async def test() -> None:
             f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.location_and_emergency, field.name)}",  # noqa: E501 # pylint: disable=C0301
         )
 
+    print("---Symptoms---")
+    for field in fields(test_m.symptoms):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.symptoms, field.name)}",
+        )
+
 
 if __name__ == "__main__":
     import asyncio

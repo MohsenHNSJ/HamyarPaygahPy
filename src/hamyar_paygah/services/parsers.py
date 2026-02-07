@@ -20,10 +20,11 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
     LocationType,
     VehicleType,
 )
-from hamyar_paygah.models.mission_details_submodels.symptoms_sub_model import Symptoms
+from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
+from hamyar_paygah.models.mission_details_submodels.vital_signs_model import VitalSigns
 from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.utils.math_utils import calculate_time_delta
 from hamyar_paygah.utils.text_utils import (
@@ -130,22 +131,24 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
 
     # Create sub-models
     # Create information sub-model
-    information: Information = _parse_information_sub_model(
+    information: Information = _parse_information(
         document,
         namespaces,
     )
     # Create times and distances sub-model
-    times_and_distances: TimesAndDistances = _parse_times_and_distances_sub_model(
+    times_and_distances: TimesAndDistances = _parse_times_and_distances(
         document,
         namespaces,
     )
     # Create location and emergency sub-model
-    location_and_emergency: LocationAndEmergency = _parse_location_and_emergency_sub_model(
+    location_and_emergency: LocationAndEmergency = _parse_location_and_emergency(
         document,
         namespaces,
     )
     # Create symptoms sub-model
     symptoms: Symptoms = _parse_symptoms(document, namespaces)
+    # Create vital signs sub-model
+    vital_signs: list[VitalSigns] = _parse_vital_signs(document, namespaces)
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -153,12 +156,13 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         times_and_distances=times_and_distances,
         location_and_emergency=location_and_emergency,
         symptoms=symptoms,
+        vital_signs=vital_signs,
     )
 
     return mission_details
 
 
-def _parse_information_sub_model(
+def _parse_information(
     document: etree._Element,
     namespaces: dict[str, str],
 ) -> Information:
@@ -220,7 +224,7 @@ def _parse_information_sub_model(
     )
 
 
-def _parse_times_and_distances_sub_model(
+def _parse_times_and_distances(
     document: etree._Element,
     namespaces: dict[str, str],
 ) -> TimesAndDistances:
@@ -342,7 +346,7 @@ def _parse_times_and_distances_sub_model(
     return tad_sub_model
 
 
-def _parse_location_and_emergency_sub_model(
+def _parse_location_and_emergency(
     document: etree._Element,
     namespaces: dict[str, str],
 ) -> LocationAndEmergency:
@@ -444,3 +448,39 @@ def _parse_symptoms(document: etree._Element, namespaces: dict[str, str]) -> Sym
         has_shortness_of_breath=get_bool(document, "TangiNafas", namespaces),
         other_symptoms=get_text(document, "AlaemHamrahSayer", namespaces),
     )
+
+
+def _parse_vital_signs(document: etree._Element, namespaces: dict[str, str]) -> list[VitalSigns]:
+    """Extracts patient vital sign records from SOAP XML response.
+
+    Args:
+        document (etree._Element): XML SOAP document
+        namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+        list[VitalSigns]: List of vita signs
+    """
+    # Create and empty list
+    vital_signs: list[VitalSigns] = []
+
+    # Iterate through all four available records
+    for i in range(1, 5):
+        record = VitalSigns(
+            record_time=get_time(document, f"Time{i}", namespaces),
+            respiratory_rate=get_integer(document, f"Rr{i}", namespaces),
+            pulse_rate=get_integer(document, f"PR{i}", namespaces),
+            blood_pressure=get_text(document, f"BP{i}", namespaces),
+            blood_sugar=get_integer(document, f"BS{i}", namespaces),
+            oxygen_saturation=get_integer(document, f"SPO2{i}", namespaces),
+            gcs_eye=get_integer(document, f"E4{i}", namespaces),
+            gcs_verbal=get_integer(document, f"v5{i}", namespaces),
+            gcs_motor=get_integer(document, f"m6{i}", namespaces),
+            gcs_total=get_integer(document, f"T15{i}", namespaces),
+        )
+
+        # If the vital sign has a valid record time
+        if record.record_time is not None:
+            # Add it to the list
+            vital_signs.append(record)
+
+    return vital_signs
