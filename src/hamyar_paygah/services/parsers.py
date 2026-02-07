@@ -178,61 +178,49 @@ def _parse_information_sub_model(
         Information: Information sub model
     """
     information_sub_model: Information = Information(
-        patient_name=get_text(document, "BimarName", namespaces) or "",
+        patient_name=get_text(document, "BimarName", namespaces),
         years_of_age=convert_to_integer(
             get_text(document, "Age", namespaces),
-        )
-        or 0,
+        ),
         months_of_age=convert_to_integer(
             get_text(document, "AgeMonth", namespaces),
-        )
-        or 0,
+        ),
         iranian_nationality=convert_to_bool(
             get_text(document, "IsIrani", namespaces),
-        )
-        or False,
+        ),
         foreign_nationality=convert_to_bool(
             get_text(document, "IsGheirIrani", namespaces),
-        )
-        or False,
+        ),
         is_male_gender=convert_to_bool(
             get_text(document, "IsMozakar", namespaces),
-        )
-        or False,
+        ),
         is_female_gender=convert_to_bool(
             get_text(document, "IsMoanas", namespaces),
-        )
-        or False,
+        ),
         is_unknown_gender=convert_to_bool(
             get_text(document, "IsNamoshakhas", namespaces),
-        )
-        or False,
+        ),
         national_code=convert_to_integer(
             get_text(document, "CodeMelli", namespaces),
-        )
-        or 0,
+        ),
         document_serial_number=get_text(
             document,
             "ShomareSerialParvade",
             namespaces,
-        )
-        or "",  # Parvade?? :/
+        ),  # Parvade?? :/
         caller_number=get_text(
             document,
             "TelAsli",
             namespaces,
-        )
-        or "",
+        ),
         backup_number=get_text(
             document,
             "TelPoshtibani",
             namespaces,
-        )
-        or "",
+        ),
         ambulance_code=convert_to_integer(
             get_text(document, "AmbulanceCode", namespaces),
-        )
-        or 0,
+        ),
         document_request_time=convert_date_and_time_to_datetime(
             str(
                 get_text(
@@ -247,14 +235,12 @@ def _parse_information_sub_model(
             document,
             "Province",
             namespaces,
-        )
-        or "",
+        ),
         summary=get_text(
             document,
             "Tozihat",
             namespaces,
-        )
-        or "",
+        ),
     )
 
     return information_sub_model

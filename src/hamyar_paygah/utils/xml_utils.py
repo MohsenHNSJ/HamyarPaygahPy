@@ -21,8 +21,15 @@ def get_text(document: etree._Element, tag: str, namespaces: dict[str, str]) -> 
         path=f"a:{tag}",
         namespaces=namespaces,
     )
-    # If element has data, return it's text, else return none
-    return element.text if element is not None else None
+    # If element has data, check the data
+    if element is not None:
+        # If it's invalid, return None
+        if element.text == "-":
+            return None
+        # Else, return data
+        return element.text
+    # Else, return None
+    return None
 
 
 # E is some kind of Enum, and the return type matches the input enum

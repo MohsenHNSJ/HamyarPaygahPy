@@ -94,19 +94,25 @@ def convert_date_to_datetime(date_string: str | None) -> datetime.datetime | Non
     return datetime.datetime.combine(gregorian_date, datetime.time.min)
 
 
-def convert_date_and_time_to_datetime(date: str, time: str) -> datetime.datetime:
+def convert_date_and_time_to_datetime(
+    date_string: str | None,
+    time_string: str | None,
+) -> datetime.datetime | None:
     """Converts jalali date and time strings into a gregorian datetime.
 
     Args:
-        date (str): Jalali date
-        time (str): Jalali time
+        date_string (str): Jalali date
+        time_string (str): Jalali time
 
     Returns:
         datetime.datetime: gregorian datetime object.
     """
+    # If inputs are `None` or invalid, return `None`
+    if date_string is None or time_string is None or date_string == "-" or time_string == "-":
+        return None
     # Split the input values
-    year, month, day = map(int, date.split("/"))
-    hour, minute = map(int, time.split(":"))
+    year, month, day = map(int, date_string.split("/"))
+    hour, minute = map(int, time_string.split(":"))
 
     # Create a jalali date time using split values
     jalali_datetime: jdatetime.datetime = jdatetime.datetime(
