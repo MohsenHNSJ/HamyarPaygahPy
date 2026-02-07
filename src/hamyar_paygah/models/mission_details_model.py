@@ -3,6 +3,9 @@
 from dataclasses import dataclass
 
 from hamyar_paygah.models.mission_details_submodels.information_model import Information
+from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
+    TimesAndDistances,
+)
 
 
 @dataclass(slots=True)
@@ -11,3 +14,5 @@ class MissionDetails:
 
     information: Information
     """General information of the mission"""
+    times_and_distances: TimesAndDistances
+    """Times and distances information of the mission"""
