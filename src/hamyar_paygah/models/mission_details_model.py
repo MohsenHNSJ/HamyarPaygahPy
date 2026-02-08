@@ -1,4 +1,5 @@
 """Defines the Mission details model used in Hamyar Paygah EMS client."""
+# pylint: disable=R0902
 
 from dataclasses import dataclass
 
@@ -6,6 +7,7 @@ from hamyar_paygah.models.mission_details_submodels.information_model import Inf
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
     LocationAndEmergency,
 )
+from hamyar_paygah.models.mission_details_submodels.medical_actions_model import MedicalActions
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
 from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import PupilsLungsHeart
 from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
@@ -36,3 +38,5 @@ class MissionDetails:
     """Status of pupils, lungs and heart of the patient."""
     trauma_types: TraumaTypes
     """Trauma types of the patient."""
+    medical_actions: MedicalActions
+    """Medical actions performed for the patient"""

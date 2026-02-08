@@ -4,7 +4,7 @@ This module provides functions to parse SOAP XML responses from the EMS server
 and convert them into Python data models.
 """
 
-# pylint: disable=I1101
+# pylint: disable=I1101,R0914
 import datetime
 from typing import cast
 
@@ -19,6 +19,10 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
     LocationAndEmergency,
     LocationType,
     VehicleType,
+)
+from hamyar_paygah.models.mission_details_submodels.medical_actions_model import (
+    ActionTiming,
+    MedicalActions,
 )
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
 from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import (
@@ -180,6 +184,11 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
     )
     # Create trauma types sub-model
     trauma_types: TraumaTypes = _parse_trauma_types(document, namespaces)
+    # Create medical actions sub-model
+    medical_actions: MedicalActions = _parse_medical_actions(
+        document,
+        namespaces,
+    )
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -191,6 +200,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         medical_history=medical_history,
         pupils_lungs_heart=pupils_lungs_heart,
         trauma_types=trauma_types,
+        medical_actions=medical_actions,
     )
 
     return mission_details
@@ -683,7 +693,7 @@ def _parse_heart_status(document: etree._Element, namespaces: dict[str, str]) ->
     return Heart(sound=heart_sound, rhythm=heart_rhythm)
 
 
-def _parse_trauma_types(document: etree.Element, namespaces: dict[str, str]) -> TraumaTypes:
+def _parse_trauma_types(document: etree._Element, namespaces: dict[str, str]) -> TraumaTypes:
     """Parses the trauma types sub model and returns it.
 
     Args:
@@ -729,4 +739,179 @@ def _parse_trauma_types(document: etree.Element, namespaces: dict[str, str]) -> 
         burn_percentage=get_text(document, "DarsadSookhtegi", namespaces),
         front_trauma_locations=get_text(document, "Jolo", namespaces),
         rear_trauma_locations=get_text(document, "Aghab", namespaces),
+    )
+
+
+def _parse_medical_actions(document: etree._Element, namespaces: dict[str, str]) -> MedicalActions:
+    """Parses the medical actions sub model and returns it.
+
+    Args:
+         document (etree._Element): XML SOAP document
+         namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+         MedicalActions: Medical actions sub model
+    """
+    # Get suction
+    suction: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "SucktionGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "SucktionBad", namespaces),
+    )
+    # Get cpr
+    cpr: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "CPRGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "CPRBad", namespaces),
+    )
+    # Get dressing
+    dressing: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "PansemanGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "PansemanBad", namespaces),
+    )
+    # Get airway tube
+    airway_tube: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "LooleGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "LooleBad", namespaces),
+    )
+    # Get cardiac massage
+    cardiac_massage: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "MasajGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "MasajBad", namespaces),
+    )
+    # Get assisted ventilation
+    assisted_ventilation: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "TnafosGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "TanafosBad", namespaces),
+    )
+    # Get vital signs
+    vital_signs: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "VSGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "VSBad", namespaces),
+    )
+    # Get consultation
+    consultation: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "MoshavereGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "MoshavereBad", namespaces),
+    )
+    # Get defibrillation
+    defibrillation: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "ShockGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "ShockBad", namespaces),
+    )
+    # Get monitoring
+    monitoring: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "MonitoringGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "MonitoringBad", namespaces),
+    )
+    # Get iv access
+    iv_access: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "RagGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "RagBad", namespaces),
+    )
+    # Get oxygen therapy
+    oxygen_therapy: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "OxygenGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "OxygenBad", namespaces),
+    )
+    # Get cbr
+    cbr: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "CbrGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "CbrBad", namespaces),
+    )
+    # Get head immobilization
+    head_immobilization: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "SarGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "SarBad", namespaces),
+    )
+    # Get limb immobilization
+    limb_immobilization: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "AndamGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "AndamBad", namespaces),
+    )
+    # Get spinal immobilization
+    spinal_immobilization: ActionTiming = ActionTiming(
+        before_ems=get_bool(
+            document,
+            "SotoonGhabl",
+            namespaces,
+        ),
+        after_ems=get_bool(document, "StoonBad", namespaces),
+    )
+
+    return MedicalActions(
+        suction=suction,
+        cpr=cpr,
+        dressing=dressing,
+        airway_tube=airway_tube,
+        cardiac_massage=cardiac_massage,
+        assisted_ventilation=assisted_ventilation,
+        vital_signs=vital_signs,
+        consultation=consultation,
+        defibrillation=defibrillation,
+        monitoring=monitoring,
+        iv_access=iv_access,
+        oxygen_therapy=oxygen_therapy,
+        cbr=cbr,
+        head_immobilization=head_immobilization,
+        limb_immobilization=limb_immobilization,
+        spinal_immobilization=spinal_immobilization,
     )
