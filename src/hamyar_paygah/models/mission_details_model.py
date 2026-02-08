@@ -12,6 +12,7 @@ from hamyar_paygah.models.mission_details_submodels.symptoms_model import Sympto
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
+from hamyar_paygah.models.mission_details_submodels.trauma_types_model import TraumaTypes
 from hamyar_paygah.models.mission_details_submodels.vital_signs_model import VitalSigns
 
 
@@ -33,3 +34,5 @@ class MissionDetails:
     """Medical history of the patient"""
     pupils_lungs_heart: PupilsLungsHeart
     """Status of pupils, lungs and heart of the patient."""
+    trauma_types: TraumaTypes
+    """Trauma types of the patient."""

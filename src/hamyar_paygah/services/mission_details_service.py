@@ -67,6 +67,10 @@ async def _fetch_mission_details(
         ) as response,
     ):
         response_text: str = await response.text()
+
+        # if server response is empty, raise an error
+        if response_text == "":
+            raise aiohttp.ServerConnectionError
         return response_text
 
 
@@ -159,6 +163,12 @@ async def test() -> None:  # noqa: C901
     for field in fields(test_m.pupils_lungs_heart.heart):
         print(
             f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.pupils_lungs_heart.heart, field.name)}",  # noqa: E501 # pylint: disable=C0301
+        )
+
+    print("---Trauma Types---")
+    for field in fields(test_m.trauma_types):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.trauma_types, field.name)}",  # noqa: E501 # pylint: disable=C0301
         )
 
 

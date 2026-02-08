@@ -37,6 +37,12 @@ from hamyar_paygah.models.mission_details_submodels.symptoms_model import Sympto
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
 )
+from hamyar_paygah.models.mission_details_submodels.trauma_types_model import (
+    DistalPulseStatus,
+    FractureType,
+    PatientExtrication,
+    TraumaTypes,
+)
 from hamyar_paygah.models.mission_details_submodels.vital_signs_model import VitalSigns
 from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.utils.math_utils import calculate_time_delta
@@ -172,6 +178,8 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         document,
         namespaces,
     )
+    # Create trauma types sub-model
+    trauma_types: TraumaTypes = _parse_trauma_types(document, namespaces)
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -182,6 +190,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         vital_signs=vital_signs,
         medical_history=medical_history,
         pupils_lungs_heart=pupils_lungs_heart,
+        trauma_types=trauma_types,
     )
 
     return mission_details
@@ -672,3 +681,52 @@ def _parse_heart_status(document: etree._Element, namespaces: dict[str, str]) ->
 
     # Return heart
     return Heart(sound=heart_sound, rhythm=heart_rhythm)
+
+
+def _parse_trauma_types(document: etree.Element, namespaces: dict[str, str]) -> TraumaTypes:
+    """Parses the trauma types sub model and returns it.
+
+    Args:
+         document (etree._Element): XML SOAP document
+         namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+         TraumaTypes: trauma types sub model
+    """
+    return TraumaTypes(
+        has_deformity=get_bool(document, "TaghirShekl", namespaces),
+        has_abrasion=get_bool(document, "Kharashidegi", namespaces),
+        has_tenderness=get_bool(document, "Tenderes", namespaces),
+        has_crush_injury=get_bool(document, "LehShodegi", namespaces),
+        has_swelling=get_bool(document, "Tavarom", namespaces),
+        has_dislocation=get_bool(document, "DarRaftegi", namespaces),
+        has_contusion=get_bool(document, "Kooftegi", namespaces),
+        has_puncture_wound=get_bool(document, "SoorakhShodegi", namespaces),
+        has_laceration=get_bool(document, "Boridegi", namespaces),
+        has_tear=get_bool(document, "PareShodegi", namespaces),
+        has_amputation=get_bool(document, "GhateOzv", namespaces),
+        has_external_bleeding=get_bool(document, "ZKhoonRizi", namespaces),
+        has_sensory_deficit=get_bool(document, "ZayeHesi", namespaces),
+        has_motor_deficit=get_bool(document, "ZayeHarkati", namespaces),
+        has_penetrating_trauma=get_bool(document, "Nafez", namespaces),
+        has_blunt_trauma=get_bool(document, "Blant", namespaces),
+        patient_extraction=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            PatientExtrication,
+        ),
+        fracture_type=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            FractureType,
+        ),
+        distal_pulse_status=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            DistalPulseStatus,
+        ),
+        burn_type=get_text(document, "Sookhtegi", namespaces),
+        burn_percentage=get_text(document, "DarsadSookhtegi", namespaces),
+        front_trauma_locations=get_text(document, "Jolo", namespaces),
+        rear_trauma_locations=get_text(document, "Aghab", namespaces),
+    )
