@@ -21,6 +21,18 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
     VehicleType,
 )
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
+from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import (
+    BreathingRhythm,
+    Heart,
+    HeartRhythm,
+    HeartSound,
+    Lungs,
+    LungSide,
+    LungSound,
+    Pupils,
+    PupilsLungsHeart,
+    PupilStatus,
+)
 from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
@@ -155,6 +167,11 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         document,
         namespaces,
     )
+    # Create pupils, lungs and heart sub-model
+    pupils_lungs_heart: PupilsLungsHeart = _parse_pupils_lungs_heart(
+        document,
+        namespaces,
+    )
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -164,6 +181,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         symptoms=symptoms,
         vital_signs=vital_signs,
         medical_history=medical_history,
+        pupils_lungs_heart=pupils_lungs_heart,
     )
 
     return mission_details
@@ -533,3 +551,124 @@ def _parse_medical_history(document: etree._Element, namespaces: dict[str, str])
         has_pulmonary_disease=get_bool(document, "TRiavi", namespaces),
         has_other_medical_history=get_bool(document, "TSayer", namespaces),
     )
+
+
+def _parse_pupils_lungs_heart(
+    document: etree._Element,
+    namespaces: dict[str, str],
+) -> PupilsLungsHeart:
+    """Parses the pupils, lungs and heart sub model and returns it.
+
+    Args:
+        document (etree._Element): XML SOAP document
+        namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+        PupilsLungsHeart: Pupils, lungs and heart model
+    """
+    # Create pupils model
+    pupils: Pupils = Pupils(
+        right=_parse_pupil_status(document, namespaces, "R"),
+        left=_parse_pupil_status(document, namespaces, "L"),
+    )
+    # Create lungs model
+    lungs: Lungs = Lungs(
+        right=_parse_lung_status(document, namespaces, "R"),
+        left=_parse_lung_status(document, namespaces, "L"),
+    )
+    # Create heart model
+    heart: Heart = _parse_heart_status(document, namespaces)
+
+    # Return the final model
+    return PupilsLungsHeart(pupils=pupils, lungs=lungs, heart=heart)
+
+
+def _parse_pupil_status(
+    document: etree._Element,
+    namespaces: dict[str, str],
+    pupil_side: str,
+) -> PupilStatus | None:
+    """Parses the status of pupil from server into Pupil status object.
+
+    Args:
+        document (etree._Element): XML SOAP response
+        namespaces (dict[str, str]): SOAP namespaces
+        pupil_side (str): "R" for right side and "L" for left side
+
+    Returns:
+        PupilStatus | None: PupilStatus object or none.
+    """
+    # Return pupils status
+    if get_bool(document, f"MardommakNo{pupil_side}", namespaces):
+        return PupilStatus.NORMAL
+    if get_bool(document, f"MardommakDi{pupil_side}", namespaces):
+        return PupilStatus.DILATED
+    if get_bool(document, f"MardommakMi{pupil_side}", namespaces):
+        return PupilStatus.MIOTIC
+    if get_bool(document, f"MardommakBe{pupil_side}", namespaces):
+        return PupilStatus.NO_RESPONSE
+    # Return None if all false
+    return None
+
+
+def _parse_lung_status(
+    document: etree._Element,
+    namespaces: dict[str, str],
+    lung_side: str,
+) -> LungSide:
+    """Parses the status of lung from server into Lung side object.
+
+    Args:
+        document (etree._Element): XML SOAP response
+        namespaces (dict[str, str]): SOAP namespaces
+        lung_side (str): "R" for right side and "L" for left side.
+
+    Returns:
+        LungSide: LungSide object.
+    """
+    # Get lung sound
+    lung_sound: LungSound | None = None
+    if get_bool(document, f"RieNo{lung_side}", namespaces):
+        lung_sound = LungSound.NORMAL
+    if get_bool(document, f"RieRa{lung_side}", namespaces):
+        lung_sound = LungSound.RALES
+    if get_bool(document, f"RieBa{lung_side}", namespaces):
+        lung_sound = LungSound.WHEEZE
+
+    # Get lung rhythm
+    lung_rhythm: BreathingRhythm | None = None
+    if get_bool(document, f"RieMo{lung_side}", namespaces):
+        lung_rhythm = BreathingRhythm.REGULAR
+    if get_bool(document, f"RieNa{lung_side}", namespaces):
+        lung_rhythm = BreathingRhythm.IRREGULAR
+
+    # Return lung status
+    return LungSide(sound=lung_sound, rhythm=lung_rhythm)
+
+
+def _parse_heart_status(document: etree._Element, namespaces: dict[str, str]) -> Heart:
+    """Parses the status of heart from server into heart object.
+
+    Args:
+        document (etree._Element): XML SOAP response
+        namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+        Heart: Heart object.
+    """
+    # Get heart sound
+    heart_sound: HeartSound | None = None
+    if get_bool(document, "GhalbNormal", namespaces):
+        heart_sound = HeartSound.NORMAL
+    if get_bool(document, "GhalbSafi", namespaces):
+        heart_sound = HeartSound.ABNORMAL
+
+    # Get heart rhythm
+    heart_rhythm: HeartRhythm | None = None
+    if get_bool(document, "GhalbMonazam", namespaces):
+        heart_rhythm = HeartRhythm.REGULAR
+    if get_bool(document, "GhalbNamonazam", namespaces):
+        heart_rhythm = HeartRhythm.IRREGULAR
+
+    # Return heart
+    return Heart(sound=heart_sound, rhythm=heart_rhythm)

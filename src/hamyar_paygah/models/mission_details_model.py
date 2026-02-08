@@ -7,6 +7,7 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
     LocationAndEmergency,
 )
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
+from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import PupilsLungsHeart
 from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
@@ -30,3 +31,5 @@ class MissionDetails:
     """Vital signs of the patient"""
     medical_history: MedicalHistory
     """Medical history of the patient"""
+    pupils_lungs_heart: PupilsLungsHeart
+    """Status of pupils, lungs and heart of the patient."""

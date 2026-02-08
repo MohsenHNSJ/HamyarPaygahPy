@@ -98,7 +98,7 @@ async def get_mission_details(
     return mission_details
 
 
-async def test() -> None:
+async def test() -> None:  # noqa: C901
     """Temporary test function."""
     test_m: MissionDetails = await get_mission_details(
         str(load_server_address()),
@@ -145,6 +145,20 @@ async def test() -> None:
     for field in fields(test_m.medical_history):
         print(
             f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.medical_history, field.name)}",  # noqa: E501 # pylint: disable=C0301
+        )
+
+    print("Pupils Lungs Heart---")
+    for field in fields(test_m.pupils_lungs_heart.pupils):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.pupils_lungs_heart.pupils, field.name)}",  # noqa: E501 # pylint: disable=C0301
+        )
+    for field in fields(test_m.pupils_lungs_heart.lungs):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.pupils_lungs_heart.lungs, field.name)}",  # noqa: E501 # pylint: disable=C0301
+        )
+    for field in fields(test_m.pupils_lungs_heart.heart):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.pupils_lungs_heart.heart, field.name)}",  # noqa: E501 # pylint: disable=C0301
         )
 
 
