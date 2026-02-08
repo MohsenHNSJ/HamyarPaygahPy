@@ -26,7 +26,7 @@ def get_text(document: etree._Element, tag: str, namespaces: dict[str, str]) -> 
     # If element has data, check the data
     if element is not None:
         # If it's invalid, return None
-        if element.text == "-":
+        if element.text in {"-", "#"}:
             return None
         # Else, return data
         return element.text

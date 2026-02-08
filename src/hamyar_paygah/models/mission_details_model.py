@@ -6,6 +6,7 @@ from hamyar_paygah.models.mission_details_submodels.information_model import Inf
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
     LocationAndEmergency,
 )
+from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
 from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
@@ -26,3 +27,6 @@ class MissionDetails:
     symptoms: Symptoms
     """Symptoms of the patient"""
     vital_signs: list[VitalSigns]
+    """Vital signs of the patient"""
+    medical_history: MedicalHistory
+    """Medical history of the patient"""

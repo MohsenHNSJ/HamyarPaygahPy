@@ -20,6 +20,7 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
     LocationType,
     VehicleType,
 )
+from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
 from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
     TimesAndDistances,
@@ -149,6 +150,11 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
     symptoms: Symptoms = _parse_symptoms(document, namespaces)
     # Create vital signs sub-model
     vital_signs: list[VitalSigns] = _parse_vital_signs(document, namespaces)
+    # Create medical history sub-model
+    medical_history: MedicalHistory = _parse_medical_history(
+        document,
+        namespaces,
+    )
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -157,6 +163,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         location_and_emergency=location_and_emergency,
         symptoms=symptoms,
         vital_signs=vital_signs,
+        medical_history=medical_history,
     )
 
     return mission_details
@@ -484,3 +491,45 @@ def _parse_vital_signs(document: etree._Element, namespaces: dict[str, str]) -> 
             vital_signs.append(record)
 
     return vital_signs
+
+
+def _parse_medical_history(document: etree._Element, namespaces: dict[str, str]) -> MedicalHistory:
+    """Extracts patient medical history from SOAP XML response.
+
+    Args:
+        document (etree._Element): XML SOAP document
+        namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+        MedicalHistory: Medical history of patient
+    """
+    return MedicalHistory(
+        drug_allergies=get_text(document, "Hasasiatdarooei", namespaces),
+        current_medications=get_text(document, "DarooMasrafi", namespaces),
+        has_cardiac_disease=get_bool(document, "TGhalbi", namespaces),
+        has_hypertension=get_bool(document, "TFesharKhoon", namespaces),
+        has_substance_abuse=get_bool(document, "SooMasrafMavad", namespaces),
+        has_disability=get_bool(document, "TMalooliat", namespaces),
+        has_asthma=get_bool(document, "TAsm", namespaces),
+        has_stroke_history=get_bool(document, "TSakteMaghzi", namespaces),
+        has_psychiatric_disorder=get_bool(document, "TRavani", namespaces),
+        has_prior_trauma=get_bool(document, "TSabegheTroma", namespaces),
+        has_surgical_history=get_bool(document, "TJarahi", namespaces),
+        has_gastrointestinal_disease=get_bool(
+            document,
+            "TMoshkelatGovareshi",
+            namespaces,
+        ),
+        has_renal_disease=get_bool(document, "TMoshkeatKolyavi", namespaces),
+        has_seizure_disorder=get_bool(document, "TSar", namespaces),
+        has_infectious_disease=get_bool(document, "TOfooni", namespaces),
+        has_diabetes=get_bool(document, "TDiabet", namespaces),
+        has_malignancy_history=get_bool(
+            document,
+            "TSabegheBadkhimi",
+            namespaces,
+        ),
+        has_special_conditions=get_bool(document, "TKhas", namespaces),
+        has_pulmonary_disease=get_bool(document, "TRiavi", namespaces),
+        has_other_medical_history=get_bool(document, "TSayer", namespaces),
+    )
