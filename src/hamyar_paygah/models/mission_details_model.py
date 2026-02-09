@@ -10,6 +10,7 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
 )
 from hamyar_paygah.models.mission_details_submodels.medical_actions_model import MedicalActions
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
+from hamyar_paygah.models.mission_details_submodels.mission_result_model import MissionResult
 from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import PupilsLungsHeart
 from hamyar_paygah.models.mission_details_submodels.symptoms_model import Symptoms
 from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
@@ -43,3 +44,5 @@ class MissionDetails:
     """Medical actions performed for the patient"""
     drugs: list[Drug]
     """List of drugs administered to the patient"""
+    result: MissionResult
+    """Result of the mission"""

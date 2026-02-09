@@ -26,6 +26,10 @@ from hamyar_paygah.models.mission_details_submodels.medical_actions_model import
     MedicalActions,
 )
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
+from hamyar_paygah.models.mission_details_submodels.mission_result_model import (
+    MissionOutcome,
+    MissionResult,
+)
 from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import (
     BreathingRhythm,
     Heart,
@@ -192,6 +196,8 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
     )
     # Create list of drugs sub-model
     list_of_drugs: list[Drug] = _parse_drugs_list(document, namespaces)
+    # Create mission result sub-model
+    result: MissionResult = _parse_mission_result(document, namespaces)
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -205,6 +211,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         trauma_types=trauma_types,
         medical_actions=medical_actions,
         drugs=list_of_drugs,
+        result=result,
     )
 
     return mission_details
@@ -952,3 +959,24 @@ def _parse_drugs_list(document: etree._Element, namespaces: dict[str, str]) -> l
         )
 
     return list_of_drugs
+
+
+def _parse_mission_result(document: etree._Element, namespaces: dict[str, str]) -> MissionResult:
+    """Parses the mission result sub model and returns it.
+
+    Args:
+         document (etree._Element): XML SOAP document
+         namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+         Mission Result: mission result sub model
+    """
+    return MissionResult(
+        result=get_enum_from_boolean_flags(document, namespaces, MissionOutcome),
+        hospital_name=get_text(
+            document,
+            "MarkazDarmaniName",
+            namespaces,
+        ),
+        refusal_form_code=get_text(document, "BeratName", namespaces),
+    )
