@@ -185,6 +185,12 @@ async def test() -> None:  # noqa: C901, PLR0912
             f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.result, field.name)}",
         )
 
+    print("---Medical Center---")
+    for field in fields(test_m.medical_center):
+        print(
+            f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.medical_center, field.name)}",  # noqa: E501 # pylint: disable=C0301
+        )
+
 
 if __name__ == "__main__":
     import asyncio

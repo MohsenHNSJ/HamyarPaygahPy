@@ -9,6 +9,7 @@ from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model
     LocationAndEmergency,
 )
 from hamyar_paygah.models.mission_details_submodels.medical_actions_model import MedicalActions
+from hamyar_paygah.models.mission_details_submodels.medical_center_model import MedicalCenter
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
 from hamyar_paygah.models.mission_details_submodels.mission_result_model import MissionResult
 from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import PupilsLungsHeart
@@ -46,3 +47,5 @@ class MissionDetails:
     """List of drugs administered to the patient"""
     result: MissionResult
     """Result of the mission"""
+    medical_center: MedicalCenter
+    """Medical center information"""

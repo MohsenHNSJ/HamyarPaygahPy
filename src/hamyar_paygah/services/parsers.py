@@ -4,7 +4,7 @@ This module provides functions to parse SOAP XML responses from the EMS server
 and convert them into Python data models.
 """
 
-# pylint: disable=I1101,R0914
+# pylint: disable=I1101,R0914,C0302
 import datetime
 from typing import cast
 
@@ -25,6 +25,7 @@ from hamyar_paygah.models.mission_details_submodels.medical_actions_model import
     ActionTiming,
     MedicalActions,
 )
+from hamyar_paygah.models.mission_details_submodels.medical_center_model import MedicalCenter
 from hamyar_paygah.models.mission_details_submodels.medical_history_model import MedicalHistory
 from hamyar_paygah.models.mission_details_submodels.mission_result_model import (
     MissionOutcome,
@@ -198,6 +199,8 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
     list_of_drugs: list[Drug] = _parse_drugs_list(document, namespaces)
     # Create mission result sub-model
     result: MissionResult = _parse_mission_result(document, namespaces)
+    # Create medical center sub-model
+    medical_center: MedicalCenter = _parse_medical_center(document, namespaces)
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -212,6 +215,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         medical_actions=medical_actions,
         drugs=list_of_drugs,
         result=result,
+        medical_center=medical_center,
     )
 
     return mission_details
@@ -969,14 +973,63 @@ def _parse_mission_result(document: etree._Element, namespaces: dict[str, str]) 
          namespaces (dict[str, str]): SOAP namespaces
 
     Returns:
-         Mission Result: mission result sub model
+         MissionResult: mission result sub model
     """
     return MissionResult(
-        result=get_enum_from_boolean_flags(document, namespaces, MissionOutcome),
+        result=get_enum_from_boolean_flags(
+            document,
+            namespaces,
+            MissionOutcome,
+        ),
         hospital_name=get_text(
             document,
             "MarkazDarmaniName",
             namespaces,
         ),
         refusal_form_code=get_text(document, "BeratName", namespaces),
+    )
+
+
+def _parse_medical_center(document: etree._Element, namespaces: dict[str, str]) -> MedicalCenter:
+    """Parses the medical center sub model and returns it.
+
+    Args:
+         document (etree._Element): XML SOAP document
+         namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+         MedicalCenter: medical center sub model
+    """
+    return MedicalCenter(
+        receiving_physician_code=get_text(document, "CodePezeshkTahvilGirande", namespaces),
+        physician_code=get_text(
+            document,
+            "CodePezeshk",
+            namespaces,
+        ),
+        physician_1050_code=get_text(
+            document,
+            "CodePezeshk1050",
+            namespaces,
+        ),
+        physician_order=get_text(
+            document,
+            "DastoorPezeshk",
+            namespaces,
+        ),
+        physician_order_secondary=get_text(
+            document,
+            "DastoorPezeshk1",
+            namespaces,
+        ),
+        receiving_physician_name=get_text(
+            document,
+            "PezeshkTahvilGirande",
+            namespaces,
+        ),
+        handover_datetime=get_text(
+            document,
+            "TarikhTahvilBeDarmani",
+            namespaces,
+        ),
     )
