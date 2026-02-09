@@ -1,5 +1,6 @@
 """Services to get mission details from server."""
 
+# pylint: disable=R0912
 from dataclasses import fields
 
 import aiohttp
@@ -102,7 +103,7 @@ async def get_mission_details(
     return mission_details
 
 
-async def test() -> None:  # noqa: C901
+async def test() -> None:  # noqa: C901, PLR0912
     """Temporary test function."""
     test_m: MissionDetails = await get_mission_details(
         str(load_server_address()),
@@ -170,6 +171,13 @@ async def test() -> None:  # noqa: C901
         print(
             f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.trauma_types, field.name)}",  # noqa: E501 # pylint: disable=C0301
         )
+
+    for drug in test_m.drugs:
+        print("---Drugs---")
+        for field in fields(drug):
+            print(
+                f"{field.name.replace('_', ' ').title():<30} {getattr(drug, field.name)}",
+            )
 
 
 if __name__ == "__main__":
