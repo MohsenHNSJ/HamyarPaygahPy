@@ -33,7 +33,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="search_parameters" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -41,29 +41,6 @@
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="search_button">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>22</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>PushButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="mission_id_line_edit">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>22</height>
-         </size>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QLabel" name="mission_id_label">
         <property name="maximumSize">
@@ -73,12 +50,12 @@
          </size>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string>شماره ماموریت</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="patient_id_line_edit">
+       <widget class="QLineEdit" name="mission_id_line_edit">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -96,7 +73,33 @@
          </size>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string>شماره مددجو</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="patient_id_line_edit">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="search_button">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>جستجو</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -104,10 +107,36 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="mission_details">
      <property name="sizeConstraint">
       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
      </property>
+     <item>
+      <widget class="QWidget" name="information_section" native="true">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>100</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>نام مددجو</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="patient_name_field">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
