@@ -3,6 +3,7 @@
 
 from dataclasses import dataclass
 
+from hamyar_paygah.models.mission_details_submodels.drug_model import Drug
 from hamyar_paygah.models.mission_details_submodels.information_model import Information
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
     LocationAndEmergency,
@@ -40,3 +41,5 @@ class MissionDetails:
     """Trauma types of the patient."""
     medical_actions: MedicalActions
     """Medical actions performed for the patient"""
+    drugs: list[Drug]
+    """List of drugs administered to the patient"""

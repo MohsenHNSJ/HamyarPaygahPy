@@ -11,6 +11,7 @@ from typing import cast
 from lxml import etree
 
 from hamyar_paygah.models.mission_details_model import MissionDetails
+from hamyar_paygah.models.mission_details_submodels.drug_model import Drug
 from hamyar_paygah.models.mission_details_submodels.information_model import Information
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
     AccidentType,
@@ -189,6 +190,8 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         document,
         namespaces,
     )
+    # Create list of drugs sub-model
+    list_of_drugs: list[Drug] = _parse_drugs_list(document, namespaces)
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -201,6 +204,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         pupils_lungs_heart=pupils_lungs_heart,
         trauma_types=trauma_types,
         medical_actions=medical_actions,
+        drugs=list_of_drugs,
     )
 
     return mission_details
@@ -915,3 +919,36 @@ def _parse_medical_actions(document: etree._Element, namespaces: dict[str, str])
         limb_immobilization=limb_immobilization,
         spinal_immobilization=spinal_immobilization,
     )
+
+
+def _parse_drugs_list(document: etree._Element, namespaces: dict[str, str]) -> list[Drug]:
+    """Parses the list of drugs sub model and returns it.
+
+    Args:
+         document (etree._Element): XML SOAP document
+         namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+         list[Drug]: list of drugs sub model
+    """
+    # Create an empty list
+    list_of_drugs: list[Drug] = []
+
+    # Iterate through the drug variables from server
+    for i in range(1, 9):
+        # Get drug name
+        name: str | None = get_text(document, f"DName{i}", namespaces)
+        dose: str | None = get_text(document, f"DDoz{i}", namespaces)
+        route: str | None = get_text(document, f"DNahve{i}", namespaces)
+        time: str | None = get_text(document, f"DZaman{i}", namespaces)
+
+        # If name is empty, ignore
+        if not name:
+            continue
+
+        # Else, add it to the list
+        list_of_drugs.append(
+            Drug(name=name, dose=dose, route=route, time=time),
+        )
+
+    return list_of_drugs

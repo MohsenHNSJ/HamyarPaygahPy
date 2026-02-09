@@ -270,6 +270,7 @@
     "Nafas",
     "Nafez",
     "Naghlie",
+    "Nahve",
     "Namonazam",
     "Namoshakhas",
     "nitpicky",
@@ -461,6 +462,7 @@
     "yarl",
     "yscrollcommand",
     "Zadegi",
+    "Zaman",
     "Zamini",
     "Zarb",
     "Zarbe",
@@ -487,6 +489,7 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.extraPaths": [
     "${workspaceFolder}/",
+    "./src",
     "./src",
     "./src",
     "./src",
