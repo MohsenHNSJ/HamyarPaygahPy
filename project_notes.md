@@ -9,6 +9,18 @@ It's like they made it in a rush and never bothered to update.
 I'm no Bill gates, but i at least try to use some tools to help me
 program better and cleaner. They just made a bit messy shit. :/
 
+- The following values are not known and not processed:
+
+```xml
+<a:Asm>false</a:Asm>
+<a:DarmaniTahvilBedoonRezayat>false</a:DarmaniTahvilBedoonRezayat>
+<a:FotHozoor>false</a:FotHozoor>
+<a:HospitalText>-</a:HospitalText>
+<a:Sar>false</a:Sar>
+<a:SucktonBad>false</a:SucktonBad>
+<a:TromaSayer>false</a:TromaSayer>
+```
+
 - This value is unknown to me and has no value, therefore
 it's not processed currently: ```<a:Ranande>-</a:Ranande>```
 

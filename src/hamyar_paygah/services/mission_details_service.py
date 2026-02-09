@@ -190,6 +190,8 @@ async def test() -> None:  # noqa: C901, PLR0912
         print(
             f"{field.name.replace('_', ' ').title():<30} {getattr(test_m.medical_center, field.name)}",  # noqa: E501 # pylint: disable=C0301
         )
+    print("---Consumables---")
+    print(test_m.consumables.items.items())
 
 
 if __name__ == "__main__":

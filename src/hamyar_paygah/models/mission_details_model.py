@@ -3,6 +3,7 @@
 
 from dataclasses import dataclass
 
+from hamyar_paygah.models.mission_details_submodels.consumable_model import ConsumablesUsed
 from hamyar_paygah.models.mission_details_submodels.drug_model import Drug
 from hamyar_paygah.models.mission_details_submodels.information_model import Information
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
@@ -49,3 +50,5 @@ class MissionDetails:
     """Result of the mission"""
     medical_center: MedicalCenter
     """Medical center information"""
+    consumables: ConsumablesUsed
+    """Consumables used in this patient"""

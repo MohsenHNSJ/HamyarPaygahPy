@@ -6,11 +6,13 @@ and convert them into Python data models.
 
 # pylint: disable=I1101,R0914,C0302
 import datetime
+from collections import Counter
 from typing import cast
 
 from lxml import etree
 
 from hamyar_paygah.models.mission_details_model import MissionDetails
+from hamyar_paygah.models.mission_details_submodels.consumable_model import ConsumablesUsed
 from hamyar_paygah.models.mission_details_submodels.drug_model import Drug
 from hamyar_paygah.models.mission_details_submodels.information_model import Information
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
@@ -201,6 +203,11 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
     result: MissionResult = _parse_mission_result(document, namespaces)
     # Create medical center sub-model
     medical_center: MedicalCenter = _parse_medical_center(document, namespaces)
+    # Create consumables used sub-model
+    consumables_used: ConsumablesUsed = _parse_consumables_used(
+        document,
+        namespaces,
+    )
 
     # Create final model
     mission_details: MissionDetails = MissionDetails(
@@ -216,6 +223,7 @@ def parse_to_mission_details(xml_text: str) -> MissionDetails:
         drugs=list_of_drugs,
         result=result,
         medical_center=medical_center,
+        consumables=consumables_used,
     )
 
     return mission_details
@@ -1001,7 +1009,11 @@ def _parse_medical_center(document: etree._Element, namespaces: dict[str, str]) 
          MedicalCenter: medical center sub model
     """
     return MedicalCenter(
-        receiving_physician_code=get_text(document, "CodePezeshkTahvilGirande", namespaces),
+        receiving_physician_code=get_text(
+            document,
+            "CodePezeshkTahvilGirande",
+            namespaces,
+        ),
         physician_code=get_text(
             document,
             "CodePezeshk",
@@ -1033,3 +1045,39 @@ def _parse_medical_center(document: etree._Element, namespaces: dict[str, str]) 
             namespaces,
         ),
     )
+
+
+def _parse_consumables_used(
+    document: etree._Element,
+    namespaces: dict[str, str],
+) -> ConsumablesUsed:
+    """Parses the consumables used sub model and returns it.
+
+    Args:
+         document (etree._Element): XML SOAP document
+         namespaces (dict[str, str]): SOAP namespaces
+
+    Returns:
+         ConsumablesUsed: consumables used sub model
+    """
+    # Get raw consumables
+    raw_consumables: str | None = get_text(
+        document,
+        "AghlameMasrafi",
+        namespaces,
+    )
+
+    # If the list is empty, return empty
+    if not raw_consumables or raw_consumables.strip() == "-":
+        return ConsumablesUsed(items=Counter())
+
+    # The list starts with a leading dash, remove it
+    if raw_consumables.startswith("-"):
+        raw_consumables = raw_consumables[1:].strip()
+
+    # Iterate through the raw consumables and strip whitespace
+    consumables = [
+        consumable.strip() for consumable in raw_consumables.split(",") if consumable.strip()
+    ]
+
+    return ConsumablesUsed(items=Counter(consumables))
