@@ -73,6 +73,7 @@ types-lxml = "2026.1.1"
 # These are not directly required by the project
 # But only required by the above packages
 anyio = "4.12.1"
+authlib = "1.6.7"
 certifi = "2026.1.4"
 cryptography = "46.0.4"
 cssselect = "1.4.0"
