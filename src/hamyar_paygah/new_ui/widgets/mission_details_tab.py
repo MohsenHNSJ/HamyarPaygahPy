@@ -46,6 +46,7 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import (
     QApplication,
+    QCheckBox,
     QHBoxLayout,
     QLabel,
     QLayout,
@@ -79,7 +80,7 @@ class Ui_mission_details_tab:
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.search_parameters = QWidget(mission_details_tab)
         self.search_parameters.setObjectName("search_parameters")
-        self.search_parameters.setMaximumSize(QSize(16777215, 50))
+        self.search_parameters.setMaximumSize(QSize(16777215, 40))
         self.horizontalLayout = QHBoxLayout(self.search_parameters)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.mission_id_label = QLabel(self.search_parameters)
@@ -122,18 +123,71 @@ class Ui_mission_details_tab:
         self.information_section = QWidget(mission_details_tab)
         self.information_section.setObjectName("information_section")
         self.information_section.setMaximumSize(QSize(16777215, 100))
-        self.verticalLayout = QVBoxLayout(self.information_section)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QLabel(self.information_section)
-        self.label.setObjectName("label")
+        self.horizontalLayout_2 = QHBoxLayout(self.information_section)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.patient_name_label = QLabel(self.information_section)
+        self.patient_name_label.setObjectName("patient_name_label")
+        sizePolicy1 = QSizePolicy(
+            QSizePolicy.Policy.Preferred,
+            QSizePolicy.Policy.Preferred,
+        )
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(
+            self.patient_name_label.sizePolicy().hasHeightForWidth(),
+        )
+        self.patient_name_label.setSizePolicy(sizePolicy1)
+        self.patient_name_label.setMaximumSize(QSize(55, 30))
+        self.patient_name_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.verticalLayout.addWidget(self.label)
+        self.horizontalLayout_2.addWidget(self.patient_name_label)
 
         self.patient_name_field = QLineEdit(self.information_section)
         self.patient_name_field.setObjectName("patient_name_field")
+        self.patient_name_field.setMaximumSize(QSize(200, 22))
         self.patient_name_field.setReadOnly(True)
 
-        self.verticalLayout.addWidget(self.patient_name_field)
+        self.horizontalLayout_2.addWidget(self.patient_name_field)
+
+        self.age_label = QLabel(self.information_section)
+        self.age_label.setObjectName("age_label")
+        self.age_label.setMaximumSize(QSize(25, 30))
+        self.age_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_2.addWidget(self.age_label)
+
+        self.age_field = QLineEdit(self.information_section)
+        self.age_field.setObjectName("age_field")
+        self.age_field.setMaximumSize(QSize(100, 22))
+        self.age_field.setReadOnly(True)
+
+        self.horizontalLayout_2.addWidget(self.age_field)
+
+        self.nationality_label = QLabel(self.information_section)
+        self.nationality_label.setObjectName("nationality_label")
+        self.nationality_label.setMaximumSize(QSize(30, 30))
+        self.nationality_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_2.addWidget(self.nationality_label)
+
+        self.iranian_nationality_checkBox = QCheckBox(self.information_section)
+        self.iranian_nationality_checkBox.setObjectName(
+            "iranian_nationality_checkBox",
+        )
+        self.iranian_nationality_checkBox.setEnabled(False)
+        self.iranian_nationality_checkBox.setMaximumSize(QSize(50, 22))
+        self.iranian_nationality_checkBox.setCheckable(True)
+
+        self.horizontalLayout_2.addWidget(self.iranian_nationality_checkBox)
+
+        self.foreign_nationality_checkBox = QCheckBox(self.information_section)
+        self.foreign_nationality_checkBox.setObjectName(
+            "foreign_nationality_checkBox",
+        )
+        self.foreign_nationality_checkBox.setEnabled(False)
+        self.foreign_nationality_checkBox.setMaximumSize(QSize(75, 20))
+
+        self.horizontalLayout_2.addWidget(self.foreign_nationality_checkBox)
 
         self.mission_details.addWidget(self.information_section)
 
@@ -176,10 +230,38 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
-        self.label.setText(
+        self.patient_name_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0646\u0627\u0645 \u0645\u062f\u062f\u062c\u0648",
+                "\u0646\u0627\u0645 \u0645\u062f\u062f\u062c\u0648:",
+                None,
+            ),
+        )
+        self.age_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0646:",
+                None,
+            ),
+        )
+        self.nationality_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0644\u06cc\u062a:",
+                None,
+            ),
+        )
+        self.iranian_nationality_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u06cc\u0631\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.foreign_nationality_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u063a\u06cc\u0631 \u0627\u06cc\u0631\u0627\u0646\u06cc",
                 None,
             ),
         )

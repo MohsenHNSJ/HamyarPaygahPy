@@ -39,3 +39,10 @@ class MissionsDetailsTab(QWidget):
         self.ui.patient_name_field.setText(
             mission_details.information.patient_name,
         )
+        # Populate age field
+        self.ui.age_field.setText(mission_details.information.full_age)
+        # Set nationality
+        if mission_details.information.iranian_nationality:
+            self.ui.iranian_nationality_checkBox.setChecked(True)
+        else:
+            self.ui.foreign_nationality_checkBox.setChecked(True)
