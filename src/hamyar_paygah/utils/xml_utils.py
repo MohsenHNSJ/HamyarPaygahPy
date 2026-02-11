@@ -4,8 +4,12 @@
 import datetime
 import re
 from enum import Enum
+from typing import TypeVar
 
 from lxml import etree
+
+# E is some kind of Enum, and the return type matches the input enum
+E = TypeVar("E", bound=Enum)
 
 
 def get_text(document: etree._Element, tag: str, namespaces: dict[str, str]) -> str | None:
@@ -106,7 +110,7 @@ def get_time(
     return datetime.datetime.strptime(text, "%H:%M:%S").time()  # noqa: DTZ007
 
 
-def get_enum_from_boolean_flags[E: Enum](
+def get_enum_from_boolean_flags(  # noqa: UP047
     document: etree._Element,
     namespaces: dict[str, str],
     enum_type: type[E],
@@ -117,8 +121,6 @@ def get_enum_from_boolean_flags[E: Enum](
     corresponding XML tag value is 'true'.
 
     Returns None if no matching value is found.
-
-    E is some kind of Enum, and the return type matches the input enum
 
     Args:
         document (etree._Element): XML SOAP response.
