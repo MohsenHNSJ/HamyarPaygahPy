@@ -45,6 +45,9 @@ class MissionsDetailsTab(QWidget):
         # Populate times and distances tab
         self._populate_times_and_distances_tab(mission_details)
 
+        # Populate location and emergency type tab
+        self._populate_location_and_emergency_tab(mission_details)
+
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
         # Clear widgets used for data showing
@@ -278,3 +281,65 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.refuel_odo_field.setText("سوختگیری انجام نشده")
+
+    def _populate_location_and_emergency_tab(self, mission_details: MissionDetails) -> None:
+        """Populates the location and emergency tab with data from mission details model."""
+        # Set address field
+        self.ui.address_plain_text_edit.setPlainText(
+            str(mission_details.location_and_emergency.address),
+        )
+
+        # Set chief complaint
+        self.ui.chief_complaint_field.setText(
+            str(mission_details.location_and_emergency.chief_complaint),
+        )
+
+        # Set type of location
+        if mission_details.location_and_emergency.location_type is not None:
+            self.ui.type_of_location_field.setText(
+                mission_details.location_and_emergency.location_type.persian_label,
+            )
+
+        # Set type of location other info
+        self.ui.type_of_location_other_info_field.setText(
+            mission_details.location_and_emergency.location_other_info,
+        )
+
+        # Set accident type
+        if mission_details.location_and_emergency.accident_type is not None:
+            self.ui.accident_type_field.setText(
+                mission_details.location_and_emergency.accident_type.persian_label,
+            )
+
+        # Set illness type
+        if mission_details.location_and_emergency.illness_type is not None:
+            self.ui.illness_type_field.setText(
+                mission_details.location_and_emergency.illness_type.persian_label,
+            )
+
+        # Set emergency type other info
+        self.ui.emergency_other_info_field.setText(
+            mission_details.location_and_emergency.emergency_type_other_info,
+        )
+
+        # Set vehicle accident
+        self.ui.is_vehicle_accident_checkBox.setChecked(
+            mission_details.location_and_emergency.is_vehicle_accident,
+        )
+
+        # Set role in accident
+        if mission_details.location_and_emergency.role_in_accident is not None:
+            self.ui.role_in_accident_field.setText(
+                mission_details.location_and_emergency.role_in_accident.persian_label,
+            )
+
+        # Set role in accident other info
+        self.ui.role_in_accident_other_info_field.setText(
+            mission_details.location_and_emergency.role_in_accident_other_info,
+        )
+
+        # Set vehicle type
+        if mission_details.location_and_emergency.vehicle_type is not None:
+            self.ui.vehicle_type_field.setText(
+                mission_details.location_and_emergency.vehicle_type.persian_label,
+            )

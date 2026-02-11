@@ -1,4 +1,4 @@
-# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201
+# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201,C0302
 # ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001
 # mypy: ignore-errors
 # type: ignore[all]
@@ -914,13 +914,223 @@ class Ui_mission_details_tab:
         self.verticalLayout_4.addWidget(self.times_section_9)
 
         self.mission_data_tab_widget.addTab(self.times_and_distances_tab, "")
+        self.location_and_emergency_tab = QWidget()
+        self.location_and_emergency_tab.setObjectName(
+            "location_and_emergency_tab",
+        )
+        self.verticalLayout_3 = QVBoxLayout(self.location_and_emergency_tab)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.section_1 = QWidget(self.location_and_emergency_tab)
+        self.section_1.setObjectName("section_1")
+        self.section_1.setMaximumSize(QSize(16777215, 100))
+        self.horizontalLayout_17 = QHBoxLayout(self.section_1)
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.address_label = QLabel(self.section_1)
+        self.address_label.setObjectName("address_label")
+        self.address_label.setMaximumSize(QSize(16777215, 30))
+        self.address_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_17.addWidget(self.address_label)
+
+        self.address_plain_text_edit = QPlainTextEdit(self.section_1)
+        self.address_plain_text_edit.setObjectName("address_plain_text_edit")
+        self.address_plain_text_edit.setMaximumSize(QSize(16777215, 100))
+        self.address_plain_text_edit.setReadOnly(True)
+
+        self.horizontalLayout_17.addWidget(self.address_plain_text_edit)
+
+        self.verticalLayout_3.addWidget(self.section_1)
+
+        self.section_2 = QWidget(self.location_and_emergency_tab)
+        self.section_2.setObjectName("section_2")
+        self.section_2.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_18 = QHBoxLayout(self.section_2)
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.chief_complaint_label = QLabel(self.section_2)
+        self.chief_complaint_label.setObjectName("chief_complaint_label")
+        self.chief_complaint_label.setMaximumSize(QSize(16777215, 30))
+        self.chief_complaint_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_18.addWidget(self.chief_complaint_label)
+
+        self.chief_complaint_field = QLineEdit(self.section_2)
+        self.chief_complaint_field.setObjectName("chief_complaint_field")
+        self.chief_complaint_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.chief_complaint_field.setReadOnly(True)
+
+        self.horizontalLayout_18.addWidget(self.chief_complaint_field)
+
+        self.type_of_location_label = QLabel(self.section_2)
+        self.type_of_location_label.setObjectName("type_of_location_label")
+        self.type_of_location_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_18.addWidget(self.type_of_location_label)
+
+        self.type_of_location_field = QLineEdit(self.section_2)
+        self.type_of_location_field.setObjectName("type_of_location_field")
+        self.type_of_location_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.type_of_location_field.setReadOnly(True)
+
+        self.horizontalLayout_18.addWidget(self.type_of_location_field)
+
+        self.type_of_location_other_info_label = QLabel(self.section_2)
+        self.type_of_location_other_info_label.setObjectName(
+            "type_of_location_other_info_label",
+        )
+        self.type_of_location_other_info_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_18.addWidget(
+            self.type_of_location_other_info_label,
+        )
+
+        self.type_of_location_other_info_field = QLineEdit(self.section_2)
+        self.type_of_location_other_info_field.setObjectName(
+            "type_of_location_other_info_field",
+        )
+        self.type_of_location_other_info_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.type_of_location_other_info_field.setReadOnly(True)
+
+        self.horizontalLayout_18.addWidget(
+            self.type_of_location_other_info_field,
+        )
+
+        self.verticalLayout_3.addWidget(self.section_2)
+
+        self.section_3 = QWidget(self.location_and_emergency_tab)
+        self.section_3.setObjectName("section_3")
+        self.section_3.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_19 = QHBoxLayout(self.section_3)
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.accident_type_label = QLabel(self.section_3)
+        self.accident_type_label.setObjectName("accident_type_label")
+        self.accident_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_19.addWidget(self.accident_type_label)
+
+        self.accident_type_field = QLineEdit(self.section_3)
+        self.accident_type_field.setObjectName("accident_type_field")
+        self.accident_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.accident_type_field.setReadOnly(True)
+
+        self.horizontalLayout_19.addWidget(self.accident_type_field)
+
+        self.illness_type_label = QLabel(self.section_3)
+        self.illness_type_label.setObjectName("illness_type_label")
+        self.illness_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_19.addWidget(self.illness_type_label)
+
+        self.illness_type_field = QLineEdit(self.section_3)
+        self.illness_type_field.setObjectName("illness_type_field")
+        self.illness_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.illness_type_field.setReadOnly(True)
+
+        self.horizontalLayout_19.addWidget(self.illness_type_field)
+
+        self.emergency_other_info_label = QLabel(self.section_3)
+        self.emergency_other_info_label.setObjectName(
+            "emergency_other_info_label",
+        )
+        self.emergency_other_info_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_19.addWidget(self.emergency_other_info_label)
+
+        self.emergency_other_info_field = QLineEdit(self.section_3)
+        self.emergency_other_info_field.setObjectName(
+            "emergency_other_info_field",
+        )
+        self.emergency_other_info_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.emergency_other_info_field.setReadOnly(True)
+
+        self.horizontalLayout_19.addWidget(self.emergency_other_info_field)
+
+        self.is_vehicle_accident_checkBox = QCheckBox(self.section_3)
+        self.is_vehicle_accident_checkBox.setObjectName(
+            "is_vehicle_accident_checkBox",
+        )
+        self.is_vehicle_accident_checkBox.setEnabled(False)
+        self.is_vehicle_accident_checkBox.setCheckable(True)
+        self.is_vehicle_accident_checkBox.setChecked(False)
+
+        self.horizontalLayout_19.addWidget(self.is_vehicle_accident_checkBox)
+
+        self.verticalLayout_3.addWidget(self.section_3)
+
+        self.section_4 = QWidget(self.location_and_emergency_tab)
+        self.section_4.setObjectName("section_4")
+        self.section_4.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_20 = QHBoxLayout(self.section_4)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.role_in_accident_label = QLabel(self.section_4)
+        self.role_in_accident_label.setObjectName("role_in_accident_label")
+        self.role_in_accident_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_20.addWidget(self.role_in_accident_label)
+
+        self.role_in_accident_field = QLineEdit(self.section_4)
+        self.role_in_accident_field.setObjectName("role_in_accident_field")
+        self.role_in_accident_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.role_in_accident_field.setReadOnly(True)
+
+        self.horizontalLayout_20.addWidget(self.role_in_accident_field)
+
+        self.role_in_accident_other_info_label = QLabel(self.section_4)
+        self.role_in_accident_other_info_label.setObjectName(
+            "role_in_accident_other_info_label",
+        )
+        self.role_in_accident_other_info_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_20.addWidget(
+            self.role_in_accident_other_info_label,
+        )
+
+        self.role_in_accident_other_info_field = QLineEdit(self.section_4)
+        self.role_in_accident_other_info_field.setObjectName(
+            "role_in_accident_other_info_field",
+        )
+        self.role_in_accident_other_info_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.role_in_accident_other_info_field.setReadOnly(True)
+
+        self.horizontalLayout_20.addWidget(
+            self.role_in_accident_other_info_field,
+        )
+
+        self.vehicle_type_label = QLabel(self.section_4)
+        self.vehicle_type_label.setObjectName("vehicle_type_label")
+        self.vehicle_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_20.addWidget(self.vehicle_type_label)
+
+        self.vehicle_type_field = QLineEdit(self.section_4)
+        self.vehicle_type_field.setObjectName("vehicle_type_field")
+        self.vehicle_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.vehicle_type_field.setReadOnly(True)
+
+        self.horizontalLayout_20.addWidget(self.vehicle_type_field)
+
+        self.verticalLayout_3.addWidget(self.section_4)
+
+        self.mission_data_tab_widget.addTab(
+            self.location_and_emergency_tab,
+            "",
+        )
 
         self.verticalLayout_2.addWidget(self.mission_data_tab_widget)
 
         self.retranslateUi(mission_details_tab)
 
         self.search_button.setDefault(True)
-        self.mission_data_tab_widget.setCurrentIndex(1)
+        self.mission_data_tab_widget.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(mission_details_tab)
 
@@ -1264,6 +1474,91 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0645\u0633\u0627\u0641\u062a \u0648 \u0632\u0645\u0627\u0646",
+                None,
+            ),
+        )
+        self.address_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0622\u062f\u0631\u0633 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
+                None,
+            ),
+        )
+        self.chief_complaint_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0634\u06a9\u0627\u06cc\u062a \u0627\u0635\u0644\u06cc:",
+                None,
+            ),
+        )
+        self.type_of_location_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
+                None,
+            ),
+        )
+        self.type_of_location_other_info_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0627\u0637\u0644\u0627\u0639\u0627\u062a:",
+                None,
+            ),
+        )
+        self.accident_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u062d\u0627\u062f\u062b\u0647:",
+                None,
+            ),
+        )
+        self.illness_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u0628\u06cc\u0645\u0627\u0631\u06cc:",
+                None,
+            ),
+        )
+        self.emergency_other_info_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0627\u0637\u0644\u0627\u0639\u0627\u062a:",
+                None,
+            ),
+        )
+        self.is_vehicle_accident_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0635\u0627\u062f\u0641",
+                None,
+            ),
+        )
+        self.role_in_accident_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0642\u0634 \u062d\u0627\u062f\u062b\u0647 \u062f\u06cc\u062f\u0647:",
+                None,
+            ),
+        )
+        self.role_in_accident_other_info_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0627\u0637\u0644\u0627\u0639\u0627\u062a:",
+                None,
+            ),
+        )
+        self.vehicle_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u062e\u0648\u062f\u0631\u0648:",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.location_and_emergency_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u062d\u0644 \u0648 \u0646\u0648\u0639 \u0641\u0648\u0631\u06cc\u062a",
                 None,
             ),
         )
