@@ -1,21 +1,68 @@
 """Utility functions related to text."""
 
+import datetime
 from urllib.parse import urlparse
 
+import jdatetime  # type: ignore[import-untyped]
 
-def convert_to_integer(text: str | None) -> int | None:
-    """Safely converts an optional string to an integer.
 
-    This function is useful when parsing XML fields that may be empty
-    or marked as nil.
+def convert_date_to_datetime(date_string: str | None) -> datetime.datetime | None:
+    """Converts a Jalali date string (YYYY/MM/DD) to gregorian datetime.
 
     Args:
-        text (str | None): A string representing an integer, or None.
+        date_string (str): Jalali date string
 
     Returns:
-        int | None: The integer value if `text` is not None, otherwise None.
+        datetime.datetime: Gregorian datetime object
     """
-    return int(text) if text is not None else None
+    # If input is `None`, return `None`
+    if not date_string:
+        return None
+
+    # Split the input to values
+    year, month, day = map(int, date_string.split("/"))
+
+    # Create a jalali date object
+    jalali_date = jdatetime.date(year, month, day)
+
+    # Convert to gregorian date
+    gregorian_date: datetime.date = jalali_date.togregorian()
+
+    # Create a datetime object and return it
+    return datetime.datetime.combine(gregorian_date, datetime.time.min)
+
+
+def convert_date_and_time_to_datetime(
+    date_string: str | None,
+    time_string: str | None,
+) -> datetime.datetime | None:
+    """Converts jalali date and time strings into a gregorian datetime.
+
+    Args:
+        date_string (str): Jalali date
+        time_string (str): Jalali time
+
+    Returns:
+        datetime.datetime: gregorian datetime object.
+    """
+    # If inputs are `None` or invalid, return `None`
+    if date_string is None or time_string is None or date_string == "-" or time_string == "-":
+        return None
+    # Split the input values
+    year, month, day = map(int, date_string.split("/"))
+    hour, minute = map(int, time_string.split(":"))
+
+    # Create a jalali date time using split values
+    jalali_datetime: jdatetime.datetime = jdatetime.datetime(
+        year,
+        month,
+        day,
+        hour,
+        minute,
+    )
+
+    # Return the gregorian date
+    return jalali_datetime.togregorian()  # type: ignore[no-any-return]
 
 
 def is_valid_server_address(server_address: str | None) -> bool:
@@ -40,7 +87,7 @@ def is_valid_server_address(server_address: str | None) -> bool:
     address: str = server_address.strip()
 
     # Must explicitly specify scheme
-    if not (address.startswith(("http://", "https://"))):
+    if not address.startswith(("http://", "https://")):
         return False
 
     # Parse the URL

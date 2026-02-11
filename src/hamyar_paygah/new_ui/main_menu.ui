@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -45,7 +45,7 @@
        <attribute name="title">
         <string>لیست ماموریت ها</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="missions_list_vertical_layout">
         <item>
          <widget class="QWidget" name="missions_list_search_filters" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout">
@@ -73,14 +73,11 @@
            </item>
            <item>
             <widget class="QDateEdit" name="from_date_picker">
-             <property name="maximumSize">
-              <size>
-               <width>110</width>
-               <height>16777215</height>
-              </size>
-             </property>
              <property name="wrapping">
               <bool>false</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
              </property>
              <property name="accelerated">
               <bool>true</bool>
@@ -137,11 +134,8 @@
            </item>
            <item>
             <widget class="QDateEdit" name="to_date_picker">
-             <property name="maximumSize">
-              <size>
-               <width>110</width>
-               <height>16777215</height>
-              </size>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
              </property>
              <property name="accelerated">
               <bool>true</bool>
@@ -211,11 +205,8 @@
            </item>
            <item>
             <widget class="QComboBox" name="region_picker">
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>16777215</height>
-              </size>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
              </property>
              <property name="placeholderText">
               <string>عباس آباد</string>
@@ -237,12 +228,6 @@
            </item>
            <item>
             <widget class="QPushButton" name="load_button">
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>16777215</height>
-              </size>
-             </property>
              <property name="text">
               <string>دریافت</string>
              </property>
@@ -283,11 +268,6 @@
          </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Tab 2</string>
-       </attribute>
       </widget>
      </widget>
     </item>

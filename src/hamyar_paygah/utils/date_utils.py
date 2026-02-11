@@ -2,7 +2,7 @@
 
 # ruff: noqa: DTZ001
 # pylint: disable=E0611
-from datetime import datetime
+import datetime
 
 import jdatetime  # type: ignore[import-untyped]
 from PySide6.QtCore import QDate
@@ -14,7 +14,7 @@ def convert_string_iso_date_to_string_persian_date(string_iso_datetime: str) -> 
     This function also removed milliseconds.
     """
     # Convert string input to datetime
-    gregorian_datetime = datetime.fromisoformat(string_iso_datetime)
+    gregorian_datetime = datetime.datetime.fromisoformat(string_iso_datetime)
 
     # Remove redundant milliseconds
     gregorian_datetime = gregorian_datetime.replace(microsecond=0)
@@ -27,7 +27,7 @@ def convert_string_iso_date_to_string_persian_date(string_iso_datetime: str) -> 
     return str(persian_datetime)
 
 
-def convert_persian_q_date_to_gregorian_pythonic_date(persian_q_date: QDate) -> datetime:
+def convert_persian_q_date_to_gregorian_pythonic_date(persian_q_date: QDate) -> datetime.datetime:
     """Converts Persian date in QDate format to Pythonic gregorian datetime object.
 
     Args:
@@ -40,7 +40,7 @@ def convert_persian_q_date_to_gregorian_pythonic_date(persian_q_date: QDate) -> 
     gregorian_date: QDate = persian_q_date
 
     # Convert QDate to normal pythonic datetime object
-    pythonic_datetime: datetime = datetime(
+    pythonic_datetime: datetime.datetime = datetime.datetime(
         gregorian_date.year(),
         gregorian_date.month(),
         gregorian_date.day(),
@@ -48,3 +48,21 @@ def convert_persian_q_date_to_gregorian_pythonic_date(persian_q_date: QDate) -> 
 
     # Return pythonic datetime
     return pythonic_datetime
+
+
+def convert_gregorian_date_to_persian_date(
+    gregorian_date: datetime.datetime | None,
+) -> jdatetime.datetime | None:
+    """Converts gregorian date to jalali date.
+
+    Args:
+        gregorian_date (datetime.datetime | None): Gregorian date
+
+    Returns:
+        jdatetime.datetime | None: Jalali date or None if the input is also None.
+    """
+    if gregorian_date is not None:
+        # Convert to jalali and return
+        return jdatetime.datetime.fromgregorian(datetime=gregorian_date)
+    # Else, return None
+    return None

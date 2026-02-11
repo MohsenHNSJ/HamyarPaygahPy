@@ -9,6 +9,7 @@ from qasync import asyncSlot  # type: ignore[import-untyped]
 
 import hamyar_paygah.new_ui.main_menu as main_menu_ui
 from hamyar_paygah.config.server_config import load_server_address
+from hamyar_paygah.controllers.widgets.mission_details_tab_controller import MissionsDetailsTab
 from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.missions_list_service import get_missions_list
@@ -17,6 +18,8 @@ from hamyar_paygah.view_models.mission_table_model import MissionTableModel
 
 if TYPE_CHECKING:
     from datetime import datetime
+
+    from PySide6.QtWidgets import QWidget
 
 
 class MainMenu(QMainWindow):
@@ -41,6 +44,10 @@ class MainMenu(QMainWindow):
 
         # Populate the region picker
         self.populate_region_picker()
+
+        # Add the mission details tab
+        mission_details_tab: QWidget = MissionsDetailsTab()
+        self.ui.tab_widget.addTab(mission_details_tab, "گزارش ماموریت")
 
     @Slot(QDate)
     def on_from_date_picker_userDateChanged(self, new_date: QDate) -> None:  # noqa: N802
