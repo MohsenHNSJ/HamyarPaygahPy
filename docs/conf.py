@@ -57,6 +57,8 @@ nitpick_ignore: set[tuple[str, str]] = {
     ("py:exc", "exc_class"),  # Exceptions
     ("py:class", "_Element"),  # C extension and not documented in Python.
     ("py:class", "etree._Element"),  # C extension.
+    ("py:class", "lxml.etree._Element"),  # C extension.
+    ("py:class", "jdatetime.datetime"),  # C extension.
 }
 # Project name
 project = "Hamyar Paygah"
