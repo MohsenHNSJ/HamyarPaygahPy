@@ -56,6 +56,7 @@ nitpick_ignore: set[tuple[str, str]] = {
     (PY_CLASS, "optional"),  # Documentation
     ("py:exc", "exc_class"),  # Exceptions
     ("py:class", "_Element"),  # C extension and not documented in Python.
+    ("py:class", "etree._Element"),  # C extension.
 }
 # Project name
 project = "Hamyar Paygah"
