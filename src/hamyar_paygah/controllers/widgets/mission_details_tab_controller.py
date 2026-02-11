@@ -3,7 +3,6 @@
 # pylint: disable=E0611,I1101,R0903
 from typing import TYPE_CHECKING
 
-import jdatetime  # type: ignore[import-untyped]
 from PySide6.QtWidgets import QCheckBox, QLineEdit, QPlainTextEdit, QTextEdit, QWidget
 from qasync import asyncSlot  # type: ignore[import-untyped]
 
@@ -11,9 +10,10 @@ import hamyar_paygah.new_ui.widgets.mission_details_tab as ui_mdt
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.models.mission_details_model import MissionDetails
 from hamyar_paygah.services.mission_details_service import get_mission_details
+from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_date
 
 if TYPE_CHECKING:
-    import datetime
+    import jdatetime  # type: ignore[import-untyped]
 
 
 class MissionsDetailsTab(QWidget):
@@ -85,9 +85,12 @@ class MissionsDetailsTab(QWidget):
             self.ui.is_gender_unknown_checkbox.setChecked(True)
 
         # Set national code field
-        self.ui.national_code_field.setText(
-            str(mission_details.information.national_code),
-        )
+        if mission_details.information.national_code != 0:
+            self.ui.national_code_field.setText(
+                str(mission_details.information.national_code),
+            )
+        else:
+            self.ui.national_code_field.setText("ارائه نشده")
 
         # Set document serial number field
         self.ui.document_serial_number_field.setText(
@@ -110,17 +113,13 @@ class MissionsDetailsTab(QWidget):
         )
 
         # Set document request time field
-        if mission_details.information.document_request_time is not None:
-            # Get gregorian date
-            gregorian_date: datetime.datetime = mission_details.information.document_request_time
-            # Convert to jalali
-            jalali_date = jdatetime.datetime.fromgregorian(
-                datetime=gregorian_date,
-            )
-
-            self.ui.last_update_field.setText(
-                str(jalali_date),
-            )
+        self.ui.last_update_field.setText(
+            str(
+                convert_gregorian_date_to_persian_date(
+                    mission_details.information.document_request_time,
+                ),
+            ),
+        )
 
         # Set province field
         self.ui.base_station_field.setText(
@@ -140,14 +139,21 @@ class MissionsDetailsTab(QWidget):
         )
 
         # Set mission date field
-        self.ui.mission_date_field.setText(
-            str(mission_details.times_and_distances.mission_date),
+        jalali_mission_date: jdatetime.datetime | None = convert_gregorian_date_to_persian_date(
+            mission_details.times_and_distances.mission_date,
         )
+        if jalali_mission_date is not None:
+            self.ui.mission_date_field.setText(
+                str(jalali_mission_date.date()),
+            )
 
         # Set second staff field
-        self.ui.second_staff_field.setText(
-            str(mission_details.times_and_distances.second_staff_code),
-        )
+        if mission_details.times_and_distances.second_staff_code != 0:
+            self.ui.second_staff_field.setText(
+                str(mission_details.times_and_distances.second_staff_code),
+            )
+        else:
+            self.ui.second_staff_field.setText("بدون پرسنل دوم")
 
         # Set senior staff field
         self.ui.senior_staff_field.setText(
@@ -235,14 +241,20 @@ class MissionsDetailsTab(QWidget):
         )
 
         # Set arrive at emergency ODO
-        self.ui.arrive_at_emergency_odo_field.setText(
-            str(mission_details.times_and_distances.arrive_at_emergency_odometer),
-        )
+        if mission_details.times_and_distances.arrive_at_emergency_odometer != 0:
+            self.ui.arrive_at_emergency_odo_field.setText(
+                str(mission_details.times_and_distances.arrive_at_emergency_odometer),
+            )
+        else:
+            self.ui.arrive_at_emergency_odo_field.setText("ثبت نشده")
 
         # Set arrive at hospital ODO
-        self.ui.arrive_at_hospital_odo_field.setText(
-            str(mission_details.times_and_distances.arrive_at_hospital_odometer),
-        )
+        if mission_details.times_and_distances.arrive_at_hospital_odometer != 0:
+            self.ui.arrive_at_hospital_odo_field.setText(
+                str(mission_details.times_and_distances.arrive_at_hospital_odometer),
+            )
+        else:
+            self.ui.arrive_at_hospital_odo_field.setText("ثبت نشده")
 
         # Set overall mission time
         self.ui.overall_mission_time_field.setText(
@@ -260,6 +272,9 @@ class MissionsDetailsTab(QWidget):
         )
 
         # Set refuel ODO
-        self.ui.refuel_odo_field.setText(
-            str(mission_details.times_and_distances.vehicle_refuel_odometer),
-        )
+        if mission_details.times_and_distances.vehicle_refuel_odometer != 0:
+            self.ui.refuel_odo_field.setText(
+                str(mission_details.times_and_distances.vehicle_refuel_odometer),
+            )
+        else:
+            self.ui.refuel_odo_field.setText("سوختگیری انجام نشده")

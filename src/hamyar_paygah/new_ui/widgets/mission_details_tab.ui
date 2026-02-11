@@ -48,23 +48,20 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="search_button">
+       <widget class="QLabel" name="mission_id_label">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>22</height>
+          <height>50</height>
          </size>
         </property>
         <property name="text">
-         <string>جستجو</string>
-        </property>
-        <property name="default">
-         <bool>true</bool>
+         <string>شماره ماموریت</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="patient_id_line_edit">
+       <widget class="QLineEdit" name="mission_id_line_edit">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -73,6 +70,9 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -90,7 +90,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="mission_id_line_edit">
+       <widget class="QLineEdit" name="patient_id_line_edit">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -100,18 +100,24 @@
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mission_id_label">
+       <widget class="QPushButton" name="search_button">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>50</height>
+          <height>22</height>
          </size>
         </property>
         <property name="text">
-         <string>شماره ماموریت</string>
+         <string>جستجو</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -533,14 +539,14 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QWidget" name="times_section_1" native="true">
+        <widget class="QWidget" name="times_section_91" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>50</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <layout class="QHBoxLayout" name="horizontalLayout_16">
           <item>
            <widget class="QLabel" name="mission_date_label">
             <property name="text">
@@ -561,6 +567,38 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="mission_received_label">
+            <property name="text">
+             <string>زمان دریافت ماموریت:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mission_received_field">
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="times_section_1" native="true">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
           <item>
            <widget class="QLabel" name="senior_staff_label">
             <property name="text">
@@ -621,6 +659,23 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="refuel_odo_label">
+            <property name="text">
+             <string>کیلومتر سوختگیری:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="refuel_odo_field">
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -653,58 +708,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="mission_received_label">
-            <property name="text">
-             <string>زمان دریافت ماموریت:</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::TextFormat::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="mission_received_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="overall_mission_distance_label">
-            <property name="text">
-             <string>مسافت کل ماموریت:</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::TextFormat::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="overall_mission_distance_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="times_section_3" native="true">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
            <widget class="QLabel" name="depart_from_station_time_label">
             <property name="text">
@@ -749,14 +752,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="times_section_4" native="true">
+        <widget class="QWidget" name="times_section_3" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>50</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
            <widget class="QLabel" name="arrive_at_emergency_time_label">
             <property name="text">
@@ -797,18 +800,38 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="arrive_at_emergency_odo_label">
+            <property name="text">
+             <string>کیلومتر رسیدن به محل فوریت:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="arrive_at_emergency_odo_field">
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="times_section_5" native="true">
+        <widget class="QWidget" name="times_section_4" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>50</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>
            <widget class="QLabel" name="depart_from_emergency_time_label">
             <property name="text">
@@ -853,14 +876,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="times_section_6" native="true">
+        <widget class="QWidget" name="times_section_5" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>50</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
           <item>
            <widget class="QLabel" name="arrive_at_hospital_time_label">
             <property name="text">
@@ -901,18 +924,38 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="arrive_at_hospital_odo_label">
+            <property name="text">
+             <string>کیلومتر رسیدن به مرکزدرمانی:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="arrive_at_hospital_odo_field">
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="times_section_7" native="true">
+        <widget class="QWidget" name="times_section_6" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>50</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
           <item>
            <widget class="QLabel" name="deliver_to_hospital_time_label">
             <property name="text">
@@ -954,14 +997,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="times_section_8" native="true">
+        <widget class="QWidget" name="times_section_7" native="true">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>50</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
           <item>
            <widget class="QLabel" name="mission_complete_time_label">
             <property name="text">
@@ -983,6 +1026,58 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="time_to_complete_label">
+            <property name="text">
+             <string>مدت زمان پایان ماموریت:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="time_to_complete_field">
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="mission_complete_odo_label">
+            <property name="text">
+             <string>کیلومتر پایان ماموریت:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mission_complete_odo_field">
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="times_section_8" native="true">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
            <widget class="QLabel" name="arrive_at_station_time_label">
             <property name="text">
              <string>زمان رسیدن به پایگاه:</string>
@@ -1003,9 +1098,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="time_to_complete_label">
+           <widget class="QLabel" name="arrive_at_station_odo_label">
             <property name="text">
-             <string>مدت زمان پایان ماموریت:</string>
+             <string>کیلومتر رسیدن به پایگاه:</string>
             </property>
             <property name="textFormat">
              <enum>Qt::TextFormat::PlainText</enum>
@@ -1013,7 +1108,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="time_to_complete_field">
+           <widget class="QLineEdit" name="arrive_at_station_odo_field">
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -1055,9 +1150,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="arrive_at_emergency_odo_label">
+           <widget class="QLabel" name="overall_mission_distance_label">
             <property name="text">
-             <string>کیلومتر رسیدن به محل فوریت:</string>
+             <string>مسافت کل ماموریت:</string>
             </property>
             <property name="textFormat">
              <enum>Qt::TextFormat::PlainText</enum>
@@ -1065,96 +1160,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="arrive_at_emergency_odo_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="arrive_at_hospital_odo_label">
-            <property name="text">
-             <string>کیلومتر رسیدن به مرکزدرمانی:</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::TextFormat::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="arrive_at_hospital_odo_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="times_section_91" native="true">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_16">
-          <item>
-           <widget class="QLabel" name="mission_complete_odo_label">
-            <property name="text">
-             <string>کیلومتر پایان ماموریت:</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::TextFormat::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="mission_complete_odo_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="arrive_at_station_odo_label">
-            <property name="text">
-             <string>کیلومتر رسیدن به پایگاه:</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::TextFormat::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="arrive_at_station_odo_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="refuel_odo_label">
-            <property name="text">
-             <string>کیلومتر سوختگیری:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="refuel_odo_field">
+           <widget class="QLineEdit" name="overall_mission_distance_field">
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>

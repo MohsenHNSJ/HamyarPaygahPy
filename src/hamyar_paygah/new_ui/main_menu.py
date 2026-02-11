@@ -73,7 +73,7 @@ class Ui_main_window:
         if not main_window.objectName():
             main_window.setObjectName("main_window")
         main_window.setWindowModality(Qt.WindowModality.NonModal)
-        main_window.resize(800, 600)
+        main_window.resize(800, 700)
         main_window.setMinimumSize(QSize(800, 600))
         main_window.setAcceptDrops(False)
         main_window.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
@@ -116,8 +116,8 @@ class Ui_main_window:
 
         self.from_date_picker = QDateEdit(self.missions_list_search_filters)
         self.from_date_picker.setObjectName("from_date_picker")
-        self.from_date_picker.setMaximumSize(QSize(110, 16777215))
         self.from_date_picker.setWrapping(False)
+        self.from_date_picker.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.from_date_picker.setAccelerated(True)
         self.from_date_picker.setCorrectionMode(
             QAbstractSpinBox.CorrectionMode.CorrectToNearestValue,
@@ -144,7 +144,7 @@ class Ui_main_window:
 
         self.to_date_picker = QDateEdit(self.missions_list_search_filters)
         self.to_date_picker.setObjectName("to_date_picker")
-        self.to_date_picker.setMaximumSize(QSize(110, 16777215))
+        self.to_date_picker.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.to_date_picker.setAccelerated(True)
         self.to_date_picker.setCorrectionMode(
             QAbstractSpinBox.CorrectionMode.CorrectToNearestValue,
@@ -179,7 +179,9 @@ class Ui_main_window:
 
         self.region_picker = QComboBox(self.missions_list_search_filters)
         self.region_picker.setObjectName("region_picker")
-        self.region_picker.setMaximumSize(QSize(150, 16777215))
+        self.region_picker.setSizeAdjustPolicy(
+            QComboBox.SizeAdjustPolicy.AdjustToContents,
+        )
 
         self.horizontalLayout.addWidget(self.region_picker)
 
@@ -193,7 +195,6 @@ class Ui_main_window:
 
         self.load_button = QPushButton(self.missions_list_search_filters)
         self.load_button.setObjectName("load_button")
-        self.load_button.setMaximumSize(QSize(150, 16777215))
 
         self.horizontalLayout.addWidget(self.load_button)
 
