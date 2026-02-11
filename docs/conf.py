@@ -56,8 +56,9 @@ nitpick_ignore: set[tuple[str, str]] = {
     (PY_CLASS, "optional"),  # Documentation
     ("py:exc", "exc_class"),  # Exceptions
     ("py:class", "_Element"),  # C extension and not documented in Python.
-    ("py:class", "tkinter.Misc"),  # Built-in C extension module
-    ("py:obj", "tkinter.Toplevel"),  # Built-in C extension module
+    ("py:class", "etree._Element"),  # C extension.
+    ("py:class", "lxml.etree._Element"),  # C extension.
+    ("py:class", "jdatetime.datetime"),  # C extension.
 }
 # Project name
 project = "Hamyar Paygah"
@@ -97,6 +98,7 @@ extensions += ["sphinx.ext.intersphinx"]
 intersphinx_mapping: dict[str, tuple[str, None]] = {
     "python": ("https://docs.python.org/3/", None),
     "aiohttp": ("https://docs.aiohttp.org/en/stable/", None),
+    "pyside6": ("https://doc.qt.io/qtforpython-6", None),
 }
 
 # Add support for nice Not Found 404 pages

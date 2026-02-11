@@ -137,6 +137,26 @@ Open vcxsrv_ and configure it with the following settings:
 
 Or load it with ``config.xlaunch`` file from ``.devcontainer/vcxsrv/`` directory.
 
+PySide6_ is used for UI development, run :code:`pyside6-designer` from the dev container terminal to open the Qt Designer application.
+
+Convert the output ``.ui`` files to ``.py`` files using the following command:
+.. code-block:: sh
+
+    pyside6-uic path/to/input.ui -o path/to/output.py
+
+Extract translate able strings from ``.ui`` files into ``.ts`` files using the following command:
+.. code-block:: sh
+
+    pyside6-lupdate path/to/input.ui -ts path/to/output.ts
+
+Translate the ``.ts`` files using Qt Linguist application :code:`pyside6-linguist`
+
+Then compile the translated ``.ts`` files into binary ``.qm`` files using the following command:
+.. code-block:: sh
+
+    pyside6-lrelease path/to/input.ts -qm path/to/output.qm
+
+
 Possible issues
 ---------------
 
@@ -249,15 +269,6 @@ List the available Nox_ sessions:
 Unit tests are located in the *tests* directory,
 and are written using the pytest_ testing framework.
 
-In order to create the initial ``.spec`` file for PyInstaller_, temporary
-replace the ``build`` Nox_ session with the following command:
-
-.. code-block:: python
-
-    session.run("pyi-makespec", "--onefile", "--windowed", "--name",
-            "HamyarPaygah", "--log-level", "INFO", "--optimize", "2",
-            "src/hamyar_paygah/main.py")
-
 Coding style
 ------------
 
@@ -328,6 +339,7 @@ Continued contributions constitute acceptance of the current version.
 .. _pull request: https://github.com/MohsenHNSJ/HamyarPaygahPy/pulls
 .. _vcxsrv: https://github.com/marchaesen/vcxsrv
 .. _PyInstaller: https://pyinstaller.org/en/stable/index.html
+.. _PySide6: https://pypi.org/project/PySide6/
 
 ..
     Ignore-in-readthedocs

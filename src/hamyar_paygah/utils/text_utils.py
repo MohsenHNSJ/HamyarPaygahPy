@@ -1,48 +1,68 @@
 """Utility functions related to text."""
 
+import datetime
 from urllib.parse import urlparse
 
-import arabic_reshaper  # type: ignore[import-untyped]
-from bidi import get_display  # type: ignore[import-untyped]
+import jdatetime  # type: ignore[import-untyped]
 
 
-def convert_to_integer(text: str | None) -> int | None:
-    """Safely converts an optional string to an integer.
-
-    This function is useful when parsing XML fields that may be empty
-    or marked as nil.
+def convert_date_to_datetime(date_string: str | None) -> datetime.datetime | None:
+    """Converts a Jalali date string (YYYY/MM/DD) to gregorian datetime.
 
     Args:
-        text (str | None): A string representing an integer, or None.
+        date_string (str): Jalali date string
 
     Returns:
-        int | None: The integer value if `text` is not None, otherwise None.
+        datetime.datetime: Gregorian datetime object
     """
-    return int(text) if text is not None else None
+    # If input is `None`, return `None`
+    if not date_string:
+        return None
+
+    # Split the input to values
+    year, month, day = map(int, date_string.split("/"))
+
+    # Create a jalali date object
+    jalali_date = jdatetime.date(year, month, day)
+
+    # Convert to gregorian date
+    gregorian_date: datetime.date = jalali_date.togregorian()
+
+    # Create a datetime object and return it
+    return datetime.datetime.combine(gregorian_date, datetime.time.min)
 
 
-def reshape_rtl(text: str | None) -> str:
-    """Prepare Persian or Arabic text for correct display in Tkinter.
-
-    Tkinter does not natively support right-to-left (RTL) scripts or proper
-    Arabic letter shaping. This function reshapes the input text so that
-    characters are joined correctly and then applies bidirectional (bidi)
-    reordering to ensure the text is rendered properly in the UI.
+def convert_date_and_time_to_datetime(
+    date_string: str | None,
+    time_string: str | None,
+) -> datetime.datetime | None:
+    """Converts jalali date and time strings into a gregorian datetime.
 
     Args:
-        text: The input string containing Persian or Arabic text.
-            If None or an empty string is provided, an empty string is returned.
+        date_string (str): Jalali date
+        time_string (str): Jalali time
 
     Returns:
-        A reshaped and RTL-corrected string suitable for display in Tkinter.
+        datetime.datetime: gregorian datetime object.
     """
-    # Handle None or empty input
-    if not text:
-        return ""
-    # Correct letter connections
-    reshaped_text = arabic_reshaper.reshape(text)
-    # Apply RTL bidi reordering
-    return str(get_display(reshaped_text))
+    # If inputs are `None` or invalid, return `None`
+    if date_string is None or time_string is None or date_string == "-" or time_string == "-":
+        return None
+    # Split the input values
+    year, month, day = map(int, date_string.split("/"))
+    hour, minute = map(int, time_string.split(":"))
+
+    # Create a jalali date time using split values
+    jalali_datetime: jdatetime.datetime = jdatetime.datetime(
+        year,
+        month,
+        day,
+        hour,
+        minute,
+    )
+
+    # Return the gregorian date
+    return jalali_datetime.togregorian()  # type: ignore[no-any-return]
 
 
 def is_valid_server_address(server_address: str | None) -> bool:
@@ -67,7 +87,7 @@ def is_valid_server_address(server_address: str | None) -> bool:
     address: str = server_address.strip()
 
     # Must explicitly specify scheme
-    if not (address.startswith(("http://", "https://"))):
+    if not address.startswith(("http://", "https://")):
         return False
 
     # Parse the URL
