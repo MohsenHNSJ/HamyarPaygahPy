@@ -20,6 +20,13 @@ from qasync import asyncSlot  # type: ignore[import-untyped]
 import hamyar_paygah.new_ui.widgets.mission_details_tab as ui_mdt
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.models.mission_details_model import MissionDetails
+from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import (
+    BreathingRhythm,
+    HeartRhythm,
+    HeartSound,
+    LungSound,
+    PupilStatus,
+)
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_date
 
@@ -146,6 +153,9 @@ class MissionsDetailsTab(QWidget):
 
         # Populate medical history section
         self._populate_medical_history_section(mission_details)
+
+        # Populate pupils lungs heart section
+        self._populate_pupils_lungs_heart_section(mission_details)
 
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
@@ -986,3 +996,109 @@ class MissionsDetailsTab(QWidget):
             self.ui.other_medical_history_checkBox,
             value=mission_details.medical_history.has_other_medical_history,
         )
+
+    def _populate_pupils_lungs_heart_section(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
+        """Populates the pupils, lungs and heart section by data of mission details."""
+        # Set right pupil status
+        if mission_details.pupils_lungs_heart.pupils.right is not None:
+            right_pupil_status = mission_details.pupils_lungs_heart.pupils.right
+            if right_pupil_status == PupilStatus.NORMAL:
+                self.ui.right_eye_examine_field.setText("طبیعی")
+            elif right_pupil_status == PupilStatus.DILATED:
+                self.ui.right_eye_examine_field.setText("گشاد شده")
+            elif right_pupil_status == PupilStatus.MIOTIC:
+                self.ui.right_eye_examine_field.setText("منقبض شده")
+            elif right_pupil_status == PupilStatus.NO_RESPONSE:
+                self.ui.right_eye_examine_field.setText("بدون پاسخ به نور")
+        else:
+            self.ui.right_eye_examine_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.right_eye_examine_field.setEnabled(False)
+
+        # Set left pupil status
+        if mission_details.pupils_lungs_heart.pupils.left is not None:
+            left_pupil_status = mission_details.pupils_lungs_heart.pupils.left
+            if left_pupil_status == PupilStatus.NORMAL:
+                self.ui.left_eye_examine_field.setText("طبیعی")
+            elif left_pupil_status == PupilStatus.DILATED:
+                self.ui.left_eye_examine_field.setText("گشاد شده")
+            elif left_pupil_status == PupilStatus.MIOTIC:
+                self.ui.left_eye_examine_field.setText("منقبض شده")
+            elif left_pupil_status == PupilStatus.NO_RESPONSE:
+                self.ui.left_eye_examine_field.setText("بدون پاسخ به نور")
+        else:
+            self.ui.left_eye_examine_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.left_eye_examine_field.setEnabled(False)
+
+        # Set lung sounds
+        # Right Lung
+        if mission_details.pupils_lungs_heart.lungs.right.sound is not None:
+            right_lung_sound = mission_details.pupils_lungs_heart.lungs.right.sound
+            if right_lung_sound == LungSound.NORMAL:
+                self.ui.right_lung_sound_field.setText("طبیعی")
+            elif right_lung_sound == LungSound.RALES:
+                self.ui.right_lung_sound_field.setText("رال")
+            elif right_lung_sound == LungSound.WHEEZE:
+                self.ui.right_lung_sound_field.setText("ویز")
+        else:
+            self.ui.right_lung_sound_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.right_lung_sound_field.setEnabled(False)
+        # Left Lung
+        if mission_details.pupils_lungs_heart.lungs.left.sound is not None:
+            left_lung_sound = mission_details.pupils_lungs_heart.lungs.left.sound
+            if left_lung_sound == LungSound.NORMAL:
+                self.ui.left_lung_sound_field.setText("طبیعی")
+            elif left_lung_sound == LungSound.RALES:
+                self.ui.left_lung_sound_field.setText("رال")
+            elif left_lung_sound == LungSound.WHEEZE:
+                self.ui.left_lung_sound_field.setText("ویز")
+        else:
+            self.ui.left_lung_sound_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.left_lung_sound_field.setEnabled(False)
+
+        # Set breathing rhythm
+        # Right Lung
+        if mission_details.pupils_lungs_heart.lungs.right.rhythm is not None:
+            breathing_rhythm = mission_details.pupils_lungs_heart.lungs.right.rhythm
+            if breathing_rhythm == BreathingRhythm.REGULAR:
+                self.ui.right_lung_rhythm_field.setText("منظم")
+            elif breathing_rhythm == BreathingRhythm.IRREGULAR:
+                self.ui.right_lung_rhythm_field.setText("نامنظم")
+        else:
+            self.ui.right_lung_rhythm_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.right_lung_rhythm_field.setEnabled(False)
+        # Left Lung
+        if mission_details.pupils_lungs_heart.lungs.left.rhythm is not None:
+            breathing_rhythm = mission_details.pupils_lungs_heart.lungs.left.rhythm
+            if breathing_rhythm == BreathingRhythm.REGULAR:
+                self.ui.left_lung_rhythm_field.setText("منظم")
+            elif breathing_rhythm == BreathingRhythm.IRREGULAR:
+                self.ui.left_lung_rhythm_field.setText("نامنظم")
+        else:
+            self.ui.left_lung_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.left_lung_rhythm_field.setEnabled(False)
+
+        # Set heart sound
+        if mission_details.pupils_lungs_heart.heart.sound is not None:
+            heart_sound = mission_details.pupils_lungs_heart.heart.sound
+            if heart_sound == HeartSound.NORMAL:
+                self.ui.heart_sound_field.setText("طبیعی")
+            elif heart_sound == HeartSound.ABNORMAL:
+                self.ui.heart_sound_field.setText("صدای اضافی")
+        else:
+            self.ui.heart_sound_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.heart_sound_field.setEnabled(False)
+
+        # Set heart rhythm
+        if mission_details.pupils_lungs_heart.heart.rhythm is not None:
+            heart_rhythm = mission_details.pupils_lungs_heart.heart.rhythm
+            if heart_rhythm == HeartRhythm.REGULAR:
+                self.ui.heart_rhythm_field.setText("منظم")
+            elif heart_rhythm == HeartRhythm.IRREGULAR:
+                self.ui.heart_rhythm_field.setText("نامنظم")
+        else:
+            self.ui.heart_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.heart_rhythm_field.setEnabled(False)

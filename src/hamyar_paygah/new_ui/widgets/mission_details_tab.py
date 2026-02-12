@@ -1634,7 +1634,7 @@ class Ui_mission_details_tab:
         self.medical_history_other_info.setObjectName(
             "medical_history_other_info",
         )
-        self.medical_history_other_info.setMaximumSize(QSize(16777215, 100))
+        self.medical_history_other_info.setMaximumSize(QSize(16777215, 75))
         self.horizontalLayout_22 = QHBoxLayout(self.medical_history_other_info)
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
         self.current_medications_label = QLabel(
@@ -1675,6 +1675,146 @@ class Ui_mission_details_tab:
         self.horizontalLayout_22.addWidget(self.drug_allergies_field)
 
         self.verticalLayout_7.addWidget(self.medical_history_other_info)
+
+        self.examine_eye_lung_heart_group_box = QGroupBox(self.widget)
+        self.examine_eye_lung_heart_group_box.setObjectName(
+            "examine_eye_lung_heart_group_box",
+        )
+        self.examine_eye_lung_heart_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.horizontalLayout_23 = QHBoxLayout(
+            self.examine_eye_lung_heart_group_box,
+        )
+        self.horizontalLayout_23.setObjectName("horizontalLayout_23")
+        self.eye_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
+        self.eye_group_box.setObjectName("eye_group_box")
+        self.eye_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_4 = QGridLayout(self.eye_group_box)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.right_eye_examine_label = QLabel(self.eye_group_box)
+        self.right_eye_examine_label.setObjectName("right_eye_examine_label")
+        self.right_eye_examine_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_4.addWidget(self.right_eye_examine_label, 0, 0, 1, 1)
+
+        self.right_eye_examine_field = QLineEdit(self.eye_group_box)
+        self.right_eye_examine_field.setObjectName("right_eye_examine_field")
+        self.right_eye_examine_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.right_eye_examine_field.setReadOnly(True)
+
+        self.gridLayout_4.addWidget(self.right_eye_examine_field, 0, 1, 1, 1)
+
+        self.left_eye_examine_label = QLabel(self.eye_group_box)
+        self.left_eye_examine_label.setObjectName("left_eye_examine_label")
+        self.left_eye_examine_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_4.addWidget(self.left_eye_examine_label, 1, 0, 1, 1)
+
+        self.left_eye_examine_field = QLineEdit(self.eye_group_box)
+        self.left_eye_examine_field.setObjectName("left_eye_examine_field")
+        self.left_eye_examine_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.left_eye_examine_field.setReadOnly(True)
+
+        self.gridLayout_4.addWidget(self.left_eye_examine_field, 1, 1, 1, 1)
+
+        self.horizontalLayout_23.addWidget(self.eye_group_box)
+
+        self.lung_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
+        self.lung_group_box.setObjectName("lung_group_box")
+        self.lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.horizontalLayout_24 = QHBoxLayout(self.lung_group_box)
+        self.horizontalLayout_24.setObjectName("horizontalLayout_24")
+        self.right_lung_group_box = QGroupBox(self.lung_group_box)
+        self.right_lung_group_box.setObjectName("right_lung_group_box")
+        self.right_lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_5 = QGridLayout(self.right_lung_group_box)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.lung_sound_label = QLabel(self.right_lung_group_box)
+        self.lung_sound_label.setObjectName("lung_sound_label")
+        self.lung_sound_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_5.addWidget(self.lung_sound_label, 0, 0, 1, 1)
+
+        self.breathing_rhythm_label = QLabel(self.right_lung_group_box)
+        self.breathing_rhythm_label.setObjectName("breathing_rhythm_label")
+        self.breathing_rhythm_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_5.addWidget(self.breathing_rhythm_label, 1, 0, 1, 1)
+
+        self.right_lung_rhythm_field = QLineEdit(self.right_lung_group_box)
+        self.right_lung_rhythm_field.setObjectName("right_lung_rhythm_field")
+        self.right_lung_rhythm_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.right_lung_rhythm_field.setReadOnly(True)
+
+        self.gridLayout_5.addWidget(self.right_lung_rhythm_field, 1, 2, 1, 1)
+
+        self.right_lung_sound_field = QLineEdit(self.right_lung_group_box)
+        self.right_lung_sound_field.setObjectName("right_lung_sound_field")
+        self.right_lung_sound_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.right_lung_sound_field.setReadOnly(True)
+
+        self.gridLayout_5.addWidget(self.right_lung_sound_field, 0, 2, 1, 1)
+
+        self.horizontalLayout_24.addWidget(self.right_lung_group_box)
+
+        self.left_lung_group_box = QGroupBox(self.lung_group_box)
+        self.left_lung_group_box.setObjectName("left_lung_group_box")
+        self.left_lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_6 = QGridLayout(self.left_lung_group_box)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.left_lung_rhythm_field = QLineEdit(self.left_lung_group_box)
+        self.left_lung_rhythm_field.setObjectName("left_lung_rhythm_field")
+        self.left_lung_rhythm_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.left_lung_rhythm_field.setReadOnly(True)
+
+        self.gridLayout_6.addWidget(self.left_lung_rhythm_field, 1, 0, 1, 1)
+
+        self.left_lung_sound_field = QLineEdit(self.left_lung_group_box)
+        self.left_lung_sound_field.setObjectName("left_lung_sound_field")
+        self.left_lung_sound_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.left_lung_sound_field.setReadOnly(True)
+
+        self.gridLayout_6.addWidget(self.left_lung_sound_field, 0, 0, 1, 1)
+
+        self.horizontalLayout_24.addWidget(self.left_lung_group_box)
+
+        self.horizontalLayout_23.addWidget(self.lung_group_box)
+
+        self.heart_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
+        self.heart_group_box.setObjectName("heart_group_box")
+        self.heart_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_7 = QGridLayout(self.heart_group_box)
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.heart_rhythm_field = QLineEdit(self.heart_group_box)
+        self.heart_rhythm_field.setObjectName("heart_rhythm_field")
+        self.heart_rhythm_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.heart_rhythm_field.setReadOnly(True)
+
+        self.gridLayout_7.addWidget(self.heart_rhythm_field, 1, 1, 1, 1)
+
+        self.heart_sound_field = QLineEdit(self.heart_group_box)
+        self.heart_sound_field.setObjectName("heart_sound_field")
+        self.heart_sound_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.heart_sound_field.setReadOnly(True)
+
+        self.gridLayout_7.addWidget(self.heart_sound_field, 0, 1, 1, 1)
+
+        self.heart_rhythm_label = QLabel(self.heart_group_box)
+        self.heart_rhythm_label.setObjectName("heart_rhythm_label")
+        self.heart_rhythm_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_7.addWidget(self.heart_rhythm_label, 1, 0, 1, 1)
+
+        self.heart_sound_label = QLabel(self.heart_group_box)
+        self.heart_sound_label.setObjectName("heart_sound_label")
+        self.heart_sound_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_7.addWidget(self.heart_sound_label, 0, 0, 1, 1)
+
+        self.horizontalLayout_23.addWidget(self.heart_group_box)
+
+        self.verticalLayout_7.addWidget(self.examine_eye_lung_heart_group_box)
 
         self.verticalLayout_8.addWidget(self.widget)
 
@@ -2409,6 +2549,90 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u062d\u0633\u0627\u0633\u06cc\u062a \u062f\u0627\u0631\u0648\u06cc\u06cc:",
+                None,
+            ),
+        )
+        self.examine_eye_lung_heart_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0639\u0627\u06cc\u0646\u0647 \u0686\u0634\u0645\u060c \u0642\u0644\u0628 \u0648 \u0631\u06cc\u0647",
+                None,
+            ),
+        )
+        self.eye_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0631\u062f\u0645\u06a9",
+                None,
+            ),
+        )
+        self.right_eye_examine_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u0627\u0633\u062a",
+                None,
+            ),
+        )
+        self.left_eye_examine_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0686\u067e",
+                None,
+            ),
+        )
+        self.lung_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u0647",
+                None,
+            ),
+        )
+        self.right_lung_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u0627\u0633\u062a",
+                None,
+            ),
+        )
+        self.lung_sound_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0645\u0639",
+                None,
+            ),
+        )
+        self.breathing_rhythm_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u062a\u0645",
+                None,
+            ),
+        )
+        self.left_lung_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0686\u067e",
+                None,
+            ),
+        )
+        self.heart_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0644\u0628",
+                None,
+            ),
+        )
+        self.heart_rhythm_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u062a\u0645",
+                None,
+            ),
+        )
+        self.heart_sound_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0645\u0639",
                 None,
             ),
         )
