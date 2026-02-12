@@ -1155,6 +1155,44 @@ class Ui_mission_details_tab:
         self.symptoms_tab.setObjectName("symptoms_tab")
         self.verticalLayout_5 = QVBoxLayout(self.symptoms_tab)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.vital_signs_group_Box = QGroupBox(self.symptoms_tab)
+        self.vital_signs_group_Box.setObjectName("vital_signs_group_Box")
+        self.vital_signs_group_Box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_6 = QVBoxLayout(self.vital_signs_group_Box)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.vital_signs_table_Widget = QTableWidget(
+            self.vital_signs_group_Box,
+        )
+        if self.vital_signs_table_Widget.rowCount() < 10:
+            self.vital_signs_table_Widget.setRowCount(10)
+        self.vital_signs_table_Widget.setObjectName(
+            "vital_signs_table_Widget",
+        )
+        self.vital_signs_table_Widget.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.vital_signs_table_Widget.setLayoutDirection(
+            Qt.LayoutDirection.LeftToRight,
+        )
+        self.vital_signs_table_Widget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.vital_signs_table_Widget.setTabKeyNavigation(False)
+        self.vital_signs_table_Widget.setProperty("showDropIndicator", False)
+        self.vital_signs_table_Widget.setAlternatingRowColors(True)
+        self.vital_signs_table_Widget.setSelectionMode(
+            QAbstractItemView.SelectionMode.NoSelection,
+        )
+        self.vital_signs_table_Widget.setCornerButtonEnabled(False)
+        self.vital_signs_table_Widget.setRowCount(10)
+        self.vital_signs_table_Widget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.vital_signs_table_Widget.verticalHeader().setDefaultSectionSize(30)
+        self.vital_signs_table_Widget.verticalHeader().setStretchLastSection(False)
+
+        self.verticalLayout_6.addWidget(self.vital_signs_table_Widget)
+
+        self.verticalLayout_5.addWidget(self.vital_signs_group_Box)
+
         self.symptoms_section = QWidget(self.symptoms_tab)
         self.symptoms_section.setObjectName("symptoms_section")
         self.symptoms_section.setMaximumSize(QSize(16777215, 175))
@@ -1341,35 +1379,6 @@ class Ui_mission_details_tab:
         self.horizontalLayout_21.addWidget(self.other_symptoms_field)
 
         self.verticalLayout_5.addWidget(self.other_symptoms_section)
-
-        self.vital_signs_table_Widget = QTableWidget(self.symptoms_tab)
-        if self.vital_signs_table_Widget.rowCount() < 10:
-            self.vital_signs_table_Widget.setRowCount(10)
-        self.vital_signs_table_Widget.setObjectName(
-            "vital_signs_table_Widget",
-        )
-        self.vital_signs_table_Widget.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.vital_signs_table_Widget.setLayoutDirection(
-            Qt.LayoutDirection.LeftToRight,
-        )
-        self.vital_signs_table_Widget.setEditTriggers(
-            QAbstractItemView.EditTrigger.NoEditTriggers,
-        )
-        self.vital_signs_table_Widget.setTabKeyNavigation(False)
-        self.vital_signs_table_Widget.setProperty("showDropIndicator", False)
-        self.vital_signs_table_Widget.setAlternatingRowColors(True)
-        self.vital_signs_table_Widget.setSelectionMode(
-            QAbstractItemView.SelectionMode.NoSelection,
-        )
-        self.vital_signs_table_Widget.setCornerButtonEnabled(False)
-        self.vital_signs_table_Widget.setRowCount(10)
-        self.vital_signs_table_Widget.setSupportedDragActions(
-            Qt.DropAction.IgnoreAction,
-        )
-        self.vital_signs_table_Widget.verticalHeader().setDefaultSectionSize(30)
-        self.vital_signs_table_Widget.verticalHeader().setStretchLastSection(True)
-
-        self.verticalLayout_5.addWidget(self.vital_signs_table_Widget)
 
         self.mission_data_tab_widget.addTab(self.symptoms_tab, "")
 
@@ -1810,6 +1819,13 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.vital_signs_group_Box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0644\u0627\u0626\u0645 \u062d\u06cc\u0627\u062a\u06cc",
+                None,
+            ),
+        )
         self.symptoms_group_box.setTitle(
             QCoreApplication.translate(
                 "mission_details_tab",
@@ -1947,7 +1963,7 @@ class Ui_mission_details_tab:
             self.mission_data_tab_widget.indexOf(self.symptoms_tab),
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0639\u0644\u0627\u0626\u0645 \u0647\u0645\u0631\u0627\u0647",
+                "\u0639\u0644\u0627\u0626\u0645 \u062d\u06cc\u0627\u062a\u06cc \u0648 \u0647\u0645\u0631\u0627\u0647",
                 None,
             ),
         )

@@ -4,6 +4,7 @@
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QCheckBox,
     QLineEdit,
@@ -28,6 +29,74 @@ NOT_PROVIDED_PERSIAN_TEXT: str = "ارائه نشده"
 """Text to show when an information is not provided to EMS"""
 NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
 """Text to show when an information is not yet registered by EMS"""
+COLOR_WARNING = QColor("#FFF59D")  # soft yellow
+"""Color to use for warning values that are approaching critical thresholds."""
+COLOR_CRITICAL = QColor("#EF9A9A")  # soft red
+"""Color to use for critical values that have exceeded safe thresholds."""
+
+# ==============================
+# Respiratory Rate (breaths/min)
+# ==============================
+RR_CRITICAL_LOW = 8
+"""Respiratory rate less than or equal to this value is considered critical (adult baseline)."""
+RR_WARNING_LOW = 11
+"""Lower bound of warning range for respiratory rate (inclusive).
+Values between RR_CRITICAL_LOW+1 and this value are considered warning."""
+RR_NORMAL_HIGH = 20
+"""Upper bound of normal range for respiratory rate (inclusive)."""
+RR_WARNING_HIGH = 24
+"""Upper bound of warning range for respiratory rate (inclusive)."""
+RR_CRITICAL_HIGH = 25
+"""Respiratory rate greater than or equal to this value is considered critical (adult baseline)."""
+# ==============================
+# Pulse Rate (beats per minute)
+# ==============================
+PULSE_CRITICAL_LOW = 50
+"""Pulse rate strictly less than this value is considered critical (adult baseline)."""
+PULSE_WARNING_LOW = 59
+"""Lower bound of warning range for pulse rate (inclusive)."""
+PULSE_NORMAL_HIGH = 100
+"""Upper bound of normal range for pulse rate (inclusive)."""
+PULSE_CRITICAL_HIGH = 120
+"""Pulse rate strictly greater than this value is considered critical (adult baseline)."""
+# ==============================
+# Oxygen Saturation (SpO₂ %)
+# ==============================
+SPO2_CRITICAL = 90
+"""Oxygen saturation strictly less than this value is considered critical."""
+SPO2_WARNING_HIGH = 94
+"""Upper bound of warning oxygen saturation range (inclusive)."""
+# ==============================
+# Blood Sugar (mg/dL)
+# ==============================
+BS_CRITICAL_LOW = 54
+"""Blood sugar strictly less than this value is considered critical hypoglycemia."""
+BS_WARNING_LOW = 69
+"""Lower bound of warning hypoglycemia range (inclusive)."""
+BS_NORMAL_HIGH = 140
+"""Upper bound of normal glucose in blood"""
+BS_CRITICAL_HIGH = 250
+"""Blood sugar strictly greater than this value is considered critical hyperglycemia."""
+# ==============================
+# Blood Pressure (mmHg)
+# ==============================
+BP_WARNING_SYS = 140
+"""Systolic blood pressure greater than or equal to this value enters warning range."""
+BP_CRITICAL_SYS = 180
+"""Systolic blood pressure greater than or equal to this value is considered critical."""
+BP_WARNING_DIA = 90
+"""Diastolic blood pressure greater than or equal to this value enters warning range."""
+BP_CRITICAL_DIA = 120
+"""Diastolic blood pressure greater than or equal to this value is considered critical."""
+# ==============================
+# Glasgow Coma Scale (GCS Total)
+# ==============================
+GCS_CRITICAL = 8
+"""Total GCS less than or equal to this value is considered critical (severe impairment)."""
+GCS_WARNING_LOW = 9
+"""Lower bound of warning GCS range (inclusive)."""
+GCS_WARNING_HIGH = 14
+"""Upper bound of warning GCS range (inclusive). A score of 15 is considered normal."""
 
 
 class MissionsDetailsTab(QWidget):
@@ -76,12 +145,15 @@ class MissionsDetailsTab(QWidget):
         # Clear widgets used for data showing
         for line_edits in self.ui.mission_data_tab_widget.findChildren(QLineEdit):
             line_edits.clear()
+            line_edits.setEnabled(True)
 
         for plain_text_edits in self.ui.mission_data_tab_widget.findChildren(QPlainTextEdit):
             plain_text_edits.clear()
+            plain_text_edits.setEnabled(True)
 
         for text_edits in self.ui.mission_data_tab_widget.findChildren(QTextEdit):
             text_edits.clear()
+            text_edits.setEnabled(True)
 
         for checkbox in self.ui.mission_data_tab_widget.findChildren(QCheckBox):
             checkbox.setChecked(False)
@@ -89,9 +161,11 @@ class MissionsDetailsTab(QWidget):
             checkbox.setAttribute(
                 Qt.WA_TransparentForMouseEvents,  # type: ignore[attr-defined]
             )
+            checkbox.setEnabled(True)
 
         for table_widget in self.ui.mission_data_tab_widget.findChildren(QTableWidget):
             table_widget.clearContents()
+            table_widget.setEnabled(True)
 
     def _populate_information_tab(self, mission_details: MissionDetails) -> None:
         """Populates the information tab with data of the mission details model."""
@@ -106,16 +180,24 @@ class MissionsDetailsTab(QWidget):
         # Set nationality checkbox
         if mission_details.information.iranian_nationality:
             self.ui.iranian_nationality_checkBox.setChecked(True)
+            self.ui.foreign_nationality_checkBox.setEnabled(False)
         else:
             self.ui.foreign_nationality_checkBox.setChecked(True)
+            self.ui.iranian_nationality_checkBox.setEnabled(False)
 
         # Set gender checkbox
         if mission_details.information.is_male_gender:
             self.ui.is_male_checkBox.setChecked(True)
+            self.ui.is_female_checkBox.setEnabled(False)
+            self.ui.is_gender_unknown_checkbox.setEnabled(False)
         elif mission_details.information.is_female_gender:
             self.ui.is_female_checkBox.setChecked(True)
+            self.ui.is_male_checkBox.setEnabled(False)
+            self.ui.is_gender_unknown_checkbox.setEnabled(False)
         elif mission_details.information.is_unknown_gender:
             self.ui.is_gender_unknown_checkbox.setChecked(True)
+            self.ui.is_female_checkBox.setEnabled(False)
+            self.ui.is_male_checkBox.setEnabled(False)
 
         # Set national code field
         if mission_details.information.national_code != 0:
@@ -124,6 +206,7 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.national_code_field.setText(NOT_PROVIDED_PERSIAN_TEXT)
+            self.ui.national_code_field.setEnabled(False)
 
         # Set document serial number field
         self.ui.document_serial_number_field.setText(
@@ -137,6 +220,7 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.caller_number_field.setText(NOT_PROVIDED_PERSIAN_TEXT)
+            self.ui.caller_number_field.setEnabled(False)
 
         # Set backup number field
         if mission_details.information.backup_number is not None:
@@ -145,6 +229,7 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.backup_number_field.setText(NOT_PROVIDED_PERSIAN_TEXT)
+            self.ui.backup_number_field.setEnabled(False)
 
         # Set ambulance code field
         self.ui.ambulance_code_field.setText(
@@ -193,6 +278,7 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.second_staff_field.setText("بدون پرسنل دوم")
+            self.ui.second_staff_field.setEnabled(False)
 
         # Set senior staff field
         self.ui.senior_staff_field.setText(
@@ -253,6 +339,7 @@ class MissionsDetailsTab(QWidget):
             self.ui.arrive_at_hospital_time_field.setText(
                 NOT_REGISTERED_PERSIAN_TEXT,
             )
+            self.ui.arrive_at_hospital_time_field.setEnabled(False)
 
         # Set time to hospital
         if mission_details.times_and_distances.time_to_hospital is not None:
@@ -261,6 +348,7 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.time_to_hospital_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.time_to_hospital_field.setEnabled(False)
 
         # Set deliver to hospital time
         if mission_details.times_and_distances.deliver_to_hospital_time is not None:
@@ -271,6 +359,7 @@ class MissionsDetailsTab(QWidget):
             self.ui.deliver_to_hospital_time_field.setText(
                 NOT_REGISTERED_PERSIAN_TEXT,
             )
+            self.ui.deliver_to_hospital_time_field.setEnabled(False)
 
         # Set time to deliver
         if mission_details.times_and_distances.time_to_deliver is not None:
@@ -279,6 +368,7 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.time_to_deliver_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.time_to_deliver_field.setEnabled(False)
 
         # Set arrive at station time
         self.ui.arrive_at_station_time_field.setText(
@@ -304,6 +394,7 @@ class MissionsDetailsTab(QWidget):
             self.ui.arrive_at_emergency_odo_field.setText(
                 NOT_REGISTERED_PERSIAN_TEXT,
             )
+            self.ui.arrive_at_emergency_odo_field.setEnabled(False)
 
         # Set arrive at hospital ODO
         if mission_details.times_and_distances.arrive_at_hospital_odometer != 0:
@@ -314,6 +405,7 @@ class MissionsDetailsTab(QWidget):
             self.ui.arrive_at_hospital_odo_field.setText(
                 NOT_REGISTERED_PERSIAN_TEXT,
             )
+            self.ui.arrive_at_hospital_odo_field.setEnabled(False)
 
         # Set overall mission time
         self.ui.overall_mission_time_field.setText(
@@ -337,8 +429,9 @@ class MissionsDetailsTab(QWidget):
             )
         else:
             self.ui.refuel_odo_field.setText("سوختگیری انجام نشده")
+            self.ui.refuel_odo_field.setEnabled(False)
 
-    def _populate_location_and_emergency_tab(self, mission_details: MissionDetails) -> None:
+    def _populate_location_and_emergency_tab(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912
         """Populates the location and emergency tab with data from mission details model."""
         # Set address field
         self.ui.address_plain_text_edit.setPlainText(
@@ -355,31 +448,46 @@ class MissionsDetailsTab(QWidget):
             self.ui.type_of_location_field.setText(
                 mission_details.location_and_emergency.location_type.persian_label,
             )
+        else:
+            self.ui.type_of_location_field.setEnabled(False)
 
         # Set type of location other info
-        self.ui.type_of_location_other_info_field.setText(
-            mission_details.location_and_emergency.location_other_info,
-        )
+        if mission_details.location_and_emergency.location_other_info is not None:
+            self.ui.type_of_location_other_info_field.setText(
+                mission_details.location_and_emergency.location_other_info,
+            )
+        else:
+            self.ui.type_of_location_other_info_field.setEnabled(False)
 
         # Set accident type
         if mission_details.location_and_emergency.accident_type is not None:
             self.ui.accident_type_field.setText(
                 mission_details.location_and_emergency.accident_type.persian_label,
             )
+        else:
+            self.ui.accident_type_field.setEnabled(False)
 
         # Set illness type
         if mission_details.location_and_emergency.illness_type is not None:
             self.ui.illness_type_field.setText(
                 mission_details.location_and_emergency.illness_type.persian_label,
             )
+        else:
+            self.ui.illness_type_field.setEnabled(False)
 
         # Set emergency type other info
-        self.ui.emergency_other_info_field.setText(
-            mission_details.location_and_emergency.emergency_type_other_info,
-        )
+        if mission_details.location_and_emergency.emergency_type_other_info is not None:
+            self.ui.emergency_other_info_field.setText(
+                mission_details.location_and_emergency.emergency_type_other_info,
+            )
+        else:
+            self.ui.emergency_other_info_field.setEnabled(False)
 
         # Set vehicle accident
         self.ui.is_vehicle_accident_checkBox.setChecked(
+            mission_details.location_and_emergency.is_vehicle_accident,
+        )
+        self.ui.is_vehicle_accident_checkBox.setEnabled(
             mission_details.location_and_emergency.is_vehicle_accident,
         )
 
@@ -388,17 +496,24 @@ class MissionsDetailsTab(QWidget):
             self.ui.role_in_accident_field.setText(
                 mission_details.location_and_emergency.role_in_accident.persian_label,
             )
+        else:
+            self.ui.role_in_accident_field.setEnabled(False)
 
         # Set role in accident other info
-        self.ui.role_in_accident_other_info_field.setText(
-            mission_details.location_and_emergency.role_in_accident_other_info,
-        )
+        if mission_details.location_and_emergency.role_in_accident_other_info is not None:
+            self.ui.role_in_accident_other_info_field.setText(
+                mission_details.location_and_emergency.role_in_accident_other_info,
+            )
+        else:
+            self.ui.role_in_accident_other_info_field.setEnabled(False)
 
         # Set vehicle type
         if mission_details.location_and_emergency.vehicle_type is not None:
             self.ui.vehicle_type_field.setText(
                 mission_details.location_and_emergency.vehicle_type.persian_label,
             )
+        else:
+            self.ui.vehicle_type_field.setEnabled(False)
 
     def _populate_symptoms_tab(self, mission_details: MissionDetails) -> None:
         """Populates the symptoms tab from mission details data."""
@@ -406,9 +521,15 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_abdominal_pain_checkbox.setChecked(
             mission_details.symptoms.has_abdominal_pain,
         )
+        self.ui.has_abdominal_pain_checkbox.setEnabled(
+            mission_details.symptoms.has_abdominal_pain,
+        )
 
         # Set altered consciousness
         self.ui.has_altered_consciousness_checkbox.setChecked(
+            mission_details.symptoms.has_altered_consciousness,
+        )
+        self.ui.has_altered_consciousness_checkbox.setEnabled(
             mission_details.symptoms.has_altered_consciousness,
         )
 
@@ -416,9 +537,15 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_bleeding_checkbox.setChecked(
             mission_details.symptoms.has_bleeding,
         )
+        self.ui.has_bleeding_checkbox.setEnabled(
+            mission_details.symptoms.has_bleeding,
+        )
 
         # Set blurred vision
         self.ui.has_blurred_vision_checkbox.setChecked(
+            mission_details.symptoms.has_blurred_vision,
+        )
+        self.ui.has_blurred_vision_checkbox.setEnabled(
             mission_details.symptoms.has_blurred_vision,
         )
 
@@ -426,9 +553,15 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_chest_pain_checkbox.setChecked(
             mission_details.symptoms.has_chest_pain,
         )
+        self.ui.has_chest_pain_checkbox.setEnabled(
+            mission_details.symptoms.has_chest_pain,
+        )
 
         # Set diarrhea
         self.ui.has_diarrhea_checkbox.setChecked(
+            mission_details.symptoms.has_diarrhea,
+        )
+        self.ui.has_diarrhea_checkbox.setEnabled(
             mission_details.symptoms.has_diarrhea,
         )
 
@@ -436,9 +569,15 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_dizziness_checkbox.setChecked(
             mission_details.symptoms.has_dizziness,
         )
+        self.ui.has_dizziness_checkbox.setEnabled(
+            mission_details.symptoms.has_dizziness,
+        )
 
         # Set double vision
         self.ui.has_double_vision_checkbox.setChecked(
+            mission_details.symptoms.has_double_vision,
+        )
+        self.ui.has_double_vision_checkbox.setEnabled(
             mission_details.symptoms.has_double_vision,
         )
 
@@ -446,9 +585,15 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_fainting_checkbox.setChecked(
             mission_details.symptoms.has_fainting,
         )
+        self.ui.has_fainting_checkbox.setEnabled(
+            mission_details.symptoms.has_fainting,
+        )
 
         # Set fever chills
         self.ui.has_fever_chills_checkbox.setChecked(
+            mission_details.symptoms.has_fever_chills,
+        )
+        self.ui.has_fever_chills_checkbox.setEnabled(
             mission_details.symptoms.has_fever_chills,
         )
 
@@ -456,9 +601,15 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_headache_checkbox.setChecked(
             mission_details.symptoms.has_headache,
         )
+        self.ui.has_headache_checkbox.setEnabled(
+            mission_details.symptoms.has_headache,
+        )
 
         # Set memory loss
         self.ui.has_memory_loss_post_trauma_checkbox.setChecked(
+            mission_details.symptoms.has_memory_loss_post_trauma,
+        )
+        self.ui.has_memory_loss_post_trauma_checkbox.setEnabled(
             mission_details.symptoms.has_memory_loss_post_trauma,
         )
 
@@ -466,9 +617,15 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_sensory_motor_disturbance_checkbox.setChecked(
             mission_details.symptoms.has_sensory_motor_disturbance,
         )
+        self.ui.has_sensory_motor_disturbance_checkbox.setEnabled(
+            mission_details.symptoms.has_sensory_motor_disturbance,
+        )
 
         # Set shortness of breath
         self.ui.has_shortness_of_breath_checkbox.setChecked(
+            mission_details.symptoms.has_shortness_of_breath,
+        )
+        self.ui.has_shortness_of_breath_checkbox.setEnabled(
             mission_details.symptoms.has_shortness_of_breath,
         )
 
@@ -476,14 +633,23 @@ class MissionsDetailsTab(QWidget):
         self.ui.has_sweating_checkbox.setChecked(
             mission_details.symptoms.has_sweating,
         )
+        self.ui.has_sweating_checkbox.setEnabled(
+            mission_details.symptoms.has_sweating,
+        )
 
         # Set vomiting
         self.ui.has_vomiting_checkbox.setChecked(
             mission_details.symptoms.has_vomiting,
         )
+        self.ui.has_vomiting_checkbox.setEnabled(
+            mission_details.symptoms.has_vomiting,
+        )
 
         # Set weakness
         self.ui.has_weakness_checkBox.setChecked(
+            mission_details.symptoms.has_weakness,
+        )
+        self.ui.has_weakness_checkBox.setEnabled(
             mission_details.symptoms.has_weakness,
         )
 
@@ -492,6 +658,8 @@ class MissionsDetailsTab(QWidget):
             self.ui.other_symptoms_field.setPlainText(
                 mission_details.symptoms.other_symptoms,
             )
+        else:
+            self.ui.other_symptoms_field.setEnabled(False)
 
     def _setup_vital_signs_table(self) -> None:
         # Get the vital signs table widget
@@ -515,6 +683,109 @@ class MissionsDetailsTab(QWidget):
         # Set the vertical header labels to the attribute names
         vital_signs_table.setVerticalHeaderLabels(row_labels)
 
+    def _classify_vital_sign(self, row: int, value: int | str | None) -> str:  # noqa: C901, PLR0911, PLR0912
+        """Classifies a vital sign value into normal, warning, or critical state.
+
+        The classification is based on predefined adult physiological thresholds.
+        The `row` parameter determines which vital sign is being evaluated,
+        following the fixed row index mapping of the vital signs table.
+
+        Row index mapping:
+            1: Respiratory rate
+            2: Pulse rate
+            3: Blood pressure (systolic/diastolic string format, e.g. "120/80")
+            4: Blood sugar
+            5: Oxygen saturation (SpO₂)
+            9: Total Glasgow Coma Scale (GCS)
+
+        All other rows default to "normal".
+
+        Thresholds are heuristic adult baseline values and may not apply to
+        pediatric patients or specific clinical contexts.
+
+        Args:
+            row (int):
+                The row index corresponding to the vital sign type.
+            value (int | str | None):
+                The measured value. Blood pressure must be provided as a
+                "systolic/diastolic" string. Other numeric values may be
+                provided as int or numeric string. If None, the value is
+                treated as normal.
+
+        Returns:
+            str:
+                One of:
+                    - "normal": Value within acceptable physiological range.
+                    - "warning": Value moderately outside normal range.
+                    - "critical": Value significantly outside normal range.
+        """
+        # If input is empty, return normal (we only classify registered values,
+        # unregistered values are not classified)
+        if value is None:
+            return "normal"
+
+        try:
+            if row == 1:  # Respiratory rate
+                # Get respiratory rate
+                respiratory_rate = int(value)
+                # Check critical range
+                if respiratory_rate <= RR_CRITICAL_LOW or respiratory_rate >= RR_CRITICAL_HIGH:
+                    return "critical"
+                if (
+                    RR_CRITICAL_LOW < respiratory_rate <= RR_WARNING_LOW
+                    or RR_NORMAL_HIGH < respiratory_rate <= RR_WARNING_HIGH
+                ):
+                    return "warning"
+
+            elif row == 2:  # Pulse  # noqa: PLR2004
+                pulse = int(value)
+                if pulse <= PULSE_CRITICAL_LOW or pulse > PULSE_CRITICAL_HIGH:
+                    return "critical"
+                if (
+                    PULSE_CRITICAL_LOW < pulse <= PULSE_WARNING_LOW
+                    or PULSE_NORMAL_HIGH < pulse <= PULSE_CRITICAL_HIGH
+                ):
+                    return "warning"
+
+            elif row == 3:  # Blood pressure  # noqa: PLR2004
+                systolic, diastolic = map(
+                    int,
+                    value.split("/"),
+                )  # type: ignore[union-attr]
+                if systolic >= BP_CRITICAL_SYS or diastolic >= BP_CRITICAL_DIA:
+                    return "critical"
+                if systolic >= BP_WARNING_SYS or diastolic >= BP_WARNING_DIA:
+                    return "warning"
+
+            elif row == 4:  # Blood sugar  # noqa: PLR2004
+                blood_sugar = int(value)
+                if blood_sugar < BS_CRITICAL_LOW or blood_sugar > BS_CRITICAL_HIGH:
+                    return "critical"
+                if (
+                    BS_CRITICAL_LOW <= blood_sugar <= BS_WARNING_LOW
+                    or BS_NORMAL_HIGH < blood_sugar <= BS_CRITICAL_HIGH
+                ):
+                    return "warning"
+
+            elif row == 5:  # SpO2  # noqa: PLR2004
+                spo2 = int(value)
+                if spo2 < SPO2_CRITICAL:
+                    return "critical"
+                if SPO2_CRITICAL <= spo2 <= SPO2_WARNING_HIGH:
+                    return "warning"
+
+            elif row == 9:  # GCS total  # noqa: PLR2004
+                gcs_total = int(value)
+                if gcs_total <= GCS_CRITICAL:
+                    return "critical"
+                if GCS_WARNING_LOW <= gcs_total <= GCS_WARNING_HIGH:
+                    return "warning"
+
+        except Exception:  # noqa: BLE001 # pylint: disable=broad-except
+            return "normal"
+
+        return "normal"
+
     def _populate_vital_signs_table(self, mission_details: MissionDetails) -> None:
         """Populates the vital signs table from mission details data."""
         # If the list of vital signs is empty, we do not populate the table
@@ -526,16 +797,6 @@ class MissionsDetailsTab(QWidget):
 
         # Set the number of columns based on the number of vital signs records
         vital_signs_table.setColumnCount(len(mission_details.vital_signs))
-
-        # Set headers to record time
-        headers = []
-        for vital_sign in mission_details.vital_signs:
-            if vital_sign.record_time:
-                headers.append(str(vital_sign.record_time))
-            else:
-                headers.append(NOT_REGISTERED_PERSIAN_TEXT)
-
-        vital_signs_table.setHorizontalHeaderLabels(headers)
 
         # Iterate through columns and set the data for each vital sign record
         for column, vital_sign in enumerate(mission_details.vital_signs):
@@ -562,9 +823,21 @@ class MissionsDetailsTab(QWidget):
                         value,
                     ),
                 )
+                # Set background color
+                state = self._classify_vital_sign(
+                    row,
+                    value,
+                )  # type: ignore[arg-type]
+                if state == "warning":
+                    item.setBackground(COLOR_WARNING)
+                elif state == "critical":
+                    item.setBackground(COLOR_CRITICAL)
+
+                # Set center align
                 item.setTextAlignment(
                     Qt.AlignCenter,  # type: ignore[attr-defined]
                 )
+                # Add item to table
                 vital_signs_table.setItem(row, column, item)
 
         # Resize to content
