@@ -1,6 +1,7 @@
 """Controller for mission details tab."""
 
 # pylint: disable=E0611,I1101,R0903,R0912,R0915,C0301
+# region imports
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Qt
@@ -24,7 +25,9 @@ from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_dat
 
 if TYPE_CHECKING:
     import jdatetime  # type: ignore[import-untyped]
+# endregion imports
 
+# region constants
 NOT_PROVIDED_PERSIAN_TEXT: str = "ارائه نشده"
 """Text to show when an information is not provided to EMS"""
 NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
@@ -97,6 +100,7 @@ GCS_WARNING_LOW = 9
 """Lower bound of warning GCS range (inclusive)."""
 GCS_WARNING_HIGH = 14
 """Upper bound of warning GCS range (inclusive). A score of 15 is considered normal."""
+# endregion constants
 
 
 class MissionsDetailsTab(QWidget):
@@ -140,6 +144,9 @@ class MissionsDetailsTab(QWidget):
         # Populate vital sings table
         self._populate_vital_signs_table(mission_details)
 
+        # Populate medical history section
+        self._populate_medical_history_section(mission_details)
+
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
         # Clear widgets used for data showing
@@ -166,6 +173,11 @@ class MissionsDetailsTab(QWidget):
         for table_widget in self.ui.mission_data_tab_widget.findChildren(QTableWidget):
             table_widget.clearContents()
             table_widget.setEnabled(True)
+
+    def _set_checkbox(self, checkbox: QCheckBox, *, value: bool) -> None:
+        """Sets the checkbox state and enables it if value is True, otherwise disables it."""
+        checkbox.setChecked(value)
+        checkbox.setEnabled(value)
 
     def _populate_information_tab(self, mission_details: MissionDetails) -> None:
         """Populates the information tab with data of the mission details model."""
@@ -842,3 +854,135 @@ class MissionsDetailsTab(QWidget):
 
         # Resize to content
         vital_signs_table.resizeColumnsToContents()
+
+    def _populate_medical_history_section(self, mission_details: MissionDetails) -> None:
+        """Populates the medical history section by data of mission details."""
+        # Set drug allergies
+        if mission_details.medical_history.drug_allergies is not None:
+            self.ui.drug_allergies_field.setPlainText(
+                mission_details.medical_history.drug_allergies,
+            )
+        else:
+            self.ui.drug_allergies_field.setEnabled(False)
+            self.ui.drug_allergies_field.setPlainText(
+                NOT_PROVIDED_PERSIAN_TEXT,
+            )
+
+        # Set current medications
+        if mission_details.medical_history.current_medications is not None:
+            self.ui.current_medications_field.setPlainText(
+                mission_details.medical_history.current_medications,
+            )
+        else:
+            self.ui.current_medications_field.setEnabled(False)
+            self.ui.current_medications_field.setPlainText(
+                NOT_PROVIDED_PERSIAN_TEXT,
+            )
+
+        # Set diseases checkboxes
+        self._set_checkbox(
+            self.ui.has_cardiac_disease_checkBox,
+            value=mission_details.medical_history.has_cardiac_disease,
+        )
+
+        # Set hypertension checkbox
+        self._set_checkbox(
+            self.ui.has_hypertension_checkBox,
+            value=mission_details.medical_history.has_hypertension,
+        )
+
+        # Set substance abuse checkbox
+        self._set_checkbox(
+            self.ui.has_substance_abuse_checkBox,
+            value=mission_details.medical_history.has_substance_abuse,
+        )
+
+        # Set disability checkbox
+        self._set_checkbox(
+            self.ui.has_disability_checkBox,
+            value=mission_details.medical_history.has_disability,
+        )
+
+        # Set asthma checkbox
+        self._set_checkbox(
+            self.ui.has_asthma_checkBox,
+            value=mission_details.medical_history.has_asthma,
+        )
+
+        # Set stroke history checkbox
+        self._set_checkbox(
+            self.ui.has_stroke_history_checkBox,
+            value=mission_details.medical_history.has_stroke_history,
+        )
+
+        # Set psychiatric disorder checkbox
+        self._set_checkbox(
+            self.ui.has_psychiatric_disorder_checkBox,
+            value=mission_details.medical_history.has_psychiatric_disorder,
+        )
+
+        # Set prior trauma checkbox
+        self._set_checkbox(
+            self.ui.has_prior_trauma_checkBox,
+            value=mission_details.medical_history.has_prior_trauma,
+        )
+
+        # Set surgical history checkbox
+        self._set_checkbox(
+            self.ui.has_surgical_history_checkBox,
+            value=mission_details.medical_history.has_surgical_history,
+        )
+
+        # Set gastrointestinal disease checkbox
+        self._set_checkbox(
+            self.ui.has_gastrointestinal_disease_checkBox,
+            value=mission_details.medical_history.has_gastrointestinal_disease,
+        )
+
+        # Set renal disease checkbox
+        self._set_checkbox(
+            self.ui.has_renal_disease_checkBox,
+            value=mission_details.medical_history.has_renal_disease,
+        )
+
+        # Set seizure disorder checkbox
+        self._set_checkbox(
+            self.ui.has_seizure_disorder_checkBox,
+            value=mission_details.medical_history.has_seizure_disorder,
+        )
+
+        # Set infectious disease checkbox
+        self._set_checkbox(
+            self.ui.has_infectious_disease_checkBox,
+            value=mission_details.medical_history.has_infectious_disease,
+        )
+
+        # Set diabetes checkbox
+        self._set_checkbox(
+            self.ui.has_diabetes_checkBox,
+            value=mission_details.medical_history.has_diabetes,
+        )
+
+        # Set malignancy history checkbox
+        self._set_checkbox(
+            self.ui.has_malignancy_history_checkBox,
+            value=mission_details.medical_history.has_malignancy_history,
+        )
+
+        # Set special conditions checkbox
+        self._set_checkbox(
+            self.ui.has_special_conditions_checkBox,
+            value=mission_details.medical_history.has_special_conditions,
+        )
+
+        # Set pulmonary disease checkbox
+        self._set_checkbox(
+            self.ui.has_pulmonary_disease_checkBox,
+            value=mission_details.medical_history.has_pulmonary_disease,
+        )
+
+        # Set other medical history checkbox
+        self._set_checkbox(
+            self.ui.other_medical_history_checkBox,
+            value=mission_details.medical_history.has_other_medical_history,
+        )

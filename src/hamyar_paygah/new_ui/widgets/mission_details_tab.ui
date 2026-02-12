@@ -127,7 +127,7 @@
    <item>
     <widget class="QTabWidget" name="mission_data_tab_widget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -1745,6 +1745,206 @@
             <property name="readOnly">
              <bool>true</bool>
             </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="history_and_trauma_tab">
+      <attribute name="title">
+       <string>تاریخچه و معاینات</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QWidget" name="widget" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QGroupBox" name="medical_history_group_box">
+            <property name="title">
+             <string>تاریخچه پزشکی</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="has_gastrointestinal_disease_checkBox">
+               <property name="text">
+                <string>گوارشی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="6">
+              <widget class="QCheckBox" name="has_hypertension_checkBox">
+               <property name="text">
+                <string>افزایش فشارخون</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QCheckBox" name="has_special_conditions_checkBox">
+               <property name="text">
+                <string>بیماری خاص</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QCheckBox" name="has_infectious_disease_checkBox">
+               <property name="text">
+                <string>عفونی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QCheckBox" name="has_diabetes_checkBox">
+               <property name="text">
+                <string>دیابت</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="has_seizure_disorder_checkBox">
+               <property name="text">
+                <string>تشنج</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="5">
+              <widget class="QCheckBox" name="has_pulmonary_disease_checkBox">
+               <property name="text">
+                <string>ریوی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QCheckBox" name="has_malignancy_history_checkBox">
+               <property name="text">
+                <string>بدخیمی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QCheckBox" name="has_substance_abuse_checkBox">
+               <property name="text">
+                <string>سوء مصرف مواد</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QCheckBox" name="has_renal_disease_checkBox">
+               <property name="text">
+                <string>کلیوی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="has_cardiac_disease_checkBox">
+               <property name="text">
+                <string>قلبی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5">
+              <widget class="QCheckBox" name="has_disability_checkBox">
+               <property name="text">
+                <string>معلولیت</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="6">
+              <widget class="QCheckBox" name="has_asthma_checkBox">
+               <property name="text">
+                <string>آسم</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="has_stroke_history_checkBox">
+               <property name="text">
+                <string>سکته مغزی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="has_psychiatric_disorder_checkBox">
+               <property name="text">
+                <string>اختلال روانی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="has_prior_trauma_checkBox">
+               <property name="text">
+                <string>تروما</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QCheckBox" name="has_surgical_history_checkBox">
+               <property name="text">
+                <string>جراحی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QCheckBox" name="other_medical_history_checkBox">
+               <property name="text">
+                <string>سایر</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="medical_history_other_info" native="true">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_22">
+             <item>
+              <widget class="QLabel" name="current_medications_label">
+               <property name="text">
+                <string>داروهای فعلی:</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPlainTextEdit" name="current_medications_field">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="drug_allergies_label">
+               <property name="text">
+                <string>حساسیت دارویی:</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPlainTextEdit" name="drug_allergies_field">
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>

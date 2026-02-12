@@ -1381,13 +1381,311 @@ class Ui_mission_details_tab:
         self.verticalLayout_5.addWidget(self.other_symptoms_section)
 
         self.mission_data_tab_widget.addTab(self.symptoms_tab, "")
+        self.history_and_trauma_tab = QWidget()
+        self.history_and_trauma_tab.setObjectName("history_and_trauma_tab")
+        self.verticalLayout_8 = QVBoxLayout(self.history_and_trauma_tab)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.widget = QWidget(self.history_and_trauma_tab)
+        self.widget.setObjectName("widget")
+        self.verticalLayout_7 = QVBoxLayout(self.widget)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.medical_history_group_box = QGroupBox(self.widget)
+        self.medical_history_group_box.setObjectName(
+            "medical_history_group_box",
+        )
+        self.medical_history_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.gridLayout_3 = QGridLayout(self.medical_history_group_box)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.has_gastrointestinal_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_gastrointestinal_disease_checkBox.setObjectName(
+            "has_gastrointestinal_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_gastrointestinal_disease_checkBox,
+            0,
+            0,
+            1,
+            1,
+        )
+
+        self.has_hypertension_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_hypertension_checkBox.setObjectName(
+            "has_hypertension_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(self.has_hypertension_checkBox, 0, 6, 1, 1)
+
+        self.has_special_conditions_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_special_conditions_checkBox.setObjectName(
+            "has_special_conditions_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_special_conditions_checkBox,
+            0,
+            4,
+            1,
+            1,
+        )
+
+        self.has_infectious_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_infectious_disease_checkBox.setObjectName(
+            "has_infectious_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_infectious_disease_checkBox,
+            0,
+            2,
+            1,
+            1,
+        )
+
+        self.has_diabetes_checkBox = QCheckBox(self.medical_history_group_box)
+        self.has_diabetes_checkBox.setObjectName("has_diabetes_checkBox")
+
+        self.gridLayout_3.addWidget(self.has_diabetes_checkBox, 0, 3, 1, 1)
+
+        self.has_seizure_disorder_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_seizure_disorder_checkBox.setObjectName(
+            "has_seizure_disorder_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_seizure_disorder_checkBox,
+            0,
+            1,
+            1,
+            1,
+        )
+
+        self.has_pulmonary_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_pulmonary_disease_checkBox.setObjectName(
+            "has_pulmonary_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_pulmonary_disease_checkBox,
+            0,
+            5,
+            1,
+            1,
+        )
+
+        self.has_malignancy_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_malignancy_history_checkBox.setObjectName(
+            "has_malignancy_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_malignancy_history_checkBox,
+            1,
+            3,
+            1,
+            1,
+        )
+
+        self.has_substance_abuse_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_substance_abuse_checkBox.setObjectName(
+            "has_substance_abuse_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_substance_abuse_checkBox,
+            1,
+            4,
+            1,
+            1,
+        )
+
+        self.has_renal_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_renal_disease_checkBox.setObjectName(
+            "has_renal_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_renal_disease_checkBox,
+            1,
+            2,
+            1,
+            1,
+        )
+
+        self.has_cardiac_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_cardiac_disease_checkBox.setObjectName(
+            "has_cardiac_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_cardiac_disease_checkBox,
+            1,
+            1,
+            1,
+            1,
+        )
+
+        self.has_disability_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_disability_checkBox.setObjectName("has_disability_checkBox")
+
+        self.gridLayout_3.addWidget(self.has_disability_checkBox, 1, 5, 1, 1)
+
+        self.has_asthma_checkBox = QCheckBox(self.medical_history_group_box)
+        self.has_asthma_checkBox.setObjectName("has_asthma_checkBox")
+
+        self.gridLayout_3.addWidget(self.has_asthma_checkBox, 1, 6, 1, 1)
+
+        self.has_stroke_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_stroke_history_checkBox.setObjectName(
+            "has_stroke_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_stroke_history_checkBox,
+            1,
+            0,
+            1,
+            1,
+        )
+
+        self.has_psychiatric_disorder_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_psychiatric_disorder_checkBox.setObjectName(
+            "has_psychiatric_disorder_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_psychiatric_disorder_checkBox,
+            2,
+            0,
+            1,
+            1,
+        )
+
+        self.has_prior_trauma_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_prior_trauma_checkBox.setObjectName(
+            "has_prior_trauma_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(self.has_prior_trauma_checkBox, 2, 1, 1, 1)
+
+        self.has_surgical_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_surgical_history_checkBox.setObjectName(
+            "has_surgical_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_surgical_history_checkBox,
+            2,
+            2,
+            1,
+            1,
+        )
+
+        self.other_medical_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.other_medical_history_checkBox.setObjectName(
+            "other_medical_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.other_medical_history_checkBox,
+            2,
+            3,
+            1,
+            1,
+        )
+
+        self.verticalLayout_7.addWidget(self.medical_history_group_box)
+
+        self.medical_history_other_info = QWidget(self.widget)
+        self.medical_history_other_info.setObjectName(
+            "medical_history_other_info",
+        )
+        self.medical_history_other_info.setMaximumSize(QSize(16777215, 100))
+        self.horizontalLayout_22 = QHBoxLayout(self.medical_history_other_info)
+        self.horizontalLayout_22.setObjectName("horizontalLayout_22")
+        self.current_medications_label = QLabel(
+            self.medical_history_other_info,
+        )
+        self.current_medications_label.setObjectName(
+            "current_medications_label",
+        )
+        self.current_medications_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_22.addWidget(self.current_medications_label)
+
+        self.current_medications_field = QPlainTextEdit(
+            self.medical_history_other_info,
+        )
+        self.current_medications_field.setObjectName(
+            "current_medications_field",
+        )
+        self.current_medications_field.setReadOnly(True)
+
+        self.horizontalLayout_22.addWidget(self.current_medications_field)
+
+        self.drug_allergies_label = QLabel(self.medical_history_other_info)
+        self.drug_allergies_label.setObjectName("drug_allergies_label")
+        self.drug_allergies_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_22.addWidget(self.drug_allergies_label)
+
+        self.drug_allergies_field = QPlainTextEdit(
+            self.medical_history_other_info,
+        )
+        self.drug_allergies_field.setObjectName("drug_allergies_field")
+        self.drug_allergies_field.setSizeAdjustPolicy(
+            QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents,
+        )
+        self.drug_allergies_field.setReadOnly(True)
+
+        self.horizontalLayout_22.addWidget(self.drug_allergies_field)
+
+        self.verticalLayout_7.addWidget(self.medical_history_other_info)
+
+        self.verticalLayout_8.addWidget(self.widget)
+
+        self.mission_data_tab_widget.addTab(self.history_and_trauma_tab, "")
 
         self.verticalLayout_2.addWidget(self.mission_data_tab_widget)
 
         self.retranslateUi(mission_details_tab)
 
         self.search_button.setDefault(True)
-        self.mission_data_tab_widget.setCurrentIndex(3)
+        self.mission_data_tab_widget.setCurrentIndex(4)
 
         QMetaObject.connectSlotsByName(mission_details_tab)
 
@@ -1964,6 +2262,161 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0639\u0644\u0627\u0626\u0645 \u062d\u06cc\u0627\u062a\u06cc \u0648 \u0647\u0645\u0631\u0627\u0647",
+                None,
+            ),
+        )
+        self.medical_history_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0627\u0631\u06cc\u062e\u0686\u0647 \u067e\u0632\u0634\u06a9\u06cc",
+                None,
+            ),
+        )
+        self.has_gastrointestinal_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06af\u0648\u0627\u0631\u0634\u06cc",
+                None,
+            ),
+        )
+        self.has_hypertension_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0641\u0632\u0627\u06cc\u0634 \u0641\u0634\u0627\u0631\u062e\u0648\u0646",
+                None,
+            ),
+        )
+        self.has_special_conditions_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u06cc\u0645\u0627\u0631\u06cc \u062e\u0627\u0635",
+                None,
+            ),
+        )
+        self.has_infectious_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0641\u0648\u0646\u06cc",
+                None,
+            ),
+        )
+        self.has_diabetes_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u06cc\u0627\u0628\u062a",
+                None,
+            ),
+        )
+        self.has_seizure_disorder_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0634\u0646\u062c",
+                None,
+            ),
+        )
+        self.has_pulmonary_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u0648\u06cc",
+                None,
+            ),
+        )
+        self.has_malignancy_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u062f\u062e\u06cc\u0645\u06cc",
+                None,
+            ),
+        )
+        self.has_substance_abuse_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0648\u0621 \u0645\u0635\u0631\u0641 \u0645\u0648\u0627\u062f",
+                None,
+            ),
+        )
+        self.has_renal_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u0644\u06cc\u0648\u06cc",
+                None,
+            ),
+        )
+        self.has_cardiac_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0644\u0628\u06cc",
+                None,
+            ),
+        )
+        self.has_disability_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0639\u0644\u0648\u0644\u06cc\u062a",
+                None,
+            ),
+        )
+        self.has_asthma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0622\u0633\u0645",
+                None,
+            ),
+        )
+        self.has_stroke_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u06a9\u062a\u0647 \u0645\u063a\u0632\u06cc",
+                None,
+            ),
+        )
+        self.has_psychiatric_disorder_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062e\u062a\u0644\u0627\u0644 \u0631\u0648\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.has_prior_trauma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0631\u0648\u0645\u0627",
+                None,
+            ),
+        )
+        self.has_surgical_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062c\u0631\u0627\u062d\u06cc",
+                None,
+            ),
+        )
+        self.other_medical_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631",
+                None,
+            ),
+        )
+        self.current_medications_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0627\u0631\u0648\u0647\u0627\u06cc \u0641\u0639\u0644\u06cc:",
+                None,
+            ),
+        )
+        self.drug_allergies_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062d\u0633\u0627\u0633\u06cc\u062a \u062f\u0627\u0631\u0648\u06cc\u06cc:",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.history_and_trauma_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0627\u0631\u06cc\u062e\u0686\u0647 \u0648 \u0645\u0639\u0627\u06cc\u0646\u0627\u062a",
                 None,
             ),
         )
