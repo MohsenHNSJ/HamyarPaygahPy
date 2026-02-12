@@ -1,6 +1,6 @@
 """Controller for mission details tab."""
 
-# pylint: disable=E0611,I1101,R0903,R0912,R0915
+# pylint: disable=E0611,I1101,R0903,R0912,R0915,C0301
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Qt
