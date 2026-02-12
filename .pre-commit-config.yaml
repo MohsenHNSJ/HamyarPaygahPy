@@ -141,7 +141,7 @@ repos:
 
     # Identify unused dependencies and avoid a bloated virtual environment.
   - repo: https://github.com/fredrikaverpil/creosote.git
-    rev: v4.2.0
+    rev: v5.0.0
     hooks:
       - id: creosote
 

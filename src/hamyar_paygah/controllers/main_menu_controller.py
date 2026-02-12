@@ -61,6 +61,18 @@ class MainMenu(QMainWindow):
             # If so, set the to date the same as from date
             self.ui.to_date_picker.setDate(new_date)
 
+    @Slot(QDate)
+    def on_to_date_picker_userDateChanged(self, new_date: QDate) -> None:  # noqa: N802
+        """Ensure to date is always equal or more that the from date.
+
+        Args:
+            new_date (PySide6.QtCore.QDate): User input date when to date picker is changed.
+        """
+        # Check if the new date is lower than from date
+        if new_date < self.ui.from_date_picker.date():  # type: ignore[]
+            # If so, set the from date the same as to date
+            self.ui.from_date_picker.setDate(new_date)
+
     @asyncSlot()  # type: ignore[untyped-decorator,misc]
     async def on_load_button_clicked(self) -> None:
         """Loads the list of missions from server and populates the table."""

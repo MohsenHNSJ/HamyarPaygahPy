@@ -1,5 +1,5 @@
-# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201,C0302
-# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001
+# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201,C0302,C0325
+# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001, PLR2004
 # mypy: ignore-errors
 # type: ignore[all]
 # -*- coding: utf-8 -*-
@@ -45,15 +45,21 @@ from PySide6.QtGui import (
     QTransform,
 )
 from PySide6.QtWidgets import (
+    QAbstractItemView,
     QAbstractScrollArea,
     QApplication,
     QCheckBox,
+    QGridLayout,
+    QGroupBox,
     QHBoxLayout,
+    QHeaderView,
     QLabel,
     QLineEdit,
     QPlainTextEdit,
     QPushButton,
     QSizePolicy,
+    QTableWidget,
+    QTableWidgetItem,
     QTabWidget,
     QVBoxLayout,
     QWidget,
@@ -302,8 +308,15 @@ class Ui_mission_details_tab:
         self.iranian_nationality_checkBox.setObjectName(
             "iranian_nationality_checkBox",
         )
-        self.iranian_nationality_checkBox.setEnabled(False)
+        self.iranian_nationality_checkBox.setEnabled(True)
         self.iranian_nationality_checkBox.setMaximumSize(QSize(50, 22))
+        self.iranian_nationality_checkBox.setMouseTracking(False)
+        self.iranian_nationality_checkBox.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus,
+        )
+        self.iranian_nationality_checkBox.setInputMethodHints(
+            Qt.InputMethodHint.ImhNone,
+        )
         self.iranian_nationality_checkBox.setCheckable(True)
 
         self.horizontalLayout_3.addWidget(self.iranian_nationality_checkBox)
@@ -314,8 +327,12 @@ class Ui_mission_details_tab:
         self.foreign_nationality_checkBox.setObjectName(
             "foreign_nationality_checkBox",
         )
-        self.foreign_nationality_checkBox.setEnabled(False)
+        self.foreign_nationality_checkBox.setEnabled(True)
         self.foreign_nationality_checkBox.setMaximumSize(QSize(75, 20))
+        self.foreign_nationality_checkBox.setMouseTracking(False)
+        self.foreign_nationality_checkBox.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus,
+        )
 
         self.horizontalLayout_3.addWidget(self.foreign_nationality_checkBox)
 
@@ -335,15 +352,19 @@ class Ui_mission_details_tab:
 
         self.is_male_checkBox = QCheckBox(self.information_section_2)
         self.is_male_checkBox.setObjectName("is_male_checkBox")
-        self.is_male_checkBox.setEnabled(False)
+        self.is_male_checkBox.setEnabled(True)
         self.is_male_checkBox.setMaximumSize(QSize(40, 16777215))
+        self.is_male_checkBox.setMouseTracking(False)
+        self.is_male_checkBox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.horizontalLayout_2.addWidget(self.is_male_checkBox)
 
         self.is_female_checkBox = QCheckBox(self.information_section_2)
         self.is_female_checkBox.setObjectName("is_female_checkBox")
-        self.is_female_checkBox.setEnabled(False)
+        self.is_female_checkBox.setEnabled(True)
         self.is_female_checkBox.setMaximumSize(QSize(45, 16777215))
+        self.is_female_checkBox.setMouseTracking(False)
+        self.is_female_checkBox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.horizontalLayout_2.addWidget(self.is_female_checkBox)
 
@@ -351,8 +372,10 @@ class Ui_mission_details_tab:
         self.is_gender_unknown_checkbox.setObjectName(
             "is_gender_unknown_checkbox",
         )
-        self.is_gender_unknown_checkbox.setEnabled(False)
+        self.is_gender_unknown_checkbox.setEnabled(True)
         self.is_gender_unknown_checkbox.setMaximumSize(QSize(85, 16777215))
+        self.is_gender_unknown_checkbox.setMouseTracking(False)
+        self.is_gender_unknown_checkbox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.horizontalLayout_2.addWidget(self.is_gender_unknown_checkbox)
 
@@ -1054,7 +1077,11 @@ class Ui_mission_details_tab:
         self.is_vehicle_accident_checkBox.setObjectName(
             "is_vehicle_accident_checkBox",
         )
-        self.is_vehicle_accident_checkBox.setEnabled(False)
+        self.is_vehicle_accident_checkBox.setEnabled(True)
+        self.is_vehicle_accident_checkBox.setMouseTracking(False)
+        self.is_vehicle_accident_checkBox.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus,
+        )
         self.is_vehicle_accident_checkBox.setCheckable(True)
         self.is_vehicle_accident_checkBox.setChecked(False)
 
@@ -1124,13 +1151,234 @@ class Ui_mission_details_tab:
             self.location_and_emergency_tab,
             "",
         )
+        self.symptoms_tab = QWidget()
+        self.symptoms_tab.setObjectName("symptoms_tab")
+        self.verticalLayout_5 = QVBoxLayout(self.symptoms_tab)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.symptoms_section = QWidget(self.symptoms_tab)
+        self.symptoms_section.setObjectName("symptoms_section")
+        self.symptoms_section.setMaximumSize(QSize(16777215, 175))
+        self.gridLayout = QGridLayout(self.symptoms_section)
+        self.gridLayout.setObjectName("gridLayout")
+        self.symptoms_group_box = QGroupBox(self.symptoms_section)
+        self.symptoms_group_box.setObjectName("symptoms_group_box")
+        self.symptoms_group_box.setMaximumSize(QSize(16777215, 175))
+        self.symptoms_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.symptoms_group_box.setFlat(False)
+        self.symptoms_group_box.setCheckable(False)
+        self.gridLayout_2 = QGridLayout(self.symptoms_group_box)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.has_sensory_motor_disturbance_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_sensory_motor_disturbance_checkbox.setObjectName(
+            "has_sensory_motor_disturbance_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_sensory_motor_disturbance_checkbox,
+            2,
+            1,
+            1,
+            1,
+        )
+
+        self.has_memory_loss_post_trauma_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_memory_loss_post_trauma_checkbox.setObjectName(
+            "has_memory_loss_post_trauma_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_memory_loss_post_trauma_checkbox,
+            1,
+            0,
+            1,
+            1,
+        )
+
+        self.has_abdominal_pain_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_abdominal_pain_checkbox.setObjectName(
+            "has_abdominal_pain_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_abdominal_pain_checkbox,
+            1,
+            1,
+            1,
+            1,
+        )
+
+        self.has_shortness_of_breath_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_shortness_of_breath_checkbox.setObjectName(
+            "has_shortness_of_breath_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_shortness_of_breath_checkbox,
+            0,
+            4,
+            1,
+            1,
+        )
+
+        self.has_altered_consciousness_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_altered_consciousness_checkbox.setObjectName(
+            "has_altered_consciousness_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_altered_consciousness_checkbox,
+            2,
+            2,
+            1,
+            1,
+        )
+
+        self.has_vomiting_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_vomiting_checkbox.setObjectName("has_vomiting_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_vomiting_checkbox, 1, 3, 1, 1)
+
+        self.has_bleeding_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_bleeding_checkbox.setObjectName("has_bleeding_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_bleeding_checkbox, 1, 5, 1, 1)
+
+        self.has_diarrhea_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_diarrhea_checkbox.setObjectName("has_diarrhea_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_diarrhea_checkbox, 1, 6, 1, 1)
+
+        self.has_double_vision_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_double_vision_checkbox.setObjectName(
+            "has_double_vision_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_double_vision_checkbox,
+            0,
+            3,
+            1,
+            1,
+        )
+
+        self.has_headache_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_headache_checkbox.setObjectName("has_headache_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_headache_checkbox, 1, 2, 1, 1)
+
+        self.has_blurred_vision_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_blurred_vision_checkbox.setObjectName(
+            "has_blurred_vision_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_blurred_vision_checkbox,
+            0,
+            5,
+            1,
+            1,
+        )
+
+        self.has_dizziness_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_dizziness_checkbox.setObjectName("has_dizziness_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_dizziness_checkbox, 1, 4, 1, 1)
+
+        self.has_fainting_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_fainting_checkbox.setObjectName("has_fainting_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_fainting_checkbox, 0, 1, 1, 1)
+
+        self.has_fever_chills_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_fever_chills_checkbox.setObjectName(
+            "has_fever_chills_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(self.has_fever_chills_checkbox, 0, 2, 1, 1)
+
+        self.has_chest_pain_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_chest_pain_checkbox.setObjectName("has_chest_pain_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_chest_pain_checkbox, 0, 0, 1, 1)
+
+        self.has_sweating_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_sweating_checkbox.setObjectName("has_sweating_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_sweating_checkbox, 0, 6, 1, 1)
+
+        self.has_weakness_checkBox = QCheckBox(self.symptoms_group_box)
+        self.has_weakness_checkBox.setObjectName("has_weakness_checkBox")
+
+        self.gridLayout_2.addWidget(self.has_weakness_checkBox, 2, 0, 1, 1)
+
+        self.gridLayout.addWidget(self.symptoms_group_box, 0, 0, 1, 1)
+
+        self.verticalLayout_5.addWidget(self.symptoms_section)
+
+        self.other_symptoms_section = QWidget(self.symptoms_tab)
+        self.other_symptoms_section.setObjectName("other_symptoms_section")
+        self.other_symptoms_section.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_21 = QHBoxLayout(self.other_symptoms_section)
+        self.horizontalLayout_21.setObjectName("horizontalLayout_21")
+        self.other_symptoms_label = QLabel(self.other_symptoms_section)
+        self.other_symptoms_label.setObjectName("other_symptoms_label")
+        self.other_symptoms_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_21.addWidget(self.other_symptoms_label)
+
+        self.other_symptoms_field = QPlainTextEdit(self.other_symptoms_section)
+        self.other_symptoms_field.setObjectName("other_symptoms_field")
+        self.other_symptoms_field.setReadOnly(True)
+
+        self.horizontalLayout_21.addWidget(self.other_symptoms_field)
+
+        self.verticalLayout_5.addWidget(self.other_symptoms_section)
+
+        self.vital_signs_table_Widget = QTableWidget(self.symptoms_tab)
+        if self.vital_signs_table_Widget.rowCount() < 10:
+            self.vital_signs_table_Widget.setRowCount(10)
+        self.vital_signs_table_Widget.setObjectName(
+            "vital_signs_table_Widget",
+        )
+        self.vital_signs_table_Widget.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.vital_signs_table_Widget.setLayoutDirection(
+            Qt.LayoutDirection.LeftToRight,
+        )
+        self.vital_signs_table_Widget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.vital_signs_table_Widget.setTabKeyNavigation(False)
+        self.vital_signs_table_Widget.setProperty("showDropIndicator", False)
+        self.vital_signs_table_Widget.setAlternatingRowColors(True)
+        self.vital_signs_table_Widget.setSelectionMode(
+            QAbstractItemView.SelectionMode.NoSelection,
+        )
+        self.vital_signs_table_Widget.setCornerButtonEnabled(False)
+        self.vital_signs_table_Widget.setRowCount(10)
+        self.vital_signs_table_Widget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.vital_signs_table_Widget.verticalHeader().setDefaultSectionSize(30)
+        self.vital_signs_table_Widget.verticalHeader().setStretchLastSection(True)
+
+        self.verticalLayout_5.addWidget(self.vital_signs_table_Widget)
+
+        self.mission_data_tab_widget.addTab(self.symptoms_tab, "")
 
         self.verticalLayout_2.addWidget(self.mission_data_tab_widget)
 
         self.retranslateUi(mission_details_tab)
 
         self.search_button.setDefault(True)
-        self.mission_data_tab_widget.setCurrentIndex(0)
+        self.mission_data_tab_widget.setCurrentIndex(3)
 
         QMetaObject.connectSlotsByName(mission_details_tab)
 
@@ -1559,6 +1807,147 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0645\u062d\u0644 \u0648 \u0646\u0648\u0639 \u0641\u0648\u0631\u06cc\u062a",
+                None,
+            ),
+        )
+        self.symptoms_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0644\u0627\u0626\u0645 \u0647\u0645\u0631\u0627\u0647",
+                None,
+            ),
+        )
+        self.has_sensory_motor_disturbance_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062e\u062a\u0644\u0627\u0644 \u062d\u0633\u06cc \u062d\u0631\u06a9\u062a\u06cc",
+                None,
+            ),
+        )
+        self.has_memory_loss_post_trauma_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0641\u0631\u0627\u0645\u0648\u0634\u06cc \u067e\u0633 \u0627\u0632 \u0636\u0631\u0628\u0647",
+                None,
+            ),
+        )
+        self.has_abdominal_pain_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631\u062f \u0634\u06a9\u0645\u06cc",
+                None,
+            ),
+        )
+        self.has_shortness_of_breath_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0646\u06af\u06cc \u0646\u0641\u0633",
+                None,
+            ),
+        )
+        self.has_altered_consciousness_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062e\u062a\u0644\u0627\u0644 \u0647\u0648\u0634\u06cc\u0627\u0631\u06cc",
+                None,
+            ),
+        )
+        self.has_vomiting_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0633\u062a\u0641\u0631\u0627\u063a",
+                None,
+            ),
+        )
+        self.has_bleeding_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0648\u0646\u0631\u06cc\u0632\u06cc",
+                None,
+            ),
+        )
+        self.has_diarrhea_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0633\u0647\u0627\u0644",
+                None,
+            ),
+        )
+        self.has_double_vision_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0648\u0628\u06cc\u0646\u06cc",
+                None,
+            ),
+        )
+        self.has_headache_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0631\u062f\u0631\u062f",
+                None,
+            ),
+        )
+        self.has_blurred_vision_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0627\u0631\u06cc \u062f\u06cc\u062f",
+                None,
+            ),
+        )
+        self.has_dizziness_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0631\u06af\u06cc\u062c\u0647",
+                None,
+            ),
+        )
+        self.has_fainting_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u06cc\u0647\u0648\u0634\u06cc",
+                None,
+            ),
+        )
+        self.has_fever_chills_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0628 \u0648 \u0644\u0631\u0632",
+                None,
+            ),
+        )
+        self.has_chest_pain_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631\u062f \u0642\u0641\u0633\u0647 \u0633\u06cc\u0646\u0647",
+                None,
+            ),
+        )
+        self.has_sweating_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0639\u0631\u06cc\u0642",
+                None,
+            ),
+        )
+        self.has_weakness_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0636\u0639\u0641 \u0648 \u0628\u06cc \u062d\u0627\u0644\u06cc",
+                None,
+            ),
+        )
+        self.other_symptoms_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0639\u0644\u0627\u0626\u0645 \u0647\u0645\u0631\u0627\u0647:",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.symptoms_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0644\u0627\u0626\u0645 \u0647\u0645\u0631\u0627\u0647",
                 None,
             ),
         )

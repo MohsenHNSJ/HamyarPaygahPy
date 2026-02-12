@@ -127,7 +127,7 @@
    <item>
     <widget class="QTabWidget" name="mission_data_tab_widget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -367,13 +367,22 @@
           <item>
            <widget class="QCheckBox" name="iranian_nationality_checkBox">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
               <width>50</width>
               <height>22</height>
              </size>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::FocusPolicy::NoFocus</enum>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::InputMethodHint::ImhNone</set>
             </property>
             <property name="text">
              <string>ایرانی</string>
@@ -386,13 +395,19 @@
           <item>
            <widget class="QCheckBox" name="foreign_nationality_checkBox">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
               <width>75</width>
               <height>20</height>
              </size>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <property name="text">
              <string>غیر ایرانی</string>
@@ -430,13 +445,19 @@
           <item>
            <widget class="QCheckBox" name="is_male_checkBox">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
               <width>40</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <property name="text">
              <string>آقا</string>
@@ -446,13 +467,19 @@
           <item>
            <widget class="QCheckBox" name="is_female_checkBox">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
               <width>45</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <property name="text">
              <string>خانم</string>
@@ -462,13 +489,19 @@
           <item>
            <widget class="QCheckBox" name="is_gender_unknown_checkbox">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="maximumSize">
              <size>
               <width>85</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <property name="text">
              <string>نامشخص</string>
@@ -1370,7 +1403,13 @@
           <item>
            <widget class="QCheckBox" name="is_vehicle_accident_checkBox">
             <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="mouseTracking">
              <bool>false</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::FocusPolicy::NoFocus</enum>
             </property>
             <property name="text">
              <string>تصادف</string>
@@ -1456,6 +1495,247 @@
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="symptoms_tab">
+      <attribute name="title">
+       <string>علائم همراه</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QWidget" name="symptoms_section" native="true">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>175</height>
+          </size>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="symptoms_group_box">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>175</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>علائم همراه</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="has_sensory_motor_disturbance_checkbox">
+               <property name="text">
+                <string>اختلال حسی حرکتی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="has_memory_loss_post_trauma_checkbox">
+               <property name="text">
+                <string>فراموشی پس از ضربه</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="has_abdominal_pain_checkbox">
+               <property name="text">
+                <string>درد شکمی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QCheckBox" name="has_shortness_of_breath_checkbox">
+               <property name="text">
+                <string>تنگی نفس</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QCheckBox" name="has_altered_consciousness_checkbox">
+               <property name="text">
+                <string>اختلال هوشیاری</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QCheckBox" name="has_vomiting_checkbox">
+               <property name="text">
+                <string>استفراغ</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5">
+              <widget class="QCheckBox" name="has_bleeding_checkbox">
+               <property name="text">
+                <string>خونریزی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="6">
+              <widget class="QCheckBox" name="has_diarrhea_checkbox">
+               <property name="text">
+                <string>اسهال</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QCheckBox" name="has_double_vision_checkbox">
+               <property name="text">
+                <string>دوبینی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QCheckBox" name="has_headache_checkbox">
+               <property name="text">
+                <string>سردرد</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="5">
+              <widget class="QCheckBox" name="has_blurred_vision_checkbox">
+               <property name="text">
+                <string>تاری دید</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QCheckBox" name="has_dizziness_checkbox">
+               <property name="text">
+                <string>سرگیجه</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="has_fainting_checkbox">
+               <property name="text">
+                <string>بیهوشی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QCheckBox" name="has_fever_chills_checkbox">
+               <property name="text">
+                <string>تب و لرز</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="has_chest_pain_checkbox">
+               <property name="text">
+                <string>درد قفسه سینه</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="6">
+              <widget class="QCheckBox" name="has_sweating_checkbox">
+               <property name="text">
+                <string>تعریق</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="has_weakness_checkBox">
+               <property name="text">
+                <string>ضعف و بی حالی</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="other_symptoms_section" native="true">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>75</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_21">
+          <item>
+           <widget class="QLabel" name="other_symptoms_label">
+            <property name="text">
+             <string>سایر علائم همراه:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="other_symptoms_field">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="vital_signs_table_Widget">
+         <property name="focusPolicy">
+          <enum>Qt::FocusPolicy::NoFocus</enum>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LayoutDirection::LeftToRight</enum>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+         </property>
+         <property name="tabKeyNavigation">
+          <bool>false</bool>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
+         </property>
+         <property name="cornerButtonEnabled">
+          <bool>false</bool>
+         </property>
+         <property name="rowCount">
+          <number>10</number>
+         </property>
+         <property name="supportedDragActions">
+          <set>Qt::DropAction::IgnoreAction</set>
+         </property>
+         <attribute name="verticalHeaderDefaultSectionSize">
+          <number>30</number>
+         </attribute>
+         <attribute name="verticalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
         </widget>
        </item>
       </layout>
