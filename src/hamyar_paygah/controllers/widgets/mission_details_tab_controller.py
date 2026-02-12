@@ -750,8 +750,8 @@ class MissionsDetailsTab(QWidget):
             elif row == 3:  # Blood pressure  # noqa: PLR2004
                 systolic, diastolic = map(
                     int,
-                    value.split("/"),
-                )  # type: ignore[union-attr]
+                    value.split("/"),  # type: ignore[union-attr]
+                )
                 if systolic >= BP_CRITICAL_SYS or diastolic >= BP_CRITICAL_DIA:
                     return "critical"
                 if systolic >= BP_WARNING_SYS or diastolic >= BP_WARNING_DIA:
@@ -826,8 +826,8 @@ class MissionsDetailsTab(QWidget):
                 # Set background color
                 state = self._classify_vital_sign(
                     row,
-                    value,
-                )  # type: ignore[arg-type]
+                    value,  # type: ignore[arg-type]
+                )
                 if state == "warning":
                     item.setBackground(COLOR_WARNING)
                 elif state == "critical":
