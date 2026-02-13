@@ -1393,11 +1393,16 @@ class Ui_mission_details_tab:
         self.medical_history_group_box.setObjectName(
             "medical_history_group_box",
         )
+        sizePolicy2.setHeightForWidth(
+            self.medical_history_group_box.sizePolicy().hasHeightForWidth(),
+        )
+        self.medical_history_group_box.setSizePolicy(sizePolicy2)
         self.medical_history_group_box.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
         self.gridLayout_3 = QGridLayout(self.medical_history_group_box)
         self.gridLayout_3.setObjectName("gridLayout_3")
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.has_gastrointestinal_disease_checkBox = QCheckBox(
             self.medical_history_group_box,
         )
@@ -1634,9 +1639,10 @@ class Ui_mission_details_tab:
         self.medical_history_other_info.setObjectName(
             "medical_history_other_info",
         )
-        self.medical_history_other_info.setMaximumSize(QSize(16777215, 75))
+        self.medical_history_other_info.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_22 = QHBoxLayout(self.medical_history_other_info)
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
+        self.horizontalLayout_22.setContentsMargins(0, 0, 0, 0)
         self.current_medications_label = QLabel(
             self.medical_history_other_info,
         )
@@ -1680,6 +1686,7 @@ class Ui_mission_details_tab:
         self.examine_eye_lung_heart_group_box.setObjectName(
             "examine_eye_lung_heart_group_box",
         )
+        self.examine_eye_lung_heart_group_box.setMinimumSize(QSize(0, 175))
         self.examine_eye_lung_heart_group_box.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
@@ -1687,11 +1694,13 @@ class Ui_mission_details_tab:
             self.examine_eye_lung_heart_group_box,
         )
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
+        self.horizontalLayout_23.setContentsMargins(0, 0, 0, 0)
         self.eye_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
         self.eye_group_box.setObjectName("eye_group_box")
         self.eye_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.gridLayout_4 = QGridLayout(self.eye_group_box)
         self.gridLayout_4.setObjectName("gridLayout_4")
+        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.right_eye_examine_label = QLabel(self.eye_group_box)
         self.right_eye_examine_label.setObjectName("right_eye_examine_label")
         self.right_eye_examine_label.setTextFormat(Qt.TextFormat.PlainText)
@@ -1725,6 +1734,7 @@ class Ui_mission_details_tab:
         self.lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.horizontalLayout_24 = QHBoxLayout(self.lung_group_box)
         self.horizontalLayout_24.setObjectName("horizontalLayout_24")
+        self.horizontalLayout_24.setContentsMargins(0, 0, 0, 0)
         self.right_lung_group_box = QGroupBox(self.lung_group_box)
         self.right_lung_group_box.setObjectName("right_lung_group_box")
         self.right_lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -1786,6 +1796,7 @@ class Ui_mission_details_tab:
         self.heart_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.gridLayout_7 = QGridLayout(self.heart_group_box)
         self.gridLayout_7.setObjectName("gridLayout_7")
+        self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
         self.heart_rhythm_field = QLineEdit(self.heart_group_box)
         self.heart_rhythm_field.setObjectName("heart_rhythm_field")
         self.heart_rhythm_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -1815,6 +1826,323 @@ class Ui_mission_details_tab:
         self.horizontalLayout_23.addWidget(self.heart_group_box)
 
         self.verticalLayout_7.addWidget(self.examine_eye_lung_heart_group_box)
+
+        self.trauma_types_group_box = QGroupBox(self.widget)
+        self.trauma_types_group_box.setObjectName("trauma_types_group_box")
+        self.trauma_types_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_8 = QGridLayout(self.trauma_types_group_box)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.has_puncture_wound_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_puncture_wound_checkBox.setObjectName(
+            "has_puncture_wound_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_puncture_wound_checkBox,
+            4,
+            16,
+            1,
+            1,
+        )
+
+        self.has_motor_deficit_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_motor_deficit_checkBox.setObjectName(
+            "has_motor_deficit_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_motor_deficit_checkBox,
+            4,
+            19,
+            1,
+            1,
+        )
+
+        self.has_swelling_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_swelling_checkBox.setObjectName("has_swelling_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_swelling_checkBox, 0, 15, 1, 1)
+
+        self.has_tenderness_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_tenderness_checkBox.setObjectName("has_tenderness_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_tenderness_checkBox, 0, 14, 1, 1)
+
+        self.has_abrasion_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_abrasion_checkBox.setObjectName("has_abrasion_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_abrasion_checkBox, 4, 13, 1, 1)
+
+        self.has_amputation_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_amputation_checkBox.setObjectName("has_amputation_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_amputation_checkBox, 0, 18, 1, 1)
+
+        self.has_laceration_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_laceration_checkBox.setObjectName("has_laceration_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_laceration_checkBox, 0, 17, 1, 1)
+
+        self.has_crush_injury_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_crush_injury_checkBox.setObjectName(
+            "has_crush_injury_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_crush_injury_checkBox,
+            4,
+            14,
+            1,
+            1,
+        )
+
+        self.has_sensory_deficit_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_sensory_deficit_checkBox.setObjectName(
+            "has_sensory_deficit_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_sensory_deficit_checkBox,
+            0,
+            19,
+            1,
+            1,
+        )
+
+        self.has_contusion_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_contusion_checkBox.setObjectName("has_contusion_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_contusion_checkBox, 0, 16, 1, 1)
+
+        self.has_deformity_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_deformity_checkBox.setObjectName("has_deformity_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_deformity_checkBox, 0, 13, 1, 1)
+
+        self.has_external_bleeding_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_external_bleeding_checkBox.setObjectName(
+            "has_external_bleeding_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_external_bleeding_checkBox,
+            4,
+            18,
+            1,
+            1,
+        )
+
+        self.has_dislocation_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_dislocation_checkBox.setObjectName(
+            "has_dislocation_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(self.has_dislocation_checkBox, 4, 15, 1, 1)
+
+        self.has_tear_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_tear_checkBox.setObjectName("has_tear_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_tear_checkBox, 4, 17, 1, 1)
+
+        self.verticalLayout_7.addWidget(self.trauma_types_group_box)
+
+        self.trauma_other_info_section = QWidget(self.widget)
+        self.trauma_other_info_section.setObjectName(
+            "trauma_other_info_section",
+        )
+        self.horizontalLayout_25 = QHBoxLayout(self.trauma_other_info_section)
+        self.horizontalLayout_25.setObjectName("horizontalLayout_25")
+        self.horizontalLayout_25.setContentsMargins(0, 0, 0, 0)
+        self.trauma_mechanism_group_box = QGroupBox(
+            self.trauma_other_info_section,
+        )
+        self.trauma_mechanism_group_box.setObjectName(
+            "trauma_mechanism_group_box",
+        )
+        self.trauma_mechanism_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_9 = QVBoxLayout(self.trauma_mechanism_group_box)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.penetrating_trauma_checkBox = QCheckBox(
+            self.trauma_mechanism_group_box,
+        )
+        self.penetrating_trauma_checkBox.setObjectName(
+            "penetrating_trauma_checkBox",
+        )
+
+        self.verticalLayout_9.addWidget(self.penetrating_trauma_checkBox)
+
+        self.blunt_trauma_checkBox = QCheckBox(self.trauma_mechanism_group_box)
+        self.blunt_trauma_checkBox.setObjectName("blunt_trauma_checkBox")
+
+        self.verticalLayout_9.addWidget(self.blunt_trauma_checkBox)
+
+        self.horizontalLayout_25.addWidget(self.trauma_mechanism_group_box)
+
+        self.burn_trauma_group_box = QGroupBox(self.trauma_other_info_section)
+        self.burn_trauma_group_box.setObjectName("burn_trauma_group_box")
+        self.burn_trauma_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_9 = QGridLayout(self.burn_trauma_group_box)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.burn_percentage_label = QLabel(self.burn_trauma_group_box)
+        self.burn_percentage_label.setObjectName("burn_percentage_label")
+        self.burn_percentage_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_9.addWidget(self.burn_percentage_label, 1, 1, 1, 1)
+
+        self.burn_type_label = QLabel(self.burn_trauma_group_box)
+        self.burn_type_label.setObjectName("burn_type_label")
+        self.burn_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_9.addWidget(self.burn_type_label, 0, 1, 1, 1)
+
+        self.burn_type_field = QLineEdit(self.burn_trauma_group_box)
+        self.burn_type_field.setObjectName("burn_type_field")
+        self.burn_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.burn_type_field.setReadOnly(True)
+
+        self.gridLayout_9.addWidget(self.burn_type_field, 0, 2, 1, 1)
+
+        self.burn_percentage_field = QLineEdit(self.burn_trauma_group_box)
+        self.burn_percentage_field.setObjectName("burn_percentage_field")
+        self.burn_percentage_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.burn_percentage_field.setReadOnly(True)
+
+        self.gridLayout_9.addWidget(self.burn_percentage_field, 1, 2, 1, 1)
+
+        self.horizontalLayout_25.addWidget(self.burn_trauma_group_box)
+
+        self.trauma_other_info_section_2 = QWidget(
+            self.trauma_other_info_section,
+        )
+        self.trauma_other_info_section_2.setObjectName(
+            "trauma_other_info_section_2",
+        )
+        self.gridLayout_10 = QGridLayout(self.trauma_other_info_section_2)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.patient_extraction_field = QLineEdit(
+            self.trauma_other_info_section_2,
+        )
+        self.patient_extraction_field.setObjectName(
+            "patient_extraction_field",
+        )
+        self.patient_extraction_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.patient_extraction_field.setReadOnly(True)
+
+        self.gridLayout_10.addWidget(self.patient_extraction_field, 0, 1, 1, 1)
+
+        self.type_of_fracture_field = QLineEdit(
+            self.trauma_other_info_section_2,
+        )
+        self.type_of_fracture_field.setObjectName("type_of_fracture_field")
+        self.type_of_fracture_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.type_of_fracture_field.setReadOnly(True)
+
+        self.gridLayout_10.addWidget(self.type_of_fracture_field, 1, 1, 1, 1)
+
+        self.distal_pulse_label = QLabel(self.trauma_other_info_section_2)
+        self.distal_pulse_label.setObjectName("distal_pulse_label")
+        self.distal_pulse_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_10.addWidget(self.distal_pulse_label, 0, 2, 1, 1)
+
+        self.patient_extraction_label = QLabel(
+            self.trauma_other_info_section_2,
+        )
+        self.patient_extraction_label.setObjectName(
+            "patient_extraction_label",
+        )
+        self.patient_extraction_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_10.addWidget(self.patient_extraction_label, 0, 0, 1, 1)
+
+        self.type_of_fracture_label = QLabel(self.trauma_other_info_section_2)
+        self.type_of_fracture_label.setObjectName("type_of_fracture_label")
+        self.type_of_fracture_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_10.addWidget(self.type_of_fracture_label, 1, 0, 1, 1)
+
+        self.distal_pulse_field = QLineEdit(self.trauma_other_info_section_2)
+        self.distal_pulse_field.setObjectName("distal_pulse_field")
+        self.distal_pulse_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.distal_pulse_field.setReadOnly(True)
+
+        self.gridLayout_10.addWidget(self.distal_pulse_field, 0, 3, 1, 1)
+
+        self.horizontalLayout_25.addWidget(self.trauma_other_info_section_2)
+
+        self.verticalLayout_7.addWidget(self.trauma_other_info_section)
+
+        self.trauma_other_info_section_3 = QWidget(self.widget)
+        self.trauma_other_info_section_3.setObjectName(
+            "trauma_other_info_section_3",
+        )
+        self.horizontalLayout_26 = QHBoxLayout(
+            self.trauma_other_info_section_3,
+        )
+        self.horizontalLayout_26.setObjectName("horizontalLayout_26")
+        self.horizontalLayout_26.setContentsMargins(0, 0, 0, 0)
+        self.front_trauma_locations_label = QLabel(
+            self.trauma_other_info_section_3,
+        )
+        self.front_trauma_locations_label.setObjectName(
+            "front_trauma_locations_label",
+        )
+        self.front_trauma_locations_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_26.addWidget(self.front_trauma_locations_label)
+
+        self.front_trauma_locations_field = QLineEdit(
+            self.trauma_other_info_section_3,
+        )
+        self.front_trauma_locations_field.setObjectName(
+            "front_trauma_locations_field",
+        )
+        self.front_trauma_locations_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.front_trauma_locations_field.setReadOnly(True)
+
+        self.horizontalLayout_26.addWidget(self.front_trauma_locations_field)
+
+        self.rear_trauma_locations_label = QLabel(
+            self.trauma_other_info_section_3,
+        )
+        self.rear_trauma_locations_label.setObjectName(
+            "rear_trauma_locations_label",
+        )
+        self.rear_trauma_locations_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_26.addWidget(self.rear_trauma_locations_label)
+
+        self.rear_trauma_locations_field = QLineEdit(
+            self.trauma_other_info_section_3,
+        )
+        self.rear_trauma_locations_field.setObjectName(
+            "rear_trauma_locations_field",
+        )
+        self.rear_trauma_locations_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.rear_trauma_locations_field.setReadOnly(True)
+
+        self.horizontalLayout_26.addWidget(self.rear_trauma_locations_field)
+
+        self.verticalLayout_7.addWidget(self.trauma_other_info_section_3)
 
         self.verticalLayout_8.addWidget(self.widget)
 
@@ -2633,6 +2961,188 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0633\u0645\u0639",
+                None,
+            ),
+        )
+        self.trauma_types_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0646\u0648\u0627\u0639 \u062a\u0631\u0648\u0645\u0627",
+                None,
+            ),
+        )
+        self.has_puncture_wound_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0648\u0631\u0627\u062e \u0634\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_motor_deficit_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0642\u0635 \u062d\u0631\u06a9\u062a\u06cc",
+                None,
+            ),
+        )
+        self.has_swelling_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0648\u0631\u0645",
+                None,
+            ),
+        )
+        self.has_tenderness_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0646\u062f\u0631\u0646\u0633",
+                None,
+            ),
+        )
+        self.has_abrasion_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0631\u0627\u0634\u06cc\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_amputation_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0637\u0639 \u0639\u0636\u0648",
+                None,
+            ),
+        )
+        self.has_laceration_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u0631\u06cc\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_crush_injury_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0644\u0647 \u0634\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_sensory_deficit_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0642\u0635 \u062d\u0633\u06cc",
+                None,
+            ),
+        )
+        self.has_contusion_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u0648\u0641\u062a\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_deformity_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0641\u0648\u0631\u0645\u06cc\u062a\u06cc",
+                None,
+            ),
+        )
+        self.has_external_bleeding_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0648\u0646\u0631\u06cc\u0632\u06cc",
+                None,
+            ),
+        )
+        self.has_dislocation_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631 \u0631\u0641\u062a\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_tear_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u067e\u0627\u0631\u06af\u06cc",
+                None,
+            ),
+        )
+        self.trauma_mechanism_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u06a9\u0627\u0646\u06cc\u0633\u0645 \u0622\u0633\u06cc\u0628",
+                None,
+            ),
+        )
+        self.penetrating_trauma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0627\u0641\u0630",
+                None,
+            ),
+        )
+        self.blunt_trauma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u063a\u06cc\u0631 \u0646\u0627\u0641\u0630",
+                None,
+            ),
+        )
+        self.burn_trauma_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0648\u062e\u062a\u06af\u06cc",
+                None,
+            ),
+        )
+        self.burn_percentage_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631\u0635\u062f:",
+                None,
+            ),
+        )
+        self.burn_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639:",
+                None,
+            ),
+        )
+        self.distal_pulse_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0628\u0636 \u062f\u06cc\u0633\u062a\u0627\u0644:",
+                None,
+            ),
+        )
+        self.patient_extraction_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0627\u0631\u062c \u0633\u0627\u0632\u06cc \u0628\u06cc\u0645\u0627\u0631:",
+                None,
+            ),
+        )
+        self.type_of_fracture_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u0634\u06a9\u0633\u062a\u06af\u06cc:",
+                None,
+            ),
+        )
+        self.front_trauma_locations_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0646\u0627\u0637\u0642 \u0622\u0633\u06cc\u0628 \u062f\u06cc\u062f\u0647 \u062c\u0644\u0648:",
+                None,
+            ),
+        )
+        self.rear_trauma_locations_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0646\u0627\u0637\u0642 \u0622\u0633\u06cc\u0628 \u062f\u06cc\u062f\u0647 \u0639\u0642\u0628:",
                 None,
             ),
         )

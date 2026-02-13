@@ -13,6 +13,14 @@ class PatientExtrication(Enum):
     BY_EMS = "TromaHozoor"
     """Patient was moved by EMS technicians."""
 
+    @property
+    def persian_label(self) -> str:
+        """Returns the persian label of the set patient extraction type."""
+        return {
+            PatientExtrication.BEFORE_EMS: "قبل از رسیدن تکنسین",
+            PatientExtrication.BY_EMS: "در حضور تکنسین",
+        }[self]
+
 
 class FractureType(Enum):
     """Type of bone fracture."""
@@ -22,6 +30,14 @@ class FractureType(Enum):
     CLOSED = "ShekastegiBaste"
     """Closed fracture without skin penetration."""
 
+    @property
+    def persian_label(self) -> str:
+        """Returns the persian label of the set fracture type."""
+        return {
+            FractureType.OPEN: "باز",
+            FractureType.CLOSED: "بسته",
+        }[self]
+
 
 class DistalPulseStatus(Enum):
     """Status of distal pulse in the affected extremity."""
@@ -30,6 +46,14 @@ class DistalPulseStatus(Enum):
     """Distal pulse is palpable."""
     ABSENT = "DistalNadard"
     """Distal pulse is not palpable."""
+
+    @property
+    def persian_label(self) -> str:
+        """Returns the persian label of the set fracture type."""
+        return {
+            DistalPulseStatus.PRESENT: "دارد",
+            DistalPulseStatus.ABSENT: "ندارد",
+        }[self]
 
 
 @dataclass(slots=True)

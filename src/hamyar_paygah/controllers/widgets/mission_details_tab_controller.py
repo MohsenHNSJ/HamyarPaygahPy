@@ -39,6 +39,8 @@ NOT_PROVIDED_PERSIAN_TEXT: str = "ارائه نشده"
 """Text to show when an information is not provided to EMS"""
 NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
 """Text to show when an information is not yet registered by EMS"""
+NO_BURN_DAMAGE: str = "بدون سوختگی"
+"""Text to show on burn type and percentage when there is no burn damage."""
 COLOR_WARNING = QColor("#FFF59D")  # soft yellow
 """Color to use for warning values that are approaching critical thresholds."""
 COLOR_CRITICAL = QColor("#EF9A9A")  # soft red
@@ -156,6 +158,9 @@ class MissionsDetailsTab(QWidget):
 
         # Populate pupils lungs heart section
         self._populate_pupils_lungs_heart_section(mission_details)
+
+        # Populate trauma types section
+        self._populate_trauma_types_section(mission_details)
 
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
@@ -1102,3 +1107,172 @@ class MissionsDetailsTab(QWidget):
         else:
             self.ui.heart_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
             self.ui.heart_rhythm_field.setEnabled(False)
+
+    def _populate_trauma_types_section(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912, PLR0915
+        """Populates the trauma types section by data of mission details."""
+        # Set deformity checkbox
+        self._set_checkbox(
+            self.ui.has_deformity_checkBox,
+            value=mission_details.trauma_types.has_deformity,
+        )
+
+        # Set abrasion checkbox
+        self._set_checkbox(
+            self.ui.has_abrasion_checkBox,
+            value=mission_details.trauma_types.has_abrasion,
+        )
+
+        # Set tenderness checkbox
+        self._set_checkbox(
+            self.ui.has_tenderness_checkBox,
+            value=mission_details.trauma_types.has_tenderness,
+        )
+
+        # Set crush injury checkbox
+        self._set_checkbox(
+            self.ui.has_crush_injury_checkBox,
+            value=mission_details.trauma_types.has_crush_injury,
+        )
+
+        # Set swelling checkbox
+        self._set_checkbox(
+            self.ui.has_swelling_checkBox,
+            value=mission_details.trauma_types.has_swelling,
+        )
+
+        # Set dislocation checkbox
+        self._set_checkbox(
+            self.ui.has_dislocation_checkBox,
+            value=mission_details.trauma_types.has_dislocation,
+        )
+
+        # Set contusion checkbox
+        self._set_checkbox(
+            self.ui.has_contusion_checkBox,
+            value=mission_details.trauma_types.has_contusion,
+        )
+
+        # Set puncture wound checkbox
+        self._set_checkbox(
+            self.ui.has_puncture_wound_checkBox,
+            value=mission_details.trauma_types.has_puncture_wound,
+        )
+
+        # Set laceration checkbox
+        self._set_checkbox(
+            self.ui.has_laceration_checkBox,
+            value=mission_details.trauma_types.has_laceration,
+        )
+
+        # Set tear checkbox
+        self._set_checkbox(
+            self.ui.has_tear_checkBox,
+            value=mission_details.trauma_types.has_tear,
+        )
+
+        # Set amputation checkbox
+        self._set_checkbox(
+            self.ui.has_amputation_checkBox,
+            value=mission_details.trauma_types.has_amputation,
+        )
+
+        # Set external bleeding checkbox
+        self._set_checkbox(
+            self.ui.has_external_bleeding_checkBox,
+            value=mission_details.trauma_types.has_external_bleeding,
+        )
+
+        # Set sensory deficit checkbox
+        self._set_checkbox(
+            self.ui.has_sensory_deficit_checkBox,
+            value=mission_details.trauma_types.has_sensory_deficit,
+        )
+
+        # Set motor deficit checkbox
+        self._set_checkbox(
+            self.ui.has_motor_deficit_checkBox,
+            value=mission_details.trauma_types.has_motor_deficit,
+        )
+
+        # Set penetrating trauma checkbox
+        self._set_checkbox(
+            self.ui.penetrating_trauma_checkBox,
+            value=mission_details.trauma_types.has_penetrating_trauma,
+        )
+
+        # Set blunt trauma checkbox
+        self._set_checkbox(
+            self.ui.blunt_trauma_checkBox,
+            value=mission_details.trauma_types.has_blunt_trauma,
+        )
+
+        # Set Burn type
+        if mission_details.trauma_types.burn_type is not None:
+            self.ui.burn_type_field.setText(
+                mission_details.trauma_types.burn_type,
+            )
+        else:
+            self.ui.burn_type_field.setText(NO_BURN_DAMAGE)
+            self.ui.burn_type_field.setEnabled(False)
+
+        # Set Burn percentage
+        if mission_details.trauma_types.burn_percentage is not None:
+            self.ui.burn_percentage_field.setText(
+                mission_details.trauma_types.burn_percentage,
+            )
+        else:
+            self.ui.burn_percentage_field.setText(NO_BURN_DAMAGE)
+            self.ui.burn_percentage_field.setEnabled(False)
+
+        # Set patient extrication
+        if mission_details.trauma_types.patient_extraction is not None:
+            self.ui.patient_extraction_field.setText(
+                mission_details.trauma_types.patient_extraction.persian_label,
+            )
+        else:
+            self.ui.patient_extraction_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.patient_extraction_field.setEnabled(False)
+
+        # Set type of fracture
+        if mission_details.trauma_types.fracture_type is not None:
+            self.ui.type_of_fracture_field.setText(
+                mission_details.trauma_types.fracture_type.persian_label,
+            )
+        else:
+            self.ui.type_of_fracture_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.type_of_fracture_field.setEnabled(False)
+
+        # Set distal pulse status
+        if mission_details.trauma_types.distal_pulse_status is not None:
+            self.ui.distal_pulse_field.setText(
+                mission_details.trauma_types.distal_pulse_status.persian_label,
+            )
+        else:
+            self.ui.distal_pulse_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.distal_pulse_field.setEnabled(False)
+
+        # Set front trauma locations
+        if mission_details.trauma_types.front_trauma_locations:
+            self.ui.front_trauma_locations_field.setText(
+                mission_details.trauma_types.front_trauma_locations,
+            )
+        else:
+            self.ui.front_trauma_locations_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.front_trauma_locations_field.setEnabled(False)
+
+        # Set rear trauma locations
+        if mission_details.trauma_types.rear_trauma_locations:
+            self.ui.rear_trauma_locations_field.setText(
+                mission_details.trauma_types.rear_trauma_locations,
+            )
+        else:
+            self.ui.rear_trauma_locations_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.rear_trauma_locations_field.setEnabled(False)

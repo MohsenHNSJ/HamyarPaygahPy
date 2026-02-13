@@ -1762,6 +1762,12 @@
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <widget class="QGroupBox" name="medical_history_group_box">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="title">
              <string>تاریخچه پزشکی</string>
             </property>
@@ -1769,6 +1775,18 @@
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item row="0" column="0">
               <widget class="QCheckBox" name="has_gastrointestinal_disease_checkBox">
                <property name="text">
@@ -1903,10 +1921,22 @@
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>75</height>
+              <height>50</height>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_22">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QLabel" name="current_medications_label">
                <property name="text">
@@ -1949,6 +1979,12 @@
           </item>
           <item>
            <widget class="QGroupBox" name="examine_eye_lung_heart_group_box">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>175</height>
+             </size>
+            </property>
             <property name="title">
              <string>معاینه چشم، قلب و ریه</string>
             </property>
@@ -1956,6 +1992,18 @@
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_23">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QGroupBox" name="eye_group_box">
                <property name="title">
@@ -1965,6 +2013,18 @@
                 <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
                <layout class="QGridLayout" name="gridLayout_4">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item row="0" column="0">
                  <widget class="QLabel" name="right_eye_examine_label">
                   <property name="text">
@@ -2017,6 +2077,18 @@
                 <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_24">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item>
                  <widget class="QGroupBox" name="right_lung_group_box">
                   <property name="title">
@@ -2113,6 +2185,18 @@
                 <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
                <layout class="QGridLayout" name="gridLayout_7">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item row="1" column="1">
                  <widget class="QLineEdit" name="heart_rhythm_field">
                   <property name="alignment">
@@ -2154,6 +2238,348 @@
                  </widget>
                 </item>
                </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="trauma_types_group_box">
+            <property name="title">
+             <string>انواع تروما</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item row="4" column="16">
+              <widget class="QCheckBox" name="has_puncture_wound_checkBox">
+               <property name="text">
+                <string>سوراخ شدگی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="19">
+              <widget class="QCheckBox" name="has_motor_deficit_checkBox">
+               <property name="text">
+                <string>نقص حرکتی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="15">
+              <widget class="QCheckBox" name="has_swelling_checkBox">
+               <property name="text">
+                <string>تورم</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="14">
+              <widget class="QCheckBox" name="has_tenderness_checkBox">
+               <property name="text">
+                <string>تندرنس</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="13">
+              <widget class="QCheckBox" name="has_abrasion_checkBox">
+               <property name="text">
+                <string>خراشیدگی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="18">
+              <widget class="QCheckBox" name="has_amputation_checkBox">
+               <property name="text">
+                <string>قطع عضو</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="17">
+              <widget class="QCheckBox" name="has_laceration_checkBox">
+               <property name="text">
+                <string>بریدگی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="14">
+              <widget class="QCheckBox" name="has_crush_injury_checkBox">
+               <property name="text">
+                <string>له شدگی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="19">
+              <widget class="QCheckBox" name="has_sensory_deficit_checkBox">
+               <property name="text">
+                <string>نقص حسی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="16">
+              <widget class="QCheckBox" name="has_contusion_checkBox">
+               <property name="text">
+                <string>کوفتگی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="13">
+              <widget class="QCheckBox" name="has_deformity_checkBox">
+               <property name="text">
+                <string>دفورمیتی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="18">
+              <widget class="QCheckBox" name="has_external_bleeding_checkBox">
+               <property name="text">
+                <string>خونریزی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="15">
+              <widget class="QCheckBox" name="has_dislocation_checkBox">
+               <property name="text">
+                <string>در رفتگی</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="17">
+              <widget class="QCheckBox" name="has_tear_checkBox">
+               <property name="text">
+                <string>پارگی</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="trauma_other_info_section" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_25">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QGroupBox" name="trauma_mechanism_group_box">
+               <property name="title">
+                <string>مکانیسم آسیب</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_9">
+                <item>
+                 <widget class="QCheckBox" name="penetrating_trauma_checkBox">
+                  <property name="text">
+                   <string>نافذ</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="blunt_trauma_checkBox">
+                  <property name="text">
+                   <string>غیر نافذ</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="burn_trauma_group_box">
+               <property name="title">
+                <string>سوختگی</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_9">
+                <item row="1" column="1">
+                 <widget class="QLabel" name="burn_percentage_label">
+                  <property name="text">
+                   <string>درصد:</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::TextFormat::PlainText</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="burn_type_label">
+                  <property name="text">
+                   <string>نوع:</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::TextFormat::PlainText</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLineEdit" name="burn_type_field">
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLineEdit" name="burn_percentage_field">
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="trauma_other_info_section_2" native="true">
+               <layout class="QGridLayout" name="gridLayout_10">
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="patient_extraction_field">
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="type_of_fracture_field">
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="distal_pulse_label">
+                  <property name="text">
+                   <string>نبض دیستال:</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::TextFormat::PlainText</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="patient_extraction_label">
+                  <property name="text">
+                   <string>خارج سازی بیمار:</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::TextFormat::PlainText</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="type_of_fracture_label">
+                  <property name="text">
+                   <string>نوع شکستگی:</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::TextFormat::PlainText</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QLineEdit" name="distal_pulse_field">
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="trauma_other_info_section_3" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_26">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="front_trauma_locations_label">
+               <property name="text">
+                <string>مناطق آسیب دیده جلو:</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="front_trauma_locations_field">
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="rear_trauma_locations_label">
+               <property name="text">
+                <string>مناطق آسیب دیده عقب:</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::TextFormat::PlainText</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="rear_trauma_locations_field">
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
