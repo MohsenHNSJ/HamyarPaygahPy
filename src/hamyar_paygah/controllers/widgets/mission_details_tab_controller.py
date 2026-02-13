@@ -125,6 +125,8 @@ class MissionsDetailsTab(QWidget):
 
         # Set up vital signs table
         self._setup_vital_signs_table()
+        # Set up drugs list table
+        self._setup_drugs_list_table()
 
     @asyncSlot()  # type: ignore[untyped-decorator,misc]
     async def on_search_button_clicked(self) -> None:
@@ -164,6 +166,9 @@ class MissionsDetailsTab(QWidget):
 
         # Populate medical actions section
         self._populate_medical_actions_section(mission_details)
+
+        # Populate drugs list table
+        self._populate_drugs_list_table(mission_details)
 
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
@@ -1441,3 +1446,55 @@ class MissionsDetailsTab(QWidget):
             self.ui.spinal_fix_action_after_checkBox,
             value=mission_details.medical_actions.spinal_immobilization.after_ems,
         )
+
+    def _setup_drugs_list_table(self) -> None:
+        """Setups the drugs list table with appropriate row labels and initial configuration."""
+        # Get the drugs list table widget
+        drugs_list_table = self.ui.drugs_list_table_widget
+
+        # Set row labels
+        row_labels = [
+            "نام",
+            "دوز",
+            "روش تجویز",
+            "زمان تجویز",
+        ]
+        # Set the number of rows based on the number of drugs list attributes
+        drugs_list_table.setRowCount(len(row_labels))
+        # Set the vertical header labels to the attribute names
+        drugs_list_table.setVerticalHeaderLabels(row_labels)
+
+    def _populate_drugs_list_table(self, mission_details: MissionDetails) -> None:
+        """Populates the drugs list table from mission details data."""
+        # If the list of drugs list is empty, we do not populate the table
+        if not mission_details.drugs:
+            return
+
+        # Get the table
+        drugs_table = self.ui.drugs_list_table_widget
+
+        # Set the number of columns based on the number of drugs records
+        drugs_table.setColumnCount(len(mission_details.drugs))
+
+        # Iterate through the columns and set the date for each drug record
+        for column, drug in enumerate(mission_details.drugs):
+            # Get the drug attribute values in the order of the row labels
+            values = [
+                drug.name or NOT_REGISTERED_PERSIAN_TEXT,
+                drug.dose or NOT_REGISTERED_PERSIAN_TEXT,
+                drug.route or NOT_REGISTERED_PERSIAN_TEXT,
+                drug.time or NOT_REGISTERED_PERSIAN_TEXT,
+            ]
+
+            # Iterate through rows and set the value for each drug attribute
+            for row, value in enumerate(values):
+                item = QTableWidgetItem(str(value))
+                # Set center align
+                item.setTextAlignment(
+                    Qt.AlignCenter,  # type: ignore[attr-defined]
+                )
+                # Add item to table
+                drugs_table.setItem(row, column, item)
+
+        # Resize to content
+        drugs_table.resizeColumnsToContents()
