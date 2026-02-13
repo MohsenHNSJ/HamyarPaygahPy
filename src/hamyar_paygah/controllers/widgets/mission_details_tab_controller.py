@@ -162,6 +162,9 @@ class MissionsDetailsTab(QWidget):
         # Populate trauma types section
         self._populate_trauma_types_section(mission_details)
 
+        # Populate medical actions section
+        self._populate_medical_actions_section(mission_details)
+
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
         # Clear widgets used for data showing
@@ -1276,3 +1279,165 @@ class MissionsDetailsTab(QWidget):
                 NOT_REGISTERED_PERSIAN_TEXT,
             )
             self.ui.rear_trauma_locations_field.setEnabled(False)
+
+    def _populate_medical_actions_section(self, mission_details: MissionDetails) -> None:
+        """Populates the medical actions section by data of mission details."""
+        # Set suction action
+        self._set_checkbox(
+            self.ui.suction_action_before_checkBox,
+            value=mission_details.medical_actions.suction.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.suction_action_after_checkBox,
+            value=mission_details.medical_actions.suction.after_ems,
+        )
+
+        # Set CPR action
+        self._set_checkbox(
+            self.ui.cpr_action_before_checkBox,
+            value=mission_details.medical_actions.cpr.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.cpr_action_after_checkBox,
+            value=mission_details.medical_actions.cpr.after_ems,
+        )
+
+        # Set dressing action
+        self._set_checkbox(
+            self.ui.dressing_action_before_checkBox,
+            value=mission_details.medical_actions.dressing.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.dressing_action_after_checkBox,
+            value=mission_details.medical_actions.dressing.after_ems,
+        )
+
+        # Set airway tube action
+        self._set_checkbox(
+            self.ui.airway_tube_action_before_checkBox,
+            value=mission_details.medical_actions.airway_tube.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.airway_tube_action_after_checkBox,
+            value=mission_details.medical_actions.airway_tube.after_ems,
+        )
+
+        # Set cardiac massage action
+        self._set_checkbox(
+            self.ui.cardiac_massage_action_before_checkBox,
+            value=mission_details.medical_actions.cardiac_massage.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.cardiac_massage_action_after_checkBox,
+            value=mission_details.medical_actions.cardiac_massage.after_ems,
+        )
+
+        # Set assisted ventilation action
+        self._set_checkbox(
+            self.ui.assisted_ventilation_action_before_checkBox,
+            value=mission_details.medical_actions.assisted_ventilation.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.assisted_ventilation_action_after_checkBox,
+            value=mission_details.medical_actions.assisted_ventilation.after_ems,
+        )
+
+        # Set vital signs assessment action
+        self._set_checkbox(
+            self.ui.vital_sign_action_before_checkBox,
+            value=mission_details.medical_actions.vital_signs.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.vital_sign_action_after_checkBox,
+            value=mission_details.medical_actions.vital_signs.after_ems,
+        )
+
+        # Set medical consultation action
+        self._set_checkbox(
+            self.ui.consultation_action_before_checkBox,
+            value=mission_details.medical_actions.consultation.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.consultation_action_after_checkBox,
+            value=mission_details.medical_actions.consultation.after_ems,
+        )
+
+        # Set defibrillation action
+        self._set_checkbox(
+            self.ui.defibrillation_action_before_checkBox,
+            value=mission_details.medical_actions.defibrillation.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.defibrillation_action_after_checkBox,
+            value=mission_details.medical_actions.defibrillation.after_ems,
+        )
+
+        # Set patient monitoring action
+        self._set_checkbox(
+            self.ui.monitoring_action_before_checkBox,
+            value=mission_details.medical_actions.monitoring.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.monitoring_action_after_checkBox,
+            value=mission_details.medical_actions.monitoring.after_ems,
+        )
+
+        # Set IV access action
+        self._set_checkbox(
+            self.ui.iv_action_before_checkBox,
+            value=mission_details.medical_actions.iv_access.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.iv_action_after_checkBox,
+            value=mission_details.medical_actions.iv_access.after_ems,
+        )
+
+        # Set oxygen therapy action
+        self._set_checkbox(
+            self.ui.oxygen_action_before_checkBox,
+            value=mission_details.medical_actions.oxygen_therapy.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.oxygen_action_after_checkBox,
+            value=mission_details.medical_actions.oxygen_therapy.after_ems,
+        )
+
+        # Set complete bed rest action
+        self._set_checkbox(
+            self.ui.cbr_action_before_checkBox,
+            value=mission_details.medical_actions.cbr.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.cbr_action_after_checkBox,
+            value=mission_details.medical_actions.cbr.after_ems,
+        )
+
+        # Set head immobilization action
+        self._set_checkbox(
+            self.ui.head_fix_action_before_checkBox,
+            value=mission_details.medical_actions.head_immobilization.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.head_fix_action_after_checkBox,
+            value=mission_details.medical_actions.head_immobilization.after_ems,
+        )
+
+        # Set limb immobilization action
+        self._set_checkbox(
+            self.ui.limb_fix_action_before_checkBox,
+            value=mission_details.medical_actions.limb_immobilization.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.limb_fix_action_after_checkBox,
+            value=mission_details.medical_actions.limb_immobilization.after_ems,
+        )
+
+        # Set spinal immobilization action
+        self._set_checkbox(
+            self.ui.spinal_fix_action_before_checkBox,
+            value=mission_details.medical_actions.spinal_immobilization.before_ems,
+        )
+        self._set_checkbox(
+            self.ui.spinal_fix_action_after_checkBox,
+            value=mission_details.medical_actions.spinal_immobilization.after_ems,
+        )

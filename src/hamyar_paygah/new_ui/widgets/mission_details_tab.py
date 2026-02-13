@@ -58,6 +58,7 @@ from PySide6.QtWidgets import (
     QPlainTextEdit,
     QPushButton,
     QSizePolicy,
+    QSpacerItem,
     QTableWidget,
     QTableWidgetItem,
     QTabWidget,
@@ -2147,13 +2148,817 @@ class Ui_mission_details_tab:
         self.verticalLayout_8.addWidget(self.widget)
 
         self.mission_data_tab_widget.addTab(self.history_and_trauma_tab, "")
+        self.medical_actions_tab = QWidget()
+        self.medical_actions_tab.setObjectName("medical_actions_tab")
+        self.verticalLayout_10 = QVBoxLayout(self.medical_actions_tab)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.medical_action_main_frame = QWidget(self.medical_actions_tab)
+        self.medical_action_main_frame.setObjectName(
+            "medical_action_main_frame",
+        )
+        self.horizontalLayout_27 = QHBoxLayout(self.medical_action_main_frame)
+        self.horizontalLayout_27.setObjectName("horizontalLayout_27")
+        self.medical_actions_group_box = QGroupBox(
+            self.medical_action_main_frame,
+        )
+        self.medical_actions_group_box.setObjectName(
+            "medical_actions_group_box",
+        )
+        self.medical_actions_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_14 = QVBoxLayout(self.medical_actions_group_box)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.before_after_indicator_section = QWidget(
+            self.medical_actions_group_box,
+        )
+        self.before_after_indicator_section.setObjectName(
+            "before_after_indicator_section",
+        )
+        self.before_after_indicator_section.setMaximumSize(QSize(16777215, 30))
+        self.horizontalLayout_28 = QHBoxLayout(
+            self.before_after_indicator_section,
+        )
+        self.horizontalLayout_28.setSpacing(20)
+        self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.horizontalLayout_28.setContentsMargins(5, 5, 5, 5)
+        self.before_medical_action_label = QLabel(
+            self.before_after_indicator_section,
+        )
+        self.before_medical_action_label.setObjectName(
+            "before_medical_action_label",
+        )
+        self.before_medical_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.before_medical_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.horizontalLayout_28.addWidget(self.before_medical_action_label)
+
+        self.horizontalSpacer = QSpacerItem(
+            35,
+            5,
+            QSizePolicy.Policy.Preferred,
+            QSizePolicy.Policy.Minimum,
+        )
+
+        self.horizontalLayout_28.addItem(self.horizontalSpacer)
+
+        self.after_medical_action_label = QLabel(
+            self.before_after_indicator_section,
+        )
+        self.after_medical_action_label.setObjectName(
+            "after_medical_action_label",
+        )
+        self.after_medical_action_label.setLayoutDirection(
+            Qt.LayoutDirection.RightToLeft,
+        )
+        self.after_medical_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.after_medical_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.horizontalLayout_28.addWidget(self.after_medical_action_label)
+
+        self.verticalLayout_14.addWidget(self.before_after_indicator_section)
+
+        self.medical_actions_grid = QWidget(self.medical_actions_group_box)
+        self.medical_actions_grid.setObjectName("medical_actions_grid")
+        self.gridLayout_11 = QGridLayout(self.medical_actions_grid)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.airway_tube_action_label = QLabel(self.medical_actions_grid)
+        self.airway_tube_action_label.setObjectName(
+            "airway_tube_action_label",
+        )
+        self.airway_tube_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.airway_tube_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(self.airway_tube_action_label, 3, 1, 1, 1)
+
+        self.consultation_action_label = QLabel(self.medical_actions_grid)
+        self.consultation_action_label.setObjectName(
+            "consultation_action_label",
+        )
+        self.consultation_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.consultation_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(
+            self.consultation_action_label,
+            7,
+            1,
+            1,
+            1,
+        )
+
+        self.limb_fix_action_label = QLabel(self.medical_actions_grid)
+        self.limb_fix_action_label.setObjectName("limb_fix_action_label")
+        self.limb_fix_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.limb_fix_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.limb_fix_action_label, 14, 1, 1, 1)
+
+        self.cardiac_massage_action_label = QLabel(self.medical_actions_grid)
+        self.cardiac_massage_action_label.setObjectName(
+            "cardiac_massage_action_label",
+        )
+        self.cardiac_massage_action_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+        self.cardiac_massage_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cardiac_massage_action_label,
+            4,
+            1,
+            1,
+            1,
+        )
+
+        self.spinal_fix_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.spinal_fix_action_before_checkBox.setObjectName(
+            "spinal_fix_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.spinal_fix_action_before_checkBox,
+            15,
+            0,
+            1,
+            1,
+        )
+
+        self.spinal_fix_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.spinal_fix_action_after_checkBox.setObjectName(
+            "spinal_fix_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.spinal_fix_action_after_checkBox,
+            15,
+            2,
+            1,
+            1,
+        )
+
+        self.spinal_fix_action_label = QLabel(self.medical_actions_grid)
+        self.spinal_fix_action_label.setObjectName("spinal_fix_action_label")
+        self.spinal_fix_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.spinal_fix_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.spinal_fix_action_label, 15, 1, 1, 1)
+
+        self.vital_sign_action_label = QLabel(self.medical_actions_grid)
+        self.vital_sign_action_label.setObjectName("vital_sign_action_label")
+        self.vital_sign_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.vital_sign_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.vital_sign_action_label, 6, 1, 1, 1)
+
+        self.dressing_action_label = QLabel(self.medical_actions_grid)
+        self.dressing_action_label.setObjectName("dressing_action_label")
+        self.dressing_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.dressing_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.dressing_action_label, 2, 1, 1, 1)
+
+        self.defibrillation_action_label = QLabel(self.medical_actions_grid)
+        self.defibrillation_action_label.setObjectName(
+            "defibrillation_action_label",
+        )
+        self.defibrillation_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.defibrillation_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(
+            self.defibrillation_action_label,
+            8,
+            1,
+            1,
+            1,
+        )
+
+        self.oxygen_action_label = QLabel(self.medical_actions_grid)
+        self.oxygen_action_label.setObjectName("oxygen_action_label")
+        self.oxygen_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.oxygen_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.oxygen_action_label, 11, 1, 1, 1)
+
+        self.head_fix_action_label = QLabel(self.medical_actions_grid)
+        self.head_fix_action_label.setObjectName("head_fix_action_label")
+        self.head_fix_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.head_fix_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.head_fix_action_label, 13, 1, 1, 1)
+
+        self.assisted_ventilation_action_label = QLabel(
+            self.medical_actions_grid,
+        )
+        self.assisted_ventilation_action_label.setObjectName(
+            "assisted_ventilation_action_label",
+        )
+        self.assisted_ventilation_action_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+        self.assisted_ventilation_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(
+            self.assisted_ventilation_action_label,
+            5,
+            1,
+            1,
+            1,
+        )
+
+        self.cpr_action_label = QLabel(self.medical_actions_grid)
+        self.cpr_action_label.setObjectName("cpr_action_label")
+        self.cpr_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.cpr_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.cpr_action_label, 1, 1, 1, 1)
+
+        self.monitoring_action_label = QLabel(self.medical_actions_grid)
+        self.monitoring_action_label.setObjectName("monitoring_action_label")
+        self.monitoring_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.monitoring_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.monitoring_action_label, 9, 1, 1, 1)
+
+        self.cbr_action_label = QLabel(self.medical_actions_grid)
+        self.cbr_action_label.setObjectName("cbr_action_label")
+        self.cbr_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.cbr_action_label, 12, 1, 1, 1)
+
+        self.iv_action_label = QLabel(self.medical_actions_grid)
+        self.iv_action_label.setObjectName("iv_action_label")
+        self.iv_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.iv_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.iv_action_label, 10, 1, 1, 1)
+
+        self.suction_action_label = QLabel(self.medical_actions_grid)
+        self.suction_action_label.setObjectName("suction_action_label")
+        self.suction_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.suction_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.suction_action_label, 0, 1, 1, 1)
+
+        self.limb_fix_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.limb_fix_action_after_checkBox.setObjectName(
+            "limb_fix_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.limb_fix_action_after_checkBox,
+            14,
+            2,
+            1,
+            1,
+        )
+
+        self.head_fix_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.head_fix_action_after_checkBox.setObjectName(
+            "head_fix_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.head_fix_action_after_checkBox,
+            13,
+            2,
+            1,
+            1,
+        )
+
+        self.cbr_action_after_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cbr_action_after_checkBox.setObjectName(
+            "cbr_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cbr_action_after_checkBox,
+            12,
+            2,
+            1,
+            1,
+        )
+
+        self.oxygen_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.oxygen_action_after_checkBox.setObjectName(
+            "oxygen_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.oxygen_action_after_checkBox,
+            11,
+            2,
+            1,
+            1,
+        )
+
+        self.iv_action_after_checkBox = QCheckBox(self.medical_actions_grid)
+        self.iv_action_after_checkBox.setObjectName(
+            "iv_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.iv_action_after_checkBox,
+            10,
+            2,
+            1,
+            1,
+        )
+
+        self.monitoring_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.monitoring_action_after_checkBox.setObjectName(
+            "monitoring_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.monitoring_action_after_checkBox,
+            9,
+            2,
+            1,
+            1,
+        )
+
+        self.defibrillation_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.defibrillation_action_after_checkBox.setObjectName(
+            "defibrillation_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.defibrillation_action_after_checkBox,
+            8,
+            2,
+            1,
+            1,
+        )
+
+        self.consultation_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.consultation_action_after_checkBox.setObjectName(
+            "consultation_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.consultation_action_after_checkBox,
+            7,
+            2,
+            1,
+            1,
+        )
+
+        self.vital_sign_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.vital_sign_action_after_checkBox.setObjectName(
+            "vital_sign_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.vital_sign_action_after_checkBox,
+            6,
+            2,
+            1,
+            1,
+        )
+
+        self.assisted_ventilation_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.assisted_ventilation_action_after_checkBox.setObjectName(
+            "assisted_ventilation_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.assisted_ventilation_action_after_checkBox,
+            5,
+            2,
+            1,
+            1,
+        )
+
+        self.cardiac_massage_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.cardiac_massage_action_after_checkBox.setObjectName(
+            "cardiac_massage_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cardiac_massage_action_after_checkBox,
+            4,
+            2,
+            1,
+            1,
+        )
+
+        self.airway_tube_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.airway_tube_action_after_checkBox.setObjectName(
+            "airway_tube_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.airway_tube_action_after_checkBox,
+            3,
+            2,
+            1,
+            1,
+        )
+
+        self.dressing_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.dressing_action_after_checkBox.setObjectName(
+            "dressing_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.dressing_action_after_checkBox,
+            2,
+            2,
+            1,
+            1,
+        )
+
+        self.cpr_action_after_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cpr_action_after_checkBox.setObjectName(
+            "cpr_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cpr_action_after_checkBox,
+            1,
+            2,
+            1,
+            1,
+        )
+
+        self.suction_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.suction_action_after_checkBox.setObjectName(
+            "suction_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.suction_action_after_checkBox,
+            0,
+            2,
+            1,
+            1,
+        )
+
+        self.limb_fix_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.limb_fix_action_before_checkBox.setObjectName(
+            "limb_fix_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.limb_fix_action_before_checkBox,
+            14,
+            0,
+            1,
+            1,
+        )
+
+        self.head_fix_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.head_fix_action_before_checkBox.setObjectName(
+            "head_fix_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.head_fix_action_before_checkBox,
+            13,
+            0,
+            1,
+            1,
+        )
+
+        self.cbr_action_before_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cbr_action_before_checkBox.setObjectName(
+            "cbr_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cbr_action_before_checkBox,
+            12,
+            0,
+            1,
+            1,
+        )
+
+        self.oxygen_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.oxygen_action_before_checkBox.setObjectName(
+            "oxygen_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.oxygen_action_before_checkBox,
+            11,
+            0,
+            1,
+            1,
+        )
+
+        self.iv_action_before_checkBox = QCheckBox(self.medical_actions_grid)
+        self.iv_action_before_checkBox.setObjectName(
+            "iv_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.iv_action_before_checkBox,
+            10,
+            0,
+            1,
+            1,
+        )
+
+        self.monitoring_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.monitoring_action_before_checkBox.setObjectName(
+            "monitoring_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.monitoring_action_before_checkBox,
+            9,
+            0,
+            1,
+            1,
+        )
+
+        self.defibrillation_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.defibrillation_action_before_checkBox.setObjectName(
+            "defibrillation_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.defibrillation_action_before_checkBox,
+            8,
+            0,
+            1,
+            1,
+        )
+
+        self.consultation_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.consultation_action_before_checkBox.setObjectName(
+            "consultation_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.consultation_action_before_checkBox,
+            7,
+            0,
+            1,
+            1,
+        )
+
+        self.vital_sign_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.vital_sign_action_before_checkBox.setObjectName(
+            "vital_sign_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.vital_sign_action_before_checkBox,
+            6,
+            0,
+            1,
+            1,
+        )
+
+        self.assisted_ventilation_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.assisted_ventilation_action_before_checkBox.setObjectName(
+            "assisted_ventilation_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.assisted_ventilation_action_before_checkBox,
+            5,
+            0,
+            1,
+            1,
+        )
+
+        self.cardiac_massage_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.cardiac_massage_action_before_checkBox.setObjectName(
+            "cardiac_massage_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cardiac_massage_action_before_checkBox,
+            4,
+            0,
+            1,
+            1,
+        )
+
+        self.airway_tube_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.airway_tube_action_before_checkBox.setObjectName(
+            "airway_tube_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.airway_tube_action_before_checkBox,
+            3,
+            0,
+            1,
+            1,
+        )
+
+        self.dressing_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.dressing_action_before_checkBox.setObjectName(
+            "dressing_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.dressing_action_before_checkBox,
+            2,
+            0,
+            1,
+            1,
+        )
+
+        self.cpr_action_before_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cpr_action_before_checkBox.setObjectName(
+            "cpr_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cpr_action_before_checkBox,
+            1,
+            0,
+            1,
+            1,
+        )
+
+        self.suction_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.suction_action_before_checkBox.setObjectName(
+            "suction_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.suction_action_before_checkBox,
+            0,
+            0,
+            1,
+            1,
+        )
+
+        self.verticalLayout_14.addWidget(self.medical_actions_grid)
+
+        self.horizontalLayout_27.addWidget(self.medical_actions_group_box)
+
+        self.consumables_and_drugs_section = QWidget(
+            self.medical_action_main_frame,
+        )
+        self.consumables_and_drugs_section.setObjectName(
+            "consumables_and_drugs_section",
+        )
+        self.verticalLayout_11 = QVBoxLayout(
+            self.consumables_and_drugs_section,
+        )
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.drugs_groupBox = QGroupBox(self.consumables_and_drugs_section)
+        self.drugs_groupBox.setObjectName("drugs_groupBox")
+        self.drugs_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_12 = QVBoxLayout(self.drugs_groupBox)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.drugs_list_table_widget = QTableWidget(self.drugs_groupBox)
+        if self.drugs_list_table_widget.rowCount() < 4:
+            self.drugs_list_table_widget.setRowCount(4)
+        self.drugs_list_table_widget.setObjectName("drugs_list_table_widget")
+        self.drugs_list_table_widget.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.drugs_list_table_widget.setLayoutDirection(
+            Qt.LayoutDirection.LeftToRight,
+        )
+        self.drugs_list_table_widget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.drugs_list_table_widget.setTabKeyNavigation(False)
+        self.drugs_list_table_widget.setProperty("showDropIndicator", False)
+        self.drugs_list_table_widget.setAlternatingRowColors(True)
+        self.drugs_list_table_widget.setSelectionMode(
+            QAbstractItemView.SelectionMode.NoSelection,
+        )
+        self.drugs_list_table_widget.setCornerButtonEnabled(False)
+        self.drugs_list_table_widget.setRowCount(4)
+        self.drugs_list_table_widget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+
+        self.verticalLayout_12.addWidget(self.drugs_list_table_widget)
+
+        self.verticalLayout_11.addWidget(self.drugs_groupBox)
+
+        self.consumables_groupBox = QGroupBox(
+            self.consumables_and_drugs_section,
+        )
+        self.consumables_groupBox.setObjectName("consumables_groupBox")
+        self.consumables_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_13 = QVBoxLayout(self.consumables_groupBox)
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.consumables_list_table_widget = QTableWidget(
+            self.consumables_groupBox,
+        )
+        if self.consumables_list_table_widget.columnCount() < 2:
+            self.consumables_list_table_widget.setColumnCount(2)
+        self.consumables_list_table_widget.setObjectName(
+            "consumables_list_table_widget",
+        )
+        self.consumables_list_table_widget.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus,
+        )
+        self.consumables_list_table_widget.setLayoutDirection(
+            Qt.LayoutDirection.LeftToRight,
+        )
+        self.consumables_list_table_widget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.consumables_list_table_widget.setTabKeyNavigation(False)
+        self.consumables_list_table_widget.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.consumables_list_table_widget.setAlternatingRowColors(True)
+        self.consumables_list_table_widget.setSelectionMode(
+            QAbstractItemView.SelectionMode.NoSelection,
+        )
+        self.consumables_list_table_widget.setCornerButtonEnabled(False)
+        self.consumables_list_table_widget.setColumnCount(2)
+        self.consumables_list_table_widget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+
+        self.verticalLayout_13.addWidget(self.consumables_list_table_widget)
+
+        self.verticalLayout_11.addWidget(self.consumables_groupBox)
+
+        self.horizontalLayout_27.addWidget(self.consumables_and_drugs_section)
+
+        self.verticalLayout_10.addWidget(self.medical_action_main_frame)
+
+        self.mission_data_tab_widget.addTab(self.medical_actions_tab, "")
 
         self.verticalLayout_2.addWidget(self.mission_data_tab_widget)
 
         self.retranslateUi(mission_details_tab)
 
         self.search_button.setDefault(True)
-        self.mission_data_tab_widget.setCurrentIndex(4)
+        self.mission_data_tab_widget.setCurrentIndex(5)
 
         QMetaObject.connectSlotsByName(mission_details_tab)
 
@@ -3151,6 +3956,192 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u062a\u0627\u0631\u06cc\u062e\u0686\u0647 \u0648 \u0645\u0639\u0627\u06cc\u0646\u0627\u062a",
+                None,
+            ),
+        )
+        self.medical_actions_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0642\u062f\u0627\u0645\u0627\u062a \u062f\u0631\u0645\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.before_medical_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0628\u0644",
+                None,
+            ),
+        )
+        self.after_medical_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u0639\u062f",
+                None,
+            ),
+        )
+        self.airway_tube_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0644\u0648\u0644\u0647 \u06af\u0630\u0627\u0631\u06cc \u0631\u0627\u0647 \u0647\u0648\u0627\u06cc\u06cc",
+                None,
+            ),
+        )
+        self.consultation_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0634\u0627\u0648\u0631\u0647 \u067e\u0632\u0634\u06a9",
+                None,
+            ),
+        )
+        self.limb_fix_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062b\u0627\u0628\u062a \u0633\u0627\u0632\u06cc \u0627\u0646\u062f\u0627\u0645 \u0647\u0627",
+                None,
+            ),
+        )
+        self.cardiac_massage_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0627\u0633\u0627\u0698 \u0642\u0644\u0628\u06cc",
+                None,
+            ),
+        )
+        self.spinal_fix_action_before_checkBox.setText("")
+        self.spinal_fix_action_after_checkBox.setText("")
+        self.spinal_fix_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062b\u0627\u0628\u062a \u0633\u0627\u0632\u06cc \u0633\u062a\u0648\u0646 \u0641\u0642\u0631\u0627\u062a",
+                None,
+            ),
+        )
+        self.vital_sign_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u0631\u0631\u0633\u06cc \u0639\u0644\u0627\u0626\u0645 \u062d\u06cc\u0627\u062a\u06cc",
+                None,
+            ),
+        )
+        self.dressing_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u067e\u0627\u0646\u0633\u0645\u0627\u0646 \u0648 \u06a9\u0646\u062a\u0631\u0644 \u062e\u0648\u0646\u0631\u06cc\u0632\u06cc",
+                None,
+            ),
+        )
+        self.defibrillation_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0641\u06cc\u0628\u0631\u06cc\u0644\u0627\u0633\u06cc\u0648\u0646 \u0642\u0644\u0628\u06cc",
+                None,
+            ),
+        )
+        self.oxygen_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u06a9\u0633\u06cc\u0698\u0646 \u062f\u0631\u0645\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.head_fix_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062b\u0627\u0628\u062a \u0633\u0627\u0632\u06cc \u0633\u0631 \u0648 \u06af\u0631\u062f\u0646",
+                None,
+            ),
+        )
+        self.assisted_ventilation_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0647\u0648\u06cc\u0647 \u06a9\u0645\u06a9\u06cc",
+                None,
+            ),
+        )
+        self.cpr_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062d\u06cc\u0627 \u0642\u0644\u0628\u06cc \u0631\u06cc\u0648\u06cc",
+                None,
+            ),
+        )
+        self.monitoring_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0627\u0646\u06cc\u062a\u0648\u0631\u06cc\u0646\u06af \u0646\u0648\u0627\u0631 \u0642\u0644\u0628",
+                None,
+            ),
+        )
+        self.cbr_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u06cc \u062d\u0631\u06a9\u062a\u06cc \u06a9\u0627\u0645\u0644",
+                None,
+            ),
+        )
+        self.iv_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06af \u06af\u06cc\u0631\u06cc",
+                None,
+            ),
+        )
+        self.suction_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06a9\u0634\u0646",
+                None,
+            ),
+        )
+        self.limb_fix_action_after_checkBox.setText("")
+        self.head_fix_action_after_checkBox.setText("")
+        self.cbr_action_after_checkBox.setText("")
+        self.oxygen_action_after_checkBox.setText("")
+        self.iv_action_after_checkBox.setText("")
+        self.monitoring_action_after_checkBox.setText("")
+        self.defibrillation_action_after_checkBox.setText("")
+        self.consultation_action_after_checkBox.setText("")
+        self.vital_sign_action_after_checkBox.setText("")
+        self.assisted_ventilation_action_after_checkBox.setText("")
+        self.cardiac_massage_action_after_checkBox.setText("")
+        self.airway_tube_action_after_checkBox.setText("")
+        self.dressing_action_after_checkBox.setText("")
+        self.cpr_action_after_checkBox.setText("")
+        self.suction_action_after_checkBox.setText("")
+        self.limb_fix_action_before_checkBox.setText("")
+        self.head_fix_action_before_checkBox.setText("")
+        self.cbr_action_before_checkBox.setText("")
+        self.oxygen_action_before_checkBox.setText("")
+        self.iv_action_before_checkBox.setText("")
+        self.monitoring_action_before_checkBox.setText("")
+        self.defibrillation_action_before_checkBox.setText("")
+        self.consultation_action_before_checkBox.setText("")
+        self.vital_sign_action_before_checkBox.setText("")
+        self.assisted_ventilation_action_before_checkBox.setText("")
+        self.cardiac_massage_action_before_checkBox.setText("")
+        self.dressing_action_before_checkBox.setText("")
+        self.cpr_action_before_checkBox.setText("")
+        self.suction_action_before_checkBox.setText("")
+        self.drugs_groupBox.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0627\u0631\u0648\u0647\u0627",
+                None,
+            ),
+        )
+        self.consumables_groupBox.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0644\u0648\u0627\u0632\u0645 \u0645\u0635\u0631\u0641\u06cc",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.medical_actions_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0642\u062f\u0627\u0645\u0627\u062a \u0648 \u062f\u0627\u0631\u0648\u0647\u0627",
                 None,
             ),
         )
