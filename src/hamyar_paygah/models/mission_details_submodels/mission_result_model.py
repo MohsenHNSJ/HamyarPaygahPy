@@ -75,6 +75,23 @@ class MissionOutcome(Enum):
     No resuscitation or treatment was initiated.
     """
 
+    @property
+    def persian_label(self) -> str:
+        """Returns the persian label of the set location type."""
+        return {
+            MissionOutcome.PATROL: "استقرار",
+            MissionOutcome.BASIC_CARE_ONLY: "اقدامات اولیه و توصیه مراجعه به مرکز درمانی",
+            MissionOutcome.PRIVATE_TRANSPORT: "انتقال با خودروی شخصی",
+            MissionOutcome.TRANSFERRED_TO_MEDICAL_CENTER: "انتقال به مرکز درمانی",
+            MissionOutcome.OTHER_AMBULANCE: "تحویل به آمبولانس دیگر",
+            MissionOutcome.NO_SHOW: "عدم حضور بیمار",
+            MissionOutcome.NO_COOPERATION_ANY: "انصراف کامل از همکاری",
+            MissionOutcome.NO_COOPERATION: "عدم همکاری و اخذ امضا",
+            MissionOutcome.CANCELED_BY_DISPATCH: "لغو از طرف مرکز  ",
+            MissionOutcome.FALSE_CALL: "کاذب / اشتباه",
+            MissionOutcome.DECEASED_BEFORE_ARRIVAL: "فوت قبل از رسیدن تکنسین",
+        }[self]
+
 
 @dataclass(slots=True)
 class MissionResult:

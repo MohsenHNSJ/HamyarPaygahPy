@@ -61,7 +61,7 @@ repos:
 
     # Static checker for GitHub Actions workflow files
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.10
+    rev: v1.7.11
     hooks:
       - id: actionlint
 
@@ -130,7 +130,7 @@ repos:
 
     # Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.0
+    rev: v0.15.1
     hooks:
       # Run the linter
       - id: ruff
@@ -141,7 +141,7 @@ repos:
 
     # Identify unused dependencies and avoid a bloated virtual environment.
   - repo: https://github.com/fredrikaverpil/creosote.git
-    rev: v4.2.0
+    rev: v5.0.0
     hooks:
       - id: creosote
 

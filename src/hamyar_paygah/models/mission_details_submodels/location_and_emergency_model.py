@@ -34,6 +34,23 @@ class LocationType(Enum):
     RURAL_ROAD = "RahRoostaei"
     """Rural roads serving villages or low-traffic countryside areas."""
 
+    @property
+    def persian_label(self) -> str:
+        """Returns the persian label of the set location type."""
+        return {
+            LocationType.RESIDENTIAL: "مسکونی",
+            LocationType.INDUSTRIAL: "صنعتی",
+            LocationType.SPORTS: "ورزشی",
+            LocationType.EDUCATIONAL: "آموزشی",
+            LocationType.MEDICAL: "درمانی",
+            LocationType.OFFICE: "اداری",
+            LocationType.HIGHWAY: "آزادراه",
+            LocationType.EXPRESSWAY: "بزرگراه",
+            LocationType.MAIN_ROAD: "راه اصلی",
+            LocationType.SECONDARY_ROAD: "راه فرعی",
+            LocationType.RURAL_ROAD: "راه روستایی",
+        }[self]
+
 
 class AccidentType(Enum):
     """Types of accidents or injury mechanisms involved in an emergency mission."""
@@ -87,6 +104,36 @@ class AccidentType(Enum):
     FROSTBITE_TRAUMA = "TromaYakhBandan"
     """Cold-induced traumatic injury caused by freezing of body tissues (frostbite)."""
 
+    @property
+    def persian_label(self) -> str:
+        """Persian label of the set accident type."""
+        return {
+            AccidentType.SUICIDE: "خودکشی",
+            AccidentType.DROWNING: "غرق‌شدگی",
+            AccidentType.HEAT_STROKE: "گرمازدگی",
+            AccidentType.AIRWAY_OBSTRUCTION: "انسداد راه هوایی",
+            AccidentType.ELECTRIC_SHOCK: "برق‌گرفتگی",
+            AccidentType.ANIMAL_BITE: "حیوان‌گزیدگی",
+            AccidentType.VIOLENCE: "خشونت",
+            AccidentType.COMMON_COLD: "سرماخوردگی",
+            AccidentType.INSECT_BITE: "گزش حشره",
+            AccidentType.HOT_OBJECT_BURN: "سوختگی با جسم داغ",
+            AccidentType.CHEMICAL_EXPOSURE: "مسمومیت یا سوختگی شیمیایی",
+            AccidentType.HOT_LIQUID_BURN: "سوختگی با مایع داغ",
+            AccidentType.ELECTRICAL_BURN: "سوختگی الکتریکی",
+            AccidentType.FIRE: "حریق",
+            AccidentType.OTHER_CAUSES: "سایر علل حوادث",
+            AccidentType.CARBON_MONOXIDE_POISONING: "مسمومیت با مونوکسید کربن",
+            AccidentType.DRUG_OVERDOSE: "اوردوز دارویی",
+            AccidentType.NARCOTIC_POISONING: "مسمومیت با مواد مخدر",
+            AccidentType.TOXIC_POISONING: "مسمومیت با مواد سمی",
+            AccidentType.ALCOHOL_INTOXICATION: "مسمومیت الکلی",
+            AccidentType.SAME_LEVEL_FALL: "سقوط هم‌سطح",
+            AccidentType.DIFFERENT_LEVEL_FALL: "سقوط از ارتفاع",
+            AccidentType.MECHANICAL_IMPACT: "برخورد مکانیکی",
+            AccidentType.FROSTBITE_TRAUMA: "ترومای یخ‌زدگی",
+        }[self]
+
 
 class IllnessType(Enum):
     """Primary medical conditions or symptoms reported during an emergency mission."""
@@ -124,6 +171,28 @@ class IllnessType(Enum):
     MISCARRIAGE = "Seght"
     """Pregnancy loss or complications related to miscarriage."""
 
+    @property
+    def persian_label(self) -> str:
+        """Persian label of the set illness type."""
+        return {
+            IllnessType.CARDIAC: "مشکل قلبی",
+            IllnessType.RESPIRATORY: "مشکل تنفسی",
+            IllnessType.WEAKNESS_FATIGUE: "ضعف و بی‌حالی",
+            IllnessType.STROKE: "سکته مغزی",
+            IllnessType.PSYCHIATRIC_DISORDER: "اختلال روانی",
+            IllnessType.FEVER_SEIZURE: "تب و تشنج",
+            IllnessType.HYPERTENSION: "افزایش فشار خون",
+            IllnessType.HYPOGLYCEMIA: "هیپوگلیسمی (افت قند خون)",
+            IllnessType.HYPERGLYCEMIA: "هایپرگلیسمی (افزایش قند خون)",
+            IllnessType.DECREASED_CONSCIOUSNESS: "کاهش سطح هوشیاری",
+            IllnessType.PHYSICAL_ASSAULT: "ضرب و جرح",
+            IllnessType.HYSTERIA: "حمله هیستریک",
+            IllnessType.ABDOMINAL_PAIN: "درد شکمی",
+            IllnessType.RENAL_COLIC: "قولنج کلیوی",
+            IllnessType.CHILDBIRTH: "زایمان",
+            IllnessType.MISCARRIAGE: "سقط جنین",
+        }[self]
+
 
 class InjuryRole(Enum):
     """Role or position of the injured person in a vehicle accident."""
@@ -136,6 +205,16 @@ class InjuryRole(Enum):
     """The injured person was outside the vehicle, e.g., struck while walking."""
     UNKNOWN = "VaziatMasdoomIsNamoshakhas"
     """The injured person's role in the accident is unknown or unspecified."""
+
+    @property
+    def persian_label(self) -> str:
+        """Persian label of the set injury role."""
+        return {
+            InjuryRole.DRIVER: "راننده",
+            InjuryRole.PASSENGER: "سرنشین",
+            InjuryRole.PEDESTRIAN: "عابر پیاده",
+            InjuryRole.UNKNOWN: "نامشخص",
+        }[self]
 
 
 class VehicleType(Enum):
@@ -159,6 +238,21 @@ class VehicleType(Enum):
     """A subway, tunnel vehicle, or other underground transport."""
     OTHER_TRANSPORT = "VasileNaghlieSayer"
     """Any other type of vehicle or transport not listed above."""
+
+    @property
+    def persian_label(self) -> str:
+        """Persian label of the set vehicle type."""
+        return {
+            VehicleType.LIGHT_VEHICLE: "خودرو سبک",
+            VehicleType.HEAVY_VEHICLE: "خودرو سنگین",
+            VehicleType.MOTORCYCLE: "موتورسیکلت",
+            VehicleType.BICYCLE: "دوچرخه",
+            VehicleType.AIRCRAFT: "وسیله هوایی",
+            VehicleType.WATERCRAFT: "وسیله دریایی",
+            VehicleType.SURFACE_VEHICLE: "وسیله نقلیه سطح زمینی",
+            VehicleType.UNDERGROUND_VEHICLE: "وسیله نقلیه زیرزمینی",
+            VehicleType.OTHER_TRANSPORT: "سایر وسایل نقلیه",
+        }[self]
 
 
 @dataclass(slots=True)
@@ -186,3 +280,4 @@ class LocationAndEmergency:
     role_in_accident_other_info: str | None
     """Other information about role in accident"""
     vehicle_type: VehicleType | None
+    """Type of the vehicle the patient is related"""
