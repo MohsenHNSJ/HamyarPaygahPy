@@ -206,7 +206,7 @@ class MissionsDetailsTab(QWidget):
         checkbox.setChecked(value)
         checkbox.setEnabled(value)
 
-    def _populate_information_tab(self, mission_details: MissionDetails) -> None:
+    def _populate_information_tab(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
         """Populates the information tab with data of the mission details model."""
         # Populate the name field
         self.ui.patient_name_field.setText(
@@ -293,6 +293,35 @@ class MissionsDetailsTab(QWidget):
         self.ui.mission_summary_field.setPlainText(
             str(mission_details.information.summary),
         )
+
+        # Set mission result field
+        if mission_details.result.result is not None:
+            self.ui.mission_result_field.setText(
+                mission_details.result.result.persian_label,
+            )
+        else:
+            self.ui.mission_result_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.mission_result_field.setEnabled(False)
+
+        # Set hospital name field
+        if mission_details.result.hospital_name is not None:
+            self.ui.hospital_name_field.setText(
+                mission_details.result.hospital_name,
+            )
+        else:
+            self.ui.hospital_name_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.hospital_name_field.setEnabled(False)
+
+        # Set refusal form code field
+        if mission_details.result.refusal_form_code is not None:
+            self.ui.refusal_form_code_field.setText(
+                mission_details.result.refusal_form_code,
+            )
+        else:
+            self.ui.refusal_form_code_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.refusal_form_code_field.setEnabled(False)
 
     def _populate_times_and_distances_tab(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912, PLR0915
         """Populates the times and distances tab with data from mission details model."""

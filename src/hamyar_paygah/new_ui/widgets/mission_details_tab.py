@@ -226,12 +226,6 @@ class Ui_mission_details_tab:
 
         self.horizontalLayout_4.addWidget(self.caller_number_field)
 
-        self.backup_number_label = QLabel(self.pre_information_section_2)
-        self.backup_number_label.setObjectName("backup_number_label")
-        self.backup_number_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_4.addWidget(self.backup_number_label)
-
         self.backup_number_field = QLineEdit(self.pre_information_section_2)
         self.backup_number_field.setObjectName("backup_number_field")
         self.backup_number_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -396,6 +390,52 @@ class Ui_mission_details_tab:
         self.horizontalLayout_2.addWidget(self.national_code_field)
 
         self.verticalLayout.addWidget(self.information_section_2)
+
+        self.result_section = QWidget(self.information_tab)
+        self.result_section.setObjectName("result_section")
+        self.horizontalLayout_29 = QHBoxLayout(self.result_section)
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.mission_result_label = QLabel(self.result_section)
+        self.mission_result_label.setObjectName("mission_result_label")
+        self.mission_result_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.mission_result_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.horizontalLayout_29.addWidget(self.mission_result_label)
+
+        self.mission_result_field = QLineEdit(self.result_section)
+        self.mission_result_field.setObjectName("mission_result_field")
+        self.mission_result_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.mission_result_field.setReadOnly(True)
+
+        self.horizontalLayout_29.addWidget(self.mission_result_field)
+
+        self.hospital_name_label = QLabel(self.result_section)
+        self.hospital_name_label.setObjectName("hospital_name_label")
+        self.hospital_name_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.hospital_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.horizontalLayout_29.addWidget(self.hospital_name_label)
+
+        self.hospital_name_field = QLineEdit(self.result_section)
+        self.hospital_name_field.setObjectName("hospital_name_field")
+        self.hospital_name_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.hospital_name_field.setReadOnly(True)
+
+        self.horizontalLayout_29.addWidget(self.hospital_name_field)
+
+        self.refusal_form_code_label = QLabel(self.result_section)
+        self.refusal_form_code_label.setObjectName("refusal_form_code_label")
+        self.refusal_form_code_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.refusal_form_code_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.horizontalLayout_29.addWidget(self.refusal_form_code_label)
+
+        self.refusal_form_code_field = QLineEdit(self.result_section)
+        self.refusal_form_code_field.setObjectName("refusal_form_code_field")
+
+        self.horizontalLayout_29.addWidget(self.refusal_form_code_field)
+
+        self.verticalLayout.addWidget(self.result_section)
 
         self.summary_section = QWidget(self.information_tab)
         self.summary_section.setObjectName("summary_section")
@@ -2939,7 +2979,7 @@ class Ui_mission_details_tab:
         self.retranslateUi(mission_details_tab)
 
         self.search_button.setDefault(True)
-        self.mission_data_tab_widget.setCurrentIndex(5)
+        self.mission_data_tab_widget.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(mission_details_tab)
 
@@ -2996,13 +3036,6 @@ class Ui_mission_details_tab:
             ),
         )
         self.caller_number_label.setText(
-            QCoreApplication.translate(
-                "mission_details_tab",
-                "\u0634\u0645\u0627\u0631\u0647 \u062a\u0645\u0627\u0633:",
-                None,
-            ),
-        )
-        self.backup_number_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0634\u0645\u0627\u0631\u0647 \u062a\u0645\u0627\u0633:",
@@ -3083,6 +3116,27 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u06a9\u062f \u0645\u0644\u06cc:",
+                None,
+            ),
+        )
+        self.mission_result_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u062a\u06cc\u062c\u0647:",
+                None,
+            ),
+        )
+        self.hospital_name_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc:",
+                None,
+            ),
+        )
+        self.refusal_form_code_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u062f \u0628\u0631\u0627\u0626\u062a:",
                 None,
             ),
         )
