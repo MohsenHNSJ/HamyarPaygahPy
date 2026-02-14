@@ -59,6 +59,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QSpacerItem,
+    QTableView,
     QTableWidget,
     QTableWidgetItem,
     QTabWidget,
@@ -2332,22 +2333,12 @@ class Ui_mission_details_tab:
 
         self.gridLayout_11.addWidget(self.dressing_action_label, 2, 1, 1, 1)
 
-        self.defibrillation_action_label = QLabel(self.medical_actions_grid)
-        self.defibrillation_action_label.setObjectName(
-            "defibrillation_action_label",
-        )
-        self.defibrillation_action_label.setTextFormat(Qt.TextFormat.PlainText)
-        self.defibrillation_action_label.setAlignment(
-            Qt.AlignmentFlag.AlignCenter,
-        )
+        self.biography_action_label = QLabel(self.medical_actions_grid)
+        self.biography_action_label.setObjectName("biography_action_label")
+        self.biography_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.biography_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.gridLayout_11.addWidget(
-            self.defibrillation_action_label,
-            8,
-            1,
-            1,
-            1,
-        )
+        self.gridLayout_11.addWidget(self.biography_action_label, 8, 1, 1, 1)
 
         self.oxygen_action_label = QLabel(self.medical_actions_grid)
         self.oxygen_action_label.setObjectName("oxygen_action_label")
@@ -2504,15 +2495,15 @@ class Ui_mission_details_tab:
             1,
         )
 
-        self.defibrillation_action_after_checkBox = QCheckBox(
+        self.biography_action_after_checkBox = QCheckBox(
             self.medical_actions_grid,
         )
-        self.defibrillation_action_after_checkBox.setObjectName(
-            "defibrillation_action_after_checkBox",
+        self.biography_action_after_checkBox.setObjectName(
+            "biography_action_after_checkBox",
         )
 
         self.gridLayout_11.addWidget(
-            self.defibrillation_action_after_checkBox,
+            self.biography_action_after_checkBox,
             8,
             2,
             1,
@@ -2723,15 +2714,15 @@ class Ui_mission_details_tab:
             1,
         )
 
-        self.defibrillation_action_before_checkBox = QCheckBox(
+        self.biography_action_before_checkBox = QCheckBox(
             self.medical_actions_grid,
         )
-        self.defibrillation_action_before_checkBox.setObjectName(
-            "defibrillation_action_before_checkBox",
+        self.biography_action_before_checkBox.setObjectName(
+            "biography_action_before_checkBox",
         )
 
         self.gridLayout_11.addWidget(
-            self.defibrillation_action_before_checkBox,
+            self.biography_action_before_checkBox,
             8,
             0,
             1,
@@ -2911,39 +2902,29 @@ class Ui_mission_details_tab:
         self.verticalLayout_13 = QVBoxLayout(self.consumables_groupBox)
         self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.consumables_list_table_widget = QTableWidget(
-            self.consumables_groupBox,
+        self.consumable_list_table_view = QTableView(self.consumables_groupBox)
+        self.consumable_list_table_view.setObjectName(
+            "consumable_list_table_view",
         )
-        if self.consumables_list_table_widget.columnCount() < 2:
-            self.consumables_list_table_widget.setColumnCount(2)
-        self.consumables_list_table_widget.setObjectName(
-            "consumables_list_table_widget",
-        )
-        self.consumables_list_table_widget.setFocusPolicy(
-            Qt.FocusPolicy.NoFocus,
-        )
-        self.consumables_list_table_widget.setLayoutDirection(
-            Qt.LayoutDirection.LeftToRight,
-        )
-        self.consumables_list_table_widget.setEditTriggers(
+        self.consumable_list_table_view.setEditTriggers(
             QAbstractItemView.EditTrigger.NoEditTriggers,
         )
-        self.consumables_list_table_widget.setTabKeyNavigation(False)
-        self.consumables_list_table_widget.setProperty(
+        self.consumable_list_table_view.setTabKeyNavigation(False)
+        self.consumable_list_table_view.setProperty(
             "showDropIndicator",
             False,
         )
-        self.consumables_list_table_widget.setAlternatingRowColors(True)
-        self.consumables_list_table_widget.setSelectionMode(
-            QAbstractItemView.SelectionMode.NoSelection,
+        self.consumable_list_table_view.setDragDropOverwriteMode(False)
+        self.consumable_list_table_view.setAlternatingRowColors(True)
+        self.consumable_list_table_view.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
         )
-        self.consumables_list_table_widget.setCornerButtonEnabled(False)
-        self.consumables_list_table_widget.setColumnCount(2)
-        self.consumables_list_table_widget.setSupportedDragActions(
-            Qt.DropAction.IgnoreAction,
+        self.consumable_list_table_view.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
         )
+        self.consumable_list_table_view.setSortingEnabled(True)
 
-        self.verticalLayout_13.addWidget(self.consumables_list_table_widget)
+        self.verticalLayout_13.addWidget(self.consumable_list_table_view)
 
         self.verticalLayout_11.addWidget(self.consumables_groupBox)
 
@@ -4031,10 +4012,10 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
-        self.defibrillation_action_label.setText(
+        self.biography_action_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u062f\u0641\u06cc\u0628\u0631\u06cc\u0644\u0627\u0633\u06cc\u0648\u0646 \u0642\u0644\u0628\u06cc",
+                "\u0634\u0631\u062d \u062d\u0627\u0644",
                 None,
             ),
         )
@@ -4100,7 +4081,7 @@ class Ui_mission_details_tab:
         self.oxygen_action_after_checkBox.setText("")
         self.iv_action_after_checkBox.setText("")
         self.monitoring_action_after_checkBox.setText("")
-        self.defibrillation_action_after_checkBox.setText("")
+        self.biography_action_after_checkBox.setText("")
         self.consultation_action_after_checkBox.setText("")
         self.vital_sign_action_after_checkBox.setText("")
         self.assisted_ventilation_action_after_checkBox.setText("")
@@ -4115,7 +4096,7 @@ class Ui_mission_details_tab:
         self.oxygen_action_before_checkBox.setText("")
         self.iv_action_before_checkBox.setText("")
         self.monitoring_action_before_checkBox.setText("")
-        self.defibrillation_action_before_checkBox.setText("")
+        self.biography_action_before_checkBox.setText("")
         self.consultation_action_before_checkBox.setText("")
         self.vital_sign_action_before_checkBox.setText("")
         self.assisted_ventilation_action_before_checkBox.setText("")

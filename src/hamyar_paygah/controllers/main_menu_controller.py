@@ -43,7 +43,7 @@ class MainMenu(QMainWindow):
         self.ui.to_date_picker.setDate(QDate.currentDate())
 
         # Populate the region picker
-        self.populate_region_picker()
+        self._populate_region_picker()
 
         # Add the mission details tab
         mission_details_tab: QWidget = MissionsDetailsTab()
@@ -96,9 +96,9 @@ class MainMenu(QMainWindow):
         )
 
         # Populate and setup the table
-        self.populate_and_setup_table_view(missions_list)
+        self._populate_and_setup_table_view(missions_list)
 
-    def populate_region_picker(self) -> None:
+    def _populate_region_picker(self) -> None:
         """Populates the region picker with regions dictionary."""
         # Define available regions
         available_regions: list[Region] = [
@@ -134,7 +134,7 @@ class MainMenu(QMainWindow):
         # Set initial selected item to first item
         self.ui.region_picker.setCurrentIndex(0)
 
-    def populate_and_setup_table_view(self, missions_list: list[Mission]) -> None:
+    def _populate_and_setup_table_view(self, missions_list: list[Mission]) -> None:
         """Populates the missions list table with data and configures the columns width.
 
         Args:

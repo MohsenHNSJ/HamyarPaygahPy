@@ -127,7 +127,7 @@
    <item>
     <widget class="QTabWidget" name="mission_data_tab_widget">
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -2800,9 +2800,9 @@
                  </widget>
                 </item>
                 <item row="8" column="1">
-                 <widget class="QLabel" name="defibrillation_action_label">
+                 <widget class="QLabel" name="biography_action_label">
                   <property name="text">
-                   <string>دفیبریلاسیون قلبی</string>
+                   <string>شرح حال</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::PlainText</enum>
@@ -2956,7 +2956,7 @@
                  </widget>
                 </item>
                 <item row="8" column="2">
-                 <widget class="QCheckBox" name="defibrillation_action_after_checkBox">
+                 <widget class="QCheckBox" name="biography_action_after_checkBox">
                   <property name="text">
                    <string/>
                   </property>
@@ -3061,7 +3061,7 @@
                  </widget>
                 </item>
                 <item row="8" column="0">
-                 <widget class="QCheckBox" name="defibrillation_action_before_checkBox">
+                 <widget class="QCheckBox" name="biography_action_before_checkBox">
                   <property name="text">
                    <string/>
                   </property>
@@ -3212,13 +3212,7 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QTableWidget" name="consumables_list_table_widget">
-                  <property name="focusPolicy">
-                   <enum>Qt::FocusPolicy::NoFocus</enum>
-                  </property>
-                  <property name="layoutDirection">
-                   <enum>Qt::LayoutDirection::LeftToRight</enum>
-                  </property>
+                 <widget class="QTableView" name="consumable_list_table_view">
                   <property name="editTriggers">
                    <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                   </property>
@@ -3228,23 +3222,21 @@
                   <property name="showDropIndicator" stdset="0">
                    <bool>false</bool>
                   </property>
+                  <property name="dragDropOverwriteMode">
+                   <bool>false</bool>
+                  </property>
                   <property name="alternatingRowColors">
                    <bool>true</bool>
                   </property>
                   <property name="selectionMode">
-                   <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
+                   <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
                   </property>
-                  <property name="cornerButtonEnabled">
-                   <bool>false</bool>
+                  <property name="selectionBehavior">
+                   <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
                   </property>
-                  <property name="columnCount">
-                   <number>2</number>
+                  <property name="sortingEnabled">
+                   <bool>true</bool>
                   </property>
-                  <property name="supportedDragActions">
-                   <set>Qt::DropAction::IgnoreAction</set>
-                  </property>
-                  <column/>
-                  <column/>
                  </widget>
                 </item>
                </layout>

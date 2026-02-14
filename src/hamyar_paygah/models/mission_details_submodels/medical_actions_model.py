@@ -34,8 +34,8 @@ class MedicalActions:
     """Vital signs assessment."""
     consultation: ActionTiming
     """Medical consultation."""
-    defibrillation: ActionTiming
-    """Electrical shock / defibrillation."""
+    biography: ActionTiming
+    """Biography or medical history taking."""
     monitoring: ActionTiming
     """Patient monitoring."""
     iv_access: ActionTiming

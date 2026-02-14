@@ -4,7 +4,7 @@
 # region imports
 from typing import TYPE_CHECKING
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QSortFilterProxyModel, Qt
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QCheckBox,
@@ -29,6 +29,7 @@ from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model imp
 )
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_date
+from hamyar_paygah.view_models.consumables_table_model import ConsumablesTableModel
 
 if TYPE_CHECKING:
     import jdatetime  # type: ignore[import-untyped]
@@ -169,6 +170,9 @@ class MissionsDetailsTab(QWidget):
 
         # Populate drugs list table
         self._populate_drugs_list_table(mission_details)
+
+        # Populate consumables list table
+        self._populate_consumables_list_table(mission_details)
 
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
@@ -1369,12 +1373,12 @@ class MissionsDetailsTab(QWidget):
 
         # Set defibrillation action
         self._set_checkbox(
-            self.ui.defibrillation_action_before_checkBox,
-            value=mission_details.medical_actions.defibrillation.before_ems,
+            self.ui.biography_action_before_checkBox,
+            value=mission_details.medical_actions.biography.before_ems,
         )
         self._set_checkbox(
-            self.ui.defibrillation_action_after_checkBox,
-            value=mission_details.medical_actions.defibrillation.after_ems,
+            self.ui.biography_action_after_checkBox,
+            value=mission_details.medical_actions.biography.after_ems,
         )
 
         # Set patient monitoring action
@@ -1498,3 +1502,28 @@ class MissionsDetailsTab(QWidget):
 
         # Resize to content
         drugs_table.resizeColumnsToContents()
+
+    def _populate_consumables_list_table(self, mission_details: MissionDetails) -> None:
+        """Populates the consumables list table from mission details data."""
+        # If the list of consumables list is empty, we do not populate the table
+        if not mission_details.consumables:
+            return
+
+        # Create the model for table view
+        source_model = ConsumablesTableModel(mission_details.consumables.items)
+
+        # Proxy the model to enable sorting and filtering
+        proxy_model = QSortFilterProxyModel(self)
+        proxy_model.setSourceModel(source_model)
+        # Set proxy model to be case insensitive
+        proxy_model.setSortCaseSensitivity(
+            Qt.CaseInsensitive,  # type: ignore[attr-defined]
+        )
+        # Set proxy model to be local aware for sorting
+        proxy_model.setSortLocaleAware(True)
+
+        # Set the model to table
+        self.ui.consumable_list_table_view.setModel(proxy_model)
+
+        # Resize columns to content
+        self.ui.consumable_list_table_view.resizeColumnsToContents()
