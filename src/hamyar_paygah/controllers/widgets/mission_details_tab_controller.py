@@ -1,6 +1,6 @@
 """Controller for mission details tab."""
 
-# pylint: disable=E0611,I1101,R0903,R0912,R0915,C0301,C0302
+# pylint: disable=E0611,I1101,R0903,R0912,R0915,C0301,C0302,R0911
 # region imports
 from typing import TYPE_CHECKING
 
@@ -102,6 +102,33 @@ BP_WARNING_DIA = 90
 BP_CRITICAL_DIA = 120
 """Diastolic blood pressure greater than or equal to this value is considered critical."""
 # ==============================
+# Eye GCS
+# ==============================
+EYE_GCS_CRITICAL = 2
+"""Eye GCS score less than or equal to this value is considered critical."""
+EYE_GCS_WARNING = 3
+"""Eye GCS score equal to this value is considered warning."""
+EYE_GCS_NORMAL = 4
+"""Eye GCS score equal to this value is considered normal."""
+# ==============================
+# Verbal GCS
+# ==============================
+VERBAL_GCS_CRITICAL = 3
+"""Verbal GCS score less than or equal to this value is considered critical."""
+VERBAL_GCS_WARNING = 4
+"""Verbal GCS score equal to this value is considered warning."""
+VERBAL_GCS_NORMAL = 5
+"""Verbal GCS score equal to this value is considered normal."""
+# ==============================
+# Motor GCS
+# ==============================
+MOTOR_GCS_CRITICAL = 4
+"""Motor GCS score less than or equal to this value is considered critical."""
+MOTOR_GCS_WARNING = 5
+"""Motor GCS score equal to this value is considered warning."""
+MOTOR_GCS_NORMAL = 6
+"""Motor GCS score equal to this value is considered normal."""
+# ==============================
 # Glasgow Coma Scale (GCS Total)
 # ==============================
 GCS_CRITICAL = 8
@@ -173,6 +200,9 @@ class MissionsDetailsTab(QWidget):
 
         # Populate consumables list table
         self._populate_consumables_list_table(mission_details)
+
+        # Populate medical center section
+        self._populate_medical_center_section(mission_details)
 
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
@@ -764,6 +794,9 @@ class MissionsDetailsTab(QWidget):
             3: Blood pressure (systolic/diastolic string format, e.g. "120/80")
             4: Blood sugar
             5: Oxygen saturation (SpO₂)
+            6: Eye GCS
+            7: Verbal GCS
+            8: Motor GCS
             9: Total Glasgow Coma Scale (GCS)
 
         All other rows default to "normal".
@@ -840,6 +873,27 @@ class MissionsDetailsTab(QWidget):
                 if spo2 < SPO2_CRITICAL:
                     return "critical"
                 if SPO2_CRITICAL <= spo2 <= SPO2_WARNING_HIGH:
+                    return "warning"
+
+            elif row == 6:  # Eye GCS # noqa: PLR2004
+                eye_gcs = int(value)
+                if eye_gcs <= EYE_GCS_CRITICAL:
+                    return "critical"
+                if EYE_GCS_CRITICAL < eye_gcs <= EYE_GCS_WARNING:
+                    return "warning"
+
+            elif row == 7:  # Verbal GCS  # noqa: PLR2004
+                verbal_gcs = int(value)
+                if verbal_gcs <= VERBAL_GCS_CRITICAL:
+                    return "critical"
+                if VERBAL_GCS_CRITICAL < verbal_gcs <= VERBAL_GCS_WARNING:
+                    return "warning"
+
+            elif row == 8:  # Motor GCS  # noqa: PLR2004
+                motor_gcs = int(value)
+                if motor_gcs <= MOTOR_GCS_CRITICAL:
+                    return "critical"
+                if MOTOR_GCS_CRITICAL < motor_gcs <= MOTOR_GCS_WARNING:
                     return "warning"
 
             elif row == 9:  # GCS total  # noqa: PLR2004
@@ -1556,3 +1610,82 @@ class MissionsDetailsTab(QWidget):
 
         # Resize columns to content
         self.ui.consumable_list_table_view.resizeColumnsToContents()
+
+    def _populate_medical_center_section(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912
+        """Populates the medical center section by data of mission details."""
+        # Set receiving physician code
+        if mission_details.medical_center.receiving_physician_code is not None:
+            self.ui.receiving_physician_code_field.setText(
+                mission_details.medical_center.receiving_physician_code,
+            )
+        else:
+            self.ui.receiving_physician_code_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.receiving_physician_code_field.setEnabled(False)
+
+        # Set physician code
+        if mission_details.medical_center.physician_code is not None:
+            self.ui.physician_code_field.setText(
+                mission_details.medical_center.physician_code,
+            )
+        else:
+            self.ui.physician_code_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.physician_code_field.setEnabled(False)
+
+        # Set physician code 1050
+        if mission_details.medical_center.physician_1050_code is not None:
+            self.ui.physician_code_1050_field.setText(
+                mission_details.medical_center.physician_1050_code,
+            )
+        else:
+            self.ui.physician_code_1050_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.physician_code_1050_field.setEnabled(False)
+
+        # Set physician order
+        if mission_details.medical_center.physician_order is not None:
+            self.ui.physician_order_field.setText(
+                mission_details.medical_center.physician_order,
+            )
+        else:
+            self.ui.physician_order_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.physician_order_field.setEnabled(False)
+
+        # Set physician order secondary
+        if mission_details.medical_center.physician_order_secondary is not None:
+            self.ui.physician_order_secondary_field.setText(
+                mission_details.medical_center.physician_order_secondary,
+            )
+        else:
+            self.ui.physician_order_secondary_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.physician_order_secondary_field.setEnabled(False)
+
+        # Set receiving physician name
+        if mission_details.medical_center.receiving_physician_name is not None:
+            self.ui.receiving_physician_name_field.setText(
+                mission_details.medical_center.receiving_physician_name,
+            )
+        else:
+            self.ui.receiving_physician_name_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.receiving_physician_name_field.setEnabled(False)
+
+        # Set handover datetime
+        if mission_details.medical_center.handover_datetime is not None:
+            self.ui.handover_time_field.setText(
+                mission_details.medical_center.handover_datetime,
+            )
+        else:
+            self.ui.handover_time_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.handover_time_field.setEnabled(False)
