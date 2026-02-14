@@ -929,7 +929,7 @@ def _parse_medical_actions(document: etree._Element, namespaces: dict[str, str])
         assisted_ventilation=assisted_ventilation,
         vital_signs=vital_signs,
         consultation=consultation,
-        defibrillation=defibrillation,
+        biography=defibrillation,
         monitoring=monitoring,
         iv_access=iv_access,
         oxygen_therapy=oxygen_therapy,

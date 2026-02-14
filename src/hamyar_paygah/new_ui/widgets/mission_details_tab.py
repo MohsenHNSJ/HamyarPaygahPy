@@ -1,5 +1,5 @@
-# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201
-# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001
+# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201,C0302,C0325
+# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001, PLR2004
 # mypy: ignore-errors
 # type: ignore[all]
 # -*- coding: utf-8 -*-
@@ -45,15 +45,23 @@ from PySide6.QtGui import (
     QTransform,
 )
 from PySide6.QtWidgets import (
+    QAbstractItemView,
     QAbstractScrollArea,
     QApplication,
     QCheckBox,
+    QGridLayout,
+    QGroupBox,
     QHBoxLayout,
+    QHeaderView,
     QLabel,
     QLineEdit,
     QPlainTextEdit,
     QPushButton,
     QSizePolicy,
+    QSpacerItem,
+    QTableView,
+    QTableWidget,
+    QTableWidgetItem,
     QTabWidget,
     QVBoxLayout,
     QWidget,
@@ -64,7 +72,7 @@ class Ui_mission_details_tab:
     def setupUi(self, mission_details_tab):
         if not mission_details_tab.objectName():
             mission_details_tab.setObjectName("mission_details_tab")
-        mission_details_tab.resize(750, 650)
+        mission_details_tab.resize(750, 700)
         sizePolicy = QSizePolicy(
             QSizePolicy.Policy.Expanding,
             QSizePolicy.Policy.Expanding,
@@ -75,11 +83,12 @@ class Ui_mission_details_tab:
             mission_details_tab.sizePolicy().hasHeightForWidth(),
         )
         mission_details_tab.setSizePolicy(sizePolicy)
-        mission_details_tab.setMinimumSize(QSize(750, 650))
+        mission_details_tab.setMinimumSize(QSize(750, 700))
         mission_details_tab.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         mission_details_tab.setLocale(QLocale(QLocale.Persian, QLocale.Iran))
         self.verticalLayout_2 = QVBoxLayout(mission_details_tab)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.search_parameters = QWidget(mission_details_tab)
         self.search_parameters.setObjectName("search_parameters")
         sizePolicy1 = QSizePolicy(
@@ -138,6 +147,7 @@ class Ui_mission_details_tab:
         self.information_tab.setObjectName("information_tab")
         self.verticalLayout = QVBoxLayout(self.information_tab)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.pre_information_section_1 = QWidget(self.information_tab)
         self.pre_information_section_1.setObjectName(
             "pre_information_section_1",
@@ -218,12 +228,6 @@ class Ui_mission_details_tab:
 
         self.horizontalLayout_4.addWidget(self.caller_number_field)
 
-        self.backup_number_label = QLabel(self.pre_information_section_2)
-        self.backup_number_label.setObjectName("backup_number_label")
-        self.backup_number_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_4.addWidget(self.backup_number_label)
-
         self.backup_number_field = QLineEdit(self.pre_information_section_2)
         self.backup_number_field.setObjectName("backup_number_field")
         self.backup_number_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -302,8 +306,15 @@ class Ui_mission_details_tab:
         self.iranian_nationality_checkBox.setObjectName(
             "iranian_nationality_checkBox",
         )
-        self.iranian_nationality_checkBox.setEnabled(False)
+        self.iranian_nationality_checkBox.setEnabled(True)
         self.iranian_nationality_checkBox.setMaximumSize(QSize(50, 22))
+        self.iranian_nationality_checkBox.setMouseTracking(False)
+        self.iranian_nationality_checkBox.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus,
+        )
+        self.iranian_nationality_checkBox.setInputMethodHints(
+            Qt.InputMethodHint.ImhNone,
+        )
         self.iranian_nationality_checkBox.setCheckable(True)
 
         self.horizontalLayout_3.addWidget(self.iranian_nationality_checkBox)
@@ -314,8 +325,12 @@ class Ui_mission_details_tab:
         self.foreign_nationality_checkBox.setObjectName(
             "foreign_nationality_checkBox",
         )
-        self.foreign_nationality_checkBox.setEnabled(False)
+        self.foreign_nationality_checkBox.setEnabled(True)
         self.foreign_nationality_checkBox.setMaximumSize(QSize(75, 20))
+        self.foreign_nationality_checkBox.setMouseTracking(False)
+        self.foreign_nationality_checkBox.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus,
+        )
 
         self.horizontalLayout_3.addWidget(self.foreign_nationality_checkBox)
 
@@ -335,15 +350,19 @@ class Ui_mission_details_tab:
 
         self.is_male_checkBox = QCheckBox(self.information_section_2)
         self.is_male_checkBox.setObjectName("is_male_checkBox")
-        self.is_male_checkBox.setEnabled(False)
+        self.is_male_checkBox.setEnabled(True)
         self.is_male_checkBox.setMaximumSize(QSize(40, 16777215))
+        self.is_male_checkBox.setMouseTracking(False)
+        self.is_male_checkBox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.horizontalLayout_2.addWidget(self.is_male_checkBox)
 
         self.is_female_checkBox = QCheckBox(self.information_section_2)
         self.is_female_checkBox.setObjectName("is_female_checkBox")
-        self.is_female_checkBox.setEnabled(False)
+        self.is_female_checkBox.setEnabled(True)
         self.is_female_checkBox.setMaximumSize(QSize(45, 16777215))
+        self.is_female_checkBox.setMouseTracking(False)
+        self.is_female_checkBox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.horizontalLayout_2.addWidget(self.is_female_checkBox)
 
@@ -351,8 +370,10 @@ class Ui_mission_details_tab:
         self.is_gender_unknown_checkbox.setObjectName(
             "is_gender_unknown_checkbox",
         )
-        self.is_gender_unknown_checkbox.setEnabled(False)
+        self.is_gender_unknown_checkbox.setEnabled(True)
         self.is_gender_unknown_checkbox.setMaximumSize(QSize(85, 16777215))
+        self.is_gender_unknown_checkbox.setMouseTracking(False)
+        self.is_gender_unknown_checkbox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.horizontalLayout_2.addWidget(self.is_gender_unknown_checkbox)
 
@@ -371,6 +392,52 @@ class Ui_mission_details_tab:
         self.horizontalLayout_2.addWidget(self.national_code_field)
 
         self.verticalLayout.addWidget(self.information_section_2)
+
+        self.result_section = QWidget(self.information_tab)
+        self.result_section.setObjectName("result_section")
+        self.horizontalLayout_29 = QHBoxLayout(self.result_section)
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.mission_result_label = QLabel(self.result_section)
+        self.mission_result_label.setObjectName("mission_result_label")
+        self.mission_result_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.mission_result_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.horizontalLayout_29.addWidget(self.mission_result_label)
+
+        self.mission_result_field = QLineEdit(self.result_section)
+        self.mission_result_field.setObjectName("mission_result_field")
+        self.mission_result_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.mission_result_field.setReadOnly(True)
+
+        self.horizontalLayout_29.addWidget(self.mission_result_field)
+
+        self.hospital_name_label = QLabel(self.result_section)
+        self.hospital_name_label.setObjectName("hospital_name_label")
+        self.hospital_name_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.hospital_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.horizontalLayout_29.addWidget(self.hospital_name_label)
+
+        self.hospital_name_field = QLineEdit(self.result_section)
+        self.hospital_name_field.setObjectName("hospital_name_field")
+        self.hospital_name_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.hospital_name_field.setReadOnly(True)
+
+        self.horizontalLayout_29.addWidget(self.hospital_name_field)
+
+        self.refusal_form_code_label = QLabel(self.result_section)
+        self.refusal_form_code_label.setObjectName("refusal_form_code_label")
+        self.refusal_form_code_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.refusal_form_code_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.horizontalLayout_29.addWidget(self.refusal_form_code_label)
+
+        self.refusal_form_code_field = QLineEdit(self.result_section)
+        self.refusal_form_code_field.setObjectName("refusal_form_code_field")
+
+        self.horizontalLayout_29.addWidget(self.refusal_form_code_field)
+
+        self.verticalLayout.addWidget(self.result_section)
 
         self.summary_section = QWidget(self.information_tab)
         self.summary_section.setObjectName("summary_section")
@@ -399,9 +466,9 @@ class Ui_mission_details_tab:
         self.times_and_distances_tab.setObjectName("times_and_distances_tab")
         self.verticalLayout_4 = QVBoxLayout(self.times_and_distances_tab)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.times_section_91 = QWidget(self.times_and_distances_tab)
         self.times_section_91.setObjectName("times_section_91")
-        self.times_section_91.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_16 = QHBoxLayout(self.times_section_91)
         self.horizontalLayout_16.setObjectName("horizontalLayout_16")
         self.mission_date_label = QLabel(self.times_section_91)
@@ -434,47 +501,54 @@ class Ui_mission_details_tab:
 
         self.times_section_1 = QWidget(self.times_and_distances_tab)
         self.times_section_1.setObjectName("times_section_1")
-        self.times_section_1.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_7 = QHBoxLayout(self.times_section_1)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.senior_staff_label = QLabel(self.times_section_1)
+        self.staff_codes_groupBox = QGroupBox(self.times_section_1)
+        self.staff_codes_groupBox.setObjectName("staff_codes_groupBox")
+        self.staff_codes_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.horizontalLayout_30 = QHBoxLayout(self.staff_codes_groupBox)
+        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
+        self.horizontalLayout_30.setContentsMargins(0, 0, 0, 0)
+        self.senior_staff_label = QLabel(self.staff_codes_groupBox)
         self.senior_staff_label.setObjectName("senior_staff_label")
         self.senior_staff_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_7.addWidget(self.senior_staff_label)
+        self.horizontalLayout_30.addWidget(self.senior_staff_label)
 
-        self.senior_staff_field = QLineEdit(self.times_section_1)
+        self.senior_staff_field = QLineEdit(self.staff_codes_groupBox)
         self.senior_staff_field.setObjectName("senior_staff_field")
         self.senior_staff_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.senior_staff_field.setReadOnly(True)
 
-        self.horizontalLayout_7.addWidget(self.senior_staff_field)
+        self.horizontalLayout_30.addWidget(self.senior_staff_field)
 
-        self.first_staff_label = QLabel(self.times_section_1)
+        self.first_staff_label = QLabel(self.staff_codes_groupBox)
         self.first_staff_label.setObjectName("first_staff_label")
         self.first_staff_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_7.addWidget(self.first_staff_label)
+        self.horizontalLayout_30.addWidget(self.first_staff_label)
 
-        self.first_staff_field = QLineEdit(self.times_section_1)
+        self.first_staff_field = QLineEdit(self.staff_codes_groupBox)
         self.first_staff_field.setObjectName("first_staff_field")
         self.first_staff_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.first_staff_field.setReadOnly(True)
 
-        self.horizontalLayout_7.addWidget(self.first_staff_field)
+        self.horizontalLayout_30.addWidget(self.first_staff_field)
 
-        self.second_staff_label = QLabel(self.times_section_1)
+        self.second_staff_label = QLabel(self.staff_codes_groupBox)
         self.second_staff_label.setObjectName("second_staff_label")
         self.second_staff_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_7.addWidget(self.second_staff_label)
+        self.horizontalLayout_30.addWidget(self.second_staff_label)
 
-        self.second_staff_field = QLineEdit(self.times_section_1)
+        self.second_staff_field = QLineEdit(self.staff_codes_groupBox)
         self.second_staff_field.setObjectName("second_staff_field")
         self.second_staff_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.second_staff_field.setReadOnly(True)
 
-        self.horizontalLayout_7.addWidget(self.second_staff_field)
+        self.horizontalLayout_30.addWidget(self.second_staff_field)
+
+        self.horizontalLayout_7.addWidget(self.staff_codes_groupBox)
 
         self.refuel_odo_label = QLabel(self.times_section_1)
         self.refuel_odo_label.setObjectName("refuel_odo_label")
@@ -492,10 +566,23 @@ class Ui_mission_details_tab:
 
         self.times_section_2 = QWidget(self.times_and_distances_tab)
         self.times_section_2.setObjectName("times_section_2")
-        self.times_section_2.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_8 = QHBoxLayout(self.times_section_2)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.depart_from_station_odo_label = QLabel(self.times_section_2)
+        self.depart_from_station_groupBox = QGroupBox(self.times_section_2)
+        self.depart_from_station_groupBox.setObjectName(
+            "depart_from_station_groupBox",
+        )
+        self.depart_from_station_groupBox.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.horizontalLayout_31 = QHBoxLayout(
+            self.depart_from_station_groupBox,
+        )
+        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
+        self.horizontalLayout_31.setContentsMargins(0, 0, 0, 0)
+        self.depart_from_station_odo_label = QLabel(
+            self.depart_from_station_groupBox,
+        )
         self.depart_from_station_odo_label.setObjectName(
             "depart_from_station_odo_label",
         )
@@ -503,9 +590,11 @@ class Ui_mission_details_tab:
             Qt.TextFormat.PlainText,
         )
 
-        self.horizontalLayout_8.addWidget(self.depart_from_station_odo_label)
+        self.horizontalLayout_31.addWidget(self.depart_from_station_odo_label)
 
-        self.depart_from_station_odo_field = QLineEdit(self.times_section_2)
+        self.depart_from_station_odo_field = QLineEdit(
+            self.depart_from_station_groupBox,
+        )
         self.depart_from_station_odo_field.setObjectName(
             "depart_from_station_odo_field",
         )
@@ -514,9 +603,11 @@ class Ui_mission_details_tab:
         )
         self.depart_from_station_odo_field.setReadOnly(True)
 
-        self.horizontalLayout_8.addWidget(self.depart_from_station_odo_field)
+        self.horizontalLayout_31.addWidget(self.depart_from_station_odo_field)
 
-        self.depart_from_station_time_label = QLabel(self.times_section_2)
+        self.depart_from_station_time_label = QLabel(
+            self.depart_from_station_groupBox,
+        )
         self.depart_from_station_time_label.setObjectName(
             "depart_from_station_time_label",
         )
@@ -524,9 +615,11 @@ class Ui_mission_details_tab:
             Qt.TextFormat.PlainText,
         )
 
-        self.horizontalLayout_8.addWidget(self.depart_from_station_time_label)
+        self.horizontalLayout_31.addWidget(self.depart_from_station_time_label)
 
-        self.depart_from_station_time_field = QLineEdit(self.times_section_2)
+        self.depart_from_station_time_field = QLineEdit(
+            self.depart_from_station_groupBox,
+        )
         self.depart_from_station_time_field.setObjectName(
             "depart_from_station_time_field",
         )
@@ -535,63 +628,46 @@ class Ui_mission_details_tab:
         )
         self.depart_from_station_time_field.setReadOnly(True)
 
-        self.horizontalLayout_8.addWidget(self.depart_from_station_time_field)
+        self.horizontalLayout_31.addWidget(self.depart_from_station_time_field)
 
-        self.time_to_depart_label = QLabel(self.times_section_2)
+        self.time_to_depart_label = QLabel(self.depart_from_station_groupBox)
         self.time_to_depart_label.setObjectName("time_to_depart_label")
         self.time_to_depart_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_8.addWidget(self.time_to_depart_label)
+        self.horizontalLayout_31.addWidget(self.time_to_depart_label)
 
-        self.time_to_depart_field = QLineEdit(self.times_section_2)
+        self.time_to_depart_field = QLineEdit(
+            self.depart_from_station_groupBox,
+        )
         self.time_to_depart_field.setObjectName("time_to_depart_field")
         self.time_to_depart_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.time_to_depart_field.setReadOnly(True)
 
-        self.horizontalLayout_8.addWidget(self.time_to_depart_field)
+        self.horizontalLayout_31.addWidget(self.time_to_depart_field)
+
+        self.horizontalLayout_8.addWidget(self.depart_from_station_groupBox)
 
         self.verticalLayout_4.addWidget(self.times_section_2)
 
         self.times_section_3 = QWidget(self.times_and_distances_tab)
         self.times_section_3.setObjectName("times_section_3")
-        self.times_section_3.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_9 = QHBoxLayout(self.times_section_3)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.arrive_at_emergency_time_label = QLabel(self.times_section_3)
-        self.arrive_at_emergency_time_label.setObjectName(
-            "arrive_at_emergency_time_label",
+        self.arrive_at_emergency_groupBox = QGroupBox(self.times_section_3)
+        self.arrive_at_emergency_groupBox.setObjectName(
+            "arrive_at_emergency_groupBox",
         )
-        self.arrive_at_emergency_time_label.setTextFormat(
-            Qt.TextFormat.PlainText,
-        )
-
-        self.horizontalLayout_9.addWidget(self.arrive_at_emergency_time_label)
-
-        self.arrive_at_emergency_time_field = QLineEdit(self.times_section_3)
-        self.arrive_at_emergency_time_field.setObjectName(
-            "arrive_at_emergency_time_field",
-        )
-        self.arrive_at_emergency_time_field.setAlignment(
+        self.arrive_at_emergency_groupBox.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
-        self.arrive_at_emergency_time_field.setReadOnly(True)
-
-        self.horizontalLayout_9.addWidget(self.arrive_at_emergency_time_field)
-
-        self.time_to_arrive_label = QLabel(self.times_section_3)
-        self.time_to_arrive_label.setObjectName("time_to_arrive_label")
-        self.time_to_arrive_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_9.addWidget(self.time_to_arrive_label)
-
-        self.time_to_arrive_field = QLineEdit(self.times_section_3)
-        self.time_to_arrive_field.setObjectName("time_to_arrive_field")
-        self.time_to_arrive_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.time_to_arrive_field.setReadOnly(True)
-
-        self.horizontalLayout_9.addWidget(self.time_to_arrive_field)
-
-        self.arrive_at_emergency_odo_label = QLabel(self.times_section_3)
+        self.horizontalLayout_32 = QHBoxLayout(
+            self.arrive_at_emergency_groupBox,
+        )
+        self.horizontalLayout_32.setObjectName("horizontalLayout_32")
+        self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
+        self.arrive_at_emergency_odo_label = QLabel(
+            self.arrive_at_emergency_groupBox,
+        )
         self.arrive_at_emergency_odo_label.setObjectName(
             "arrive_at_emergency_odo_label",
         )
@@ -599,9 +675,11 @@ class Ui_mission_details_tab:
             Qt.TextFormat.PlainText,
         )
 
-        self.horizontalLayout_9.addWidget(self.arrive_at_emergency_odo_label)
+        self.horizontalLayout_32.addWidget(self.arrive_at_emergency_odo_label)
 
-        self.arrive_at_emergency_odo_field = QLineEdit(self.times_section_3)
+        self.arrive_at_emergency_odo_field = QLineEdit(
+            self.arrive_at_emergency_groupBox,
+        )
         self.arrive_at_emergency_odo_field.setObjectName(
             "arrive_at_emergency_odo_field",
         )
@@ -610,13 +688,54 @@ class Ui_mission_details_tab:
         )
         self.arrive_at_emergency_odo_field.setReadOnly(True)
 
-        self.horizontalLayout_9.addWidget(self.arrive_at_emergency_odo_field)
+        self.horizontalLayout_32.addWidget(self.arrive_at_emergency_odo_field)
+
+        self.arrive_at_emergency_time_label = QLabel(
+            self.arrive_at_emergency_groupBox,
+        )
+        self.arrive_at_emergency_time_label.setObjectName(
+            "arrive_at_emergency_time_label",
+        )
+        self.arrive_at_emergency_time_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_32.addWidget(self.arrive_at_emergency_time_label)
+
+        self.arrive_at_emergency_time_field = QLineEdit(
+            self.arrive_at_emergency_groupBox,
+        )
+        self.arrive_at_emergency_time_field.setObjectName(
+            "arrive_at_emergency_time_field",
+        )
+        self.arrive_at_emergency_time_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.arrive_at_emergency_time_field.setReadOnly(True)
+
+        self.horizontalLayout_32.addWidget(self.arrive_at_emergency_time_field)
+
+        self.time_to_arrive_label = QLabel(self.arrive_at_emergency_groupBox)
+        self.time_to_arrive_label.setObjectName("time_to_arrive_label")
+        self.time_to_arrive_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_32.addWidget(self.time_to_arrive_label)
+
+        self.time_to_arrive_field = QLineEdit(
+            self.arrive_at_emergency_groupBox,
+        )
+        self.time_to_arrive_field.setObjectName("time_to_arrive_field")
+        self.time_to_arrive_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.time_to_arrive_field.setReadOnly(True)
+
+        self.horizontalLayout_32.addWidget(self.time_to_arrive_field)
+
+        self.horizontalLayout_9.addWidget(self.arrive_at_emergency_groupBox)
 
         self.verticalLayout_4.addWidget(self.times_section_3)
 
         self.times_section_4 = QWidget(self.times_and_distances_tab)
         self.times_section_4.setObjectName("times_section_4")
-        self.times_section_4.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_10 = QHBoxLayout(self.times_section_4)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
         self.depart_from_emergency_time_label = QLabel(self.times_section_4)
@@ -661,44 +780,23 @@ class Ui_mission_details_tab:
 
         self.times_section_5 = QWidget(self.times_and_distances_tab)
         self.times_section_5.setObjectName("times_section_5")
-        self.times_section_5.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_11 = QHBoxLayout(self.times_section_5)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
-        self.arrive_at_hospital_time_label = QLabel(self.times_section_5)
-        self.arrive_at_hospital_time_label.setObjectName(
-            "arrive_at_hospital_time_label",
+        self.arrive_at_hospital_groupBox = QGroupBox(self.times_section_5)
+        self.arrive_at_hospital_groupBox.setObjectName(
+            "arrive_at_hospital_groupBox",
         )
-        self.arrive_at_hospital_time_label.setTextFormat(
-            Qt.TextFormat.PlainText,
-        )
-
-        self.horizontalLayout_11.addWidget(self.arrive_at_hospital_time_label)
-
-        self.arrive_at_hospital_time_field = QLineEdit(self.times_section_5)
-        self.arrive_at_hospital_time_field.setObjectName(
-            "arrive_at_hospital_time_field",
-        )
-        self.arrive_at_hospital_time_field.setAlignment(
+        self.arrive_at_hospital_groupBox.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
-        self.arrive_at_hospital_time_field.setReadOnly(True)
-
-        self.horizontalLayout_11.addWidget(self.arrive_at_hospital_time_field)
-
-        self.time_to_hospital_label = QLabel(self.times_section_5)
-        self.time_to_hospital_label.setObjectName("time_to_hospital_label")
-        self.time_to_hospital_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_11.addWidget(self.time_to_hospital_label)
-
-        self.time_to_hospital_field = QLineEdit(self.times_section_5)
-        self.time_to_hospital_field.setObjectName("time_to_hospital_field")
-        self.time_to_hospital_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.time_to_hospital_field.setReadOnly(True)
-
-        self.horizontalLayout_11.addWidget(self.time_to_hospital_field)
-
-        self.arrive_at_hospital_odo_label = QLabel(self.times_section_5)
+        self.horizontalLayout_33 = QHBoxLayout(
+            self.arrive_at_hospital_groupBox,
+        )
+        self.horizontalLayout_33.setObjectName("horizontalLayout_33")
+        self.horizontalLayout_33.setContentsMargins(0, 0, 0, 0)
+        self.arrive_at_hospital_odo_label = QLabel(
+            self.arrive_at_hospital_groupBox,
+        )
         self.arrive_at_hospital_odo_label.setObjectName(
             "arrive_at_hospital_odo_label",
         )
@@ -706,9 +804,11 @@ class Ui_mission_details_tab:
             Qt.TextFormat.PlainText,
         )
 
-        self.horizontalLayout_11.addWidget(self.arrive_at_hospital_odo_label)
+        self.horizontalLayout_33.addWidget(self.arrive_at_hospital_odo_label)
 
-        self.arrive_at_hospital_odo_field = QLineEdit(self.times_section_5)
+        self.arrive_at_hospital_odo_field = QLineEdit(
+            self.arrive_at_hospital_groupBox,
+        )
         self.arrive_at_hospital_odo_field.setObjectName(
             "arrive_at_hospital_odo_field",
         )
@@ -717,13 +817,54 @@ class Ui_mission_details_tab:
         )
         self.arrive_at_hospital_odo_field.setReadOnly(True)
 
-        self.horizontalLayout_11.addWidget(self.arrive_at_hospital_odo_field)
+        self.horizontalLayout_33.addWidget(self.arrive_at_hospital_odo_field)
+
+        self.arrive_at_hospital_time_label = QLabel(
+            self.arrive_at_hospital_groupBox,
+        )
+        self.arrive_at_hospital_time_label.setObjectName(
+            "arrive_at_hospital_time_label",
+        )
+        self.arrive_at_hospital_time_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_33.addWidget(self.arrive_at_hospital_time_label)
+
+        self.arrive_at_hospital_time_field = QLineEdit(
+            self.arrive_at_hospital_groupBox,
+        )
+        self.arrive_at_hospital_time_field.setObjectName(
+            "arrive_at_hospital_time_field",
+        )
+        self.arrive_at_hospital_time_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.arrive_at_hospital_time_field.setReadOnly(True)
+
+        self.horizontalLayout_33.addWidget(self.arrive_at_hospital_time_field)
+
+        self.time_to_hospital_label = QLabel(self.arrive_at_hospital_groupBox)
+        self.time_to_hospital_label.setObjectName("time_to_hospital_label")
+        self.time_to_hospital_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_33.addWidget(self.time_to_hospital_label)
+
+        self.time_to_hospital_field = QLineEdit(
+            self.arrive_at_hospital_groupBox,
+        )
+        self.time_to_hospital_field.setObjectName("time_to_hospital_field")
+        self.time_to_hospital_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.time_to_hospital_field.setReadOnly(True)
+
+        self.horizontalLayout_33.addWidget(self.time_to_hospital_field)
+
+        self.horizontalLayout_11.addWidget(self.arrive_at_hospital_groupBox)
 
         self.verticalLayout_4.addWidget(self.times_section_5)
 
         self.times_section_6 = QWidget(self.times_and_distances_tab)
         self.times_section_6.setObjectName("times_section_6")
-        self.times_section_6.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_12 = QHBoxLayout(self.times_section_6)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         self.deliver_to_hospital_time_label = QLabel(self.times_section_6)
@@ -763,50 +904,31 @@ class Ui_mission_details_tab:
 
         self.times_section_7 = QWidget(self.times_and_distances_tab)
         self.times_section_7.setObjectName("times_section_7")
-        self.times_section_7.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_13 = QHBoxLayout(self.times_section_7)
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
-        self.mission_complete_time_label = QLabel(self.times_section_7)
-        self.mission_complete_time_label.setObjectName(
-            "mission_complete_time_label",
+        self.mission_complete_groupBox = QGroupBox(self.times_section_7)
+        self.mission_complete_groupBox.setObjectName(
+            "mission_complete_groupBox",
         )
-        self.mission_complete_time_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_13.addWidget(self.mission_complete_time_label)
-
-        self.mission_complete_time_field = QLineEdit(self.times_section_7)
-        self.mission_complete_time_field.setObjectName(
-            "mission_complete_time_field",
-        )
-        self.mission_complete_time_field.setAlignment(
+        self.mission_complete_groupBox.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
-        self.mission_complete_time_field.setReadOnly(True)
-
-        self.horizontalLayout_13.addWidget(self.mission_complete_time_field)
-
-        self.time_to_complete_label = QLabel(self.times_section_7)
-        self.time_to_complete_label.setObjectName("time_to_complete_label")
-        self.time_to_complete_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_13.addWidget(self.time_to_complete_label)
-
-        self.time_to_complete_field = QLineEdit(self.times_section_7)
-        self.time_to_complete_field.setObjectName("time_to_complete_field")
-        self.time_to_complete_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.time_to_complete_field.setReadOnly(True)
-
-        self.horizontalLayout_13.addWidget(self.time_to_complete_field)
-
-        self.mission_complete_odo_label = QLabel(self.times_section_7)
+        self.horizontalLayout_34 = QHBoxLayout(self.mission_complete_groupBox)
+        self.horizontalLayout_34.setObjectName("horizontalLayout_34")
+        self.horizontalLayout_34.setContentsMargins(0, 0, 0, 0)
+        self.mission_complete_odo_label = QLabel(
+            self.mission_complete_groupBox,
+        )
         self.mission_complete_odo_label.setObjectName(
             "mission_complete_odo_label",
         )
         self.mission_complete_odo_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_13.addWidget(self.mission_complete_odo_label)
+        self.horizontalLayout_34.addWidget(self.mission_complete_odo_label)
 
-        self.mission_complete_odo_field = QLineEdit(self.times_section_7)
+        self.mission_complete_odo_field = QLineEdit(
+            self.mission_complete_groupBox,
+        )
         self.mission_complete_odo_field.setObjectName(
             "mission_complete_odo_field",
         )
@@ -815,13 +937,50 @@ class Ui_mission_details_tab:
         )
         self.mission_complete_odo_field.setReadOnly(True)
 
-        self.horizontalLayout_13.addWidget(self.mission_complete_odo_field)
+        self.horizontalLayout_34.addWidget(self.mission_complete_odo_field)
+
+        self.mission_complete_time_label = QLabel(
+            self.mission_complete_groupBox,
+        )
+        self.mission_complete_time_label.setObjectName(
+            "mission_complete_time_label",
+        )
+        self.mission_complete_time_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_34.addWidget(self.mission_complete_time_label)
+
+        self.mission_complete_time_field = QLineEdit(
+            self.mission_complete_groupBox,
+        )
+        self.mission_complete_time_field.setObjectName(
+            "mission_complete_time_field",
+        )
+        self.mission_complete_time_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.mission_complete_time_field.setReadOnly(True)
+
+        self.horizontalLayout_34.addWidget(self.mission_complete_time_field)
+
+        self.time_to_complete_label = QLabel(self.mission_complete_groupBox)
+        self.time_to_complete_label.setObjectName("time_to_complete_label")
+        self.time_to_complete_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_34.addWidget(self.time_to_complete_label)
+
+        self.time_to_complete_field = QLineEdit(self.mission_complete_groupBox)
+        self.time_to_complete_field.setObjectName("time_to_complete_field")
+        self.time_to_complete_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.time_to_complete_field.setReadOnly(True)
+
+        self.horizontalLayout_34.addWidget(self.time_to_complete_field)
+
+        self.horizontalLayout_13.addWidget(self.mission_complete_groupBox)
 
         self.verticalLayout_4.addWidget(self.times_section_7)
 
         self.times_section_8 = QWidget(self.times_and_distances_tab)
         self.times_section_8.setObjectName("times_section_8")
-        self.times_section_8.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_14 = QHBoxLayout(self.times_section_8)
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
         self.arrive_at_station_time_label = QLabel(self.times_section_8)
@@ -868,7 +1027,6 @@ class Ui_mission_details_tab:
 
         self.times_section_9 = QWidget(self.times_and_distances_tab)
         self.times_section_9.setObjectName("times_section_9")
-        self.times_section_9.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_15 = QHBoxLayout(self.times_section_9)
         self.horizontalLayout_15.setObjectName("horizontalLayout_15")
         self.overall_mission_time_label = QLabel(self.times_section_9)
@@ -914,13 +1072,2204 @@ class Ui_mission_details_tab:
         self.verticalLayout_4.addWidget(self.times_section_9)
 
         self.mission_data_tab_widget.addTab(self.times_and_distances_tab, "")
+        self.location_and_emergency_tab = QWidget()
+        self.location_and_emergency_tab.setObjectName(
+            "location_and_emergency_tab",
+        )
+        self.verticalLayout_3 = QVBoxLayout(self.location_and_emergency_tab)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.section_1 = QWidget(self.location_and_emergency_tab)
+        self.section_1.setObjectName("section_1")
+        self.section_1.setMaximumSize(QSize(16777215, 100))
+        self.horizontalLayout_17 = QHBoxLayout(self.section_1)
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.address_label = QLabel(self.section_1)
+        self.address_label.setObjectName("address_label")
+        self.address_label.setMaximumSize(QSize(16777215, 30))
+        self.address_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_17.addWidget(self.address_label)
+
+        self.address_plain_text_edit = QPlainTextEdit(self.section_1)
+        self.address_plain_text_edit.setObjectName("address_plain_text_edit")
+        self.address_plain_text_edit.setMaximumSize(QSize(16777215, 100))
+        self.address_plain_text_edit.setReadOnly(True)
+
+        self.horizontalLayout_17.addWidget(self.address_plain_text_edit)
+
+        self.verticalLayout_3.addWidget(self.section_1)
+
+        self.section_2 = QWidget(self.location_and_emergency_tab)
+        self.section_2.setObjectName("section_2")
+        self.section_2.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_18 = QHBoxLayout(self.section_2)
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.chief_complaint_label = QLabel(self.section_2)
+        self.chief_complaint_label.setObjectName("chief_complaint_label")
+        self.chief_complaint_label.setMaximumSize(QSize(16777215, 30))
+        self.chief_complaint_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_18.addWidget(self.chief_complaint_label)
+
+        self.chief_complaint_field = QLineEdit(self.section_2)
+        self.chief_complaint_field.setObjectName("chief_complaint_field")
+        self.chief_complaint_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.chief_complaint_field.setReadOnly(True)
+
+        self.horizontalLayout_18.addWidget(self.chief_complaint_field)
+
+        self.type_of_location_label = QLabel(self.section_2)
+        self.type_of_location_label.setObjectName("type_of_location_label")
+        self.type_of_location_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_18.addWidget(self.type_of_location_label)
+
+        self.type_of_location_field = QLineEdit(self.section_2)
+        self.type_of_location_field.setObjectName("type_of_location_field")
+        self.type_of_location_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.type_of_location_field.setReadOnly(True)
+
+        self.horizontalLayout_18.addWidget(self.type_of_location_field)
+
+        self.type_of_location_other_info_label = QLabel(self.section_2)
+        self.type_of_location_other_info_label.setObjectName(
+            "type_of_location_other_info_label",
+        )
+        self.type_of_location_other_info_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_18.addWidget(
+            self.type_of_location_other_info_label,
+        )
+
+        self.type_of_location_other_info_field = QLineEdit(self.section_2)
+        self.type_of_location_other_info_field.setObjectName(
+            "type_of_location_other_info_field",
+        )
+        self.type_of_location_other_info_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.type_of_location_other_info_field.setReadOnly(True)
+
+        self.horizontalLayout_18.addWidget(
+            self.type_of_location_other_info_field,
+        )
+
+        self.verticalLayout_3.addWidget(self.section_2)
+
+        self.section_3 = QWidget(self.location_and_emergency_tab)
+        self.section_3.setObjectName("section_3")
+        self.section_3.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_19 = QHBoxLayout(self.section_3)
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.accident_type_label = QLabel(self.section_3)
+        self.accident_type_label.setObjectName("accident_type_label")
+        self.accident_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_19.addWidget(self.accident_type_label)
+
+        self.accident_type_field = QLineEdit(self.section_3)
+        self.accident_type_field.setObjectName("accident_type_field")
+        self.accident_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.accident_type_field.setReadOnly(True)
+
+        self.horizontalLayout_19.addWidget(self.accident_type_field)
+
+        self.illness_type_label = QLabel(self.section_3)
+        self.illness_type_label.setObjectName("illness_type_label")
+        self.illness_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_19.addWidget(self.illness_type_label)
+
+        self.illness_type_field = QLineEdit(self.section_3)
+        self.illness_type_field.setObjectName("illness_type_field")
+        self.illness_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.illness_type_field.setReadOnly(True)
+
+        self.horizontalLayout_19.addWidget(self.illness_type_field)
+
+        self.emergency_other_info_label = QLabel(self.section_3)
+        self.emergency_other_info_label.setObjectName(
+            "emergency_other_info_label",
+        )
+        self.emergency_other_info_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_19.addWidget(self.emergency_other_info_label)
+
+        self.emergency_other_info_field = QLineEdit(self.section_3)
+        self.emergency_other_info_field.setObjectName(
+            "emergency_other_info_field",
+        )
+        self.emergency_other_info_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.emergency_other_info_field.setReadOnly(True)
+
+        self.horizontalLayout_19.addWidget(self.emergency_other_info_field)
+
+        self.is_vehicle_accident_checkBox = QCheckBox(self.section_3)
+        self.is_vehicle_accident_checkBox.setObjectName(
+            "is_vehicle_accident_checkBox",
+        )
+        self.is_vehicle_accident_checkBox.setEnabled(True)
+        self.is_vehicle_accident_checkBox.setMouseTracking(False)
+        self.is_vehicle_accident_checkBox.setFocusPolicy(
+            Qt.FocusPolicy.NoFocus,
+        )
+        self.is_vehicle_accident_checkBox.setCheckable(True)
+        self.is_vehicle_accident_checkBox.setChecked(False)
+
+        self.horizontalLayout_19.addWidget(self.is_vehicle_accident_checkBox)
+
+        self.verticalLayout_3.addWidget(self.section_3)
+
+        self.section_4 = QWidget(self.location_and_emergency_tab)
+        self.section_4.setObjectName("section_4")
+        self.section_4.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_20 = QHBoxLayout(self.section_4)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.role_in_accident_label = QLabel(self.section_4)
+        self.role_in_accident_label.setObjectName("role_in_accident_label")
+        self.role_in_accident_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_20.addWidget(self.role_in_accident_label)
+
+        self.role_in_accident_field = QLineEdit(self.section_4)
+        self.role_in_accident_field.setObjectName("role_in_accident_field")
+        self.role_in_accident_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.role_in_accident_field.setReadOnly(True)
+
+        self.horizontalLayout_20.addWidget(self.role_in_accident_field)
+
+        self.role_in_accident_other_info_label = QLabel(self.section_4)
+        self.role_in_accident_other_info_label.setObjectName(
+            "role_in_accident_other_info_label",
+        )
+        self.role_in_accident_other_info_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_20.addWidget(
+            self.role_in_accident_other_info_label,
+        )
+
+        self.role_in_accident_other_info_field = QLineEdit(self.section_4)
+        self.role_in_accident_other_info_field.setObjectName(
+            "role_in_accident_other_info_field",
+        )
+        self.role_in_accident_other_info_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.role_in_accident_other_info_field.setReadOnly(True)
+
+        self.horizontalLayout_20.addWidget(
+            self.role_in_accident_other_info_field,
+        )
+
+        self.vehicle_type_label = QLabel(self.section_4)
+        self.vehicle_type_label.setObjectName("vehicle_type_label")
+        self.vehicle_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_20.addWidget(self.vehicle_type_label)
+
+        self.vehicle_type_field = QLineEdit(self.section_4)
+        self.vehicle_type_field.setObjectName("vehicle_type_field")
+        self.vehicle_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.vehicle_type_field.setReadOnly(True)
+
+        self.horizontalLayout_20.addWidget(self.vehicle_type_field)
+
+        self.verticalLayout_3.addWidget(self.section_4)
+
+        self.medical_center_groupBox = QGroupBox(
+            self.location_and_emergency_tab,
+        )
+        self.medical_center_groupBox.setObjectName("medical_center_groupBox")
+        self.medical_center_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_12 = QGridLayout(self.medical_center_groupBox)
+        self.gridLayout_12.setObjectName("gridLayout_12")
+        self.receiving_physician_name_field = QLineEdit(
+            self.medical_center_groupBox,
+        )
+        self.receiving_physician_name_field.setObjectName(
+            "receiving_physician_name_field",
+        )
+        self.receiving_physician_name_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.receiving_physician_name_field.setReadOnly(True)
+
+        self.gridLayout_12.addWidget(
+            self.receiving_physician_name_field,
+            8,
+            2,
+            1,
+            1,
+        )
+
+        self.receiving_physician_code_field = QLineEdit(
+            self.medical_center_groupBox,
+        )
+        self.receiving_physician_code_field.setObjectName(
+            "receiving_physician_code_field",
+        )
+        self.receiving_physician_code_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.receiving_physician_code_field.setReadOnly(True)
+
+        self.gridLayout_12.addWidget(
+            self.receiving_physician_code_field,
+            4,
+            2,
+            1,
+            1,
+        )
+
+        self.physician_order_secondary_field = QLineEdit(
+            self.medical_center_groupBox,
+        )
+        self.physician_order_secondary_field.setObjectName(
+            "physician_order_secondary_field",
+        )
+        self.physician_order_secondary_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.physician_order_secondary_field.setReadOnly(True)
+
+        self.gridLayout_12.addWidget(
+            self.physician_order_secondary_field,
+            10,
+            2,
+            1,
+            1,
+        )
+
+        self.physician_code_1050_field = QLineEdit(
+            self.medical_center_groupBox,
+        )
+        self.physician_code_1050_field.setObjectName(
+            "physician_code_1050_field",
+        )
+        self.physician_code_1050_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.physician_code_1050_field.setReadOnly(True)
+
+        self.gridLayout_12.addWidget(
+            self.physician_code_1050_field,
+            6,
+            2,
+            1,
+            1,
+        )
+
+        self.receiving_physician_code_label = QLabel(
+            self.medical_center_groupBox,
+        )
+        self.receiving_physician_code_label.setObjectName(
+            "receiving_physician_code_label",
+        )
+        self.receiving_physician_code_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.gridLayout_12.addWidget(
+            self.receiving_physician_code_label,
+            4,
+            0,
+            1,
+            1,
+        )
+
+        self.physician_code_label = QLabel(self.medical_center_groupBox)
+        self.physician_code_label.setObjectName("physician_code_label")
+        self.physician_code_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_12.addWidget(self.physician_code_label, 4, 3, 1, 1)
+
+        self.physician_code_field = QLineEdit(self.medical_center_groupBox)
+        self.physician_code_field.setObjectName("physician_code_field")
+        self.physician_code_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.physician_code_field.setReadOnly(True)
+
+        self.gridLayout_12.addWidget(self.physician_code_field, 4, 4, 1, 1)
+
+        self.physician_code_1050_label = QLabel(self.medical_center_groupBox)
+        self.physician_code_1050_label.setObjectName(
+            "physician_code_1050_label",
+        )
+        self.physician_code_1050_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_12.addWidget(
+            self.physician_code_1050_label,
+            6,
+            0,
+            1,
+            1,
+        )
+
+        self.handover_time_label = QLabel(self.medical_center_groupBox)
+        self.handover_time_label.setObjectName("handover_time_label")
+        self.handover_time_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_12.addWidget(self.handover_time_label, 6, 3, 1, 1)
+
+        self.handover_time_field = QLineEdit(self.medical_center_groupBox)
+        self.handover_time_field.setObjectName("handover_time_field")
+        self.handover_time_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.handover_time_field.setReadOnly(True)
+
+        self.gridLayout_12.addWidget(self.handover_time_field, 6, 4, 1, 1)
+
+        self.receiving_physician_name_label = QLabel(
+            self.medical_center_groupBox,
+        )
+        self.receiving_physician_name_label.setObjectName(
+            "receiving_physician_name_label",
+        )
+        self.receiving_physician_name_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.gridLayout_12.addWidget(
+            self.receiving_physician_name_label,
+            8,
+            0,
+            1,
+            1,
+        )
+
+        self.physician_order_label = QLabel(self.medical_center_groupBox)
+        self.physician_order_label.setObjectName("physician_order_label")
+        self.physician_order_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_12.addWidget(self.physician_order_label, 8, 3, 1, 1)
+
+        self.physician_order_field = QLineEdit(self.medical_center_groupBox)
+        self.physician_order_field.setObjectName("physician_order_field")
+        self.physician_order_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.physician_order_field.setReadOnly(True)
+
+        self.gridLayout_12.addWidget(self.physician_order_field, 8, 4, 1, 1)
+
+        self.physician_order_secondary_label = QLabel(
+            self.medical_center_groupBox,
+        )
+        self.physician_order_secondary_label.setObjectName(
+            "physician_order_secondary_label",
+        )
+        self.physician_order_secondary_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.gridLayout_12.addWidget(
+            self.physician_order_secondary_label,
+            10,
+            0,
+            1,
+            1,
+        )
+
+        self.verticalLayout_3.addWidget(self.medical_center_groupBox)
+
+        self.mission_data_tab_widget.addTab(
+            self.location_and_emergency_tab,
+            "",
+        )
+        self.symptoms_tab = QWidget()
+        self.symptoms_tab.setObjectName("symptoms_tab")
+        self.verticalLayout_5 = QVBoxLayout(self.symptoms_tab)
+        self.verticalLayout_5.setSpacing(6)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.vital_signs_group_Box = QGroupBox(self.symptoms_tab)
+        self.vital_signs_group_Box.setObjectName("vital_signs_group_Box")
+        self.vital_signs_group_Box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_6 = QVBoxLayout(self.vital_signs_group_Box)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.vital_signs_table_Widget = QTableWidget(
+            self.vital_signs_group_Box,
+        )
+        if self.vital_signs_table_Widget.rowCount() < 10:
+            self.vital_signs_table_Widget.setRowCount(10)
+        self.vital_signs_table_Widget.setObjectName(
+            "vital_signs_table_Widget",
+        )
+        self.vital_signs_table_Widget.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.vital_signs_table_Widget.setLayoutDirection(
+            Qt.LayoutDirection.LeftToRight,
+        )
+        self.vital_signs_table_Widget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.vital_signs_table_Widget.setTabKeyNavigation(False)
+        self.vital_signs_table_Widget.setProperty("showDropIndicator", False)
+        self.vital_signs_table_Widget.setAlternatingRowColors(True)
+        self.vital_signs_table_Widget.setSelectionMode(
+            QAbstractItemView.SelectionMode.NoSelection,
+        )
+        self.vital_signs_table_Widget.setCornerButtonEnabled(False)
+        self.vital_signs_table_Widget.setRowCount(10)
+        self.vital_signs_table_Widget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.vital_signs_table_Widget.verticalHeader().setDefaultSectionSize(30)
+        self.vital_signs_table_Widget.verticalHeader().setStretchLastSection(False)
+
+        self.verticalLayout_6.addWidget(self.vital_signs_table_Widget)
+
+        self.verticalLayout_5.addWidget(self.vital_signs_group_Box)
+
+        self.symptoms_section = QWidget(self.symptoms_tab)
+        self.symptoms_section.setObjectName("symptoms_section")
+        self.symptoms_section.setMaximumSize(QSize(16777215, 175))
+        self.gridLayout = QGridLayout(self.symptoms_section)
+        self.gridLayout.setObjectName("gridLayout")
+        self.symptoms_group_box = QGroupBox(self.symptoms_section)
+        self.symptoms_group_box.setObjectName("symptoms_group_box")
+        self.symptoms_group_box.setMaximumSize(QSize(16777215, 175))
+        self.symptoms_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.symptoms_group_box.setFlat(False)
+        self.symptoms_group_box.setCheckable(False)
+        self.gridLayout_2 = QGridLayout(self.symptoms_group_box)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.has_sensory_motor_disturbance_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_sensory_motor_disturbance_checkbox.setObjectName(
+            "has_sensory_motor_disturbance_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_sensory_motor_disturbance_checkbox,
+            2,
+            1,
+            1,
+            1,
+        )
+
+        self.has_memory_loss_post_trauma_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_memory_loss_post_trauma_checkbox.setObjectName(
+            "has_memory_loss_post_trauma_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_memory_loss_post_trauma_checkbox,
+            1,
+            0,
+            1,
+            1,
+        )
+
+        self.has_abdominal_pain_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_abdominal_pain_checkbox.setObjectName(
+            "has_abdominal_pain_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_abdominal_pain_checkbox,
+            1,
+            1,
+            1,
+            1,
+        )
+
+        self.has_shortness_of_breath_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_shortness_of_breath_checkbox.setObjectName(
+            "has_shortness_of_breath_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_shortness_of_breath_checkbox,
+            0,
+            4,
+            1,
+            1,
+        )
+
+        self.has_altered_consciousness_checkbox = QCheckBox(
+            self.symptoms_group_box,
+        )
+        self.has_altered_consciousness_checkbox.setObjectName(
+            "has_altered_consciousness_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_altered_consciousness_checkbox,
+            2,
+            2,
+            1,
+            1,
+        )
+
+        self.has_vomiting_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_vomiting_checkbox.setObjectName("has_vomiting_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_vomiting_checkbox, 1, 3, 1, 1)
+
+        self.has_bleeding_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_bleeding_checkbox.setObjectName("has_bleeding_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_bleeding_checkbox, 1, 5, 1, 1)
+
+        self.has_diarrhea_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_diarrhea_checkbox.setObjectName("has_diarrhea_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_diarrhea_checkbox, 1, 6, 1, 1)
+
+        self.has_double_vision_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_double_vision_checkbox.setObjectName(
+            "has_double_vision_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_double_vision_checkbox,
+            0,
+            3,
+            1,
+            1,
+        )
+
+        self.has_headache_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_headache_checkbox.setObjectName("has_headache_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_headache_checkbox, 1, 2, 1, 1)
+
+        self.has_blurred_vision_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_blurred_vision_checkbox.setObjectName(
+            "has_blurred_vision_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(
+            self.has_blurred_vision_checkbox,
+            0,
+            5,
+            1,
+            1,
+        )
+
+        self.has_dizziness_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_dizziness_checkbox.setObjectName("has_dizziness_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_dizziness_checkbox, 1, 4, 1, 1)
+
+        self.has_fainting_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_fainting_checkbox.setObjectName("has_fainting_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_fainting_checkbox, 0, 1, 1, 1)
+
+        self.has_fever_chills_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_fever_chills_checkbox.setObjectName(
+            "has_fever_chills_checkbox",
+        )
+
+        self.gridLayout_2.addWidget(self.has_fever_chills_checkbox, 0, 2, 1, 1)
+
+        self.has_chest_pain_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_chest_pain_checkbox.setObjectName("has_chest_pain_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_chest_pain_checkbox, 0, 0, 1, 1)
+
+        self.has_sweating_checkbox = QCheckBox(self.symptoms_group_box)
+        self.has_sweating_checkbox.setObjectName("has_sweating_checkbox")
+
+        self.gridLayout_2.addWidget(self.has_sweating_checkbox, 0, 6, 1, 1)
+
+        self.has_weakness_checkBox = QCheckBox(self.symptoms_group_box)
+        self.has_weakness_checkBox.setObjectName("has_weakness_checkBox")
+
+        self.gridLayout_2.addWidget(self.has_weakness_checkBox, 2, 0, 1, 1)
+
+        self.gridLayout.addWidget(self.symptoms_group_box, 0, 0, 1, 1)
+
+        self.verticalLayout_5.addWidget(self.symptoms_section)
+
+        self.other_symptoms_section = QWidget(self.symptoms_tab)
+        self.other_symptoms_section.setObjectName("other_symptoms_section")
+        self.other_symptoms_section.setMaximumSize(QSize(16777215, 75))
+        self.horizontalLayout_21 = QHBoxLayout(self.other_symptoms_section)
+        self.horizontalLayout_21.setObjectName("horizontalLayout_21")
+        self.other_symptoms_label = QLabel(self.other_symptoms_section)
+        self.other_symptoms_label.setObjectName("other_symptoms_label")
+        self.other_symptoms_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_21.addWidget(self.other_symptoms_label)
+
+        self.other_symptoms_field = QPlainTextEdit(self.other_symptoms_section)
+        self.other_symptoms_field.setObjectName("other_symptoms_field")
+        self.other_symptoms_field.setReadOnly(True)
+
+        self.horizontalLayout_21.addWidget(self.other_symptoms_field)
+
+        self.verticalLayout_5.addWidget(self.other_symptoms_section)
+
+        self.mission_data_tab_widget.addTab(self.symptoms_tab, "")
+        self.history_and_trauma_tab = QWidget()
+        self.history_and_trauma_tab.setObjectName("history_and_trauma_tab")
+        self.verticalLayout_8 = QVBoxLayout(self.history_and_trauma_tab)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.widget = QWidget(self.history_and_trauma_tab)
+        self.widget.setObjectName("widget")
+        self.verticalLayout_7 = QVBoxLayout(self.widget)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.medical_history_group_box = QGroupBox(self.widget)
+        self.medical_history_group_box.setObjectName(
+            "medical_history_group_box",
+        )
+        sizePolicy2.setHeightForWidth(
+            self.medical_history_group_box.sizePolicy().hasHeightForWidth(),
+        )
+        self.medical_history_group_box.setSizePolicy(sizePolicy2)
+        self.medical_history_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.gridLayout_3 = QGridLayout(self.medical_history_group_box)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.has_gastrointestinal_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_gastrointestinal_disease_checkBox.setObjectName(
+            "has_gastrointestinal_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_gastrointestinal_disease_checkBox,
+            0,
+            0,
+            1,
+            1,
+        )
+
+        self.has_hypertension_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_hypertension_checkBox.setObjectName(
+            "has_hypertension_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(self.has_hypertension_checkBox, 0, 6, 1, 1)
+
+        self.has_special_conditions_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_special_conditions_checkBox.setObjectName(
+            "has_special_conditions_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_special_conditions_checkBox,
+            0,
+            4,
+            1,
+            1,
+        )
+
+        self.has_infectious_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_infectious_disease_checkBox.setObjectName(
+            "has_infectious_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_infectious_disease_checkBox,
+            0,
+            2,
+            1,
+            1,
+        )
+
+        self.has_diabetes_checkBox = QCheckBox(self.medical_history_group_box)
+        self.has_diabetes_checkBox.setObjectName("has_diabetes_checkBox")
+
+        self.gridLayout_3.addWidget(self.has_diabetes_checkBox, 0, 3, 1, 1)
+
+        self.has_seizure_disorder_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_seizure_disorder_checkBox.setObjectName(
+            "has_seizure_disorder_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_seizure_disorder_checkBox,
+            0,
+            1,
+            1,
+            1,
+        )
+
+        self.has_pulmonary_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_pulmonary_disease_checkBox.setObjectName(
+            "has_pulmonary_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_pulmonary_disease_checkBox,
+            0,
+            5,
+            1,
+            1,
+        )
+
+        self.has_malignancy_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_malignancy_history_checkBox.setObjectName(
+            "has_malignancy_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_malignancy_history_checkBox,
+            1,
+            3,
+            1,
+            1,
+        )
+
+        self.has_substance_abuse_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_substance_abuse_checkBox.setObjectName(
+            "has_substance_abuse_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_substance_abuse_checkBox,
+            1,
+            4,
+            1,
+            1,
+        )
+
+        self.has_renal_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_renal_disease_checkBox.setObjectName(
+            "has_renal_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_renal_disease_checkBox,
+            1,
+            2,
+            1,
+            1,
+        )
+
+        self.has_cardiac_disease_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_cardiac_disease_checkBox.setObjectName(
+            "has_cardiac_disease_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_cardiac_disease_checkBox,
+            1,
+            1,
+            1,
+            1,
+        )
+
+        self.has_disability_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_disability_checkBox.setObjectName("has_disability_checkBox")
+
+        self.gridLayout_3.addWidget(self.has_disability_checkBox, 1, 5, 1, 1)
+
+        self.has_asthma_checkBox = QCheckBox(self.medical_history_group_box)
+        self.has_asthma_checkBox.setObjectName("has_asthma_checkBox")
+
+        self.gridLayout_3.addWidget(self.has_asthma_checkBox, 1, 6, 1, 1)
+
+        self.has_stroke_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_stroke_history_checkBox.setObjectName(
+            "has_stroke_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_stroke_history_checkBox,
+            1,
+            0,
+            1,
+            1,
+        )
+
+        self.has_psychiatric_disorder_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_psychiatric_disorder_checkBox.setObjectName(
+            "has_psychiatric_disorder_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_psychiatric_disorder_checkBox,
+            2,
+            0,
+            1,
+            1,
+        )
+
+        self.has_prior_trauma_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_prior_trauma_checkBox.setObjectName(
+            "has_prior_trauma_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(self.has_prior_trauma_checkBox, 2, 1, 1, 1)
+
+        self.has_surgical_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.has_surgical_history_checkBox.setObjectName(
+            "has_surgical_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.has_surgical_history_checkBox,
+            2,
+            2,
+            1,
+            1,
+        )
+
+        self.other_medical_history_checkBox = QCheckBox(
+            self.medical_history_group_box,
+        )
+        self.other_medical_history_checkBox.setObjectName(
+            "other_medical_history_checkBox",
+        )
+
+        self.gridLayout_3.addWidget(
+            self.other_medical_history_checkBox,
+            2,
+            3,
+            1,
+            1,
+        )
+
+        self.verticalLayout_7.addWidget(self.medical_history_group_box)
+
+        self.medical_history_other_info = QWidget(self.widget)
+        self.medical_history_other_info.setObjectName(
+            "medical_history_other_info",
+        )
+        self.medical_history_other_info.setMaximumSize(QSize(16777215, 50))
+        self.horizontalLayout_22 = QHBoxLayout(self.medical_history_other_info)
+        self.horizontalLayout_22.setObjectName("horizontalLayout_22")
+        self.horizontalLayout_22.setContentsMargins(0, 0, 0, 0)
+        self.current_medications_label = QLabel(
+            self.medical_history_other_info,
+        )
+        self.current_medications_label.setObjectName(
+            "current_medications_label",
+        )
+        self.current_medications_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_22.addWidget(self.current_medications_label)
+
+        self.current_medications_field = QPlainTextEdit(
+            self.medical_history_other_info,
+        )
+        self.current_medications_field.setObjectName(
+            "current_medications_field",
+        )
+        self.current_medications_field.setReadOnly(True)
+
+        self.horizontalLayout_22.addWidget(self.current_medications_field)
+
+        self.drug_allergies_label = QLabel(self.medical_history_other_info)
+        self.drug_allergies_label.setObjectName("drug_allergies_label")
+        self.drug_allergies_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_22.addWidget(self.drug_allergies_label)
+
+        self.drug_allergies_field = QPlainTextEdit(
+            self.medical_history_other_info,
+        )
+        self.drug_allergies_field.setObjectName("drug_allergies_field")
+        self.drug_allergies_field.setSizeAdjustPolicy(
+            QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents,
+        )
+        self.drug_allergies_field.setReadOnly(True)
+
+        self.horizontalLayout_22.addWidget(self.drug_allergies_field)
+
+        self.verticalLayout_7.addWidget(self.medical_history_other_info)
+
+        self.examine_eye_lung_heart_group_box = QGroupBox(self.widget)
+        self.examine_eye_lung_heart_group_box.setObjectName(
+            "examine_eye_lung_heart_group_box",
+        )
+        self.examine_eye_lung_heart_group_box.setMinimumSize(QSize(0, 175))
+        self.examine_eye_lung_heart_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.horizontalLayout_23 = QHBoxLayout(
+            self.examine_eye_lung_heart_group_box,
+        )
+        self.horizontalLayout_23.setObjectName("horizontalLayout_23")
+        self.horizontalLayout_23.setContentsMargins(0, 0, 0, 0)
+        self.eye_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
+        self.eye_group_box.setObjectName("eye_group_box")
+        self.eye_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_4 = QGridLayout(self.eye_group_box)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.right_eye_examine_label = QLabel(self.eye_group_box)
+        self.right_eye_examine_label.setObjectName("right_eye_examine_label")
+        self.right_eye_examine_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_4.addWidget(self.right_eye_examine_label, 0, 0, 1, 1)
+
+        self.right_eye_examine_field = QLineEdit(self.eye_group_box)
+        self.right_eye_examine_field.setObjectName("right_eye_examine_field")
+        self.right_eye_examine_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.right_eye_examine_field.setReadOnly(True)
+
+        self.gridLayout_4.addWidget(self.right_eye_examine_field, 0, 1, 1, 1)
+
+        self.left_eye_examine_label = QLabel(self.eye_group_box)
+        self.left_eye_examine_label.setObjectName("left_eye_examine_label")
+        self.left_eye_examine_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_4.addWidget(self.left_eye_examine_label, 1, 0, 1, 1)
+
+        self.left_eye_examine_field = QLineEdit(self.eye_group_box)
+        self.left_eye_examine_field.setObjectName("left_eye_examine_field")
+        self.left_eye_examine_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.left_eye_examine_field.setReadOnly(True)
+
+        self.gridLayout_4.addWidget(self.left_eye_examine_field, 1, 1, 1, 1)
+
+        self.horizontalLayout_23.addWidget(self.eye_group_box)
+
+        self.lung_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
+        self.lung_group_box.setObjectName("lung_group_box")
+        self.lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.horizontalLayout_24 = QHBoxLayout(self.lung_group_box)
+        self.horizontalLayout_24.setObjectName("horizontalLayout_24")
+        self.horizontalLayout_24.setContentsMargins(0, 0, 0, 0)
+        self.right_lung_group_box = QGroupBox(self.lung_group_box)
+        self.right_lung_group_box.setObjectName("right_lung_group_box")
+        self.right_lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_5 = QGridLayout(self.right_lung_group_box)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.lung_sound_label = QLabel(self.right_lung_group_box)
+        self.lung_sound_label.setObjectName("lung_sound_label")
+        self.lung_sound_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_5.addWidget(self.lung_sound_label, 0, 0, 1, 1)
+
+        self.breathing_rhythm_label = QLabel(self.right_lung_group_box)
+        self.breathing_rhythm_label.setObjectName("breathing_rhythm_label")
+        self.breathing_rhythm_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_5.addWidget(self.breathing_rhythm_label, 1, 0, 1, 1)
+
+        self.right_lung_rhythm_field = QLineEdit(self.right_lung_group_box)
+        self.right_lung_rhythm_field.setObjectName("right_lung_rhythm_field")
+        self.right_lung_rhythm_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.right_lung_rhythm_field.setReadOnly(True)
+
+        self.gridLayout_5.addWidget(self.right_lung_rhythm_field, 1, 2, 1, 1)
+
+        self.right_lung_sound_field = QLineEdit(self.right_lung_group_box)
+        self.right_lung_sound_field.setObjectName("right_lung_sound_field")
+        self.right_lung_sound_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.right_lung_sound_field.setReadOnly(True)
+
+        self.gridLayout_5.addWidget(self.right_lung_sound_field, 0, 2, 1, 1)
+
+        self.horizontalLayout_24.addWidget(self.right_lung_group_box)
+
+        self.left_lung_group_box = QGroupBox(self.lung_group_box)
+        self.left_lung_group_box.setObjectName("left_lung_group_box")
+        self.left_lung_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_6 = QGridLayout(self.left_lung_group_box)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.left_lung_rhythm_field = QLineEdit(self.left_lung_group_box)
+        self.left_lung_rhythm_field.setObjectName("left_lung_rhythm_field")
+        self.left_lung_rhythm_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.left_lung_rhythm_field.setReadOnly(True)
+
+        self.gridLayout_6.addWidget(self.left_lung_rhythm_field, 1, 0, 1, 1)
+
+        self.left_lung_sound_field = QLineEdit(self.left_lung_group_box)
+        self.left_lung_sound_field.setObjectName("left_lung_sound_field")
+        self.left_lung_sound_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.left_lung_sound_field.setReadOnly(True)
+
+        self.gridLayout_6.addWidget(self.left_lung_sound_field, 0, 0, 1, 1)
+
+        self.horizontalLayout_24.addWidget(self.left_lung_group_box)
+
+        self.horizontalLayout_23.addWidget(self.lung_group_box)
+
+        self.heart_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
+        self.heart_group_box.setObjectName("heart_group_box")
+        self.heart_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_7 = QGridLayout(self.heart_group_box)
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.heart_rhythm_field = QLineEdit(self.heart_group_box)
+        self.heart_rhythm_field.setObjectName("heart_rhythm_field")
+        self.heart_rhythm_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.heart_rhythm_field.setReadOnly(True)
+
+        self.gridLayout_7.addWidget(self.heart_rhythm_field, 1, 1, 1, 1)
+
+        self.heart_sound_field = QLineEdit(self.heart_group_box)
+        self.heart_sound_field.setObjectName("heart_sound_field")
+        self.heart_sound_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.heart_sound_field.setReadOnly(True)
+
+        self.gridLayout_7.addWidget(self.heart_sound_field, 0, 1, 1, 1)
+
+        self.heart_rhythm_label = QLabel(self.heart_group_box)
+        self.heart_rhythm_label.setObjectName("heart_rhythm_label")
+        self.heart_rhythm_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_7.addWidget(self.heart_rhythm_label, 1, 0, 1, 1)
+
+        self.heart_sound_label = QLabel(self.heart_group_box)
+        self.heart_sound_label.setObjectName("heart_sound_label")
+        self.heart_sound_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_7.addWidget(self.heart_sound_label, 0, 0, 1, 1)
+
+        self.horizontalLayout_23.addWidget(self.heart_group_box)
+
+        self.verticalLayout_7.addWidget(self.examine_eye_lung_heart_group_box)
+
+        self.trauma_types_group_box = QGroupBox(self.widget)
+        self.trauma_types_group_box.setObjectName("trauma_types_group_box")
+        self.trauma_types_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_8 = QGridLayout(self.trauma_types_group_box)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.has_puncture_wound_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_puncture_wound_checkBox.setObjectName(
+            "has_puncture_wound_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_puncture_wound_checkBox,
+            4,
+            16,
+            1,
+            1,
+        )
+
+        self.has_motor_deficit_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_motor_deficit_checkBox.setObjectName(
+            "has_motor_deficit_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_motor_deficit_checkBox,
+            4,
+            19,
+            1,
+            1,
+        )
+
+        self.has_swelling_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_swelling_checkBox.setObjectName("has_swelling_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_swelling_checkBox, 0, 15, 1, 1)
+
+        self.has_tenderness_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_tenderness_checkBox.setObjectName("has_tenderness_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_tenderness_checkBox, 0, 14, 1, 1)
+
+        self.has_abrasion_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_abrasion_checkBox.setObjectName("has_abrasion_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_abrasion_checkBox, 4, 13, 1, 1)
+
+        self.has_amputation_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_amputation_checkBox.setObjectName("has_amputation_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_amputation_checkBox, 0, 18, 1, 1)
+
+        self.has_laceration_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_laceration_checkBox.setObjectName("has_laceration_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_laceration_checkBox, 0, 17, 1, 1)
+
+        self.has_crush_injury_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_crush_injury_checkBox.setObjectName(
+            "has_crush_injury_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_crush_injury_checkBox,
+            4,
+            14,
+            1,
+            1,
+        )
+
+        self.has_sensory_deficit_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_sensory_deficit_checkBox.setObjectName(
+            "has_sensory_deficit_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_sensory_deficit_checkBox,
+            0,
+            19,
+            1,
+            1,
+        )
+
+        self.has_contusion_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_contusion_checkBox.setObjectName("has_contusion_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_contusion_checkBox, 0, 16, 1, 1)
+
+        self.has_deformity_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_deformity_checkBox.setObjectName("has_deformity_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_deformity_checkBox, 0, 13, 1, 1)
+
+        self.has_external_bleeding_checkBox = QCheckBox(
+            self.trauma_types_group_box,
+        )
+        self.has_external_bleeding_checkBox.setObjectName(
+            "has_external_bleeding_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(
+            self.has_external_bleeding_checkBox,
+            4,
+            18,
+            1,
+            1,
+        )
+
+        self.has_dislocation_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_dislocation_checkBox.setObjectName(
+            "has_dislocation_checkBox",
+        )
+
+        self.gridLayout_8.addWidget(self.has_dislocation_checkBox, 4, 15, 1, 1)
+
+        self.has_tear_checkBox = QCheckBox(self.trauma_types_group_box)
+        self.has_tear_checkBox.setObjectName("has_tear_checkBox")
+
+        self.gridLayout_8.addWidget(self.has_tear_checkBox, 4, 17, 1, 1)
+
+        self.verticalLayout_7.addWidget(self.trauma_types_group_box)
+
+        self.trauma_other_info_section = QWidget(self.widget)
+        self.trauma_other_info_section.setObjectName(
+            "trauma_other_info_section",
+        )
+        self.horizontalLayout_25 = QHBoxLayout(self.trauma_other_info_section)
+        self.horizontalLayout_25.setObjectName("horizontalLayout_25")
+        self.horizontalLayout_25.setContentsMargins(0, 0, 0, 0)
+        self.trauma_mechanism_group_box = QGroupBox(
+            self.trauma_other_info_section,
+        )
+        self.trauma_mechanism_group_box.setObjectName(
+            "trauma_mechanism_group_box",
+        )
+        self.trauma_mechanism_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_9 = QVBoxLayout(self.trauma_mechanism_group_box)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.penetrating_trauma_checkBox = QCheckBox(
+            self.trauma_mechanism_group_box,
+        )
+        self.penetrating_trauma_checkBox.setObjectName(
+            "penetrating_trauma_checkBox",
+        )
+
+        self.verticalLayout_9.addWidget(self.penetrating_trauma_checkBox)
+
+        self.blunt_trauma_checkBox = QCheckBox(self.trauma_mechanism_group_box)
+        self.blunt_trauma_checkBox.setObjectName("blunt_trauma_checkBox")
+
+        self.verticalLayout_9.addWidget(self.blunt_trauma_checkBox)
+
+        self.horizontalLayout_25.addWidget(self.trauma_mechanism_group_box)
+
+        self.burn_trauma_group_box = QGroupBox(self.trauma_other_info_section)
+        self.burn_trauma_group_box.setObjectName("burn_trauma_group_box")
+        self.burn_trauma_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.gridLayout_9 = QGridLayout(self.burn_trauma_group_box)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.burn_percentage_label = QLabel(self.burn_trauma_group_box)
+        self.burn_percentage_label.setObjectName("burn_percentage_label")
+        self.burn_percentage_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_9.addWidget(self.burn_percentage_label, 1, 1, 1, 1)
+
+        self.burn_type_label = QLabel(self.burn_trauma_group_box)
+        self.burn_type_label.setObjectName("burn_type_label")
+        self.burn_type_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_9.addWidget(self.burn_type_label, 0, 1, 1, 1)
+
+        self.burn_type_field = QLineEdit(self.burn_trauma_group_box)
+        self.burn_type_field.setObjectName("burn_type_field")
+        self.burn_type_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.burn_type_field.setReadOnly(True)
+
+        self.gridLayout_9.addWidget(self.burn_type_field, 0, 2, 1, 1)
+
+        self.burn_percentage_field = QLineEdit(self.burn_trauma_group_box)
+        self.burn_percentage_field.setObjectName("burn_percentage_field")
+        self.burn_percentage_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.burn_percentage_field.setReadOnly(True)
+
+        self.gridLayout_9.addWidget(self.burn_percentage_field, 1, 2, 1, 1)
+
+        self.horizontalLayout_25.addWidget(self.burn_trauma_group_box)
+
+        self.trauma_other_info_section_2 = QWidget(
+            self.trauma_other_info_section,
+        )
+        self.trauma_other_info_section_2.setObjectName(
+            "trauma_other_info_section_2",
+        )
+        self.gridLayout_10 = QGridLayout(self.trauma_other_info_section_2)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.patient_extraction_field = QLineEdit(
+            self.trauma_other_info_section_2,
+        )
+        self.patient_extraction_field.setObjectName(
+            "patient_extraction_field",
+        )
+        self.patient_extraction_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.patient_extraction_field.setReadOnly(True)
+
+        self.gridLayout_10.addWidget(self.patient_extraction_field, 0, 1, 1, 1)
+
+        self.type_of_fracture_field = QLineEdit(
+            self.trauma_other_info_section_2,
+        )
+        self.type_of_fracture_field.setObjectName("type_of_fracture_field")
+        self.type_of_fracture_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.type_of_fracture_field.setReadOnly(True)
+
+        self.gridLayout_10.addWidget(self.type_of_fracture_field, 1, 1, 1, 1)
+
+        self.distal_pulse_label = QLabel(self.trauma_other_info_section_2)
+        self.distal_pulse_label.setObjectName("distal_pulse_label")
+        self.distal_pulse_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_10.addWidget(self.distal_pulse_label, 0, 2, 1, 1)
+
+        self.patient_extraction_label = QLabel(
+            self.trauma_other_info_section_2,
+        )
+        self.patient_extraction_label.setObjectName(
+            "patient_extraction_label",
+        )
+        self.patient_extraction_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_10.addWidget(self.patient_extraction_label, 0, 0, 1, 1)
+
+        self.type_of_fracture_label = QLabel(self.trauma_other_info_section_2)
+        self.type_of_fracture_label.setObjectName("type_of_fracture_label")
+        self.type_of_fracture_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.gridLayout_10.addWidget(self.type_of_fracture_label, 1, 0, 1, 1)
+
+        self.distal_pulse_field = QLineEdit(self.trauma_other_info_section_2)
+        self.distal_pulse_field.setObjectName("distal_pulse_field")
+        self.distal_pulse_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.distal_pulse_field.setReadOnly(True)
+
+        self.gridLayout_10.addWidget(self.distal_pulse_field, 0, 3, 1, 1)
+
+        self.horizontalLayout_25.addWidget(self.trauma_other_info_section_2)
+
+        self.verticalLayout_7.addWidget(self.trauma_other_info_section)
+
+        self.trauma_other_info_section_3 = QWidget(self.widget)
+        self.trauma_other_info_section_3.setObjectName(
+            "trauma_other_info_section_3",
+        )
+        self.horizontalLayout_26 = QHBoxLayout(
+            self.trauma_other_info_section_3,
+        )
+        self.horizontalLayout_26.setObjectName("horizontalLayout_26")
+        self.horizontalLayout_26.setContentsMargins(0, 0, 0, 0)
+        self.front_trauma_locations_label = QLabel(
+            self.trauma_other_info_section_3,
+        )
+        self.front_trauma_locations_label.setObjectName(
+            "front_trauma_locations_label",
+        )
+        self.front_trauma_locations_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_26.addWidget(self.front_trauma_locations_label)
+
+        self.front_trauma_locations_field = QLineEdit(
+            self.trauma_other_info_section_3,
+        )
+        self.front_trauma_locations_field.setObjectName(
+            "front_trauma_locations_field",
+        )
+        self.front_trauma_locations_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.front_trauma_locations_field.setReadOnly(True)
+
+        self.horizontalLayout_26.addWidget(self.front_trauma_locations_field)
+
+        self.rear_trauma_locations_label = QLabel(
+            self.trauma_other_info_section_3,
+        )
+        self.rear_trauma_locations_label.setObjectName(
+            "rear_trauma_locations_label",
+        )
+        self.rear_trauma_locations_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_26.addWidget(self.rear_trauma_locations_label)
+
+        self.rear_trauma_locations_field = QLineEdit(
+            self.trauma_other_info_section_3,
+        )
+        self.rear_trauma_locations_field.setObjectName(
+            "rear_trauma_locations_field",
+        )
+        self.rear_trauma_locations_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.rear_trauma_locations_field.setReadOnly(True)
+
+        self.horizontalLayout_26.addWidget(self.rear_trauma_locations_field)
+
+        self.verticalLayout_7.addWidget(self.trauma_other_info_section_3)
+
+        self.verticalLayout_8.addWidget(self.widget)
+
+        self.mission_data_tab_widget.addTab(self.history_and_trauma_tab, "")
+        self.medical_actions_tab = QWidget()
+        self.medical_actions_tab.setObjectName("medical_actions_tab")
+        self.verticalLayout_10 = QVBoxLayout(self.medical_actions_tab)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.medical_action_main_frame = QWidget(self.medical_actions_tab)
+        self.medical_action_main_frame.setObjectName(
+            "medical_action_main_frame",
+        )
+        self.horizontalLayout_27 = QHBoxLayout(self.medical_action_main_frame)
+        self.horizontalLayout_27.setObjectName("horizontalLayout_27")
+        self.medical_actions_group_box = QGroupBox(
+            self.medical_action_main_frame,
+        )
+        self.medical_actions_group_box.setObjectName(
+            "medical_actions_group_box",
+        )
+        self.medical_actions_group_box.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_14 = QVBoxLayout(self.medical_actions_group_box)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.before_after_indicator_section = QWidget(
+            self.medical_actions_group_box,
+        )
+        self.before_after_indicator_section.setObjectName(
+            "before_after_indicator_section",
+        )
+        self.before_after_indicator_section.setMaximumSize(QSize(16777215, 30))
+        self.horizontalLayout_28 = QHBoxLayout(
+            self.before_after_indicator_section,
+        )
+        self.horizontalLayout_28.setSpacing(20)
+        self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.horizontalLayout_28.setContentsMargins(5, 5, 5, 5)
+        self.before_medical_action_label = QLabel(
+            self.before_after_indicator_section,
+        )
+        self.before_medical_action_label.setObjectName(
+            "before_medical_action_label",
+        )
+        self.before_medical_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.before_medical_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.horizontalLayout_28.addWidget(self.before_medical_action_label)
+
+        self.horizontalSpacer = QSpacerItem(
+            35,
+            5,
+            QSizePolicy.Policy.Preferred,
+            QSizePolicy.Policy.Minimum,
+        )
+
+        self.horizontalLayout_28.addItem(self.horizontalSpacer)
+
+        self.after_medical_action_label = QLabel(
+            self.before_after_indicator_section,
+        )
+        self.after_medical_action_label.setObjectName(
+            "after_medical_action_label",
+        )
+        self.after_medical_action_label.setLayoutDirection(
+            Qt.LayoutDirection.RightToLeft,
+        )
+        self.after_medical_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.after_medical_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.horizontalLayout_28.addWidget(self.after_medical_action_label)
+
+        self.verticalLayout_14.addWidget(self.before_after_indicator_section)
+
+        self.medical_actions_grid = QWidget(self.medical_actions_group_box)
+        self.medical_actions_grid.setObjectName("medical_actions_grid")
+        self.gridLayout_11 = QGridLayout(self.medical_actions_grid)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.airway_tube_action_label = QLabel(self.medical_actions_grid)
+        self.airway_tube_action_label.setObjectName(
+            "airway_tube_action_label",
+        )
+        self.airway_tube_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.airway_tube_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(self.airway_tube_action_label, 3, 1, 1, 1)
+
+        self.consultation_action_label = QLabel(self.medical_actions_grid)
+        self.consultation_action_label.setObjectName(
+            "consultation_action_label",
+        )
+        self.consultation_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.consultation_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(
+            self.consultation_action_label,
+            7,
+            1,
+            1,
+            1,
+        )
+
+        self.limb_fix_action_label = QLabel(self.medical_actions_grid)
+        self.limb_fix_action_label.setObjectName("limb_fix_action_label")
+        self.limb_fix_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.limb_fix_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.limb_fix_action_label, 14, 1, 1, 1)
+
+        self.cardiac_massage_action_label = QLabel(self.medical_actions_grid)
+        self.cardiac_massage_action_label.setObjectName(
+            "cardiac_massage_action_label",
+        )
+        self.cardiac_massage_action_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+        self.cardiac_massage_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cardiac_massage_action_label,
+            4,
+            1,
+            1,
+            1,
+        )
+
+        self.spinal_fix_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.spinal_fix_action_before_checkBox.setObjectName(
+            "spinal_fix_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.spinal_fix_action_before_checkBox,
+            15,
+            0,
+            1,
+            1,
+        )
+
+        self.spinal_fix_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.spinal_fix_action_after_checkBox.setObjectName(
+            "spinal_fix_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.spinal_fix_action_after_checkBox,
+            15,
+            2,
+            1,
+            1,
+        )
+
+        self.spinal_fix_action_label = QLabel(self.medical_actions_grid)
+        self.spinal_fix_action_label.setObjectName("spinal_fix_action_label")
+        self.spinal_fix_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.spinal_fix_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.spinal_fix_action_label, 15, 1, 1, 1)
+
+        self.vital_sign_action_label = QLabel(self.medical_actions_grid)
+        self.vital_sign_action_label.setObjectName("vital_sign_action_label")
+        self.vital_sign_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.vital_sign_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.vital_sign_action_label, 6, 1, 1, 1)
+
+        self.dressing_action_label = QLabel(self.medical_actions_grid)
+        self.dressing_action_label.setObjectName("dressing_action_label")
+        self.dressing_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.dressing_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.dressing_action_label, 2, 1, 1, 1)
+
+        self.biography_action_label = QLabel(self.medical_actions_grid)
+        self.biography_action_label.setObjectName("biography_action_label")
+        self.biography_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.biography_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.biography_action_label, 8, 1, 1, 1)
+
+        self.oxygen_action_label = QLabel(self.medical_actions_grid)
+        self.oxygen_action_label.setObjectName("oxygen_action_label")
+        self.oxygen_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.oxygen_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.oxygen_action_label, 11, 1, 1, 1)
+
+        self.head_fix_action_label = QLabel(self.medical_actions_grid)
+        self.head_fix_action_label.setObjectName("head_fix_action_label")
+        self.head_fix_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.head_fix_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.head_fix_action_label, 13, 1, 1, 1)
+
+        self.assisted_ventilation_action_label = QLabel(
+            self.medical_actions_grid,
+        )
+        self.assisted_ventilation_action_label.setObjectName(
+            "assisted_ventilation_action_label",
+        )
+        self.assisted_ventilation_action_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+        self.assisted_ventilation_action_label.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+
+        self.gridLayout_11.addWidget(
+            self.assisted_ventilation_action_label,
+            5,
+            1,
+            1,
+            1,
+        )
+
+        self.cpr_action_label = QLabel(self.medical_actions_grid)
+        self.cpr_action_label.setObjectName("cpr_action_label")
+        self.cpr_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.cpr_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.cpr_action_label, 1, 1, 1, 1)
+
+        self.monitoring_action_label = QLabel(self.medical_actions_grid)
+        self.monitoring_action_label.setObjectName("monitoring_action_label")
+        self.monitoring_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.monitoring_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.monitoring_action_label, 9, 1, 1, 1)
+
+        self.cbr_action_label = QLabel(self.medical_actions_grid)
+        self.cbr_action_label.setObjectName("cbr_action_label")
+        self.cbr_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.cbr_action_label, 12, 1, 1, 1)
+
+        self.iv_action_label = QLabel(self.medical_actions_grid)
+        self.iv_action_label.setObjectName("iv_action_label")
+        self.iv_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.iv_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.iv_action_label, 10, 1, 1, 1)
+
+        self.suction_action_label = QLabel(self.medical_actions_grid)
+        self.suction_action_label.setObjectName("suction_action_label")
+        self.suction_action_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.suction_action_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_11.addWidget(self.suction_action_label, 0, 1, 1, 1)
+
+        self.limb_fix_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.limb_fix_action_after_checkBox.setObjectName(
+            "limb_fix_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.limb_fix_action_after_checkBox,
+            14,
+            2,
+            1,
+            1,
+        )
+
+        self.head_fix_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.head_fix_action_after_checkBox.setObjectName(
+            "head_fix_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.head_fix_action_after_checkBox,
+            13,
+            2,
+            1,
+            1,
+        )
+
+        self.cbr_action_after_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cbr_action_after_checkBox.setObjectName(
+            "cbr_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cbr_action_after_checkBox,
+            12,
+            2,
+            1,
+            1,
+        )
+
+        self.oxygen_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.oxygen_action_after_checkBox.setObjectName(
+            "oxygen_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.oxygen_action_after_checkBox,
+            11,
+            2,
+            1,
+            1,
+        )
+
+        self.iv_action_after_checkBox = QCheckBox(self.medical_actions_grid)
+        self.iv_action_after_checkBox.setObjectName(
+            "iv_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.iv_action_after_checkBox,
+            10,
+            2,
+            1,
+            1,
+        )
+
+        self.monitoring_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.monitoring_action_after_checkBox.setObjectName(
+            "monitoring_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.monitoring_action_after_checkBox,
+            9,
+            2,
+            1,
+            1,
+        )
+
+        self.biography_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.biography_action_after_checkBox.setObjectName(
+            "biography_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.biography_action_after_checkBox,
+            8,
+            2,
+            1,
+            1,
+        )
+
+        self.consultation_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.consultation_action_after_checkBox.setObjectName(
+            "consultation_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.consultation_action_after_checkBox,
+            7,
+            2,
+            1,
+            1,
+        )
+
+        self.vital_sign_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.vital_sign_action_after_checkBox.setObjectName(
+            "vital_sign_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.vital_sign_action_after_checkBox,
+            6,
+            2,
+            1,
+            1,
+        )
+
+        self.assisted_ventilation_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.assisted_ventilation_action_after_checkBox.setObjectName(
+            "assisted_ventilation_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.assisted_ventilation_action_after_checkBox,
+            5,
+            2,
+            1,
+            1,
+        )
+
+        self.cardiac_massage_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.cardiac_massage_action_after_checkBox.setObjectName(
+            "cardiac_massage_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cardiac_massage_action_after_checkBox,
+            4,
+            2,
+            1,
+            1,
+        )
+
+        self.airway_tube_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.airway_tube_action_after_checkBox.setObjectName(
+            "airway_tube_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.airway_tube_action_after_checkBox,
+            3,
+            2,
+            1,
+            1,
+        )
+
+        self.dressing_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.dressing_action_after_checkBox.setObjectName(
+            "dressing_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.dressing_action_after_checkBox,
+            2,
+            2,
+            1,
+            1,
+        )
+
+        self.cpr_action_after_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cpr_action_after_checkBox.setObjectName(
+            "cpr_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cpr_action_after_checkBox,
+            1,
+            2,
+            1,
+            1,
+        )
+
+        self.suction_action_after_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.suction_action_after_checkBox.setObjectName(
+            "suction_action_after_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.suction_action_after_checkBox,
+            0,
+            2,
+            1,
+            1,
+        )
+
+        self.limb_fix_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.limb_fix_action_before_checkBox.setObjectName(
+            "limb_fix_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.limb_fix_action_before_checkBox,
+            14,
+            0,
+            1,
+            1,
+        )
+
+        self.head_fix_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.head_fix_action_before_checkBox.setObjectName(
+            "head_fix_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.head_fix_action_before_checkBox,
+            13,
+            0,
+            1,
+            1,
+        )
+
+        self.cbr_action_before_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cbr_action_before_checkBox.setObjectName(
+            "cbr_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cbr_action_before_checkBox,
+            12,
+            0,
+            1,
+            1,
+        )
+
+        self.oxygen_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.oxygen_action_before_checkBox.setObjectName(
+            "oxygen_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.oxygen_action_before_checkBox,
+            11,
+            0,
+            1,
+            1,
+        )
+
+        self.iv_action_before_checkBox = QCheckBox(self.medical_actions_grid)
+        self.iv_action_before_checkBox.setObjectName(
+            "iv_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.iv_action_before_checkBox,
+            10,
+            0,
+            1,
+            1,
+        )
+
+        self.monitoring_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.monitoring_action_before_checkBox.setObjectName(
+            "monitoring_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.monitoring_action_before_checkBox,
+            9,
+            0,
+            1,
+            1,
+        )
+
+        self.biography_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.biography_action_before_checkBox.setObjectName(
+            "biography_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.biography_action_before_checkBox,
+            8,
+            0,
+            1,
+            1,
+        )
+
+        self.consultation_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.consultation_action_before_checkBox.setObjectName(
+            "consultation_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.consultation_action_before_checkBox,
+            7,
+            0,
+            1,
+            1,
+        )
+
+        self.vital_sign_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.vital_sign_action_before_checkBox.setObjectName(
+            "vital_sign_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.vital_sign_action_before_checkBox,
+            6,
+            0,
+            1,
+            1,
+        )
+
+        self.assisted_ventilation_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.assisted_ventilation_action_before_checkBox.setObjectName(
+            "assisted_ventilation_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.assisted_ventilation_action_before_checkBox,
+            5,
+            0,
+            1,
+            1,
+        )
+
+        self.cardiac_massage_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.cardiac_massage_action_before_checkBox.setObjectName(
+            "cardiac_massage_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cardiac_massage_action_before_checkBox,
+            4,
+            0,
+            1,
+            1,
+        )
+
+        self.airway_tube_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.airway_tube_action_before_checkBox.setObjectName(
+            "airway_tube_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.airway_tube_action_before_checkBox,
+            3,
+            0,
+            1,
+            1,
+        )
+
+        self.dressing_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.dressing_action_before_checkBox.setObjectName(
+            "dressing_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.dressing_action_before_checkBox,
+            2,
+            0,
+            1,
+            1,
+        )
+
+        self.cpr_action_before_checkBox = QCheckBox(self.medical_actions_grid)
+        self.cpr_action_before_checkBox.setObjectName(
+            "cpr_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.cpr_action_before_checkBox,
+            1,
+            0,
+            1,
+            1,
+        )
+
+        self.suction_action_before_checkBox = QCheckBox(
+            self.medical_actions_grid,
+        )
+        self.suction_action_before_checkBox.setObjectName(
+            "suction_action_before_checkBox",
+        )
+
+        self.gridLayout_11.addWidget(
+            self.suction_action_before_checkBox,
+            0,
+            0,
+            1,
+            1,
+        )
+
+        self.verticalLayout_14.addWidget(self.medical_actions_grid)
+
+        self.horizontalLayout_27.addWidget(self.medical_actions_group_box)
+
+        self.consumables_and_drugs_section = QWidget(
+            self.medical_action_main_frame,
+        )
+        self.consumables_and_drugs_section.setObjectName(
+            "consumables_and_drugs_section",
+        )
+        self.verticalLayout_11 = QVBoxLayout(
+            self.consumables_and_drugs_section,
+        )
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.drugs_groupBox = QGroupBox(self.consumables_and_drugs_section)
+        self.drugs_groupBox.setObjectName("drugs_groupBox")
+        self.drugs_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_12 = QVBoxLayout(self.drugs_groupBox)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.drugs_list_table_widget = QTableWidget(self.drugs_groupBox)
+        if self.drugs_list_table_widget.rowCount() < 4:
+            self.drugs_list_table_widget.setRowCount(4)
+        self.drugs_list_table_widget.setObjectName("drugs_list_table_widget")
+        self.drugs_list_table_widget.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.drugs_list_table_widget.setLayoutDirection(
+            Qt.LayoutDirection.LeftToRight,
+        )
+        self.drugs_list_table_widget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.drugs_list_table_widget.setTabKeyNavigation(False)
+        self.drugs_list_table_widget.setProperty("showDropIndicator", False)
+        self.drugs_list_table_widget.setAlternatingRowColors(True)
+        self.drugs_list_table_widget.setSelectionMode(
+            QAbstractItemView.SelectionMode.NoSelection,
+        )
+        self.drugs_list_table_widget.setCornerButtonEnabled(False)
+        self.drugs_list_table_widget.setRowCount(4)
+        self.drugs_list_table_widget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+
+        self.verticalLayout_12.addWidget(self.drugs_list_table_widget)
+
+        self.verticalLayout_11.addWidget(self.drugs_groupBox)
+
+        self.consumables_groupBox = QGroupBox(
+            self.consumables_and_drugs_section,
+        )
+        self.consumables_groupBox.setObjectName("consumables_groupBox")
+        self.consumables_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.verticalLayout_13 = QVBoxLayout(self.consumables_groupBox)
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.consumable_list_table_view = QTableView(self.consumables_groupBox)
+        self.consumable_list_table_view.setObjectName(
+            "consumable_list_table_view",
+        )
+        self.consumable_list_table_view.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.consumable_list_table_view.setTabKeyNavigation(False)
+        self.consumable_list_table_view.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.consumable_list_table_view.setDragDropOverwriteMode(False)
+        self.consumable_list_table_view.setAlternatingRowColors(True)
+        self.consumable_list_table_view.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
+        )
+        self.consumable_list_table_view.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.consumable_list_table_view.setSortingEnabled(True)
+
+        self.verticalLayout_13.addWidget(self.consumable_list_table_view)
+
+        self.verticalLayout_11.addWidget(self.consumables_groupBox)
+
+        self.horizontalLayout_27.addWidget(self.consumables_and_drugs_section)
+
+        self.verticalLayout_10.addWidget(self.medical_action_main_frame)
+
+        self.mission_data_tab_widget.addTab(self.medical_actions_tab, "")
 
         self.verticalLayout_2.addWidget(self.mission_data_tab_widget)
 
         self.retranslateUi(mission_details_tab)
 
         self.search_button.setDefault(True)
-        self.mission_data_tab_widget.setCurrentIndex(1)
+        self.mission_data_tab_widget.setCurrentIndex(2)
 
         QMetaObject.connectSlotsByName(mission_details_tab)
 
@@ -977,13 +3326,6 @@ class Ui_mission_details_tab:
             ),
         )
         self.caller_number_label.setText(
-            QCoreApplication.translate(
-                "mission_details_tab",
-                "\u0634\u0645\u0627\u0631\u0647 \u062a\u0645\u0627\u0633:",
-                None,
-            ),
-        )
-        self.backup_number_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0634\u0645\u0627\u0631\u0647 \u062a\u0645\u0627\u0633:",
@@ -1067,6 +3409,27 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.mission_result_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u062a\u06cc\u062c\u0647:",
+                None,
+            ),
+        )
+        self.hospital_name_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc:",
+                None,
+            ),
+        )
+        self.refusal_form_code_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u062f \u0628\u0631\u0627\u0626\u062a:",
+                None,
+            ),
+        )
         self.mission_data_tab_widget.setTabText(
             self.mission_data_tab_widget.indexOf(
                 self.information_tab,
@@ -1091,24 +3454,31 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.staff_codes_groupBox.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u062f \u062a\u06a9\u0646\u0633\u06cc\u0646",
+                None,
+            ),
+        )
         self.senior_staff_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u06a9\u062f \u0627\u0631\u0634\u062f:",
+                "\u0627\u0631\u0634\u062f:",
                 None,
             ),
         )
         self.first_staff_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u06a9\u062f \u0627\u0648\u0644:",
+                "\u0627\u0648\u0644:",
                 None,
             ),
         )
         self.second_staff_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u06a9\u062f \u062f\u0648\u0645:",
+                "\u062f\u0648\u0645:",
                 None,
             ),
         )
@@ -1119,52 +3489,66 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.depart_from_station_groupBox.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062d\u0631\u06a9\u062a \u0627\u0632 \u067e\u0627\u06cc\u06af\u0627\u0647",
+                None,
+            ),
+        )
         self.depart_from_station_odo_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631 \u062d\u0631\u06a9\u062a \u0627\u0632 \u067e\u0627\u06cc\u06af\u0627\u0647:",
+                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631:",
                 None,
             ),
         )
         self.depart_from_station_time_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0632\u0645\u0627\u0646 \u062d\u0631\u06a9\u062a \u0627\u0632 \u067e\u0627\u06cc\u06af\u0627\u0647:",
+                "\u0633\u0627\u0639\u062a:",
                 None,
             ),
         )
         self.time_to_depart_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646 \u062a\u0627 \u062d\u0631\u06a9\u062a:",
+                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646:",
                 None,
             ),
         )
-        self.arrive_at_emergency_time_label.setText(
+        self.arrive_at_emergency_groupBox.setTitle(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0632\u0645\u0627\u0646 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
-                None,
-            ),
-        )
-        self.time_to_arrive_label.setText(
-            QCoreApplication.translate(
-                "mission_details_tab",
-                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646 \u062a\u0627 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
+                "\u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a",
                 None,
             ),
         )
         self.arrive_at_emergency_odo_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
+                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631:",
+                None,
+            ),
+        )
+        self.arrive_at_emergency_time_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u0639\u062a:",
+                None,
+            ),
+        )
+        self.time_to_arrive_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646:",
                 None,
             ),
         )
         self.depart_from_emergency_time_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0632\u0645\u0627\u0646 \u062d\u0631\u06a9\u062a \u0627\u0632 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
+                "\u0633\u0627\u0639\u062a \u062d\u0631\u06a9\u062a \u0627\u0632 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
                 None,
             ),
         )
@@ -1175,31 +3559,38 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
-        self.arrive_at_hospital_time_label.setText(
+        self.arrive_at_hospital_groupBox.setTitle(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0632\u0645\u0627\u0646 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc:",
-                None,
-            ),
-        )
-        self.time_to_hospital_label.setText(
-            QCoreApplication.translate(
-                "mission_details_tab",
-                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646 \u062a\u0627 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc:",
+                "\u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc",
                 None,
             ),
         )
         self.arrive_at_hospital_odo_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u0645\u0631\u06a9\u0632\u062f\u0631\u0645\u0627\u0646\u06cc:",
+                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631:",
+                None,
+            ),
+        )
+        self.arrive_at_hospital_time_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u0639\u062a:",
+                None,
+            ),
+        )
+        self.time_to_hospital_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646:",
                 None,
             ),
         )
         self.deliver_to_hospital_time_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0632\u0645\u0627\u0646 \u062a\u062d\u0648\u06cc\u0644 \u0628\u0647 \u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc:",
+                "\u0633\u0627\u0639\u062a \u062a\u062d\u0648\u06cc\u0644 \u0628\u0647 \u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc:",
                 None,
             ),
         )
@@ -1210,31 +3601,38 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
-        self.mission_complete_time_label.setText(
+        self.mission_complete_groupBox.setTitle(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0632\u0645\u0627\u0646 \u067e\u0627\u06cc\u0627\u0646 \u0645\u0627\u0645\u0648\u0631\u06cc\u062a:",
-                None,
-            ),
-        )
-        self.time_to_complete_label.setText(
-            QCoreApplication.translate(
-                "mission_details_tab",
-                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646 \u067e\u0627\u06cc\u0627\u0646 \u0645\u0627\u0645\u0648\u0631\u06cc\u062a:",
+                "\u067e\u0627\u06cc\u0627\u0646 \u0645\u0627\u0645\u0648\u0631\u06cc\u062a",
                 None,
             ),
         )
         self.mission_complete_odo_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631 \u067e\u0627\u06cc\u0627\u0646 \u0645\u0627\u0645\u0648\u0631\u06cc\u062a:",
+                "\u06a9\u06cc\u0644\u0648\u0645\u062a\u0631:",
+                None,
+            ),
+        )
+        self.mission_complete_time_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u0639\u062a:",
+                None,
+            ),
+        )
+        self.time_to_complete_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u062f\u062a \u0632\u0645\u0627\u0646:",
                 None,
             ),
         )
         self.arrive_at_station_time_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
-                "\u0632\u0645\u0627\u0646 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u067e\u0627\u06cc\u06af\u0627\u0647:",
+                "\u0633\u0627\u0639\u062a \u0631\u0633\u06cc\u062f\u0646 \u0628\u0647 \u067e\u0627\u06cc\u06af\u0627\u0647:",
                 None,
             ),
         )
@@ -1264,6 +3662,902 @@ class Ui_mission_details_tab:
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0645\u0633\u0627\u0641\u062a \u0648 \u0632\u0645\u0627\u0646",
+                None,
+            ),
+        )
+        self.address_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0622\u062f\u0631\u0633 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
+                None,
+            ),
+        )
+        self.chief_complaint_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0634\u06a9\u0627\u06cc\u062a \u0627\u0635\u0644\u06cc:",
+                None,
+            ),
+        )
+        self.type_of_location_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u0645\u062d\u0644 \u0641\u0648\u0631\u06cc\u062a:",
+                None,
+            ),
+        )
+        self.type_of_location_other_info_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0627\u0637\u0644\u0627\u0639\u0627\u062a:",
+                None,
+            ),
+        )
+        self.accident_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u062d\u0627\u062f\u062b\u0647:",
+                None,
+            ),
+        )
+        self.illness_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u0628\u06cc\u0645\u0627\u0631\u06cc:",
+                None,
+            ),
+        )
+        self.emergency_other_info_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0627\u0637\u0644\u0627\u0639\u0627\u062a:",
+                None,
+            ),
+        )
+        self.is_vehicle_accident_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0635\u0627\u062f\u0641",
+                None,
+            ),
+        )
+        self.role_in_accident_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0642\u0634 \u062d\u0627\u062f\u062b\u0647 \u062f\u06cc\u062f\u0647:",
+                None,
+            ),
+        )
+        self.role_in_accident_other_info_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0627\u0637\u0644\u0627\u0639\u0627\u062a:",
+                None,
+            ),
+        )
+        self.vehicle_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u062e\u0648\u062f\u0631\u0648:",
+                None,
+            ),
+        )
+        self.medical_center_groupBox.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0631\u06a9\u0632 \u062f\u0631\u0645\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.receiving_physician_code_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u062f  \u067e\u0632\u0634\u06a9 \u062a\u062d\u0648\u06cc\u0644 \u06af\u06cc\u0631\u0646\u062f\u0647:",
+                None,
+            ),
+        )
+        self.physician_code_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u062f \u067e\u0632\u0634\u06a9:",
+                None,
+            ),
+        )
+        self.physician_code_1050_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u062f \u067e\u0632\u0634\u06a9 1050:",
+                None,
+            ),
+        )
+        self.handover_time_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u0639\u062a \u062a\u062d\u0648\u06cc\u0644:",
+                None,
+            ),
+        )
+        self.receiving_physician_name_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0627\u0645 \u067e\u0632\u0634\u06a9 \u062a\u062d\u0648\u06cc\u0644 \u06af\u06cc\u0631\u0646\u062f\u0647:",
+                None,
+            ),
+        )
+        self.physician_order_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0633\u062a\u0648\u0631 \u067e\u0632\u0634\u06a9:",
+                None,
+            ),
+        )
+        self.physician_order_secondary_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0633\u062a\u0648\u0631 \u067e\u0632\u0634\u06a9:",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.location_and_emergency_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u062d\u0644 \u0648 \u0646\u0648\u0639 \u0641\u0648\u0631\u06cc\u062a",
+                None,
+            ),
+        )
+        self.vital_signs_group_Box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0644\u0627\u0626\u0645 \u062d\u06cc\u0627\u062a\u06cc",
+                None,
+            ),
+        )
+        self.symptoms_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0644\u0627\u0626\u0645 \u0647\u0645\u0631\u0627\u0647",
+                None,
+            ),
+        )
+        self.has_sensory_motor_disturbance_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062e\u062a\u0644\u0627\u0644 \u062d\u0633\u06cc \u062d\u0631\u06a9\u062a\u06cc",
+                None,
+            ),
+        )
+        self.has_memory_loss_post_trauma_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0641\u0631\u0627\u0645\u0648\u0634\u06cc \u067e\u0633 \u0627\u0632 \u0636\u0631\u0628\u0647",
+                None,
+            ),
+        )
+        self.has_abdominal_pain_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631\u062f \u0634\u06a9\u0645\u06cc",
+                None,
+            ),
+        )
+        self.has_shortness_of_breath_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0646\u06af\u06cc \u0646\u0641\u0633",
+                None,
+            ),
+        )
+        self.has_altered_consciousness_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062e\u062a\u0644\u0627\u0644 \u0647\u0648\u0634\u06cc\u0627\u0631\u06cc",
+                None,
+            ),
+        )
+        self.has_vomiting_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0633\u062a\u0641\u0631\u0627\u063a",
+                None,
+            ),
+        )
+        self.has_bleeding_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0648\u0646\u0631\u06cc\u0632\u06cc",
+                None,
+            ),
+        )
+        self.has_diarrhea_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0633\u0647\u0627\u0644",
+                None,
+            ),
+        )
+        self.has_double_vision_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0648\u0628\u06cc\u0646\u06cc",
+                None,
+            ),
+        )
+        self.has_headache_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0631\u062f\u0631\u062f",
+                None,
+            ),
+        )
+        self.has_blurred_vision_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0627\u0631\u06cc \u062f\u06cc\u062f",
+                None,
+            ),
+        )
+        self.has_dizziness_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0631\u06af\u06cc\u062c\u0647",
+                None,
+            ),
+        )
+        self.has_fainting_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u06cc\u0647\u0648\u0634\u06cc",
+                None,
+            ),
+        )
+        self.has_fever_chills_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0628 \u0648 \u0644\u0631\u0632",
+                None,
+            ),
+        )
+        self.has_chest_pain_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631\u062f \u0642\u0641\u0633\u0647 \u0633\u06cc\u0646\u0647",
+                None,
+            ),
+        )
+        self.has_sweating_checkbox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0639\u0631\u06cc\u0642",
+                None,
+            ),
+        )
+        self.has_weakness_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0636\u0639\u0641 \u0648 \u0628\u06cc \u062d\u0627\u0644\u06cc",
+                None,
+            ),
+        )
+        self.other_symptoms_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631 \u0639\u0644\u0627\u0626\u0645 \u0647\u0645\u0631\u0627\u0647:",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.symptoms_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0644\u0627\u0626\u0645 \u062d\u06cc\u0627\u062a\u06cc \u0648 \u0647\u0645\u0631\u0627\u0647",
+                None,
+            ),
+        )
+        self.medical_history_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0627\u0631\u06cc\u062e\u0686\u0647 \u067e\u0632\u0634\u06a9\u06cc",
+                None,
+            ),
+        )
+        self.has_gastrointestinal_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06af\u0648\u0627\u0631\u0634\u06cc",
+                None,
+            ),
+        )
+        self.has_hypertension_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0641\u0632\u0627\u06cc\u0634 \u0641\u0634\u0627\u0631\u062e\u0648\u0646",
+                None,
+            ),
+        )
+        self.has_special_conditions_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u06cc\u0645\u0627\u0631\u06cc \u062e\u0627\u0635",
+                None,
+            ),
+        )
+        self.has_infectious_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0639\u0641\u0648\u0646\u06cc",
+                None,
+            ),
+        )
+        self.has_diabetes_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u06cc\u0627\u0628\u062a",
+                None,
+            ),
+        )
+        self.has_seizure_disorder_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0634\u0646\u062c",
+                None,
+            ),
+        )
+        self.has_pulmonary_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u0648\u06cc",
+                None,
+            ),
+        )
+        self.has_malignancy_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u062f\u062e\u06cc\u0645\u06cc",
+                None,
+            ),
+        )
+        self.has_substance_abuse_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0648\u0621 \u0645\u0635\u0631\u0641 \u0645\u0648\u0627\u062f",
+                None,
+            ),
+        )
+        self.has_renal_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u0644\u06cc\u0648\u06cc",
+                None,
+            ),
+        )
+        self.has_cardiac_disease_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0644\u0628\u06cc",
+                None,
+            ),
+        )
+        self.has_disability_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0639\u0644\u0648\u0644\u06cc\u062a",
+                None,
+            ),
+        )
+        self.has_asthma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0622\u0633\u0645",
+                None,
+            ),
+        )
+        self.has_stroke_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u06a9\u062a\u0647 \u0645\u063a\u0632\u06cc",
+                None,
+            ),
+        )
+        self.has_psychiatric_disorder_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062e\u062a\u0644\u0627\u0644 \u0631\u0648\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.has_prior_trauma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0631\u0648\u0645\u0627",
+                None,
+            ),
+        )
+        self.has_surgical_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062c\u0631\u0627\u062d\u06cc",
+                None,
+            ),
+        )
+        self.other_medical_history_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06cc\u0631",
+                None,
+            ),
+        )
+        self.current_medications_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0627\u0631\u0648\u0647\u0627\u06cc \u0641\u0639\u0644\u06cc:",
+                None,
+            ),
+        )
+        self.drug_allergies_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062d\u0633\u0627\u0633\u06cc\u062a \u062f\u0627\u0631\u0648\u06cc\u06cc:",
+                None,
+            ),
+        )
+        self.examine_eye_lung_heart_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0639\u0627\u06cc\u0646\u0647 \u0686\u0634\u0645\u060c \u0642\u0644\u0628 \u0648 \u0631\u06cc\u0647",
+                None,
+            ),
+        )
+        self.eye_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0631\u062f\u0645\u06a9",
+                None,
+            ),
+        )
+        self.right_eye_examine_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u0627\u0633\u062a",
+                None,
+            ),
+        )
+        self.left_eye_examine_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0686\u067e",
+                None,
+            ),
+        )
+        self.lung_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u0647",
+                None,
+            ),
+        )
+        self.right_lung_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u0627\u0633\u062a",
+                None,
+            ),
+        )
+        self.lung_sound_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0645\u0639",
+                None,
+            ),
+        )
+        self.breathing_rhythm_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u062a\u0645",
+                None,
+            ),
+        )
+        self.left_lung_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0686\u067e",
+                None,
+            ),
+        )
+        self.heart_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0644\u0628",
+                None,
+            ),
+        )
+        self.heart_rhythm_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06cc\u062a\u0645",
+                None,
+            ),
+        )
+        self.heart_sound_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0645\u0639",
+                None,
+            ),
+        )
+        self.trauma_types_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0646\u0648\u0627\u0639 \u062a\u0631\u0648\u0645\u0627",
+                None,
+            ),
+        )
+        self.has_puncture_wound_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0648\u0631\u0627\u062e \u0634\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_motor_deficit_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0642\u0635 \u062d\u0631\u06a9\u062a\u06cc",
+                None,
+            ),
+        )
+        self.has_swelling_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0648\u0631\u0645",
+                None,
+            ),
+        )
+        self.has_tenderness_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0646\u062f\u0631\u0646\u0633",
+                None,
+            ),
+        )
+        self.has_abrasion_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0631\u0627\u0634\u06cc\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_amputation_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0637\u0639 \u0639\u0636\u0648",
+                None,
+            ),
+        )
+        self.has_laceration_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u0631\u06cc\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_crush_injury_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0644\u0647 \u0634\u062f\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_sensory_deficit_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0642\u0635 \u062d\u0633\u06cc",
+                None,
+            ),
+        )
+        self.has_contusion_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u0648\u0641\u062a\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_deformity_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0641\u0648\u0631\u0645\u06cc\u062a\u06cc",
+                None,
+            ),
+        )
+        self.has_external_bleeding_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0648\u0646\u0631\u06cc\u0632\u06cc",
+                None,
+            ),
+        )
+        self.has_dislocation_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631 \u0631\u0641\u062a\u06af\u06cc",
+                None,
+            ),
+        )
+        self.has_tear_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u067e\u0627\u0631\u06af\u06cc",
+                None,
+            ),
+        )
+        self.trauma_mechanism_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u06a9\u0627\u0646\u06cc\u0633\u0645 \u0622\u0633\u06cc\u0628",
+                None,
+            ),
+        )
+        self.penetrating_trauma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0627\u0641\u0630",
+                None,
+            ),
+        )
+        self.blunt_trauma_checkBox.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u063a\u06cc\u0631 \u0646\u0627\u0641\u0630",
+                None,
+            ),
+        )
+        self.burn_trauma_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0648\u062e\u062a\u06af\u06cc",
+                None,
+            ),
+        )
+        self.burn_percentage_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0631\u0635\u062f:",
+                None,
+            ),
+        )
+        self.burn_type_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639:",
+                None,
+            ),
+        )
+        self.distal_pulse_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0628\u0636 \u062f\u06cc\u0633\u062a\u0627\u0644:",
+                None,
+            ),
+        )
+        self.patient_extraction_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062e\u0627\u0631\u062c \u0633\u0627\u0632\u06cc \u0628\u06cc\u0645\u0627\u0631:",
+                None,
+            ),
+        )
+        self.type_of_fracture_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0646\u0648\u0639 \u0634\u06a9\u0633\u062a\u06af\u06cc:",
+                None,
+            ),
+        )
+        self.front_trauma_locations_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0646\u0627\u0637\u0642 \u0622\u0633\u06cc\u0628 \u062f\u06cc\u062f\u0647 \u062c\u0644\u0648:",
+                None,
+            ),
+        )
+        self.rear_trauma_locations_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0646\u0627\u0637\u0642 \u0622\u0633\u06cc\u0628 \u062f\u06cc\u062f\u0647 \u0639\u0642\u0628:",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.history_and_trauma_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0627\u0631\u06cc\u062e\u0686\u0647 \u0648 \u0645\u0639\u0627\u06cc\u0646\u0627\u062a",
+                None,
+            ),
+        )
+        self.medical_actions_group_box.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0642\u062f\u0627\u0645\u0627\u062a \u062f\u0631\u0645\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.before_medical_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0642\u0628\u0644",
+                None,
+            ),
+        )
+        self.after_medical_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u0639\u062f",
+                None,
+            ),
+        )
+        self.airway_tube_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0644\u0648\u0644\u0647 \u06af\u0630\u0627\u0631\u06cc \u0631\u0627\u0647 \u0647\u0648\u0627\u06cc\u06cc",
+                None,
+            ),
+        )
+        self.consultation_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0634\u0627\u0648\u0631\u0647 \u067e\u0632\u0634\u06a9",
+                None,
+            ),
+        )
+        self.limb_fix_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062b\u0627\u0628\u062a \u0633\u0627\u0632\u06cc \u0627\u0646\u062f\u0627\u0645 \u0647\u0627",
+                None,
+            ),
+        )
+        self.cardiac_massage_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0627\u0633\u0627\u0698 \u0642\u0644\u0628\u06cc",
+                None,
+            ),
+        )
+        self.spinal_fix_action_before_checkBox.setText("")
+        self.spinal_fix_action_after_checkBox.setText("")
+        self.spinal_fix_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062b\u0627\u0628\u062a \u0633\u0627\u0632\u06cc \u0633\u062a\u0648\u0646 \u0641\u0642\u0631\u0627\u062a",
+                None,
+            ),
+        )
+        self.vital_sign_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u0631\u0631\u0633\u06cc \u0639\u0644\u0627\u0626\u0645 \u062d\u06cc\u0627\u062a\u06cc",
+                None,
+            ),
+        )
+        self.dressing_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u067e\u0627\u0646\u0633\u0645\u0627\u0646 \u0648 \u06a9\u0646\u062a\u0631\u0644 \u062e\u0648\u0646\u0631\u06cc\u0632\u06cc",
+                None,
+            ),
+        )
+        self.biography_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0634\u0631\u062d \u062d\u0627\u0644",
+                None,
+            ),
+        )
+        self.oxygen_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u06a9\u0633\u06cc\u0698\u0646 \u062f\u0631\u0645\u0627\u0646\u06cc",
+                None,
+            ),
+        )
+        self.head_fix_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062b\u0627\u0628\u062a \u0633\u0627\u0632\u06cc \u0633\u0631 \u0648 \u06af\u0631\u062f\u0646",
+                None,
+            ),
+        )
+        self.assisted_ventilation_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062a\u0647\u0648\u06cc\u0647 \u06a9\u0645\u06a9\u06cc",
+                None,
+            ),
+        )
+        self.cpr_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u062d\u06cc\u0627 \u0642\u0644\u0628\u06cc \u0631\u06cc\u0648\u06cc",
+                None,
+            ),
+        )
+        self.monitoring_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0645\u0627\u0646\u06cc\u062a\u0648\u0631\u06cc\u0646\u06af \u0646\u0648\u0627\u0631 \u0642\u0644\u0628",
+                None,
+            ),
+        )
+        self.cbr_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0628\u06cc \u062d\u0631\u06a9\u062a\u06cc \u06a9\u0627\u0645\u0644",
+                None,
+            ),
+        )
+        self.iv_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0631\u06af \u06af\u06cc\u0631\u06cc",
+                None,
+            ),
+        )
+        self.suction_action_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0633\u0627\u06a9\u0634\u0646",
+                None,
+            ),
+        )
+        self.limb_fix_action_after_checkBox.setText("")
+        self.head_fix_action_after_checkBox.setText("")
+        self.cbr_action_after_checkBox.setText("")
+        self.oxygen_action_after_checkBox.setText("")
+        self.iv_action_after_checkBox.setText("")
+        self.monitoring_action_after_checkBox.setText("")
+        self.biography_action_after_checkBox.setText("")
+        self.consultation_action_after_checkBox.setText("")
+        self.vital_sign_action_after_checkBox.setText("")
+        self.assisted_ventilation_action_after_checkBox.setText("")
+        self.cardiac_massage_action_after_checkBox.setText("")
+        self.airway_tube_action_after_checkBox.setText("")
+        self.dressing_action_after_checkBox.setText("")
+        self.cpr_action_after_checkBox.setText("")
+        self.suction_action_after_checkBox.setText("")
+        self.limb_fix_action_before_checkBox.setText("")
+        self.head_fix_action_before_checkBox.setText("")
+        self.cbr_action_before_checkBox.setText("")
+        self.oxygen_action_before_checkBox.setText("")
+        self.iv_action_before_checkBox.setText("")
+        self.monitoring_action_before_checkBox.setText("")
+        self.biography_action_before_checkBox.setText("")
+        self.consultation_action_before_checkBox.setText("")
+        self.vital_sign_action_before_checkBox.setText("")
+        self.assisted_ventilation_action_before_checkBox.setText("")
+        self.cardiac_massage_action_before_checkBox.setText("")
+        self.dressing_action_before_checkBox.setText("")
+        self.cpr_action_before_checkBox.setText("")
+        self.suction_action_before_checkBox.setText("")
+        self.drugs_groupBox.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u062f\u0627\u0631\u0648\u0647\u0627",
+                None,
+            ),
+        )
+        self.consumables_groupBox.setTitle(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0644\u0648\u0627\u0632\u0645 \u0645\u0635\u0631\u0641\u06cc",
+                None,
+            ),
+        )
+        self.mission_data_tab_widget.setTabText(
+            self.mission_data_tab_widget.indexOf(self.medical_actions_tab),
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u0627\u0642\u062f\u0627\u0645\u0627\u062a \u0648 \u062f\u0627\u0631\u0648\u0647\u0627",
                 None,
             ),
         )
