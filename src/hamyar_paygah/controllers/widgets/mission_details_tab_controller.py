@@ -353,7 +353,7 @@ class MissionsDetailsTab(QWidget):
             )
             self.ui.refusal_form_code_field.setEnabled(False)
 
-    def _populate_times_and_distances_tab(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912, PLR0915
+    def _populate_times_and_distances_tab(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
         """Populates the times and distances tab with data from mission details model."""
         # Set first staff field
         self.ui.first_staff_field.setText(
@@ -384,9 +384,15 @@ class MissionsDetailsTab(QWidget):
         )
 
         # Set depart from station ODO
-        self.ui.depart_from_station_odo_field.setText(
-            str(mission_details.times_and_distances.depart_from_station_odometer),
-        )
+        if mission_details.times_and_distances.depart_from_station_odometer != 0:
+            self.ui.depart_from_station_odo_field.setText(
+                str(mission_details.times_and_distances.depart_from_station_odometer),
+            )
+        else:
+            self.ui.depart_from_station_odo_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.depart_from_station_odo_field.setEnabled(False)
 
         # Set mission received time
         self.ui.mission_received_field.setText(
@@ -394,19 +400,35 @@ class MissionsDetailsTab(QWidget):
         )
 
         # Set overall mission distance
-        self.ui.overall_mission_distance_field.setText(
-            str(mission_details.times_and_distances.overall_mission_distance),
-        )
+        if mission_details.times_and_distances.overall_mission_distance != 0:
+            self.ui.overall_mission_distance_field.setText(
+                str(mission_details.times_and_distances.overall_mission_distance),
+            )
+        else:
+            self.ui.overall_mission_distance_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.overall_mission_distance_field.setEnabled(False)
 
         # Set depart from station time
-        self.ui.depart_from_station_time_field.setText(
-            str(mission_details.times_and_distances.depart_from_station_time),
-        )
+        if mission_details.times_and_distances.depart_from_station_time is not None:
+            self.ui.depart_from_station_time_field.setText(
+                str(mission_details.times_and_distances.depart_from_station_time),
+            )
+        else:
+            self.ui.depart_from_station_time_field.setText(
+                NOT_REGISTERED_PERSIAN_TEXT,
+            )
+            self.ui.depart_from_station_time_field.setEnabled(False)
 
         # Set time to depart
-        self.ui.time_to_depart_field.setText(
-            str(mission_details.times_and_distances.time_to_depart),
-        )
+        if mission_details.times_and_distances.time_to_depart is not None:
+            self.ui.time_to_depart_field.setText(
+                str(mission_details.times_and_distances.time_to_depart),
+            )
+        else:
+            self.ui.time_to_depart_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.time_to_depart_field.setEnabled(False)
 
         # Set arrive at emergency time
         self.ui.arrive_at_emergency_time_field.setText(
@@ -414,9 +436,13 @@ class MissionsDetailsTab(QWidget):
         )
 
         # Set time to arrive
-        self.ui.time_to_arrive_field.setText(
-            str(mission_details.times_and_distances.time_to_arrive),
-        )
+        if mission_details.times_and_distances.time_to_arrive is not None:
+            self.ui.time_to_arrive_field.setText(
+                str(mission_details.times_and_distances.time_to_arrive),
+            )
+        else:
+            self.ui.time_to_arrive_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
+            self.ui.time_to_arrive_field.setEnabled(False)
 
         # Set depart from emergency time
         self.ui.depart_from_emergency_time_field.setText(
