@@ -70,5 +70,5 @@ jobs:
       - name: Run benchmark
         uses: CodSpeedHQ/action@4deb3275dd364fb96fb074c953133d29ec96f80f # v4.10.6
         with:
-          mode: simulation # Run the benchmarks with CPU simulation measurements.
+          mode: "simulation" # Run the benchmarks with CPU simulation measurements.
           run: pytest tests/ --codspeed -rA
