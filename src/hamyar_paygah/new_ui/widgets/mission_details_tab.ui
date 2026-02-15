@@ -139,7 +139,7 @@
    <item>
     <widget class="QTabWidget" name="mission_data_tab_widget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
