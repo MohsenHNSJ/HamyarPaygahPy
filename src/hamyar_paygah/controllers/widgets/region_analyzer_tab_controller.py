@@ -7,16 +7,16 @@ from typing import TYPE_CHECKING
 from PySide6.QtCore import QCalendar, QDate, Qt, Slot
 from PySide6.QtWidgets import (
     QCheckBox,
-    QLabel,
     QLineEdit,
     QPlainTextEdit,
     QTableWidget,
+    QTabWidget,
     QTextEdit,
-    QVBoxLayout,
     QWidget,
 )
 from qasync import asyncSlot  # type: ignore[import-untyped]
 
+import hamyar_paygah.new_ui.widgets.analysis_page as ui_ap
 import hamyar_paygah.new_ui.widgets.region_analyzer_tab as ui_rat
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.models.mission_model import Mission
@@ -166,6 +166,9 @@ class RegionAnalyzerTab(QWidget):
             table_widget.clearContents()
             table_widget.setEnabled(True)
 
+        for tab_widget in self.ui.scrollAreaWidgetContents.findChildren(QTabWidget):
+            tab_widget.clear()
+
     def _group_missions_by_ambulance_code(
         self,
         missions_list: list[Mission],
@@ -191,16 +194,15 @@ class RegionAnalyzerTab(QWidget):
 
     def _summarize_missions(self, missions_list: list[Mission]) -> dict[str, int]:
         """Compute basic statistics from the missions list."""
-        total_missions: int = len(missions_list)
+        # Get total patients
+        total_patients: int = len(missions_list)
 
         return {
-            "total_missions": total_missions,
+            "total_patients": total_patients,
         }
 
     def _build_tabs(self, missions_list: list[Mission]) -> None:
         """Build dynamic tabs per ambulance and one overall tab."""
-        self.ui.analysis_tab_container.clear()  # Clear existing tabs
-
         # Create overall summary tab
         overall_summary_widget: QWidget = self._create_summary_widget(
             missions_list,
@@ -228,14 +230,15 @@ class RegionAnalyzerTab(QWidget):
 
     def _create_summary_widget(self, missions_list: list[Mission]) -> QWidget:
         """Create a simple summary display widget for a mission list."""
+        # Get summary stats from the missions list
         stats = self._summarize_missions(missions_list)
 
+        # Setup UI
         widget = QWidget()
+        ui = ui_ap.Ui_analysis_page()  # type: ignore[attr-defined]
+        ui.setupUi(widget)
 
-        layout = QVBoxLayout(widget)
+        # Set patients count field
+        ui.patients_count_field.setText(str(stats["total_patients"]))
 
-        layout.addWidget(QLabel(f"Total Missions: {stats['total_missions']}"))
-
-        layout.addStretch()  # Add stretch to push content to the top
-
-        return widget
+        return widget  # type: ignore[no-any-return]

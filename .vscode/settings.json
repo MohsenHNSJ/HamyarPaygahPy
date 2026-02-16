@@ -514,6 +514,7 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.extraPaths": [
     "${workspaceFolder}/",
+    "./src",
     "./src"
   ],
   "python.analysis.inlayHints.callArgumentNames": "all",
