@@ -197,8 +197,14 @@ class RegionAnalyzerTab(QWidget):
         # Get total patients
         total_patients: int = len(missions_list)
 
+        # Get total missions (with unique IDs to avoid counting duplicates)
+        total_missions: int = len(
+            {mission.id for mission in missions_list if mission.id is not None},
+        )
+
         return {
             "total_patients": total_patients,
+            "total_missions": total_missions,
         }
 
     def _build_tabs(self, missions_list: list[Mission]) -> None:
@@ -240,5 +246,8 @@ class RegionAnalyzerTab(QWidget):
 
         # Set patients count field
         ui.patients_count_field.setText(str(stats["total_patients"]))
+
+        # Set missions count field
+        ui.missions_count_field.setText(str(stats["total_missions"]))
 
         return widget  # type: ignore[no-any-return]
