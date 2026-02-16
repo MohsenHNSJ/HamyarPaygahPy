@@ -56,6 +56,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QSizePolicy,
+    QTabWidget,
     QVBoxLayout,
     QWidget,
 )
@@ -191,11 +192,24 @@ class Ui_region_analyzer_tab:
 
         self.verticalLayout_2.addWidget(self.missions_list_search_filters)
 
+        self.analysis_tab_container = QTabWidget(self.scrollAreaWidgetContents)
+        self.analysis_tab_container.setObjectName("analysis_tab_container")
+        self.tab = QWidget()
+        self.tab.setObjectName("tab")
+        self.analysis_tab_container.addTab(self.tab, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.analysis_tab_container.addTab(self.tab_2, "")
+
+        self.verticalLayout_2.addWidget(self.analysis_tab_container)
+
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
         self.verticalLayout.addWidget(self.scrollArea)
 
         self.retranslateUi(region_analyzer_tab)
+
+        self.analysis_tab_container.setCurrentIndex(1)
 
         QMetaObject.connectSlotsByName(region_analyzer_tab)
 
@@ -253,6 +267,18 @@ class Ui_region_analyzer_tab:
                 "\u062f\u0631\u06cc\u0627\u0641\u062a",
                 None,
             ),
+        )
+        self.analysis_tab_container.setTabText(
+            self.analysis_tab_container.indexOf(
+                self.tab,
+            ),
+            QCoreApplication.translate("region_analyzer_tab", "Tab 1", None),
+        )
+        self.analysis_tab_container.setTabText(
+            self.analysis_tab_container.indexOf(
+                self.tab_2,
+            ),
+            QCoreApplication.translate("region_analyzer_tab", "Tab 2", None),
         )
 
     # retranslateUi
