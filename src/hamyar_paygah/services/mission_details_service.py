@@ -2,6 +2,7 @@
 
 # pylint: disable=R0912
 import datetime
+import lzma
 
 import aiohttp
 from anyio import Path
@@ -82,7 +83,7 @@ def _get_cache_file_path(mission_id: int, patient_id: int) -> Path:
 
     This function constructs a unique file path within the `CACHE_DIR`
     directory based on the provided mission ID and patient ID. The resulting
-    file name follows the format `mission_{mission_id}_patient_{patient_id}.xml`,
+    file name follows the format `mission_{mission_id}_patient_{patient_id}.xml.xz`,
     ensuring that cached data for different missions and patients are stored
     separately.
 
@@ -93,7 +94,21 @@ def _get_cache_file_path(mission_id: int, patient_id: int) -> Path:
     Returns:
         Path: The path to the cache file.
     """
-    return CACHE_DIR / f"mission_{mission_id}_patient_{patient_id}.xml"
+    return CACHE_DIR / f"mission_{mission_id}_patient_{patient_id}.xml.xz"
+
+
+def _save_xml_cache(mission_id: int, patient_id: int, xml_text: str) -> None:
+    """Save XML response as compressed LZMA file."""
+    path = CACHE_DIR / f"mission_{mission_id}_patient_{patient_id}.xml.xz"
+    with lzma.open(path, "wb", preset=9) as f:
+        f.write(xml_text.encode("utf-8"))
+
+
+def _load_xml_cache(mission_id: int, patient_id: int) -> str:
+    """Load compressed XML response from cache."""
+    path = CACHE_DIR / f"mission_{mission_id}_patient_{patient_id}.xml.xz"
+    with lzma.open(path, "rb") as f:
+        return f.read().decode("utf-8")
 
 
 async def get_mission_details(
@@ -128,9 +143,9 @@ async def get_mission_details(
 
     raw_data: str = ""
 
-    if cached_mission_details.exists():
+    if await cached_mission_details.exists():
         # If cache exists, read from it
-        raw_data = await cached_mission_details.read_text()
+        raw_data = _load_xml_cache(mission_id, patient_id)
     else:
         # If no cache, fetch from server
         raw_data = await _fetch_mission_details(server_address, mission_id, patient_id)
@@ -145,6 +160,6 @@ async def get_mission_details(
         and mission_details.times_and_distances.mission_date
         < (datetime.datetime.now() - datetime.timedelta(days=2))  # noqa: DTZ005
     ):
-        await cached_mission_details.write_text(raw_data)
+        _save_xml_cache(mission_id, patient_id, raw_data)
 
     return mission_details
