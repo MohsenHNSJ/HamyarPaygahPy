@@ -272,8 +272,8 @@ class RegionAnalyzerTab(QWidget):
     def _populate_mission_per_hospital_table(
         self,
         missions_per_hospital: list[tuple[str, int]],
-        ui: ui_ap.Ui_analysis_page,
-    ) -> None:  # type: ignore[name-defined]
+        ui: ui_ap.Ui_analysis_page,  # type: ignore[name-defined]
+    ) -> None:
         """Populate the missions per hospital table with the given data."""
         # Get the table widget
         table_widget: QTableWidget = ui.missions_per_hospital_tableWidget
@@ -289,14 +289,14 @@ class RegionAnalyzerTab(QWidget):
             # Create and set hospital name item
             hospital_item = QTableWidgetItem(hospital_name)
             hospital_item.setTextAlignment(
-                Qt.AlignCenter,
-            )  # type: ignore[attr-defined]
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
 
             # Create and set mission count item
             count_item = QTableWidgetItem(str(mission_count))
             count_item.setTextAlignment(
-                Qt.AlignCenter,
-            )  # type: ignore[attr-defined]
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
 
             table_widget.setItem(row_index, 0, hospital_item)
             table_widget.setItem(row_index, 1, count_item)
