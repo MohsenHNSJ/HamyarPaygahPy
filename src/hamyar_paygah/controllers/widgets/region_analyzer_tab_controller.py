@@ -2,6 +2,7 @@
 
 # pylint: disable=E0611,I1101,R0903,C0103
 
+from collections import Counter
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QCalendar, QDate, Qt, Slot
@@ -10,6 +11,7 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QPlainTextEdit,
     QTableWidget,
+    QTableWidgetItem,
     QTabWidget,
     QTextEdit,
     QWidget,
@@ -192,7 +194,10 @@ class RegionAnalyzerTab(QWidget):
 
         return grouped_missions
 
-    def _summarize_missions(self, missions_list: list[Mission]) -> dict[str, int]:
+    def _summarize_missions(
+        self,
+        missions_list: list[Mission],
+    ) -> dict[str, int | list[tuple[str, int]]]:
         """Compute basic statistics from the missions list."""
         # Get total patients
         total_patients: int = len(missions_list)
@@ -202,9 +207,15 @@ class RegionAnalyzerTab(QWidget):
             {mission.id for mission in missions_list if mission.id is not None},
         )
 
+        # Get missions count per hospital (only for transported patients)
+        missions_per_hospital: list[tuple[str, int]] = Counter(
+            mission.hospital_name for mission in missions_list if mission.hospital_name is not None
+        ).most_common()
+
         return {
             "total_patients": total_patients,
             "total_missions": total_missions,
+            "missions_per_hospital": missions_per_hospital,
         }
 
     def _build_tabs(self, missions_list: list[Mission]) -> None:
@@ -250,4 +261,45 @@ class RegionAnalyzerTab(QWidget):
         # Set missions count field
         ui.missions_count_field.setText(str(stats["total_missions"]))
 
+        # Populate the missions per hospital table
+        self._populate_mission_per_hospital_table(
+            stats["missions_per_hospital"],  # type: ignore[arg-type]
+            ui,
+        )
+
         return widget  # type: ignore[no-any-return]
+
+    def _populate_mission_per_hospital_table(
+        self,
+        missions_per_hospital: list[tuple[str, int]],
+        ui: ui_ap.Ui_analysis_page,
+    ) -> None:  # type: ignore[name-defined]
+        """Populate the missions per hospital table with the given data."""
+        # Get the table widget
+        table_widget: QTableWidget = ui.missions_per_hospital_tableWidget
+
+        # Clear the table contents
+        table_widget.clearContents()
+
+        # Set row count based on the data
+        table_widget.setRowCount(len(missions_per_hospital))
+
+        # Populate the table rows
+        for row_index, (hospital_name, mission_count) in enumerate(missions_per_hospital):
+            # Create and set hospital name item
+            hospital_item = QTableWidgetItem(hospital_name)
+            hospital_item.setTextAlignment(
+                Qt.AlignCenter,
+            )  # type: ignore[attr-defined]
+
+            # Create and set mission count item
+            count_item = QTableWidgetItem(str(mission_count))
+            count_item.setTextAlignment(
+                Qt.AlignCenter,
+            )  # type: ignore[attr-defined]
+
+            table_widget.setItem(row_index, 0, hospital_item)
+            table_widget.setItem(row_index, 1, count_item)
+
+        # Resize columns to fit contents
+        table_widget.resizeColumnsToContents()

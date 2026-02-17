@@ -45,11 +45,16 @@ from PySide6.QtGui import (
     QTransform,
 )
 from PySide6.QtWidgets import (
+    QAbstractItemView,
     QApplication,
+    QGroupBox,
     QHBoxLayout,
+    QHeaderView,
     QLabel,
     QLineEdit,
     QSizePolicy,
+    QTableWidget,
+    QTableWidgetItem,
     QVBoxLayout,
     QWidget,
 )
@@ -116,6 +121,54 @@ class Ui_analysis_page:
 
         self.verticalLayout.addWidget(self.section_1)
 
+        self.section_2 = QWidget(analysis_page)
+        self.section_2.setObjectName("section_2")
+        self.horizontalLayout_2 = QHBoxLayout(self.section_2)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.missions_per_hospital_groupBox = QGroupBox(self.section_2)
+        self.missions_per_hospital_groupBox.setObjectName(
+            "missions_per_hospital_groupBox",
+        )
+        self.missions_per_hospital_groupBox.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_2 = QVBoxLayout(
+            self.missions_per_hospital_groupBox,
+        )
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.missions_per_hospital_tableWidget = QTableWidget(
+            self.missions_per_hospital_groupBox,
+        )
+        if self.missions_per_hospital_tableWidget.columnCount() < 2:
+            self.missions_per_hospital_tableWidget.setColumnCount(2)
+        self.missions_per_hospital_tableWidget.setObjectName(
+            "missions_per_hospital_tableWidget",
+        )
+        self.missions_per_hospital_tableWidget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.missions_per_hospital_tableWidget.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.missions_per_hospital_tableWidget.setDragDropOverwriteMode(False)
+        self.missions_per_hospital_tableWidget.setAlternatingRowColors(True)
+        self.missions_per_hospital_tableWidget.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
+        )
+        self.missions_per_hospital_tableWidget.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_per_hospital_tableWidget.setSortingEnabled(True)
+        self.missions_per_hospital_tableWidget.setColumnCount(2)
+        self.missions_per_hospital_tableWidget.verticalHeader().setVisible(False)
+
+        self.verticalLayout_2.addWidget(self.missions_per_hospital_tableWidget)
+
+        self.horizontalLayout_2.addWidget(self.missions_per_hospital_groupBox)
+
+        self.verticalLayout.addWidget(self.section_2)
+
         self.retranslateUi(analysis_page)
 
         QMetaObject.connectSlotsByName(analysis_page)
@@ -141,6 +194,13 @@ class Ui_analysis_page:
             QCoreApplication.translate(
                 "analysis_page",
                 "\u062a\u0639\u062f\u0627\u062f \u0645\u062f\u062f\u062c\u0648:",
+                None,
+            ),
+        )
+        self.missions_per_hospital_groupBox.setTitle(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0628\u06cc\u0645\u0627\u0631\u0633\u062a\u0627\u0646",
                 None,
             ),
         )
