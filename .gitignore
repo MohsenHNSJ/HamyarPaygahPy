@@ -267,4 +267,4 @@ styles/write-good
 .private_tests/
 server_config.json
 app_config.json
-mission_details_cache
+cache

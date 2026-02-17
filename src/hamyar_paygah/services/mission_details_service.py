@@ -10,7 +10,7 @@ from anyio import Path
 from hamyar_paygah.models.mission_details_model import MissionDetails
 from hamyar_paygah.services.parsers import parse_to_mission_details
 
-CACHE_DIR = Path("mission_details_cache")
+CACHE_DIR = Path("cache/mission_details")
 
 
 async def _fetch_mission_details(
