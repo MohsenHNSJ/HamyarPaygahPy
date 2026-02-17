@@ -114,6 +114,7 @@ sphinx-version-warning = "1.1.2"
 astroid = "4.1.0"
 babel = "2.18.0"
 starlette = "0.52.1"
+uvicorn = "0.41.0"
 websockets = "16.0"
 
 # Ruff general settings
