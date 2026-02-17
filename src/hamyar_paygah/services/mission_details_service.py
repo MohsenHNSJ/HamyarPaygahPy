@@ -92,7 +92,7 @@ def _get_cache_file_path(mission_id: int, patient_id: int) -> Path:
         patient_id (int): The ID of the patient.
 
     Returns:
-        Path: The path to the cache file.
+        anyio.Path: The path to the cache file.
     """
     return CACHE_DIR / f"mission_{mission_id}_patient_{patient_id}.xml.xz"
 

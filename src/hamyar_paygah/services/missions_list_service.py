@@ -97,10 +97,10 @@ def _get_cache_file_path(region_id: int, date: datetime) -> Path:
 
     Args:
         region_id (int): The ID of the region.
-        date (datetime): The date for which to generate the cache path.
+        date (datetime.datetime): The date for which to generate the cache path.
 
     Returns:
-        Path: The path to the cache file.
+        anyio.Path: The path to the cache file.
     """
     date_str = date.strftime(format="%Y-%m-%d")
     return CACHE_DIR / f"region_{region_id}" / f"{date_str}.xml.xz"
@@ -140,8 +140,8 @@ async def get_missions_list(
 
     Args:
         server_address (str): The base address of the EMS server.
-        from_date (datetime): The start date of the missions query.
-        to_date (datetime): The end date of the missions query.
+        from_date (datetime.datetime): The start date of the missions query.
+        to_date (datetime.datetime): The end date of the missions query.
         region_id (int): The region ID to filter missions by.
 
     Returns:
