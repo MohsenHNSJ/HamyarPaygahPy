@@ -64,7 +64,7 @@ class Ui_analysis_page:
     def setupUi(self, analysis_page):
         if not analysis_page.objectName():
             analysis_page.setObjectName("analysis_page")
-        analysis_page.resize(600, 600)
+        analysis_page.resize(700, 700)
         sizePolicy = QSizePolicy(
             QSizePolicy.Policy.MinimumExpanding,
             QSizePolicy.Policy.MinimumExpanding,
@@ -125,6 +125,49 @@ class Ui_analysis_page:
         self.section_2.setObjectName("section_2")
         self.horizontalLayout_2 = QHBoxLayout(self.section_2)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.missions_per_result_groupBox = QGroupBox(self.section_2)
+        self.missions_per_result_groupBox.setObjectName(
+            "missions_per_result_groupBox",
+        )
+        self.missions_per_result_groupBox.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_3 = QVBoxLayout(self.missions_per_result_groupBox)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.missions_per_result_tableWidget = QTableWidget(
+            self.missions_per_result_groupBox,
+        )
+        if self.missions_per_result_tableWidget.columnCount() < 2:
+            self.missions_per_result_tableWidget.setColumnCount(2)
+        self.missions_per_result_tableWidget.setObjectName(
+            "missions_per_result_tableWidget",
+        )
+        self.missions_per_result_tableWidget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.missions_per_result_tableWidget.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.missions_per_result_tableWidget.setDragDropOverwriteMode(False)
+        self.missions_per_result_tableWidget.setAlternatingRowColors(True)
+        self.missions_per_result_tableWidget.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
+        )
+        self.missions_per_result_tableWidget.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_per_result_tableWidget.setSortingEnabled(True)
+        self.missions_per_result_tableWidget.setColumnCount(2)
+        self.missions_per_result_tableWidget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.missions_per_result_tableWidget.verticalHeader().setVisible(False)
+
+        self.verticalLayout_3.addWidget(self.missions_per_result_tableWidget)
+
+        self.horizontalLayout_2.addWidget(self.missions_per_result_groupBox)
+
         self.missions_per_hospital_groupBox = QGroupBox(self.section_2)
         self.missions_per_hospital_groupBox.setObjectName(
             "missions_per_hospital_groupBox",
@@ -161,6 +204,9 @@ class Ui_analysis_page:
         )
         self.missions_per_hospital_tableWidget.setSortingEnabled(True)
         self.missions_per_hospital_tableWidget.setColumnCount(2)
+        self.missions_per_hospital_tableWidget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
         self.missions_per_hospital_tableWidget.verticalHeader().setVisible(False)
 
         self.verticalLayout_2.addWidget(self.missions_per_hospital_tableWidget)
@@ -194,6 +240,13 @@ class Ui_analysis_page:
             QCoreApplication.translate(
                 "analysis_page",
                 "\u062a\u0639\u062f\u0627\u062f \u0645\u062f\u062f\u062c\u0648:",
+                None,
+            ),
+        )
+        self.missions_per_result_groupBox.setTitle(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0646\u062a\u06cc\u062c\u0647",
                 None,
             ),
         )

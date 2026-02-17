@@ -212,10 +212,16 @@ class RegionAnalyzerTab(QWidget):
             mission.hospital_name for mission in missions_list if mission.hospital_name is not None
         ).most_common()
 
+        # Get missions count per result
+        missions_per_result: list[tuple[str, int]] = Counter(
+            mission.result for mission in missions_list if mission.result is not None
+        ).most_common()
+
         return {
             "total_patients": total_patients,
             "total_missions": total_missions,
             "missions_per_hospital": missions_per_hospital,
+            "missions_per_result": missions_per_result,
         }
 
     def _build_tabs(self, missions_list: list[Mission]) -> None:
@@ -267,6 +273,12 @@ class RegionAnalyzerTab(QWidget):
             ui,
         )
 
+        # Populate the missions per result table
+        self._populate_mission_per_result_table(
+            stats["missions_per_result"],  # type: ignore[arg-type]
+            ui,
+        )
+
         return widget  # type: ignore[no-any-return]
 
     def _populate_mission_per_hospital_table(
@@ -284,6 +296,11 @@ class RegionAnalyzerTab(QWidget):
         # Set row count based on the data
         table_widget.setRowCount(len(missions_per_hospital))
 
+        # Set horizontal header labels
+        table_widget.setHorizontalHeaderLabels(
+            ["نام بیمارستان", "تعداد ماموریت"],
+        )
+
         # Populate the table rows
         for row_index, (hospital_name, mission_count) in enumerate(missions_per_hospital):
             # Create and set hospital name item
@@ -293,12 +310,58 @@ class RegionAnalyzerTab(QWidget):
             )
 
             # Create and set mission count item
-            count_item = QTableWidgetItem(str(mission_count))
+            count_item = QTableWidgetItem()
+            count_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                mission_count,
+            )
             count_item.setTextAlignment(
                 Qt.AlignCenter,  # type: ignore[attr-defined]
             )
 
             table_widget.setItem(row_index, 0, hospital_item)
+            table_widget.setItem(row_index, 1, count_item)
+
+        # Resize columns to fit contents
+        table_widget.resizeColumnsToContents()
+
+    def _populate_mission_per_result_table(
+        self,
+        missions_per_result: list[tuple[str, int]],
+        ui: ui_ap.Ui_analysis_page,  # type: ignore[name-defined]
+    ) -> None:
+        """Populate the missions per result table with the given data."""
+        # Get the table widget
+        table_widget: QTableWidget = ui.missions_per_result_tableWidget
+
+        # Clear the table contents
+        table_widget.clearContents()
+
+        # Set row count based on the data
+        table_widget.setRowCount(len(missions_per_result))
+
+        # Set horizontal header labels
+        table_widget.setHorizontalHeaderLabels(["نتیجه", "تعداد ماموریت"])
+
+        # Populate the table rows
+        for row_index, (result, mission_count) in enumerate(missions_per_result):
+            # Create and set result item
+            result_item = QTableWidgetItem(result)
+            result_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            # Create and set mission count item
+            count_item = QTableWidgetItem()
+            count_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                mission_count,
+            )
+            count_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table_widget.setItem(row_index, 0, result_item)
             table_widget.setItem(row_index, 1, count_item)
 
         # Resize columns to fit contents
