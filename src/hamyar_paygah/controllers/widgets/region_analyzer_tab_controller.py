@@ -139,7 +139,7 @@ class RegionAnalyzerTab(QWidget):
         )
 
         # Build the tabs with the retrieved missions list
-        self._build_tabs(missions_list)
+        await self._build_tabs(missions_list)
 
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
@@ -194,7 +194,7 @@ class RegionAnalyzerTab(QWidget):
 
         return grouped_missions
 
-    def _summarize_missions(
+    async def _summarize_missions(
         self,
         missions_list: list[Mission],
     ) -> dict[str, int | list[tuple[str, int]]]:
@@ -217,6 +217,9 @@ class RegionAnalyzerTab(QWidget):
             mission.result for mission in missions_list if mission.result is not None
         ).most_common()
 
+        # Iterate through each mission in the list and get mission details
+        # for processing deeper statistics
+
         return {
             "total_patients": total_patients,
             "total_missions": total_missions,
@@ -224,10 +227,10 @@ class RegionAnalyzerTab(QWidget):
             "missions_per_result": missions_per_result,
         }
 
-    def _build_tabs(self, missions_list: list[Mission]) -> None:
+    async def _build_tabs(self, missions_list: list[Mission]) -> None:
         """Build dynamic tabs per ambulance and one overall tab."""
         # Create overall summary tab
-        overall_summary_widget: QWidget = self._create_summary_widget(
+        overall_summary_widget: QWidget = await self._create_summary_widget(
             missions_list,
         )
         self.ui.analysis_tab_container.addTab(
@@ -243,7 +246,7 @@ class RegionAnalyzerTab(QWidget):
 
         for ambulance_code in sorted(grouped_missions.keys()):
             ambulance_missions: list[Mission] = grouped_missions[ambulance_code]
-            ambulance_summary_widget: QWidget = self._create_summary_widget(
+            ambulance_summary_widget: QWidget = await self._create_summary_widget(
                 ambulance_missions,
             )
             self.ui.analysis_tab_container.addTab(
@@ -251,10 +254,10 @@ class RegionAnalyzerTab(QWidget):
                 f"{ambulance_code}",
             )
 
-    def _create_summary_widget(self, missions_list: list[Mission]) -> QWidget:
+    async def _create_summary_widget(self, missions_list: list[Mission]) -> QWidget:
         """Create a simple summary display widget for a mission list."""
         # Get summary stats from the missions list
-        stats = self._summarize_missions(missions_list)
+        stats = await self._summarize_missions(missions_list)
 
         # Setup UI
         widget = QWidget()

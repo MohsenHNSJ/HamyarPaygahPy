@@ -64,7 +64,7 @@ class Ui_analysis_page:
     def setupUi(self, analysis_page):
         if not analysis_page.objectName():
             analysis_page.setObjectName("analysis_page")
-        analysis_page.resize(700, 700)
+        analysis_page.resize(700, 1064)
         sizePolicy = QSizePolicy(
             QSizePolicy.Policy.MinimumExpanding,
             QSizePolicy.Policy.MinimumExpanding,
@@ -123,6 +123,7 @@ class Ui_analysis_page:
 
         self.section_2 = QWidget(analysis_page)
         self.section_2.setObjectName("section_2")
+        self.section_2.setMinimumSize(QSize(0, 1000))
         self.horizontalLayout_2 = QHBoxLayout(self.section_2)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.missions_per_result_groupBox = QGroupBox(self.section_2)
@@ -156,6 +157,12 @@ class Ui_analysis_page:
         )
         self.missions_per_result_tableWidget.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_per_result_tableWidget.setVerticalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_result_tableWidget.setHorizontalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
         )
         self.missions_per_result_tableWidget.setSortingEnabled(True)
         self.missions_per_result_tableWidget.setColumnCount(2)
@@ -201,6 +208,12 @@ class Ui_analysis_page:
         )
         self.missions_per_hospital_tableWidget.setSelectionBehavior(
             QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_per_hospital_tableWidget.setVerticalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_hospital_tableWidget.setHorizontalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
         )
         self.missions_per_hospital_tableWidget.setSortingEnabled(True)
         self.missions_per_hospital_tableWidget.setColumnCount(2)
