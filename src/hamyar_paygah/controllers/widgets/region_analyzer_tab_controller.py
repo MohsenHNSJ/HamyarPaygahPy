@@ -3,7 +3,7 @@
 # pylint: disable=E0611,I1101,R0903,C0103
 
 from collections import Counter
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from PySide6.QtCore import QCalendar, QDate, Qt, Slot
 from PySide6.QtWidgets import (
@@ -169,6 +169,7 @@ class RegionAnalyzerTab(QWidget):
 
         for table_widget in self.ui.scrollAreaWidgetContents.findChildren(QTableWidget):
             table_widget.clearContents()
+            table_widget.clear()
             table_widget.setEnabled(True)
 
         for tab_widget in self.ui.scrollAreaWidgetContents.findChildren(QTabWidget):
@@ -200,7 +201,7 @@ class RegionAnalyzerTab(QWidget):
     async def _summarize_missions(
         self,
         missions_list: list[Mission],
-    ) -> dict[str, int | list[tuple[str, int]]]:
+    ) -> dict[str, int | list[tuple[str, int]] | Counter[Any]]:
         """Compute basic statistics from the missions list."""
         # Get total patients
         total_patients: int = len(missions_list)
@@ -223,6 +224,11 @@ class RegionAnalyzerTab(QWidget):
         # Mission details variables
         total_iranian_patients: int = 0
         total_foreign_patients: int = 0
+        total_male_patients: int = 0
+        total_female_patients: int = 0
+        total_unknown_gender: int = 0
+        total_consumables: Counter[Any] = Counter()
+        total_drugs: Counter[Any] = Counter()
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
         for mission in missions_list:
@@ -238,6 +244,37 @@ class RegionAnalyzerTab(QWidget):
             if mission_details.information.foreign_nationality:
                 total_foreign_patients += 1
 
+            # Get genders count
+            if mission_details.information.is_male_gender:
+                total_male_patients += 1
+            if mission_details.information.is_female_gender:
+                total_female_patients += 1
+            if mission_details.information.is_unknown_gender:
+                total_unknown_gender += 1
+
+            # Get total consumables
+            total_consumables += mission_details.consumables.items
+
+            # Get total drugs
+            total_drugs += Counter(
+                drug.name
+                for drug in mission_details.drugs
+                if drug.name  # ignore None
+            )
+
+        # Sort the consumables list
+        sorted_total_consumables = sorted(
+            total_consumables.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sort the drugs list
+        sorted_total_drugs = sorted(
+            total_drugs.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+
         return {
             "total_patients": total_patients,
             "total_missions": total_missions,
@@ -245,6 +282,11 @@ class RegionAnalyzerTab(QWidget):
             "missions_per_result": missions_per_result,
             "total_iranian_patients": total_iranian_patients,
             "total_foreign_patients": total_foreign_patients,
+            "total_male_patients": total_male_patients,
+            "total_female_patients": total_female_patients,
+            "total_unknown_gender": total_unknown_gender,
+            "total_consumables": sorted_total_consumables,
+            "total_drugs": sorted_total_drugs,
         }
 
     async def _build_tabs(self, missions_list: list[Mission]) -> None:
@@ -302,6 +344,37 @@ class RegionAnalyzerTab(QWidget):
             ui,
         )
 
+        # Populate total iranian patients
+        ui.total_iranian_patient_field.setText(
+            str(stats["total_iranian_patients"]),
+        )
+
+        # Populate total foreign patients
+        ui.total_foreign_patient_field.setText(
+            str(stats["total_foreign_patients"]),
+        )
+
+        # Populate genders section
+        ui.total_male_patients_field.setText(str(stats["total_male_patients"]))
+        ui.total_female_patients_field.setText(
+            str(stats["total_female_patients"]),
+        )
+        ui.total_unknown_gender_field.setText(
+            str(stats["total_unknown_gender"]),
+        )
+
+        # Populate consumables table
+        self._populate_consumables_table(
+            ui.consumables_list_tableWidget,
+            stats["total_consumables"],
+        )  # type: ignore[arg-type]
+
+        # Populate drugs table
+        self._populate_drugs_table(
+            ui.drugs_list_tableWidget,
+            stats["total_drugs"],
+        )  # type: ignore[arg-type]
+
         return widget  # type: ignore[no-any-return]
 
     def _populate_mission_per_hospital_table(
@@ -357,9 +430,6 @@ class RegionAnalyzerTab(QWidget):
         # Get the table widget
         table_widget: QTableWidget = ui.missions_per_result_tableWidget
 
-        # Clear the table contents
-        table_widget.clearContents()
-
         # Set row count based on the data
         table_widget.setRowCount(len(missions_per_result))
 
@@ -389,3 +459,60 @@ class RegionAnalyzerTab(QWidget):
 
         # Resize columns to fit contents
         table_widget.resizeColumnsToContents()
+
+    def _populate_consumables_table(
+        self,
+        table: QTableWidget,
+        consumables_list: list[tuple[Any, int]],
+    ) -> None:
+
+        table.setRowCount(len(consumables_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["نوع", "تعداد"])
+
+        for row, (name, quantity) in enumerate(consumables_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,
+            )  # type: ignore[attr-defined]
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_drugs_table(self, table: QTableWidget, drugs_list: list[tuple[Any, int]]) -> None:
+
+        table.setRowCount(len(drugs_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["نوع", "تعداد"])
+
+        for row, (name, quantity) in enumerate(drugs_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,
+            )  # type: ignore[attr-defined]
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
