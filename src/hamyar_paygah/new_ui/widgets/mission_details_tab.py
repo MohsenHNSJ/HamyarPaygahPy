@@ -3269,7 +3269,7 @@ class Ui_mission_details_tab:
         self.retranslateUi(mission_details_tab)
 
         self.search_button.setDefault(True)
-        self.mission_data_tab_widget.setCurrentIndex(2)
+        self.mission_data_tab_widget.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(mission_details_tab)
 

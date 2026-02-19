@@ -44,7 +44,7 @@ repos:
 
     # A set of pre-commit hooks for jsonschema validation.
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.1
+    rev: 0.36.2
     hooks:
       # Validate Dependabot Config (v2)
       - id: check-dependabot
@@ -166,7 +166,7 @@ repos:
 
   # A fast, flexible, configuration-based command-line interface for linting Markdown/CommonMark files with the markdownlint library
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.20.0
+    rev: v0.21.0
     hooks:
       - id: markdownlint-cli2
 
