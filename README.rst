@@ -17,7 +17,7 @@ Hamyar Paygah
     * - Tests
       - |nox| |codspeed| |pre-commit-ci| |codecov| |scorecard|
     * - Security
-      - |synk| |sonar-security| |sonar-vulnerabilities| |openssf|
+      - |synk| |sonar-security| |sonar-vulnerabilities| |openssf| |openssf-baseline|
     * - Linters
       - |ruff| |pre-commit| |megalinter| |mypy| |pylint|
     * - Activity
@@ -193,6 +193,10 @@ See the ``LICENSE`` file for full license text and terms.
 .. |openssf| image:: https://www.bestpractices.dev/projects/11675/badge
     :target: openssf-status_
     :alt: Open Source Security Foundation Best Practices Badge
+
+.. |openssf-baseline| image:: https://www.bestpractices.dev/projects/11675/baseline
+    :target: openssf-status_
+    :alt: Open Source Security Foundation Baseline Badge
 
 .. |poetry| image:: https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json
     :target: poetry-website_
