@@ -33,18 +33,125 @@ Hamyar Paygah is an application designed for
 **Emergency Medical Services (EMS) overseers**
 to gather and review information from EMS servers.
 
-This project is intended as **internal tooling** for authorized
-EMS personnel only.
+The system provides structured operational visibility into:
+
+- Mission lists
+- Individual mission details
+- Consumables and drugs used per patient
+- Regional-level usage statistics and equipment trends
+
+The project is intended strictly for **authorized internal EMS** use.
 
 
-Status
-------
+Development Status
+------------------
 
-**Development Status:** Alpha
+**Alpha**
 
-This software is under active development and is not considered stable.
-Features, behavior, data handling, and interfaces may change at any time
-without notice.
+This software is under active development.
+
+Interfaces, behavior, and internal data handling may change without
+backward compatibility guarantees. Deployment should remain internal
+during this phase.
+
+
+Core Capabilities
+-----------------
+
+Current implemented features include:
+
+- Retrieval of mission lists from EMS servers
+- On-demand retrieval of individual mission details
+- Display of consumables and drugs used for each patient
+- Regional analysis of:
+
+  - Number of patients
+  - Equipment usage patterns
+
+- Local caching of retrieved mission data to reduce load on the primary server
+
+No telemetry collection is implemented.
+
+Architecture (High-Level)
+-------------------------
+
+Hamyar Paygah follows a structured desktop architecture:
+
+- Python 3.13 application core
+- Qt-based graphical user interface
+- Direct communication with EMS server endpoints
+- Local caching layer for mission data
+- Packaged as Windows executable via GitHub Actions workflows
+
+The system operates without background services or external telemetry.
+
+Data Handling & Storage
+-----------------------
+
+- Mission data is cached locally to reduce repeated server load.
+- No telemetry or analytics data is transmitted externally.
+- The application does not intentionally log sensitive mission data.
+- Cached data exists solely to improve performance and reduce server strain.
+
+Users are responsible for ensuring lawful and compliant data usage
+within their operational environment.
+
+Authentication & Communication Model
+-------------------------------------
+
+- The user must manually provide the EMS server address.
+- No username, password, or token authentication is required.
+- The EMS server does not provide encryption.
+
+As a result, deployment is intended exclusively within trusted and
+controlled network environments.
+
+Example Workflow
+----------------
+
+1. Launch the application.
+2. Provide the EMS server address.
+3. Retrieve the mission list.
+4. Select an individual mission.
+5. Inspect patient details, drugs, and consumables used.
+6. Review regional equipment and patient statistics.
+
+The interface is designed for operational clarity and structured oversight.
+
+
+Installation
+------------
+
+Prebuilt Windows executable files are published via:
+
+GitHub Releases
+
+Versioning follows Semantic Versioning.
+
+Executables are automatically built using GitHub workflows.
+They are not digitally signed.
+
+Screenshots
+-----------
+
+.. Add application screenshots below this section.
+
+.. image:: .github/SCREENSHOTS/SCREENSHOT_1.png
+   :alt: Application screenshot
+   :align: center
+
+
+Roadmap
+-------
+
+Planned areas of improvement:
+
+- Expanded data analytics capabilities
+- Performance optimizations
+- Stability hardening
+- Potential future support for macOS and Linux
+
+Multi-platform support is not currently a priority.
 
 
 Audience
@@ -57,36 +164,6 @@ This project is intended exclusively for:
 
 It is **not** intended for public use, consumer use, or deployment in
 uncontrolled environments.
-
-
-Technology Stack
-----------------
-
-- Python 3.13
-- Qt (GUI framework)
-
-The project is built and packaged by GitHub workflows and distributed as
-a Windows executable (``.exe``).
-
-
-Installation
-------------
-
-Prebuilt Windows executable files are produced by the project's build process.
-
-No installation via package managers is currently supported.
-Source builds and alternative distribution methods are not guaranteed
-to function or remain supported.
-
-
-Usage
------
-
-Usage documentation is **not yet available**.
-
-Functionality, interfaces, and workflows are subject to change during
-the Alpha phase. No guarantees are made regarding correctness,
-completeness, or fitness for any particular operational purpose.
 
 
 Lawful Use Only
