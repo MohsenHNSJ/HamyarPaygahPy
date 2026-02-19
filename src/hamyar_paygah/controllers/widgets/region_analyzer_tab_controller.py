@@ -366,14 +366,14 @@ class RegionAnalyzerTab(QWidget):
         # Populate consumables table
         self._populate_consumables_table(
             ui.consumables_list_tableWidget,
-            stats["total_consumables"],
-        )  # type: ignore[arg-type]
+            stats["total_consumables"],  # type: ignore[arg-type]
+        )
 
         # Populate drugs table
         self._populate_drugs_table(
             ui.drugs_list_tableWidget,
-            stats["total_drugs"],
-        )  # type: ignore[arg-type]
+            stats["total_drugs"],  # type: ignore[arg-type]
+        )
 
         return widget  # type: ignore[no-any-return]
 
@@ -482,8 +482,8 @@ class RegionAnalyzerTab(QWidget):
             )
 
             quantity_item.setTextAlignment(
-                Qt.AlignCenter,
-            )  # type: ignore[attr-defined]
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
 
             table.setItem(row, 0, name_item)
             table.setItem(row, 1, quantity_item)
@@ -509,8 +509,8 @@ class RegionAnalyzerTab(QWidget):
             )
 
             quantity_item.setTextAlignment(
-                Qt.AlignCenter,
-            )  # type: ignore[attr-defined]
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
 
             table.setItem(row, 0, name_item)
             table.setItem(row, 1, quantity_item)
