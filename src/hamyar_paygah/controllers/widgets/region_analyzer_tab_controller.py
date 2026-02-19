@@ -23,11 +23,14 @@ import hamyar_paygah.new_ui.widgets.region_analyzer_tab as ui_rat
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.models.region_model import Region
+from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.services.missions_list_service import get_missions_list
 from hamyar_paygah.utils.date_utils import convert_persian_q_date_to_gregorian_pythonic_date
 
 if TYPE_CHECKING:
     from datetime import datetime
+
+    from hamyar_paygah.models.mission_details_model import MissionDetails
 
 
 class RegionAnalyzerTab(QWidget):
@@ -217,14 +220,31 @@ class RegionAnalyzerTab(QWidget):
             mission.result for mission in missions_list if mission.result is not None
         ).most_common()
 
+        # Mission details variables
+        total_iranian_patients: int = 0
+        total_foreign_patients: int = 0
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
+        for mission in missions_list:
+            mission_details: MissionDetails = await get_mission_details(
+                str(load_server_address()),
+                mission.id,  # type: ignore[arg-type]
+                mission.patient_id,  # type: ignore[arg-type]
+            )
+
+            # Get iranian and foreign patients count
+            if mission_details.information.iranian_nationality:
+                total_iranian_patients += 1
+            if mission_details.information.foreign_nationality:
+                total_foreign_patients += 1
 
         return {
             "total_patients": total_patients,
             "total_missions": total_missions,
             "missions_per_hospital": missions_per_hospital,
             "missions_per_result": missions_per_result,
+            "total_iranian_patients": total_iranian_patients,
+            "total_foreign_patients": total_foreign_patients,
         }
 
     async def _build_tabs(self, missions_list: list[Mission]) -> None:
