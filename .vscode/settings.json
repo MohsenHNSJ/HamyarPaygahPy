@@ -515,14 +515,6 @@
   "python.analysis.extraPaths": [
     "${workspaceFolder}/",
     "./src",
-    "./src",
-    "./src",
-    "./src",
-    "./src",
-    "./src",
-    "./src",
-    "./src",
-    "./src",
     "./src"
   ],
   "python.analysis.inlayHints.callArgumentNames": "all",

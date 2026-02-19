@@ -55,10 +55,10 @@ nitpick_ignore: set[tuple[str, str]] = {
     (PY_CLASS, "ClientResponse"),  # aiohttp
     (PY_CLASS, "optional"),  # Documentation
     ("py:exc", "exc_class"),  # Exceptions
-    ("py:class", "_Element"),  # C extension and not documented in Python.
-    ("py:class", "etree._Element"),  # C extension.
-    ("py:class", "lxml.etree._Element"),  # C extension.
-    ("py:class", "jdatetime.datetime"),  # C extension.
+    (PY_CLASS, "_Element"),  # C extension and not documented in Python.
+    (PY_CLASS, "etree._Element"),  # C extension.
+    (PY_CLASS, "lxml.etree._Element"),  # C extension.
+    (PY_CLASS, "jdatetime.datetime"),  # C extension.
 }
 # Project name
 project = "Hamyar Paygah"
@@ -99,6 +99,7 @@ intersphinx_mapping: dict[str, tuple[str, None]] = {
     "python": ("https://docs.python.org/3/", None),
     "aiohttp": ("https://docs.aiohttp.org/en/stable/", None),
     "pyside6": ("https://doc.qt.io/qtforpython-6", None),
+    "anyio": ("https://anyio.readthedocs.io/en/stable/", None),
 }
 
 # Add support for nice Not Found 404 pages
