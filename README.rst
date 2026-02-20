@@ -134,9 +134,7 @@ They are not digitally signed.
 Screenshots
 -----------
 
-.. Add application screenshots below this section.
-
-.. image:: .github/SCREENSHOTS/SCREENSHOT_1.png
+.. image:: docs/_static/images/SCREENSHOT_1.png
    :alt: Application screenshot
    :align: center
 
