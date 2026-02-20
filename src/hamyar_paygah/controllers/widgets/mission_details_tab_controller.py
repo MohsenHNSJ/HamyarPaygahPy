@@ -270,83 +270,83 @@ class MissionsDetailsTab(QWidget):
 
     def _populate_times_and_distances_tab(self, mission_details: MissionDetails) -> None:
         """Populates the times and distances tab with data from mission details model."""
-        times_and_distances: TimesAndDistances = mission_details.times_and_distances
+        times: TimesAndDistances = mission_details.times_and_distances
 
         # Text fields
         text_fields = [
-            (self.ui.first_staff_field, times_and_distances.first_staff_code),
-            (self.ui.second_staff_field, times_and_distances.second_staff_code),
-            (self.ui.senior_staff_field, times_and_distances.senior_staff_code),
+            (self.ui.first_staff_field, times.first_staff_code),
+            (self.ui.second_staff_field, times.second_staff_code),
+            (self.ui.senior_staff_field, times.senior_staff_code),
             (
                 self.ui.depart_from_station_odo_field,
-                times_and_distances.depart_from_station_odometer,
+                times.depart_from_station_odometer,
             ),
             (
                 self.ui.mission_received_field,
-                times_and_distances.mission_received_time,
+                times.mission_received_time,
             ),
             (
                 self.ui.overall_mission_distance_field,
-                times_and_distances.overall_mission_distance,
+                times.overall_mission_distance,
             ),
             (
                 self.ui.depart_from_station_time_field,
-                times_and_distances.depart_from_station_time,
+                times.depart_from_station_time,
             ),
-            (self.ui.time_to_depart_field, times_and_distances.time_to_depart),
+            (self.ui.time_to_depart_field, times.time_to_depart),
             (
                 self.ui.arrive_at_emergency_time_field,
-                times_and_distances.arrive_at_emergency_time,
+                times.arrive_at_emergency_time,
             ),
-            (self.ui.time_to_arrive_field, times_and_distances.time_to_arrive),
+            (self.ui.time_to_arrive_field, times.time_to_arrive),
             (
                 self.ui.depart_from_emergency_time_field,
-                times_and_distances.depart_from_emergency_time,
+                times.depart_from_emergency_time,
             ),
             (
                 self.ui.time_at_emergency_field,
-                times_and_distances.time_at_emergency_location,
+                times.time_at_emergency_location,
             ),
             (
                 self.ui.arrive_at_hospital_time_field,
-                times_and_distances.arrive_at_hospital_time,
+                times.arrive_at_hospital_time,
             ),
-            (self.ui.time_to_hospital_field, times_and_distances.time_to_hospital),
+            (self.ui.time_to_hospital_field, times.time_to_hospital),
             (
                 self.ui.deliver_to_hospital_time_field,
-                times_and_distances.deliver_to_hospital_time,
+                times.deliver_to_hospital_time,
             ),
-            (self.ui.time_to_deliver_field, times_and_distances.time_to_deliver),
+            (self.ui.time_to_deliver_field, times.time_to_deliver),
             (
                 self.ui.arrive_at_station_time_field,
-                times_and_distances.arrive_at_station_time,
+                times.arrive_at_station_time,
             ),
             (
                 self.ui.mission_complete_time_field,
-                times_and_distances.mission_complete_time,
+                times.mission_complete_time,
             ),
-            (self.ui.time_to_complete_field, times_and_distances.time_to_complete),
+            (self.ui.time_to_complete_field, times.time_to_complete),
             (
                 self.ui.arrive_at_emergency_odo_field,
-                times_and_distances.arrive_at_emergency_odometer,
+                times.arrive_at_emergency_odometer,
             ),
             (
                 self.ui.arrive_at_hospital_odo_field,
-                times_and_distances.arrive_at_hospital_odometer,
+                times.arrive_at_hospital_odometer,
             ),
             (
                 self.ui.overall_mission_time_field,
-                times_and_distances.overall_mission_time,
+                times.overall_mission_time,
             ),
             (
                 self.ui.arrive_at_station_odo_field,
-                times_and_distances.arrive_at_station_odometer,
+                times.arrive_at_station_odometer,
             ),
             (
                 self.ui.mission_complete_odo_field,
-                times_and_distances.mission_complete_odometer,
+                times.mission_complete_odometer,
             ),
-            (self.ui.refuel_odo_field, times_and_distances.vehicle_refuel_odometer),
+            (self.ui.refuel_odo_field, times.vehicle_refuel_odometer),
         ]
         # Set all text fields
         for field, value in text_fields:
