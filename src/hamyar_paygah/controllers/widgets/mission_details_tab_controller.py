@@ -172,41 +172,25 @@ class MissionsDetailsTab(QWidget):
             int(self.ui.patient_id_line_edit.text()),
         )
 
-        # Populate information tab
-        self._populate_information_tab(mission_details)
+        # Define a list of functions that populate tabs
+        tab_populators = [
+            self._populate_information_tab,
+            self._populate_times_and_distances_tab,
+            self._populate_location_and_emergency_tab,
+            self._populate_symptoms_tab,
+            self._populate_vital_signs_table,
+            self._populate_medical_history_section,
+            self._populate_pupils_lungs_heart_section,
+            self._populate_trauma_types_section,
+            self._populate_medical_actions_section,
+            self._populate_drugs_list_table,
+            self._populate_consumables_list_table,
+            self._populate_medical_center_section,
+        ]
 
-        # Populate times and distances tab
-        self._populate_times_and_distances_tab(mission_details)
-
-        # Populate location and emergency type tab
-        self._populate_location_and_emergency_tab(mission_details)
-
-        # Populate symptoms tab
-        self._populate_symptoms_tab(mission_details)
-
-        # Populate vital sings table
-        self._populate_vital_signs_table(mission_details)
-
-        # Populate medical history section
-        self._populate_medical_history_section(mission_details)
-
-        # Populate pupils lungs heart section
-        self._populate_pupils_lungs_heart_section(mission_details)
-
-        # Populate trauma types section
-        self._populate_trauma_types_section(mission_details)
-
-        # Populate medical actions section
-        self._populate_medical_actions_section(mission_details)
-
-        # Populate drugs list table
-        self._populate_drugs_list_table(mission_details)
-
-        # Populate consumables list table
-        self._populate_consumables_list_table(mission_details)
-
-        # Populate medical center section
-        self._populate_medical_center_section(mission_details)
+        # Iterate through all of them
+        for populator in tab_populators:
+            populator(mission_details)
 
     def _clear_data(self) -> None:
         """Clears all the fields and checkboxes in the UI."""
