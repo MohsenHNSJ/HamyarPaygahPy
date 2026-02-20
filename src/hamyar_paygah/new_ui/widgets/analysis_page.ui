@@ -75,6 +75,26 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QLabel" name="total_vehicle_accident_label">
+        <property name="text">
+         <string>تعداد تصادف:</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::TextFormat::PlainText</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="total_vehicle_accident_field">
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

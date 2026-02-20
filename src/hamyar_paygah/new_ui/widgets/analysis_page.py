@@ -119,6 +119,27 @@ class Ui_analysis_page:
 
         self.horizontalLayout.addWidget(self.patients_count_field)
 
+        self.total_vehicle_accident_label = QLabel(self.section_1)
+        self.total_vehicle_accident_label.setObjectName(
+            "total_vehicle_accident_label",
+        )
+        self.total_vehicle_accident_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout.addWidget(self.total_vehicle_accident_label)
+
+        self.total_vehicle_accident_field = QLineEdit(self.section_1)
+        self.total_vehicle_accident_field.setObjectName(
+            "total_vehicle_accident_field",
+        )
+        self.total_vehicle_accident_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.total_vehicle_accident_field.setReadOnly(True)
+
+        self.horizontalLayout.addWidget(self.total_vehicle_accident_field)
+
         self.verticalLayout.addWidget(self.section_1)
 
         self.section_2 = QWidget(analysis_page)
@@ -457,6 +478,13 @@ class Ui_analysis_page:
             QCoreApplication.translate(
                 "analysis_page",
                 "\u062a\u0639\u062f\u0627\u062f \u0645\u062f\u062f\u062c\u0648:",
+                None,
+            ),
+        )
+        self.total_vehicle_accident_label.setText(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u062a\u0639\u062f\u0627\u062f \u062a\u0635\u0627\u062f\u0641:",
                 None,
             ),
         )

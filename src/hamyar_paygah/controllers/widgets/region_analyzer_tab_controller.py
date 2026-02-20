@@ -229,6 +229,7 @@ class RegionAnalyzerTab(QWidget):
         total_unknown_gender: int = 0
         total_consumables: Counter[Any] = Counter()
         total_drugs: Counter[Any] = Counter()
+        total_vehicle_accident: int = 0
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
         for mission in missions_list:
@@ -262,6 +263,10 @@ class RegionAnalyzerTab(QWidget):
                 if drug.name  # ignore None
             )
 
+            # Get total vehicle accidents
+            if mission_details.location_and_emergency.is_vehicle_accident:
+                total_vehicle_accident += 1
+
         # Sort the consumables list
         sorted_total_consumables = sorted(
             total_consumables.items(),
@@ -287,6 +292,7 @@ class RegionAnalyzerTab(QWidget):
             "total_unknown_gender": total_unknown_gender,
             "total_consumables": sorted_total_consumables,
             "total_drugs": sorted_total_drugs,
+            "total_vehicle_accident": total_vehicle_accident,
         }
 
     async def _build_tabs(self, missions_list: list[Mission]) -> None:
@@ -373,6 +379,11 @@ class RegionAnalyzerTab(QWidget):
         self._populate_drugs_table(
             ui.drugs_list_tableWidget,
             stats["total_drugs"],  # type: ignore[arg-type]
+        )
+
+        # Set total vehicle accidents field
+        ui.total_vehicle_accident_field.setText(
+            str(stats["total_vehicle_accident"]),
         )
 
         return widget  # type: ignore[no-any-return]
