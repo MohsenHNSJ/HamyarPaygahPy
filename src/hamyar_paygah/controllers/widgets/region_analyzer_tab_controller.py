@@ -198,7 +198,7 @@ class RegionAnalyzerTab(QWidget):
 
         return grouped_missions
 
-    async def _summarize_missions(
+    async def _summarize_missions(  # noqa: C901, PLR0912, PLR0915
         self,
         missions_list: list[Mission],
     ) -> dict[str, int | list[tuple[str, int]] | Counter[Any]]:
@@ -230,6 +230,13 @@ class RegionAnalyzerTab(QWidget):
         total_consumables: Counter[Any] = Counter()
         total_drugs: Counter[Any] = Counter()
         total_vehicle_accident: int = 0
+        total_caller_numbers: Counter[Any] = Counter()
+        total_location_types: Counter[Any] = Counter()
+        total_accident_types: Counter[Any] = Counter()
+        total_illness_types: Counter[Any] = Counter()
+        total_vehicle_types: Counter[Any] = Counter()
+        total_injury_types: Counter[Any] = Counter()
+        total_chief_complaints: Counter[Any] = Counter()
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
         for mission in missions_list:
@@ -267,6 +274,45 @@ class RegionAnalyzerTab(QWidget):
             if mission_details.location_and_emergency.is_vehicle_accident:
                 total_vehicle_accident += 1
 
+            # Get total caller numbers
+            total_caller_numbers += Counter(
+                number
+                for number in (
+                    mission_details.information.caller_number,
+                    mission_details.information.backup_number,
+                )
+                if number is not None and number != "Anonymous"
+            )
+
+            # Get total location types
+            location_type = mission_details.location_and_emergency.location_type
+            if location_type is not None:
+                total_location_types[location_type.persian_label] += 1
+
+            # Get total accident types
+            accident_type = mission_details.location_and_emergency.accident_type
+            if accident_type is not None:
+                total_accident_types[accident_type.persian_label] += 1
+
+            # Get total illness types
+            illness_type = mission_details.location_and_emergency.illness_type
+            if illness_type is not None:
+                total_illness_types[illness_type.persian_label] += 1
+
+            # Get total vehicle types
+            vehicle_type = mission_details.location_and_emergency.vehicle_type
+            if vehicle_type is not None:
+                total_vehicle_types[vehicle_type.persian_label] += 1
+
+            # Get total injury types
+            injury_type = mission_details.location_and_emergency.role_in_accident
+            if injury_type is not None:
+                total_injury_types[injury_type.persian_label] += 1
+
+            # Get total chief complaints
+            if mission_details.location_and_emergency.chief_complaint is not None:
+                total_chief_complaints[mission_details.location_and_emergency.chief_complaint] += 1
+
         # Sort the consumables list
         sorted_total_consumables = sorted(
             total_consumables.items(),
@@ -276,6 +322,48 @@ class RegionAnalyzerTab(QWidget):
         # Sort the drugs list
         sorted_total_drugs = sorted(
             total_drugs.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sort caller numbers list
+        sorted_caller_numbers = sorted(
+            total_caller_numbers.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sort location types
+        sorted_location_types = sorted(
+            total_location_types.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sorted accident types
+        sorted_accident_types = sorted(
+            total_accident_types.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sorted illness types
+        sorted_illness_types = sorted(
+            total_illness_types.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sorted vehicle types
+        sorted_vehicle_types = sorted(
+            total_vehicle_types.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sorted injury types
+        sorted_injury_types = sorted(
+            total_injury_types.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+        # Sorted chief complaints
+        sorted_chief_complaints = sorted(
+            total_chief_complaints.items(),
             key=lambda x: x[1],
             reverse=True,
         )
@@ -293,6 +381,13 @@ class RegionAnalyzerTab(QWidget):
             "total_consumables": sorted_total_consumables,
             "total_drugs": sorted_total_drugs,
             "total_vehicle_accident": total_vehicle_accident,
+            "total_caller_numbers": sorted_caller_numbers,
+            "total_location_types": sorted_location_types,
+            "total_accident_types": sorted_accident_types,
+            "total_illness_types": sorted_illness_types,
+            "total_vehicle_types": sorted_vehicle_types,
+            "total_injury_types": sorted_injury_types,
+            "total_chief_complaints": sorted_chief_complaints,
         }
 
     async def _build_tabs(self, missions_list: list[Mission]) -> None:
@@ -384,6 +479,48 @@ class RegionAnalyzerTab(QWidget):
         # Set total vehicle accidents field
         ui.total_vehicle_accident_field.setText(
             str(stats["total_vehicle_accident"]),
+        )
+
+        # Populate caller numbers table
+        self._populate_caller_numbers_table(
+            ui.caller_numbers_tableWidget,
+            stats["total_caller_numbers"],  # type: ignore[arg-type]
+        )
+
+        # Populate location types table
+        self._populate_location_types_table(
+            ui.missions_per_type_of_location_tableWidget,
+            stats["total_location_types"],  # type: ignore[arg-type]
+        )
+
+        # Populate accident types table
+        self._populate_accident_types_table(
+            ui.missions_per_accident_type_tableWidget,
+            stats["total_accident_types"],  # type: ignore[arg-type]
+        )
+
+        # Populate illness types table
+        self._populate_illness_types_table(
+            ui.missions_per_illness_type_tableWidget,
+            stats["total_illness_types"],  # type: ignore[arg-type]
+        )
+
+        # Populate vehicle types table
+        self._populate_vehicle_types_table(
+            ui.missions_per_vehicle_type_tableWidget,
+            stats["total_vehicle_types"],  # type: ignore[arg-type]
+        )
+
+        # Populate injury types table
+        self._populate_injury_types_table(
+            ui.missions_per_injured_type_tableWidget,
+            stats["total_injury_types"],  # type: ignore[arg-type]
+        )
+
+        # Populate chief complaints table
+        self._populate_chief_complaints_table(
+            ui.missions_per_chief_complain_tableWidget,
+            stats["total_chief_complaints"],  # type: ignore[arg-type]
         )
 
         return widget  # type: ignore[no-any-return]
@@ -508,6 +645,218 @@ class RegionAnalyzerTab(QWidget):
         table.setHorizontalHeaderLabels(["نوع", "تعداد"])
 
         for row, (name, quantity) in enumerate(drugs_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_caller_numbers_table(
+        self,
+        table: QTableWidget,
+        numbers_list: list[tuple[Any, int]],
+    ) -> None:
+
+        table.setRowCount(len(numbers_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["شماره", "تعداد"])
+
+        for row, (name, quantity) in enumerate(numbers_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_location_types_table(
+        self,
+        table: QTableWidget,
+        location_types_list: list[tuple[Any, int]],
+    ) -> None:
+
+        table.setRowCount(len(location_types_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["نوع محل فوریت", "تعداد"])
+
+        for row, (name, quantity) in enumerate(location_types_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_accident_types_table(
+        self,
+        table: QTableWidget,
+        accident_types_list: list[tuple[Any, int]],
+    ) -> None:
+        table.setRowCount(len(accident_types_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["نوع حادثه", "تعداد"])
+
+        for row, (name, quantity) in enumerate(accident_types_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_illness_types_table(
+        self,
+        table: QTableWidget,
+        illness_types_list: list[tuple[Any, int]],
+    ) -> None:
+        table.setRowCount(len(illness_types_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["نوع بیماری", "تعداد"])
+
+        for row, (name, quantity) in enumerate(illness_types_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_vehicle_types_table(
+        self,
+        table: QTableWidget,
+        vehicle_types_list: list[tuple[Any, int]],
+    ) -> None:
+        table.setRowCount(len(vehicle_types_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["نوع خودرو", "تعداد"])
+
+        for row, (name, quantity) in enumerate(vehicle_types_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_injury_types_table(
+        self,
+        table: QTableWidget,
+        injury_types_list: list[tuple[Any, int]],
+    ) -> None:
+        table.setRowCount(len(injury_types_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["نقش مصدوم", "تعداد"])
+
+        for row, (name, quantity) in enumerate(injury_types_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_chief_complaints_table(
+        self,
+        table: QTableWidget,
+        chief_complaints_list: list[tuple[Any, int]],
+    ) -> None:
+        table.setRowCount(len(chief_complaints_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["شکایت اصلی", "تعداد"])
+
+        for row, (name, quantity) in enumerate(chief_complaints_list):
             name_item = QTableWidgetItem(name)
             name_item.setTextAlignment(
                 Qt.AlignCenter,  # type: ignore[attr-defined]
