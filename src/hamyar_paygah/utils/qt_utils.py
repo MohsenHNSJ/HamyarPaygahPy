@@ -1,6 +1,7 @@
 """Utility functions related to Qt UI."""
 
 # pylint: disable=E0611
+from datetime import date, time, timedelta
 from enum import Enum
 
 from PySide6.QtWidgets import QCheckBox, QLineEdit, QPlainTextEdit
@@ -15,7 +16,10 @@ def set_checkbox(checkbox: QCheckBox, *, value: bool) -> None:
     checkbox.setEnabled(value)
 
 
-def set_textfield(textfield: QLineEdit | QPlainTextEdit, value: int | str | None) -> None:
+def set_textfield(
+    textfield: QLineEdit | QPlainTextEdit,
+    value: int | str | timedelta | time | date | None,
+) -> None:
     """Sets the text field with value, if None or zero, disables it."""
     if (isinstance(value, int) and value != 0) or value is not None:
         if isinstance(textfield, QLineEdit):

@@ -37,6 +37,9 @@ if TYPE_CHECKING:
 
     from hamyar_paygah.models.mission_details_submodels.information_model import Information
     from hamyar_paygah.models.mission_details_submodels.mission_result_model import MissionResult
+    from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
+        TimesAndDistances,
+    )
 # endregion imports
 
 # region constants
@@ -224,7 +227,7 @@ class MissionsDetailsTab(QWidget):
         info: Information = mission_details.information
         result: MissionResult = mission_details.result
 
-        # Test fields
+        # Text fields
         text_fields = [
             (self.ui.patient_name_field, info.patient_name),
             (self.ui.age_field, info.full_age),
@@ -265,207 +268,99 @@ class MissionsDetailsTab(QWidget):
         )
         set_enum_textfield(self.ui.mission_result_field, result.result)
 
-    def _populate_times_and_distances_tab(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
+    def _populate_times_and_distances_tab(self, mission_details: MissionDetails) -> None:
         """Populates the times and distances tab with data from mission details model."""
-        # Set first staff field
-        self.ui.first_staff_field.setText(
-            str(mission_details.times_and_distances.first_staff_code),
-        )
+        times_and_distances: TimesAndDistances = mission_details.times_and_distances
 
-        # Set mission date field
+        # Text fields
+        text_fields = [
+            (self.ui.first_staff_field, times_and_distances.first_staff_code),
+            (self.ui.second_staff_field, times_and_distances.second_staff_code),
+            (self.ui.senior_staff_field, times_and_distances.senior_staff_code),
+            (
+                self.ui.depart_from_station_odo_field,
+                times_and_distances.depart_from_station_odometer,
+            ),
+            (
+                self.ui.mission_received_field,
+                times_and_distances.mission_received_time,
+            ),
+            (
+                self.ui.overall_mission_distance_field,
+                times_and_distances.overall_mission_distance,
+            ),
+            (
+                self.ui.depart_from_station_time_field,
+                times_and_distances.depart_from_station_time,
+            ),
+            (self.ui.time_to_depart_field, times_and_distances.time_to_depart),
+            (
+                self.ui.arrive_at_emergency_time_field,
+                times_and_distances.arrive_at_emergency_time,
+            ),
+            (self.ui.time_to_arrive_field, times_and_distances.time_to_arrive),
+            (
+                self.ui.depart_from_emergency_time_field,
+                times_and_distances.depart_from_emergency_time,
+            ),
+            (
+                self.ui.time_at_emergency_field,
+                times_and_distances.time_at_emergency_location,
+            ),
+            (
+                self.ui.arrive_at_hospital_time_field,
+                times_and_distances.arrive_at_hospital_time,
+            ),
+            (self.ui.time_to_hospital_field, times_and_distances.time_to_hospital),
+            (
+                self.ui.deliver_to_hospital_time_field,
+                times_and_distances.deliver_to_hospital_time,
+            ),
+            (self.ui.time_to_deliver_field, times_and_distances.time_to_deliver),
+            (
+                self.ui.arrive_at_station_time_field,
+                times_and_distances.arrive_at_station_time,
+            ),
+            (
+                self.ui.mission_complete_time_field,
+                times_and_distances.mission_complete_time,
+            ),
+            (self.ui.time_to_complete_field, times_and_distances.time_to_complete),
+            (
+                self.ui.arrive_at_emergency_odo_field,
+                times_and_distances.arrive_at_emergency_odometer,
+            ),
+            (
+                self.ui.arrive_at_hospital_odo_field,
+                times_and_distances.arrive_at_hospital_odometer,
+            ),
+            (
+                self.ui.overall_mission_time_field,
+                times_and_distances.overall_mission_time,
+            ),
+            (
+                self.ui.arrive_at_station_odo_field,
+                times_and_distances.arrive_at_station_odometer,
+            ),
+            (
+                self.ui.mission_complete_odo_field,
+                times_and_distances.mission_complete_odometer,
+            ),
+            (self.ui.refuel_odo_field, times_and_distances.vehicle_refuel_odometer),
+        ]
+        # Set all text fields
+        for field, value in text_fields:
+            set_textfield(field, value)
+
+        # Special cases
         jalali_mission_date: jdatetime.datetime | None = convert_gregorian_date_to_persian_date(
             mission_details.times_and_distances.mission_date,
         )
         if jalali_mission_date is not None:
-            self.ui.mission_date_field.setText(
-                str(jalali_mission_date.date()),
+            set_textfield(
+                self.ui.mission_date_field,
+                jalali_mission_date.date(),
             )
-
-        # Set second staff field
-        if mission_details.times_and_distances.second_staff_code != 0:
-            self.ui.second_staff_field.setText(
-                str(mission_details.times_and_distances.second_staff_code),
-            )
-        else:
-            self.ui.second_staff_field.setText("بدون پرسنل دوم")
-            self.ui.second_staff_field.setEnabled(False)
-
-        # Set senior staff field
-        self.ui.senior_staff_field.setText(
-            str(mission_details.times_and_distances.senior_staff_code),
-        )
-
-        # Set depart from station ODO
-        if mission_details.times_and_distances.depart_from_station_odometer != 0:
-            self.ui.depart_from_station_odo_field.setText(
-                str(mission_details.times_and_distances.depart_from_station_odometer),
-            )
-        else:
-            self.ui.depart_from_station_odo_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.depart_from_station_odo_field.setEnabled(False)
-
-        # Set mission received time
-        self.ui.mission_received_field.setText(
-            str(mission_details.times_and_distances.mission_received_time),
-        )
-
-        # Set overall mission distance
-        if mission_details.times_and_distances.overall_mission_distance != 0:
-            self.ui.overall_mission_distance_field.setText(
-                str(mission_details.times_and_distances.overall_mission_distance),
-            )
-        else:
-            self.ui.overall_mission_distance_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.overall_mission_distance_field.setEnabled(False)
-
-        # Set depart from station time
-        if mission_details.times_and_distances.depart_from_station_time is not None:
-            self.ui.depart_from_station_time_field.setText(
-                str(mission_details.times_and_distances.depart_from_station_time),
-            )
-        else:
-            self.ui.depart_from_station_time_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.depart_from_station_time_field.setEnabled(False)
-
-        # Set time to depart
-        if mission_details.times_and_distances.time_to_depart is not None:
-            self.ui.time_to_depart_field.setText(
-                str(mission_details.times_and_distances.time_to_depart),
-            )
-        else:
-            self.ui.time_to_depart_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.time_to_depart_field.setEnabled(False)
-
-        # Set arrive at emergency time
-        self.ui.arrive_at_emergency_time_field.setText(
-            str(mission_details.times_and_distances.arrive_at_emergency_time),
-        )
-
-        # Set time to arrive
-        if mission_details.times_and_distances.time_to_arrive is not None:
-            self.ui.time_to_arrive_field.setText(
-                str(mission_details.times_and_distances.time_to_arrive),
-            )
-        else:
-            self.ui.time_to_arrive_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.time_to_arrive_field.setEnabled(False)
-
-        # Set depart from emergency time
-        self.ui.depart_from_emergency_time_field.setText(
-            str(mission_details.times_and_distances.depart_from_emergency_time),
-        )
-
-        # Set time at emergency
-        self.ui.time_at_emergency_field.setText(
-            str(mission_details.times_and_distances.time_at_emergency_location),
-        )
-
-        # Set arrive at hospital time
-        if mission_details.times_and_distances.arrive_at_hospital_time is not None:
-            self.ui.arrive_at_hospital_time_field.setText(
-                str(mission_details.times_and_distances.arrive_at_hospital_time),
-            )
-        else:
-            self.ui.arrive_at_hospital_time_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.arrive_at_hospital_time_field.setEnabled(False)
-
-        # Set time to hospital
-        if mission_details.times_and_distances.time_to_hospital is not None:
-            self.ui.time_to_hospital_field.setText(
-                str(mission_details.times_and_distances.time_to_hospital),
-            )
-        else:
-            self.ui.time_to_hospital_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.time_to_hospital_field.setEnabled(False)
-
-        # Set deliver to hospital time
-        if mission_details.times_and_distances.deliver_to_hospital_time is not None:
-            self.ui.deliver_to_hospital_time_field.setText(
-                str(mission_details.times_and_distances.deliver_to_hospital_time),
-            )
-        else:
-            self.ui.deliver_to_hospital_time_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.deliver_to_hospital_time_field.setEnabled(False)
-
-        # Set time to deliver
-        if mission_details.times_and_distances.time_to_deliver is not None:
-            self.ui.time_to_deliver_field.setText(
-                str(mission_details.times_and_distances.time_to_deliver),
-            )
-        else:
-            self.ui.time_to_deliver_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.time_to_deliver_field.setEnabled(False)
-
-        # Set arrive at station time
-        self.ui.arrive_at_station_time_field.setText(
-            str(mission_details.times_and_distances.arrive_at_station_time),
-        )
-
-        # Set mission complete time
-        self.ui.mission_complete_time_field.setText(
-            str(mission_details.times_and_distances.mission_complete_time),
-        )
-
-        # Set time to complete
-        self.ui.time_to_complete_field.setText(
-            str(mission_details.times_and_distances.time_to_complete),
-        )
-
-        # Set arrive at emergency ODO
-        if mission_details.times_and_distances.arrive_at_emergency_odometer != 0:
-            self.ui.arrive_at_emergency_odo_field.setText(
-                str(mission_details.times_and_distances.arrive_at_emergency_odometer),
-            )
-        else:
-            self.ui.arrive_at_emergency_odo_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.arrive_at_emergency_odo_field.setEnabled(False)
-
-        # Set arrive at hospital ODO
-        if mission_details.times_and_distances.arrive_at_hospital_odometer != 0:
-            self.ui.arrive_at_hospital_odo_field.setText(
-                str(mission_details.times_and_distances.arrive_at_hospital_odometer),
-            )
-        else:
-            self.ui.arrive_at_hospital_odo_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.arrive_at_hospital_odo_field.setEnabled(False)
-
-        # Set overall mission time
-        self.ui.overall_mission_time_field.setText(
-            str(mission_details.times_and_distances.overall_mission_time),
-        )
-
-        # Set arrive at station ODO
-        self.ui.arrive_at_station_odo_field.setText(
-            str(mission_details.times_and_distances.arrive_at_station_odometer),
-        )
-
-        # Set mission complete ODO
-        self.ui.mission_complete_odo_field.setText(
-            str(mission_details.times_and_distances.mission_complete_odometer),
-        )
-
-        # Set refuel ODO
-        if mission_details.times_and_distances.vehicle_refuel_odometer != 0:
-            self.ui.refuel_odo_field.setText(
-                str(mission_details.times_and_distances.vehicle_refuel_odometer),
-            )
-        else:
-            self.ui.refuel_odo_field.setText("سوختگیری انجام نشده")
-            self.ui.refuel_odo_field.setEnabled(False)
 
     def _populate_location_and_emergency_tab(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912
         """Populates the location and emergency tab with data from mission details model."""
