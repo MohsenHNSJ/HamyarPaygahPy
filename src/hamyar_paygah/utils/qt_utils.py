@@ -21,7 +21,7 @@ def set_textfield(
     value: int | str | timedelta | time | date | None,
 ) -> None:
     """Sets the text field with value, if None or zero, disables it."""
-    if (isinstance(value, int) and value != 0) or value is not None:
+    if value is not None and (not isinstance(value, int) or value != 0):
         if isinstance(textfield, QLineEdit):
             textfield.setText(str(value))
         else:
