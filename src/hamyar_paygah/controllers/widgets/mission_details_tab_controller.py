@@ -29,10 +29,14 @@ from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model imp
 )
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_date
+from hamyar_paygah.utils.qt_utils import set_checkbox, set_enum_textfield, set_textfield
 from hamyar_paygah.view_models.consumables_table_model import ConsumablesTableModel
 
 if TYPE_CHECKING:
     import jdatetime  # type: ignore[import-untyped]
+
+    from hamyar_paygah.models.mission_details_submodels.information_model import Information
+    from hamyar_paygah.models.mission_details_submodels.mission_result_model import MissionResult
 # endregion imports
 
 # region constants
@@ -231,127 +235,51 @@ class MissionsDetailsTab(QWidget):
             table_widget.clearContents()
             table_widget.setEnabled(True)
 
-    def _set_checkbox(self, checkbox: QCheckBox, *, value: bool) -> None:
-        """Sets the checkbox state and enables it if value is True, otherwise disables it."""
-        checkbox.setChecked(value)
-        checkbox.setEnabled(value)
-
-    def _populate_information_tab(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
+    def _populate_information_tab(self, mission_details: MissionDetails) -> None:
         """Populates the information tab with data of the mission details model."""
-        # Populate the name field
-        self.ui.patient_name_field.setText(
-            mission_details.information.patient_name,
-        )
+        info: Information = mission_details.information
+        result: MissionResult = mission_details.result
 
-        # Populate age field
-        self.ui.age_field.setText(mission_details.information.full_age)
+        # Test fields
+        text_fields = [
+            (self.ui.patient_name_field, info.patient_name),
+            (self.ui.age_field, info.full_age),
+            (self.ui.national_code_field, info.national_code),
+            (self.ui.document_serial_number_field, info.document_serial_number),
+            (self.ui.caller_number_field, info.caller_number),
+            (self.ui.backup_number_field, info.backup_number),
+            (self.ui.ambulance_code_field, info.ambulance_code),
+            (self.ui.base_station_field, info.province),
+            (self.ui.hospital_name_field, result.hospital_name),
+            (self.ui.refusal_form_code_field, result.refusal_form_code),
+            (self.ui.mission_summary_field, info.summary),
+        ]
+        # Set all text fields
+        for field, value in text_fields:
+            set_textfield(field, value)
 
-        # Set nationality checkbox
-        if mission_details.information.iranian_nationality:
-            self.ui.iranian_nationality_checkBox.setChecked(True)
-            self.ui.foreign_nationality_checkBox.setEnabled(False)
-        else:
-            self.ui.foreign_nationality_checkBox.setChecked(True)
-            self.ui.iranian_nationality_checkBox.setEnabled(False)
+        # Checkboxes
+        checkbox_fields = [
+            (self.ui.iranian_nationality_checkBox, info.iranian_nationality),
+            (self.ui.foreign_nationality_checkBox, info.foreign_nationality),
+            (self.ui.is_male_checkBox, info.is_male_gender),
+            (self.ui.is_female_checkBox, info.is_female_gender),
+            (self.ui.is_gender_unknown_checkbox, info.is_unknown_gender),
+        ]
+        # Set all checkboxes
+        for checkbox, value in checkbox_fields:
+            set_checkbox(checkbox, value=value)
 
-        # Set gender checkbox
-        if mission_details.information.is_male_gender:
-            self.ui.is_male_checkBox.setChecked(True)
-            self.ui.is_female_checkBox.setEnabled(False)
-            self.ui.is_gender_unknown_checkbox.setEnabled(False)
-        elif mission_details.information.is_female_gender:
-            self.ui.is_female_checkBox.setChecked(True)
-            self.ui.is_male_checkBox.setEnabled(False)
-            self.ui.is_gender_unknown_checkbox.setEnabled(False)
-        elif mission_details.information.is_unknown_gender:
-            self.ui.is_gender_unknown_checkbox.setChecked(True)
-            self.ui.is_female_checkBox.setEnabled(False)
-            self.ui.is_male_checkBox.setEnabled(False)
-
-        # Set national code field
-        if mission_details.information.national_code != 0:
-            self.ui.national_code_field.setText(
-                str(mission_details.information.national_code),
-            )
-        else:
-            self.ui.national_code_field.setText(NOT_PROVIDED_PERSIAN_TEXT)
-            self.ui.national_code_field.setEnabled(False)
-
-        # Set document serial number field
-        self.ui.document_serial_number_field.setText(
-            mission_details.information.document_serial_number,
-        )
-
-        # Set caller number field
-        if mission_details.information.caller_number is not None:
-            self.ui.caller_number_field.setText(
-                mission_details.information.caller_number,
-            )
-        else:
-            self.ui.caller_number_field.setText(NOT_PROVIDED_PERSIAN_TEXT)
-            self.ui.caller_number_field.setEnabled(False)
-
-        # Set backup number field
-        if mission_details.information.backup_number is not None:
-            self.ui.backup_number_field.setText(
-                mission_details.information.backup_number,
-            )
-        else:
-            self.ui.backup_number_field.setText(NOT_PROVIDED_PERSIAN_TEXT)
-            self.ui.backup_number_field.setEnabled(False)
-
-        # Set ambulance code field
-        self.ui.ambulance_code_field.setText(
-            str(mission_details.information.ambulance_code),
-        )
-
-        # Set document request time field
-        self.ui.last_update_field.setText(
+        # Special cases
+        set_textfield(
+            self.ui.last_update_field,
             str(
                 convert_gregorian_date_to_persian_date(
-                    mission_details.information.document_request_time,
+                    info.document_request_time,
                 ),
             ),
         )
-
-        # Set province field
-        self.ui.base_station_field.setText(
-            mission_details.information.province,
-        )
-
-        # Set summary field
-        self.ui.mission_summary_field.setPlainText(
-            str(mission_details.information.summary),
-        )
-
-        # Set mission result field
-        if mission_details.result.result is not None:
-            self.ui.mission_result_field.setText(
-                mission_details.result.result.persian_label,
-            )
-        else:
-            self.ui.mission_result_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.mission_result_field.setEnabled(False)
-
-        # Set hospital name field
-        if mission_details.result.hospital_name is not None:
-            self.ui.hospital_name_field.setText(
-                mission_details.result.hospital_name,
-            )
-        else:
-            self.ui.hospital_name_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.hospital_name_field.setEnabled(False)
-
-        # Set refusal form code field
-        if mission_details.result.refusal_form_code is not None:
-            self.ui.refusal_form_code_field.setText(
-                mission_details.result.refusal_form_code,
-            )
-        else:
-            self.ui.refusal_form_code_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.refusal_form_code_field.setEnabled(False)
+        set_enum_textfield(self.ui.mission_result_field, result.result)
 
     def _populate_times_and_distances_tab(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
         """Populates the times and distances tab with data from mission details model."""
@@ -1016,109 +944,109 @@ class MissionsDetailsTab(QWidget):
             )
 
         # Set diseases checkboxes
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_cardiac_disease_checkBox,
             value=mission_details.medical_history.has_cardiac_disease,
         )
 
         # Set hypertension checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_hypertension_checkBox,
             value=mission_details.medical_history.has_hypertension,
         )
 
         # Set substance abuse checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_substance_abuse_checkBox,
             value=mission_details.medical_history.has_substance_abuse,
         )
 
         # Set disability checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_disability_checkBox,
             value=mission_details.medical_history.has_disability,
         )
 
         # Set asthma checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_asthma_checkBox,
             value=mission_details.medical_history.has_asthma,
         )
 
         # Set stroke history checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_stroke_history_checkBox,
             value=mission_details.medical_history.has_stroke_history,
         )
 
         # Set psychiatric disorder checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_psychiatric_disorder_checkBox,
             value=mission_details.medical_history.has_psychiatric_disorder,
         )
 
         # Set prior trauma checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_prior_trauma_checkBox,
             value=mission_details.medical_history.has_prior_trauma,
         )
 
         # Set surgical history checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_surgical_history_checkBox,
             value=mission_details.medical_history.has_surgical_history,
         )
 
         # Set gastrointestinal disease checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_gastrointestinal_disease_checkBox,
             value=mission_details.medical_history.has_gastrointestinal_disease,
         )
 
         # Set renal disease checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_renal_disease_checkBox,
             value=mission_details.medical_history.has_renal_disease,
         )
 
         # Set seizure disorder checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_seizure_disorder_checkBox,
             value=mission_details.medical_history.has_seizure_disorder,
         )
 
         # Set infectious disease checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_infectious_disease_checkBox,
             value=mission_details.medical_history.has_infectious_disease,
         )
 
         # Set diabetes checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_diabetes_checkBox,
             value=mission_details.medical_history.has_diabetes,
         )
 
         # Set malignancy history checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_malignancy_history_checkBox,
             value=mission_details.medical_history.has_malignancy_history,
         )
 
         # Set special conditions checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_special_conditions_checkBox,
             value=mission_details.medical_history.has_special_conditions,
         )
 
         # Set pulmonary disease checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_pulmonary_disease_checkBox,
             value=mission_details.medical_history.has_pulmonary_disease,
         )
 
         # Set other medical history checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.other_medical_history_checkBox,
             value=mission_details.medical_history.has_other_medical_history,
         )
@@ -1232,97 +1160,97 @@ class MissionsDetailsTab(QWidget):
     def _populate_trauma_types_section(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912, PLR0915
         """Populates the trauma types section by data of mission details."""
         # Set deformity checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_deformity_checkBox,
             value=mission_details.trauma_types.has_deformity,
         )
 
         # Set abrasion checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_abrasion_checkBox,
             value=mission_details.trauma_types.has_abrasion,
         )
 
         # Set tenderness checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_tenderness_checkBox,
             value=mission_details.trauma_types.has_tenderness,
         )
 
         # Set crush injury checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_crush_injury_checkBox,
             value=mission_details.trauma_types.has_crush_injury,
         )
 
         # Set swelling checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_swelling_checkBox,
             value=mission_details.trauma_types.has_swelling,
         )
 
         # Set dislocation checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_dislocation_checkBox,
             value=mission_details.trauma_types.has_dislocation,
         )
 
         # Set contusion checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_contusion_checkBox,
             value=mission_details.trauma_types.has_contusion,
         )
 
         # Set puncture wound checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_puncture_wound_checkBox,
             value=mission_details.trauma_types.has_puncture_wound,
         )
 
         # Set laceration checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_laceration_checkBox,
             value=mission_details.trauma_types.has_laceration,
         )
 
         # Set tear checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_tear_checkBox,
             value=mission_details.trauma_types.has_tear,
         )
 
         # Set amputation checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_amputation_checkBox,
             value=mission_details.trauma_types.has_amputation,
         )
 
         # Set external bleeding checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_external_bleeding_checkBox,
             value=mission_details.trauma_types.has_external_bleeding,
         )
 
         # Set sensory deficit checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_sensory_deficit_checkBox,
             value=mission_details.trauma_types.has_sensory_deficit,
         )
 
         # Set motor deficit checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.has_motor_deficit_checkBox,
             value=mission_details.trauma_types.has_motor_deficit,
         )
 
         # Set penetrating trauma checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.penetrating_trauma_checkBox,
             value=mission_details.trauma_types.has_penetrating_trauma,
         )
 
         # Set blunt trauma checkbox
-        self._set_checkbox(
+        set_checkbox(
             self.ui.blunt_trauma_checkBox,
             value=mission_details.trauma_types.has_blunt_trauma,
         )
@@ -1401,161 +1329,161 @@ class MissionsDetailsTab(QWidget):
     def _populate_medical_actions_section(self, mission_details: MissionDetails) -> None:
         """Populates the medical actions section by data of mission details."""
         # Set suction action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.suction_action_before_checkBox,
             value=mission_details.medical_actions.suction.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.suction_action_after_checkBox,
             value=mission_details.medical_actions.suction.after_ems,
         )
 
         # Set CPR action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.cpr_action_before_checkBox,
             value=mission_details.medical_actions.cpr.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.cpr_action_after_checkBox,
             value=mission_details.medical_actions.cpr.after_ems,
         )
 
         # Set dressing action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.dressing_action_before_checkBox,
             value=mission_details.medical_actions.dressing.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.dressing_action_after_checkBox,
             value=mission_details.medical_actions.dressing.after_ems,
         )
 
         # Set airway tube action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.airway_tube_action_before_checkBox,
             value=mission_details.medical_actions.airway_tube.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.airway_tube_action_after_checkBox,
             value=mission_details.medical_actions.airway_tube.after_ems,
         )
 
         # Set cardiac massage action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.cardiac_massage_action_before_checkBox,
             value=mission_details.medical_actions.cardiac_massage.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.cardiac_massage_action_after_checkBox,
             value=mission_details.medical_actions.cardiac_massage.after_ems,
         )
 
         # Set assisted ventilation action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.assisted_ventilation_action_before_checkBox,
             value=mission_details.medical_actions.assisted_ventilation.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.assisted_ventilation_action_after_checkBox,
             value=mission_details.medical_actions.assisted_ventilation.after_ems,
         )
 
         # Set vital signs assessment action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.vital_sign_action_before_checkBox,
             value=mission_details.medical_actions.vital_signs.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.vital_sign_action_after_checkBox,
             value=mission_details.medical_actions.vital_signs.after_ems,
         )
 
         # Set medical consultation action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.consultation_action_before_checkBox,
             value=mission_details.medical_actions.consultation.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.consultation_action_after_checkBox,
             value=mission_details.medical_actions.consultation.after_ems,
         )
 
         # Set defibrillation action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.biography_action_before_checkBox,
             value=mission_details.medical_actions.biography.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.biography_action_after_checkBox,
             value=mission_details.medical_actions.biography.after_ems,
         )
 
         # Set patient monitoring action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.monitoring_action_before_checkBox,
             value=mission_details.medical_actions.monitoring.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.monitoring_action_after_checkBox,
             value=mission_details.medical_actions.monitoring.after_ems,
         )
 
         # Set IV access action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.iv_action_before_checkBox,
             value=mission_details.medical_actions.iv_access.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.iv_action_after_checkBox,
             value=mission_details.medical_actions.iv_access.after_ems,
         )
 
         # Set oxygen therapy action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.oxygen_action_before_checkBox,
             value=mission_details.medical_actions.oxygen_therapy.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.oxygen_action_after_checkBox,
             value=mission_details.medical_actions.oxygen_therapy.after_ems,
         )
 
         # Set complete bed rest action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.cbr_action_before_checkBox,
             value=mission_details.medical_actions.cbr.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.cbr_action_after_checkBox,
             value=mission_details.medical_actions.cbr.after_ems,
         )
 
         # Set head immobilization action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.head_fix_action_before_checkBox,
             value=mission_details.medical_actions.head_immobilization.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.head_fix_action_after_checkBox,
             value=mission_details.medical_actions.head_immobilization.after_ems,
         )
 
         # Set limb immobilization action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.limb_fix_action_before_checkBox,
             value=mission_details.medical_actions.limb_immobilization.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.limb_fix_action_after_checkBox,
             value=mission_details.medical_actions.limb_immobilization.after_ems,
         )
 
         # Set spinal immobilization action
-        self._set_checkbox(
+        set_checkbox(
             self.ui.spinal_fix_action_before_checkBox,
             value=mission_details.medical_actions.spinal_immobilization.before_ems,
         )
-        self._set_checkbox(
+        set_checkbox(
             self.ui.spinal_fix_action_after_checkBox,
             value=mission_details.medical_actions.spinal_immobilization.after_ems,
         )
