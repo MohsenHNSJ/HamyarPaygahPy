@@ -2,8 +2,11 @@
   "aliveStatusCodes": [
     200,
     203,
+    204,
     301,
-    302
+    302,
+    307,
+    308
   ],
   "ignorePatterns": [
     {
@@ -11,5 +14,7 @@
     }
   ],
   "retryCount": 5,
-  "retryOn429": true
+  "retryOn429": true,
+  "strictSSL": true,
+  "timeout": 1000
 }
