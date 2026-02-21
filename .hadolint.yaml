@@ -3,5 +3,5 @@
 ## Hadolint config file ##
 ##########################
 ignored:
-  - DL3018 # Pin versions in apk add. Instead of apk add <package> use apk add <package>=<version>.
-  - DL3008 # Pin versions in apt-get install.
+  - DL3018 # Ignore APK version pinning. Allows using 'apk add <package>' without specifying version.
+  - DL3008 # Ignore APT version pinning. Allows using 'apt-get install <package>' without specifying version.
