@@ -92,14 +92,22 @@ BS_CRITICAL_HIGH = 250
 # ==============================
 # Blood Pressure (mmHg)
 # ==============================
-BP_WARNING_SYS = 140
+BP_WARNING_SYS_HIGH = 140
 """Systolic blood pressure greater than or equal to this value enters warning range."""
-BP_CRITICAL_SYS = 180
+BP_CRITICAL_SYS_HIGH = 180
 """Systolic blood pressure greater than or equal to this value is considered critical."""
-BP_WARNING_DIA = 90
+BP_WARNING_DIA_HIGH = 90
 """Diastolic blood pressure greater than or equal to this value enters warning range."""
-BP_CRITICAL_DIA = 120
+BP_CRITICAL_DIA_HIGH = 120
 """Diastolic blood pressure greater than or equal to this value is considered critical."""
+BP_WARNING_SYS_LOW = 90
+"""Systolic blood pressure lower than or equal to this value enters warning range."""
+BP_CRITICAL_SYS_LOW = 70
+"""Systolic blood pressure lower than or equal to this value is considered critical."""
+BP_WARNING_DIA_LOW = 60
+"""Diastolic blood pressure lower than or equal to this value enters warning range."""
+BP_CRITICAL_DIA_LOW = 40
+"""Diastolic blood pressure lower than or equal to this value is considered critical."""
 # ==============================
 # Eye GCS
 # ==============================
@@ -464,132 +472,115 @@ class MissionsDetailsTab(QWidget):
         # Set the vertical header labels to the attribute names
         vital_signs_table.setVerticalHeaderLabels(row_labels)
 
-    def _classify_vital_sign(self, row: int, value: int | str | None) -> str:  # noqa: C901, PLR0911, PLR0912
-        """Classifies a vital sign value into normal, warning, or critical state.
+    def _classify_respiratory_rate(self, value: int) -> str:
+        if value <= RR_CRITICAL_LOW or value >= RR_CRITICAL_HIGH:
+            return "critical"
+        if RR_CRITICAL_LOW < value <= RR_WARNING_LOW or RR_NORMAL_HIGH < value <= RR_WARNING_HIGH:
+            return "warning"
+        return "normal"
 
-        The classification is based on predefined adult physiological thresholds.
-        The `row` parameter determines which vital sign is being evaluated,
-        following the fixed row index mapping of the vital signs table.
+    def _classify_pulse(self, value: int) -> str:
+        if value <= PULSE_CRITICAL_LOW or value > PULSE_CRITICAL_HIGH:
+            return "critical"
+        if (
+            PULSE_CRITICAL_LOW < value <= PULSE_WARNING_LOW
+            or PULSE_NORMAL_HIGH < value <= PULSE_CRITICAL_HIGH
+        ):
+            return "warning"
+        return "normal"
 
-        Row index mapping:
-            1: Respiratory rate
-            2: Pulse rate
-            3: Blood pressure (systolic/diastolic string format, e.g. "120/80")
-            4: Blood sugar
-            5: Oxygen saturation (SpO₂)
-            6: Eye GCS
-            7: Verbal GCS
-            8: Motor GCS
-            9: Total Glasgow Coma Scale (GCS)
+    def _classify_blood_pressure(self, value: int | str) -> str:
+        systolic, diastolic = map(int, str(value).split("/"))
+        if (
+            systolic >= BP_CRITICAL_SYS_HIGH
+            or diastolic >= BP_CRITICAL_DIA_HIGH
+            or systolic <= BP_CRITICAL_SYS_LOW
+            or diastolic <= BP_CRITICAL_DIA_LOW
+        ):
+            return "critical"
+        if (
+            systolic >= BP_WARNING_SYS_HIGH
+            or diastolic >= BP_WARNING_DIA_HIGH
+            or systolic <= BP_WARNING_SYS_LOW
+            or diastolic <= BP_WARNING_DIA_LOW
+        ):
+            return "warning"
+        return "normal"
 
-        All other rows default to "normal".
+    def _classify_blood_sugar(self, value: int) -> str:
+        if value < BS_CRITICAL_LOW or value > BS_CRITICAL_HIGH:
+            return "critical"
+        if BS_CRITICAL_LOW <= value <= BS_WARNING_LOW or BS_NORMAL_HIGH < value <= BS_CRITICAL_HIGH:
+            return "warning"
+        return "normal"
 
-        Thresholds are heuristic adult baseline values and may not apply to
-        pediatric patients or specific clinical contexts.
+    def _classify_spo2(self, value: int) -> str:
+        if value < SPO2_CRITICAL:
+            return "critical"
+        if SPO2_CRITICAL <= value <= SPO2_WARNING_HIGH:
+            return "warning"
+        return "normal"
 
-        Args:
-            row (int):
-                The row index corresponding to the vital sign type.
-            value (int | str | None):
-                The measured value. Blood pressure must be provided as a
-                "systolic/diastolic" string. Other numeric values may be
-                provided as int or numeric string. If None, the value is
-                treated as normal.
+    def _classify_eye_gcs(self, value: int) -> str:
+        if value <= EYE_GCS_CRITICAL:
+            return "critical"
+        if EYE_GCS_CRITICAL < value <= EYE_GCS_WARNING:
+            return "warning"
+        return "normal"
 
-        Returns:
-            str:
-                One of:
-                    - "normal": Value within acceptable physiological range.
-                    - "warning": Value moderately outside normal range.
-                    - "critical": Value significantly outside normal range.
-        """
+    def _classify_verbal_gcs(self, value: int) -> str:
+        if value <= VERBAL_GCS_CRITICAL:
+            return "critical"
+        if VERBAL_GCS_CRITICAL < value <= VERBAL_GCS_WARNING:
+            return "warning"
+        return "normal"
+
+    def _classify_motor_gcs(self, value: int) -> str:
+        if value <= MOTOR_GCS_CRITICAL:
+            return "critical"
+        if MOTOR_GCS_CRITICAL < value <= MOTOR_GCS_WARNING:
+            return "warning"
+        return "normal"
+
+    def _classify_gcs_total(self, value: int) -> str:
+        if value <= GCS_CRITICAL:
+            return "critical"
+        if GCS_WARNING_LOW <= value <= GCS_WARNING_HIGH:
+            return "warning"
+        return "normal"
+
+    def _classify_vital_sign(self, row: int, value: int | str | None) -> str:
+        """Classifies a vital sign value into normal, warning, or critical state."""
         # If input is empty, return normal (we only classify registered values,
         # unregistered values are not classified)
         if value is None:
             return "normal"
 
         try:
-            if row == 1:  # Respiratory rate
-                # Get respiratory rate
-                respiratory_rate = int(value)
-                # Check critical range
-                if respiratory_rate <= RR_CRITICAL_LOW or respiratory_rate >= RR_CRITICAL_HIGH:
-                    return "critical"
-                if (
-                    RR_CRITICAL_LOW < respiratory_rate <= RR_WARNING_LOW
-                    or RR_NORMAL_HIGH < respiratory_rate <= RR_WARNING_HIGH
-                ):
-                    return "warning"
+            if row == 3:  # Blood pressure  # noqa: PLR2004
+                return self._classify_blood_pressure(value)
 
-            elif row == 2:  # Pulse  # noqa: PLR2004
-                pulse = int(value)
-                if pulse <= PULSE_CRITICAL_LOW or pulse > PULSE_CRITICAL_HIGH:
-                    return "critical"
-                if (
-                    PULSE_CRITICAL_LOW < pulse <= PULSE_WARNING_LOW
-                    or PULSE_NORMAL_HIGH < pulse <= PULSE_CRITICAL_HIGH
-                ):
-                    return "warning"
+            numeric = int(value)
 
-            elif row == 3:  # Blood pressure  # noqa: PLR2004
-                systolic, diastolic = map(
-                    int,
-                    value.split("/"),  # type: ignore[union-attr]
-                )
-                if systolic >= BP_CRITICAL_SYS or diastolic >= BP_CRITICAL_DIA:
-                    return "critical"
-                if systolic >= BP_WARNING_SYS or diastolic >= BP_WARNING_DIA:
-                    return "warning"
+            classifiers = {
+                1: self._classify_respiratory_rate,
+                2: self._classify_pulse,
+                4: self._classify_blood_sugar,
+                5: self._classify_spo2,
+                6: self._classify_eye_gcs,
+                7: self._classify_verbal_gcs,
+                8: self._classify_motor_gcs,
+                9: self._classify_gcs_total,
+            }
 
-            elif row == 4:  # Blood sugar  # noqa: PLR2004
-                blood_sugar = int(value)
-                if blood_sugar < BS_CRITICAL_LOW or blood_sugar > BS_CRITICAL_HIGH:
-                    return "critical"
-                if (
-                    BS_CRITICAL_LOW <= blood_sugar <= BS_WARNING_LOW
-                    or BS_NORMAL_HIGH < blood_sugar <= BS_CRITICAL_HIGH
-                ):
-                    return "warning"
+            classifier = classifiers.get(row)
+            if classifier is None:
+                return "normal"
 
-            elif row == 5:  # SpO2  # noqa: PLR2004
-                spo2 = int(value)
-                if spo2 < SPO2_CRITICAL:
-                    return "critical"
-                if SPO2_CRITICAL <= spo2 <= SPO2_WARNING_HIGH:
-                    return "warning"
+            return classifier(numeric)
 
-            elif row == 6:  # Eye GCS # noqa: PLR2004
-                eye_gcs = int(value)
-                if eye_gcs <= EYE_GCS_CRITICAL:
-                    return "critical"
-                if EYE_GCS_CRITICAL < eye_gcs <= EYE_GCS_WARNING:
-                    return "warning"
-
-            elif row == 7:  # Verbal GCS  # noqa: PLR2004
-                verbal_gcs = int(value)
-                if verbal_gcs <= VERBAL_GCS_CRITICAL:
-                    return "critical"
-                if VERBAL_GCS_CRITICAL < verbal_gcs <= VERBAL_GCS_WARNING:
-                    return "warning"
-
-            elif row == 8:  # Motor GCS  # noqa: PLR2004
-                motor_gcs = int(value)
-                if motor_gcs <= MOTOR_GCS_CRITICAL:
-                    return "critical"
-                if MOTOR_GCS_CRITICAL < motor_gcs <= MOTOR_GCS_WARNING:
-                    return "warning"
-
-            elif row == 9:  # GCS total  # noqa: PLR2004
-                gcs_total = int(value)
-                if gcs_total <= GCS_CRITICAL:
-                    return "critical"
-                if GCS_WARNING_LOW <= gcs_total <= GCS_WARNING_HIGH:
-                    return "warning"
-
-        except Exception:  # noqa: BLE001 # pylint: disable=broad-except
+        except (ValueError, TypeError):
             return "normal"
-
-        return "normal"
 
     def _populate_vital_signs_table(self, mission_details: MissionDetails) -> None:
         """Populates the vital signs table from mission details data."""
@@ -731,58 +722,21 @@ class MissionsDetailsTab(QWidget):
     def _populate_pupils_lungs_heart_section(self, mission_details: MissionDetails) -> None:
         """Populates the pupils, lungs and heart section by data of mission details."""
         status = mission_details.pupils_lungs_heart
-        # Set pupils status
-        # Set right pupil status
-        if status.pupils.right is not None:
-            set_enum_textfield(
-                self.ui.right_eye_examine_field,
-                status.pupils.right,
-            )
 
-        # Set left pupil status
-        if status.pupils.left is not None:
-            set_enum_textfield(
-                self.ui.left_eye_examine_field,
-                status.pupils.left,
-            )
-
-        # Set lung sounds
-        # Right Lung
-        if status.lungs.right.sound is not None:
-            set_enum_textfield(
-                self.ui.right_lung_sound_field,
-                status.lungs.right.sound,
-            )
-
-        # Left Lung
-        if status.lungs.left.sound is not None:
-            set_enum_textfield(
-                self.ui.left_lung_sound_field,
-                status.lungs.left.sound,
-            )
-
-        # Set breathing rhythm
-        # Right Lung
-        if status.lungs.right.rhythm is not None:
-            set_enum_textfield(
-                self.ui.right_lung_rhythm_field,
-                status.lungs.right.rhythm,
-            )
-
-        # Left Lung
-        if status.lungs.left.rhythm is not None:
-            set_enum_textfield(
-                self.ui.left_lung_rhythm_field,
-                status.lungs.left.rhythm,
-            )
-
-        # Set heart sound
-        if status.heart.sound is not None:
-            set_enum_textfield(self.ui.heart_sound_field, status.heart.sound)
-
-        # Set heart rhythm
-        if status.heart.rhythm is not None:
-            set_enum_textfield(self.ui.heart_rhythm_field, status.heart.rhythm)
+        # Enum text fields
+        enum_text_fields = [
+            (self.ui.right_eye_examine_field, status.pupils.right),
+            (self.ui.left_eye_examine_field, status.pupils.left),
+            (self.ui.right_lung_sound_field, status.lungs.right.sound),
+            (self.ui.left_lung_sound_field, status.lungs.left.sound),
+            (self.ui.right_lung_rhythm_field, status.lungs.right.rhythm),
+            (self.ui.left_lung_rhythm_field, status.lungs.left.rhythm),
+            (self.ui.heart_sound_field, status.heart.sound),
+            (self.ui.heart_rhythm_field, status.heart.rhythm),
+        ]
+        # Set all enum text fields
+        for enum_field, enum_value in enum_text_fields:
+            set_enum_textfield(enum_field, enum_value)
 
     def _populate_trauma_types_section(self, mission_details: MissionDetails) -> None:
         """Populates the trauma types section by data of mission details."""
