@@ -19,7 +19,7 @@ Reporting Method
 
 All security reports must be submitted via email:
 
-**Email:** <MohsenHasanNezhad@outlook.com>
+**Email:** <mohsenhasannezhad@outlook.com>
 
 Reports should include sufficient technical detail to permit verification and
 assessment, including:
