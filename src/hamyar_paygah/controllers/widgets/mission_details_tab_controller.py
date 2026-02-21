@@ -46,12 +46,12 @@ if TYPE_CHECKING:
 # endregion imports
 
 # region constants
-NOT_PROVIDED_PERSIAN_TEXT: str = "ارائه نشده"
-"""Text to show when an information is not provided to EMS"""
 NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
 """Text to show when an information is not yet registered by EMS"""
-NO_BURN_DAMAGE: str = "بدون سوختگی"
-"""Text to show on burn type and percentage when there is no burn damage."""
+IRREGULAR_PERSIAN_TEXT: str = "نامنظم"
+"""Text to show when status is irregular"""
+NORMAL_PERSIAN_TEXT: str = "طبیعی"
+"""Text to show when status is normal"""
 COLOR_WARNING = QColor("#FFF59D")  # soft yellow
 """Color to use for warning values that are approaching critical thresholds."""
 COLOR_CRITICAL = QColor("#EF9A9A")  # soft red
@@ -745,7 +745,7 @@ class MissionsDetailsTab(QWidget):
         if mission_details.pupils_lungs_heart.pupils.right is not None:
             right_pupil_status = mission_details.pupils_lungs_heart.pupils.right
             if right_pupil_status == PupilStatus.NORMAL:
-                self.ui.right_eye_examine_field.setText("طبیعی")
+                self.ui.right_eye_examine_field.setText(NORMAL_PERSIAN_TEXT)
             elif right_pupil_status == PupilStatus.DILATED:
                 self.ui.right_eye_examine_field.setText("گشاد شده")
             elif right_pupil_status == PupilStatus.MIOTIC:
@@ -762,7 +762,7 @@ class MissionsDetailsTab(QWidget):
         if mission_details.pupils_lungs_heart.pupils.left is not None:
             left_pupil_status = mission_details.pupils_lungs_heart.pupils.left
             if left_pupil_status == PupilStatus.NORMAL:
-                self.ui.left_eye_examine_field.setText("طبیعی")
+                self.ui.left_eye_examine_field.setText(NORMAL_PERSIAN_TEXT)
             elif left_pupil_status == PupilStatus.DILATED:
                 self.ui.left_eye_examine_field.setText("گشاد شده")
             elif left_pupil_status == PupilStatus.MIOTIC:
@@ -778,7 +778,7 @@ class MissionsDetailsTab(QWidget):
         if mission_details.pupils_lungs_heart.lungs.right.sound is not None:
             right_lung_sound = mission_details.pupils_lungs_heart.lungs.right.sound
             if right_lung_sound == LungSound.NORMAL:
-                self.ui.right_lung_sound_field.setText("طبیعی")
+                self.ui.right_lung_sound_field.setText(NORMAL_PERSIAN_TEXT)
             elif right_lung_sound == LungSound.RALES:
                 self.ui.right_lung_sound_field.setText("رال")
             elif right_lung_sound == LungSound.WHEEZE:
@@ -790,7 +790,7 @@ class MissionsDetailsTab(QWidget):
         if mission_details.pupils_lungs_heart.lungs.left.sound is not None:
             left_lung_sound = mission_details.pupils_lungs_heart.lungs.left.sound
             if left_lung_sound == LungSound.NORMAL:
-                self.ui.left_lung_sound_field.setText("طبیعی")
+                self.ui.left_lung_sound_field.setText(NORMAL_PERSIAN_TEXT)
             elif left_lung_sound == LungSound.RALES:
                 self.ui.left_lung_sound_field.setText("رال")
             elif left_lung_sound == LungSound.WHEEZE:
@@ -806,7 +806,7 @@ class MissionsDetailsTab(QWidget):
             if breathing_rhythm == BreathingRhythm.REGULAR:
                 self.ui.right_lung_rhythm_field.setText("منظم")
             elif breathing_rhythm == BreathingRhythm.IRREGULAR:
-                self.ui.right_lung_rhythm_field.setText("نامنظم")
+                self.ui.right_lung_rhythm_field.setText(IRREGULAR_PERSIAN_TEXT)
         else:
             self.ui.right_lung_rhythm_field.setText(
                 NOT_REGISTERED_PERSIAN_TEXT,
@@ -818,7 +818,7 @@ class MissionsDetailsTab(QWidget):
             if breathing_rhythm == BreathingRhythm.REGULAR:
                 self.ui.left_lung_rhythm_field.setText("منظم")
             elif breathing_rhythm == BreathingRhythm.IRREGULAR:
-                self.ui.left_lung_rhythm_field.setText("نامنظم")
+                self.ui.left_lung_rhythm_field.setText(IRREGULAR_PERSIAN_TEXT)
         else:
             self.ui.left_lung_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
             self.ui.left_lung_rhythm_field.setEnabled(False)
@@ -827,7 +827,7 @@ class MissionsDetailsTab(QWidget):
         if mission_details.pupils_lungs_heart.heart.sound is not None:
             heart_sound = mission_details.pupils_lungs_heart.heart.sound
             if heart_sound == HeartSound.NORMAL:
-                self.ui.heart_sound_field.setText("طبیعی")
+                self.ui.heart_sound_field.setText(NORMAL_PERSIAN_TEXT)
             elif heart_sound == HeartSound.ABNORMAL:
                 self.ui.heart_sound_field.setText("صدای اضافی")
         else:
@@ -840,7 +840,7 @@ class MissionsDetailsTab(QWidget):
             if heart_rhythm == HeartRhythm.REGULAR:
                 self.ui.heart_rhythm_field.setText("منظم")
             elif heart_rhythm == HeartRhythm.IRREGULAR:
-                self.ui.heart_rhythm_field.setText("نامنظم")
+                self.ui.heart_rhythm_field.setText(IRREGULAR_PERSIAN_TEXT)
         else:
             self.ui.heart_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
             self.ui.heart_rhythm_field.setEnabled(False)
