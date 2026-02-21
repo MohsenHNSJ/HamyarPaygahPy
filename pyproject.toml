@@ -17,6 +17,7 @@ maintainers = [{ name = "MohsenHNSJ", email = "mohsenhasannezhad@outlook.com" }]
 keywords = ["EMS", "Hamyar", "Paygah"]
 license-files = ["LICENSE"]
 classifiers = [
+    "Environment :: X11 Applications :: Qt",
     "Framework :: aiohttp",
     "Framework :: AsyncIO",
     "Framework :: Pydantic :: 2",
@@ -27,6 +28,7 @@ classifiers = [
     "Intended Audience :: End Users/Desktop",
     "Natural Language :: English",
     "Natural Language :: Persian",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
     "Typing :: Typed",
 ]
 dependencies = ["aiohttp == 3.13.3", "anyio == 4.12.1", "lxml == 6.0.2", "jdatetime == 5.2.0", "PySide6 == 6.10.1", "qasync == 0.28.0" ]
