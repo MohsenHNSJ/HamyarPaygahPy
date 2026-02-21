@@ -1,11 +1,14 @@
 """Utility functions related to Qt UI."""
 
 # pylint: disable=E0611
+from collections.abc import Awaitable, Callable
 from datetime import time, timedelta
 from enum import Enum
+from typing import Any, TypeVar, cast
 
 import jdatetime  # type: ignore[import-untyped]
 from PySide6.QtWidgets import QCheckBox, QLineEdit, QPlainTextEdit
+from qasync import asyncSlot  # type: ignore[import-untyped]
 
 NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
 """Text to show when an information is not yet registered by EMS"""
@@ -44,3 +47,11 @@ def set_enum_textfield(textfield: QLineEdit, enum_value: Enum | None) -> None:
     else:
         textfield.setText(NOT_REGISTERED_PERSIAN_TEXT)
         textfield.setEnabled(False)
+
+
+F = TypeVar("F", bound=Callable[..., Awaitable[Any]])
+
+
+def typed_async_slot(*args: Any, **kwargs: Any) -> Callable[[F], F]:  # noqa: ANN401
+    """Fixes the untyped decorator of asyncSlot from qasync module."""
+    return cast("Callable[[F], F]", asyncSlot(*args, **kwargs))

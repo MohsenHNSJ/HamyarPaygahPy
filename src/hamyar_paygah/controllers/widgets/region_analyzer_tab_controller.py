@@ -16,7 +16,6 @@ from PySide6.QtWidgets import (
     QTextEdit,
     QWidget,
 )
-from qasync import asyncSlot  # type: ignore[import-untyped]
 
 import hamyar_paygah.new_ui.widgets.analysis_page as ui_ap
 import hamyar_paygah.new_ui.widgets.region_analyzer_tab as ui_rat
@@ -26,6 +25,7 @@ from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.services.missions_list_service import get_missions_list
 from hamyar_paygah.utils.date_utils import convert_persian_q_date_to_gregorian_pythonic_date
+from hamyar_paygah.utils.qt_utils import typed_async_slot
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -116,7 +116,7 @@ class RegionAnalyzerTab(QWidget):
             # If so, set the from date the same as to date
             self.ui.from_date_picker.setDate(new_date)
 
-    @asyncSlot()  # type: ignore[misc]
+    @typed_async_slot()
     async def on_load_button_clicked(self) -> None:
         """Dynamically load the missions list from the server and build the tabs based on it."""
         # Clear the current data
