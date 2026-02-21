@@ -100,7 +100,7 @@ class RegionAnalyzerTab(QWidget):
             new_date (PySide6.QtCore.QDate): User input date when from date picker is changed.
         """
         # Check if the new date is greater than to date
-        if new_date > self.ui.to_date_picker.date():  # type: ignore[]
+        if new_date.toJulianDay() > self.ui.to_date_picker.date().toJulianDay():
             # If so, set the to date the same as from date
             self.ui.to_date_picker.setDate(new_date)
 
@@ -112,11 +112,11 @@ class RegionAnalyzerTab(QWidget):
             new_date (PySide6.QtCore.QDate): User input date when to date picker is changed.
         """
         # Check if the new date is lower than from date
-        if new_date < self.ui.from_date_picker.date():  # type: ignore[]
+        if new_date.toJulianDay() < self.ui.from_date_picker.date().toJulianDay():
             # If so, set the from date the same as to date
             self.ui.from_date_picker.setDate(new_date)
 
-    @asyncSlot()  # type: ignore[untyped-decorator,misc]
+    @asyncSlot()  # type: ignore[misc]
     async def on_load_button_clicked(self) -> None:
         """Dynamically load the missions list from the server and build the tabs based on it."""
         # Clear the current data
@@ -523,7 +523,7 @@ class RegionAnalyzerTab(QWidget):
             stats["total_chief_complaints"],  # type: ignore[arg-type]
         )
 
-        return widget  # type: ignore[no-any-return]
+        return widget
 
     def _populate_mission_per_hospital_table(
         self,

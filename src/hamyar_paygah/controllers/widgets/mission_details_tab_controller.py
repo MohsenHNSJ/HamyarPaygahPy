@@ -166,7 +166,7 @@ class MissionsDetailsTab(QWidget):
         # Set up drugs list table
         self._setup_drugs_list_table()
 
-    @asyncSlot()  # type: ignore[untyped-decorator,misc]
+    @asyncSlot()  # type: ignore[misc]
     async def on_search_button_clicked(self) -> None:
         """Loads the mission details from server and populates the fields."""
         # Clear the current data
