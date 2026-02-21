@@ -36,6 +36,9 @@ if TYPE_CHECKING:
     import jdatetime  # type: ignore[import-untyped]
 
     from hamyar_paygah.models.mission_details_submodels.information_model import Information
+    from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
+        LocationAndEmergency,
+    )
     from hamyar_paygah.models.mission_details_submodels.mission_result_model import MissionResult
     from hamyar_paygah.models.mission_details_submodels.times_and_distances_model import (
         TimesAndDistances,
@@ -362,235 +365,93 @@ class MissionsDetailsTab(QWidget):
                 jalali_mission_date.date(),
             )
 
-    def _populate_location_and_emergency_tab(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912
+    def _populate_location_and_emergency_tab(self, mission_details: MissionDetails) -> None:
         """Populates the location and emergency tab with data from mission details model."""
-        # Set address field
-        self.ui.address_plain_text_edit.setPlainText(
-            str(mission_details.location_and_emergency.address),
-        )
+        location: LocationAndEmergency = mission_details.location_and_emergency
 
-        # Set chief complaint
-        self.ui.chief_complaint_field.setText(
-            str(mission_details.location_and_emergency.chief_complaint),
-        )
+        # Text fields
+        text_fields = [
+            (self.ui.address_plain_text_edit, location.address),
+            (self.ui.chief_complaint_field, location.chief_complaint),
+            (
+                self.ui.type_of_location_other_info_field,
+                location.location_other_info,
+            ),
+            (
+                self.ui.emergency_other_info_field,
+                location.emergency_type_other_info,
+            ),
+            (
+                self.ui.role_in_accident_other_info_field,
+                location.role_in_accident_other_info,
+            ),
+        ]
+        # Set all text fields
+        for field, value in text_fields:
+            set_textfield(field, value)
 
-        # Set type of location
-        if mission_details.location_and_emergency.location_type is not None:
-            self.ui.type_of_location_field.setText(
-                mission_details.location_and_emergency.location_type.persian_label,
-            )
-        else:
-            self.ui.type_of_location_field.setEnabled(False)
+        # Checkboxes
+        checkbox_fields = [
+            (self.ui.is_vehicle_accident_checkBox, location.is_vehicle_accident),
+        ]
+        # Set all checkboxes
+        for checkbox, check_value in checkbox_fields:
+            set_checkbox(checkbox, value=check_value)
 
-        # Set type of location other info
-        if mission_details.location_and_emergency.location_other_info is not None:
-            self.ui.type_of_location_other_info_field.setText(
-                mission_details.location_and_emergency.location_other_info,
-            )
-        else:
-            self.ui.type_of_location_other_info_field.setEnabled(False)
-
-        # Set accident type
-        if mission_details.location_and_emergency.accident_type is not None:
-            self.ui.accident_type_field.setText(
-                mission_details.location_and_emergency.accident_type.persian_label,
-            )
-        else:
-            self.ui.accident_type_field.setEnabled(False)
-
-        # Set illness type
-        if mission_details.location_and_emergency.illness_type is not None:
-            self.ui.illness_type_field.setText(
-                mission_details.location_and_emergency.illness_type.persian_label,
-            )
-        else:
-            self.ui.illness_type_field.setEnabled(False)
-
-        # Set emergency type other info
-        if mission_details.location_and_emergency.emergency_type_other_info is not None:
-            self.ui.emergency_other_info_field.setText(
-                mission_details.location_and_emergency.emergency_type_other_info,
-            )
-        else:
-            self.ui.emergency_other_info_field.setEnabled(False)
-
-        # Set vehicle accident
-        self.ui.is_vehicle_accident_checkBox.setChecked(
-            mission_details.location_and_emergency.is_vehicle_accident,
-        )
-        self.ui.is_vehicle_accident_checkBox.setEnabled(
-            mission_details.location_and_emergency.is_vehicle_accident,
-        )
-
-        # Set role in accident
-        if mission_details.location_and_emergency.role_in_accident is not None:
-            self.ui.role_in_accident_field.setText(
-                mission_details.location_and_emergency.role_in_accident.persian_label,
-            )
-        else:
-            self.ui.role_in_accident_field.setEnabled(False)
-
-        # Set role in accident other info
-        if mission_details.location_and_emergency.role_in_accident_other_info is not None:
-            self.ui.role_in_accident_other_info_field.setText(
-                mission_details.location_and_emergency.role_in_accident_other_info,
-            )
-        else:
-            self.ui.role_in_accident_other_info_field.setEnabled(False)
-
-        # Set vehicle type
-        if mission_details.location_and_emergency.vehicle_type is not None:
-            self.ui.vehicle_type_field.setText(
-                mission_details.location_and_emergency.vehicle_type.persian_label,
-            )
-        else:
-            self.ui.vehicle_type_field.setEnabled(False)
+        # Enum text fields
+        enum_text_fields = [
+            (self.ui.type_of_location_field, location.location_type),
+            (self.ui.accident_type_field, location.accident_type),
+            (self.ui.illness_type_field, location.illness_type),
+            (self.ui.role_in_accident_field, location.role_in_accident),
+            (self.ui.vehicle_type_field, location.vehicle_type),
+        ]
+        # Set all enum text fields
+        for enum_field, enum_value in enum_text_fields:
+            set_enum_textfield(enum_field, enum_value)
 
     def _populate_symptoms_tab(self, mission_details: MissionDetails) -> None:
         """Populates the symptoms tab from mission details data."""
-        # Set abdominal pain
-        self.ui.has_abdominal_pain_checkbox.setChecked(
-            mission_details.symptoms.has_abdominal_pain,
-        )
-        self.ui.has_abdominal_pain_checkbox.setEnabled(
-            mission_details.symptoms.has_abdominal_pain,
-        )
+        symptoms = mission_details.symptoms
 
-        # Set altered consciousness
-        self.ui.has_altered_consciousness_checkbox.setChecked(
-            mission_details.symptoms.has_altered_consciousness,
-        )
-        self.ui.has_altered_consciousness_checkbox.setEnabled(
-            mission_details.symptoms.has_altered_consciousness,
-        )
+        # Checkboxes
+        checkbox_fields = [
+            (self.ui.has_abdominal_pain_checkbox, symptoms.has_abdominal_pain),
+            (
+                self.ui.has_altered_consciousness_checkbox,
+                symptoms.has_altered_consciousness,
+            ),
+            (self.ui.has_bleeding_checkbox, symptoms.has_bleeding),
+            (self.ui.has_blurred_vision_checkbox, symptoms.has_blurred_vision),
+            (self.ui.has_chest_pain_checkbox, symptoms.has_chest_pain),
+            (self.ui.has_diarrhea_checkbox, symptoms.has_diarrhea),
+            (self.ui.has_dizziness_checkbox, symptoms.has_dizziness),
+            (self.ui.has_double_vision_checkbox, symptoms.has_double_vision),
+            (self.ui.has_fainting_checkbox, symptoms.has_fainting),
+            (self.ui.has_fever_chills_checkbox, symptoms.has_fever_chills),
+            (self.ui.has_headache_checkbox, symptoms.has_headache),
+            (
+                self.ui.has_memory_loss_post_trauma_checkbox,
+                symptoms.has_memory_loss_post_trauma,
+            ),
+            (
+                self.ui.has_sensory_motor_disturbance_checkbox,
+                symptoms.has_sensory_motor_disturbance,
+            ),
+            (
+                self.ui.has_shortness_of_breath_checkbox,
+                symptoms.has_shortness_of_breath,
+            ),
+            (self.ui.has_sweating_checkbox, symptoms.has_sweating),
+            (self.ui.has_vomiting_checkbox, symptoms.has_vomiting),
+            (self.ui.has_weakness_checkBox, symptoms.has_weakness),
+        ]
+        # Set all checkboxes
+        for checkbox, check_value in checkbox_fields:
+            set_checkbox(checkbox, value=check_value)
 
-        # Set bleeding
-        self.ui.has_bleeding_checkbox.setChecked(
-            mission_details.symptoms.has_bleeding,
-        )
-        self.ui.has_bleeding_checkbox.setEnabled(
-            mission_details.symptoms.has_bleeding,
-        )
-
-        # Set blurred vision
-        self.ui.has_blurred_vision_checkbox.setChecked(
-            mission_details.symptoms.has_blurred_vision,
-        )
-        self.ui.has_blurred_vision_checkbox.setEnabled(
-            mission_details.symptoms.has_blurred_vision,
-        )
-
-        # Set chest pain
-        self.ui.has_chest_pain_checkbox.setChecked(
-            mission_details.symptoms.has_chest_pain,
-        )
-        self.ui.has_chest_pain_checkbox.setEnabled(
-            mission_details.symptoms.has_chest_pain,
-        )
-
-        # Set diarrhea
-        self.ui.has_diarrhea_checkbox.setChecked(
-            mission_details.symptoms.has_diarrhea,
-        )
-        self.ui.has_diarrhea_checkbox.setEnabled(
-            mission_details.symptoms.has_diarrhea,
-        )
-
-        # Set dizziness
-        self.ui.has_dizziness_checkbox.setChecked(
-            mission_details.symptoms.has_dizziness,
-        )
-        self.ui.has_dizziness_checkbox.setEnabled(
-            mission_details.symptoms.has_dizziness,
-        )
-
-        # Set double vision
-        self.ui.has_double_vision_checkbox.setChecked(
-            mission_details.symptoms.has_double_vision,
-        )
-        self.ui.has_double_vision_checkbox.setEnabled(
-            mission_details.symptoms.has_double_vision,
-        )
-
-        # Set fainting
-        self.ui.has_fainting_checkbox.setChecked(
-            mission_details.symptoms.has_fainting,
-        )
-        self.ui.has_fainting_checkbox.setEnabled(
-            mission_details.symptoms.has_fainting,
-        )
-
-        # Set fever chills
-        self.ui.has_fever_chills_checkbox.setChecked(
-            mission_details.symptoms.has_fever_chills,
-        )
-        self.ui.has_fever_chills_checkbox.setEnabled(
-            mission_details.symptoms.has_fever_chills,
-        )
-
-        # Set headache
-        self.ui.has_headache_checkbox.setChecked(
-            mission_details.symptoms.has_headache,
-        )
-        self.ui.has_headache_checkbox.setEnabled(
-            mission_details.symptoms.has_headache,
-        )
-
-        # Set memory loss
-        self.ui.has_memory_loss_post_trauma_checkbox.setChecked(
-            mission_details.symptoms.has_memory_loss_post_trauma,
-        )
-        self.ui.has_memory_loss_post_trauma_checkbox.setEnabled(
-            mission_details.symptoms.has_memory_loss_post_trauma,
-        )
-
-        # Set sensory motor disturbance
-        self.ui.has_sensory_motor_disturbance_checkbox.setChecked(
-            mission_details.symptoms.has_sensory_motor_disturbance,
-        )
-        self.ui.has_sensory_motor_disturbance_checkbox.setEnabled(
-            mission_details.symptoms.has_sensory_motor_disturbance,
-        )
-
-        # Set shortness of breath
-        self.ui.has_shortness_of_breath_checkbox.setChecked(
-            mission_details.symptoms.has_shortness_of_breath,
-        )
-        self.ui.has_shortness_of_breath_checkbox.setEnabled(
-            mission_details.symptoms.has_shortness_of_breath,
-        )
-
-        # Set sweating
-        self.ui.has_sweating_checkbox.setChecked(
-            mission_details.symptoms.has_sweating,
-        )
-        self.ui.has_sweating_checkbox.setEnabled(
-            mission_details.symptoms.has_sweating,
-        )
-
-        # Set vomiting
-        self.ui.has_vomiting_checkbox.setChecked(
-            mission_details.symptoms.has_vomiting,
-        )
-        self.ui.has_vomiting_checkbox.setEnabled(
-            mission_details.symptoms.has_vomiting,
-        )
-
-        # Set weakness
-        self.ui.has_weakness_checkBox.setChecked(
-            mission_details.symptoms.has_weakness,
-        )
-        self.ui.has_weakness_checkBox.setEnabled(
-            mission_details.symptoms.has_weakness,
-        )
-
-        # Set other symptoms
-        if mission_details.symptoms.other_symptoms is not None:
-            self.ui.other_symptoms_field.setPlainText(
-                mission_details.symptoms.other_symptoms,
-            )
-        else:
-            self.ui.other_symptoms_field.setEnabled(False)
+        # Set text field
+        set_textfield(self.ui.other_symptoms_field, symptoms.other_symptoms)
 
     def _setup_vital_signs_table(self) -> None:
         # Get the vital signs table widget
@@ -800,135 +661,83 @@ class MissionsDetailsTab(QWidget):
 
     def _populate_medical_history_section(self, mission_details: MissionDetails) -> None:
         """Populates the medical history section by data of mission details."""
-        # Set drug allergies
-        if mission_details.medical_history.drug_allergies is not None:
-            self.ui.drug_allergies_field.setPlainText(
-                mission_details.medical_history.drug_allergies,
-            )
-        else:
-            self.ui.drug_allergies_field.setEnabled(False)
-            self.ui.drug_allergies_field.setPlainText(
-                NOT_PROVIDED_PERSIAN_TEXT,
-            )
+        history = mission_details.medical_history
 
-        # Set current medications
-        if mission_details.medical_history.current_medications is not None:
-            self.ui.current_medications_field.setPlainText(
-                mission_details.medical_history.current_medications,
-            )
-        else:
-            self.ui.current_medications_field.setEnabled(False)
-            self.ui.current_medications_field.setPlainText(
-                NOT_PROVIDED_PERSIAN_TEXT,
-            )
+        # Text fields
+        text_fields = [
+            (self.ui.drug_allergies_field, history.drug_allergies),
+            (
+                self.ui.current_medications_field,
+                history.current_medications,
+            ),
+        ]
+        # Set all text fields
+        for field, value in text_fields:
+            set_textfield(field, value)
 
-        # Set diseases checkboxes
-        set_checkbox(
-            self.ui.has_cardiac_disease_checkBox,
-            value=mission_details.medical_history.has_cardiac_disease,
-        )
-
-        # Set hypertension checkbox
-        set_checkbox(
-            self.ui.has_hypertension_checkBox,
-            value=mission_details.medical_history.has_hypertension,
-        )
-
-        # Set substance abuse checkbox
-        set_checkbox(
-            self.ui.has_substance_abuse_checkBox,
-            value=mission_details.medical_history.has_substance_abuse,
-        )
-
-        # Set disability checkbox
-        set_checkbox(
-            self.ui.has_disability_checkBox,
-            value=mission_details.medical_history.has_disability,
-        )
-
-        # Set asthma checkbox
-        set_checkbox(
-            self.ui.has_asthma_checkBox,
-            value=mission_details.medical_history.has_asthma,
-        )
-
-        # Set stroke history checkbox
-        set_checkbox(
-            self.ui.has_stroke_history_checkBox,
-            value=mission_details.medical_history.has_stroke_history,
-        )
-
-        # Set psychiatric disorder checkbox
-        set_checkbox(
-            self.ui.has_psychiatric_disorder_checkBox,
-            value=mission_details.medical_history.has_psychiatric_disorder,
-        )
-
-        # Set prior trauma checkbox
-        set_checkbox(
-            self.ui.has_prior_trauma_checkBox,
-            value=mission_details.medical_history.has_prior_trauma,
-        )
-
-        # Set surgical history checkbox
-        set_checkbox(
-            self.ui.has_surgical_history_checkBox,
-            value=mission_details.medical_history.has_surgical_history,
-        )
-
-        # Set gastrointestinal disease checkbox
-        set_checkbox(
-            self.ui.has_gastrointestinal_disease_checkBox,
-            value=mission_details.medical_history.has_gastrointestinal_disease,
-        )
-
-        # Set renal disease checkbox
-        set_checkbox(
-            self.ui.has_renal_disease_checkBox,
-            value=mission_details.medical_history.has_renal_disease,
-        )
-
-        # Set seizure disorder checkbox
-        set_checkbox(
-            self.ui.has_seizure_disorder_checkBox,
-            value=mission_details.medical_history.has_seizure_disorder,
-        )
-
-        # Set infectious disease checkbox
-        set_checkbox(
-            self.ui.has_infectious_disease_checkBox,
-            value=mission_details.medical_history.has_infectious_disease,
-        )
-
-        # Set diabetes checkbox
-        set_checkbox(
-            self.ui.has_diabetes_checkBox,
-            value=mission_details.medical_history.has_diabetes,
-        )
-
-        # Set malignancy history checkbox
-        set_checkbox(
-            self.ui.has_malignancy_history_checkBox,
-            value=mission_details.medical_history.has_malignancy_history,
-        )
-
-        # Set special conditions checkbox
-        set_checkbox(
-            self.ui.has_special_conditions_checkBox,
-            value=mission_details.medical_history.has_special_conditions,
-        )
-
-        # Set pulmonary disease checkbox
-        set_checkbox(
-            self.ui.has_pulmonary_disease_checkBox,
-            value=mission_details.medical_history.has_pulmonary_disease,
-        )
-
-        # Set other medical history checkbox
-        set_checkbox(
-            self.ui.other_medical_history_checkBox,
-            value=mission_details.medical_history.has_other_medical_history,
-        )
+        # Checkboxes
+        checkbox_fields = [
+            (
+                self.ui.has_cardiac_disease_checkBox,
+                history.has_cardiac_disease,
+            ),
+            (self.ui.has_hypertension_checkBox, history.has_hypertension),
+            (
+                self.ui.has_substance_abuse_checkBox,
+                history.has_substance_abuse,
+            ),
+            (self.ui.has_disability_checkBox, history.has_disability),
+            (self.ui.has_asthma_checkBox, history.has_asthma),
+            (
+                self.ui.has_stroke_history_checkBox,
+                history.has_stroke_history,
+            ),
+            (
+                self.ui.has_psychiatric_disorder_checkBox,
+                history.has_psychiatric_disorder,
+            ),
+            (self.ui.has_prior_trauma_checkBox, history.has_prior_trauma),
+            (
+                self.ui.has_surgical_history_checkBox,
+                history.has_surgical_history,
+            ),
+            (
+                self.ui.has_gastrointestinal_disease_checkBox,
+                history.has_gastrointestinal_disease,
+            ),
+            (
+                self.ui.has_renal_disease_checkBox,
+                history.has_renal_disease,
+            ),
+            (
+                self.ui.has_seizure_disorder_checkBox,
+                history.has_seizure_disorder,
+            ),
+            (
+                self.ui.has_infectious_disease_checkBox,
+                history.has_infectious_disease,
+            ),
+            (self.ui.has_diabetes_checkBox, history.has_diabetes),
+            (
+                self.ui.has_malignancy_history_checkBox,
+                history.has_malignancy_history,
+            ),
+            (
+                self.ui.has_special_conditions_checkBox,
+                history.has_special_conditions,
+            ),
+            (
+                self.ui.has_pulmonary_disease_checkBox,
+                history.has_pulmonary_disease,
+            ),
+            (
+                self.ui.other_medical_history_checkBox,
+                history.has_other_medical_history,
+            ),
+        ]
+        # Set all checkboxes
+        for checkbox, check_value in checkbox_fields:
+            set_checkbox(checkbox, value=check_value)
 
     def _populate_pupils_lungs_heart_section(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
         """Populates the pupils, lungs and heart section by data of mission details."""
@@ -1036,336 +845,110 @@ class MissionsDetailsTab(QWidget):
             self.ui.heart_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
             self.ui.heart_rhythm_field.setEnabled(False)
 
-    def _populate_trauma_types_section(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912, PLR0915
+    def _populate_trauma_types_section(self, mission_details: MissionDetails) -> None:
         """Populates the trauma types section by data of mission details."""
-        # Set deformity checkbox
-        set_checkbox(
-            self.ui.has_deformity_checkBox,
-            value=mission_details.trauma_types.has_deformity,
-        )
+        trauma = mission_details.trauma_types
 
-        # Set abrasion checkbox
-        set_checkbox(
-            self.ui.has_abrasion_checkBox,
-            value=mission_details.trauma_types.has_abrasion,
-        )
+        # Text fields
+        text_fields = [
+            (self.ui.burn_type_field, trauma.burn_type),
+            (self.ui.burn_percentage_field, trauma.burn_percentage),
+            (self.ui.front_trauma_locations_field, trauma.front_trauma_locations),
+            (self.ui.rear_trauma_locations_field, trauma.rear_trauma_locations),
+        ]
+        # Set all text fields
+        for field, value in text_fields:
+            set_textfield(field, value)
 
-        # Set tenderness checkbox
-        set_checkbox(
-            self.ui.has_tenderness_checkBox,
-            value=mission_details.trauma_types.has_tenderness,
-        )
+        # Checkboxes
+        checkbox_fields = [
+            (self.ui.has_deformity_checkBox, trauma.has_deformity),
+            (self.ui.has_abrasion_checkBox, trauma.has_abrasion),
+            (self.ui.has_tenderness_checkBox, trauma.has_tenderness),
+            (self.ui.has_crush_injury_checkBox, trauma.has_crush_injury),
+            (self.ui.has_swelling_checkBox, trauma.has_swelling),
+            (self.ui.has_dislocation_checkBox, trauma.has_dislocation),
+            (self.ui.has_contusion_checkBox, trauma.has_contusion),
+            (self.ui.has_puncture_wound_checkBox, trauma.has_puncture_wound),
+            (self.ui.has_laceration_checkBox, trauma.has_laceration),
+            (self.ui.has_tear_checkBox, trauma.has_tear),
+            (self.ui.has_amputation_checkBox, trauma.has_amputation),
+            (self.ui.has_external_bleeding_checkBox, trauma.has_external_bleeding),
+            (self.ui.has_sensory_deficit_checkBox, trauma.has_sensory_deficit),
+            (self.ui.has_motor_deficit_checkBox, trauma.has_motor_deficit),
+            (self.ui.penetrating_trauma_checkBox, trauma.has_penetrating_trauma),
+            (self.ui.blunt_trauma_checkBox, trauma.has_blunt_trauma),
+        ]
+        # Set all checkboxes
+        for checkbox, check_value in checkbox_fields:
+            set_checkbox(checkbox, value=check_value)
 
-        # Set crush injury checkbox
-        set_checkbox(
-            self.ui.has_crush_injury_checkBox,
-            value=mission_details.trauma_types.has_crush_injury,
-        )
-
-        # Set swelling checkbox
-        set_checkbox(
-            self.ui.has_swelling_checkBox,
-            value=mission_details.trauma_types.has_swelling,
-        )
-
-        # Set dislocation checkbox
-        set_checkbox(
-            self.ui.has_dislocation_checkBox,
-            value=mission_details.trauma_types.has_dislocation,
-        )
-
-        # Set contusion checkbox
-        set_checkbox(
-            self.ui.has_contusion_checkBox,
-            value=mission_details.trauma_types.has_contusion,
-        )
-
-        # Set puncture wound checkbox
-        set_checkbox(
-            self.ui.has_puncture_wound_checkBox,
-            value=mission_details.trauma_types.has_puncture_wound,
-        )
-
-        # Set laceration checkbox
-        set_checkbox(
-            self.ui.has_laceration_checkBox,
-            value=mission_details.trauma_types.has_laceration,
-        )
-
-        # Set tear checkbox
-        set_checkbox(
-            self.ui.has_tear_checkBox,
-            value=mission_details.trauma_types.has_tear,
-        )
-
-        # Set amputation checkbox
-        set_checkbox(
-            self.ui.has_amputation_checkBox,
-            value=mission_details.trauma_types.has_amputation,
-        )
-
-        # Set external bleeding checkbox
-        set_checkbox(
-            self.ui.has_external_bleeding_checkBox,
-            value=mission_details.trauma_types.has_external_bleeding,
-        )
-
-        # Set sensory deficit checkbox
-        set_checkbox(
-            self.ui.has_sensory_deficit_checkBox,
-            value=mission_details.trauma_types.has_sensory_deficit,
-        )
-
-        # Set motor deficit checkbox
-        set_checkbox(
-            self.ui.has_motor_deficit_checkBox,
-            value=mission_details.trauma_types.has_motor_deficit,
-        )
-
-        # Set penetrating trauma checkbox
-        set_checkbox(
-            self.ui.penetrating_trauma_checkBox,
-            value=mission_details.trauma_types.has_penetrating_trauma,
-        )
-
-        # Set blunt trauma checkbox
-        set_checkbox(
-            self.ui.blunt_trauma_checkBox,
-            value=mission_details.trauma_types.has_blunt_trauma,
-        )
-
-        # Set Burn type
-        if mission_details.trauma_types.burn_type is not None:
-            self.ui.burn_type_field.setText(
-                mission_details.trauma_types.burn_type,
-            )
-        else:
-            self.ui.burn_type_field.setText(NO_BURN_DAMAGE)
-            self.ui.burn_type_field.setEnabled(False)
-
-        # Set Burn percentage
-        if mission_details.trauma_types.burn_percentage is not None:
-            self.ui.burn_percentage_field.setText(
-                mission_details.trauma_types.burn_percentage,
-            )
-        else:
-            self.ui.burn_percentage_field.setText(NO_BURN_DAMAGE)
-            self.ui.burn_percentage_field.setEnabled(False)
-
-        # Set patient extrication
-        if mission_details.trauma_types.patient_extraction is not None:
-            self.ui.patient_extraction_field.setText(
-                mission_details.trauma_types.patient_extraction.persian_label,
-            )
-        else:
-            self.ui.patient_extraction_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.patient_extraction_field.setEnabled(False)
-
-        # Set type of fracture
-        if mission_details.trauma_types.fracture_type is not None:
-            self.ui.type_of_fracture_field.setText(
-                mission_details.trauma_types.fracture_type.persian_label,
-            )
-        else:
-            self.ui.type_of_fracture_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.type_of_fracture_field.setEnabled(False)
-
-        # Set distal pulse status
-        if mission_details.trauma_types.distal_pulse_status is not None:
-            self.ui.distal_pulse_field.setText(
-                mission_details.trauma_types.distal_pulse_status.persian_label,
-            )
-        else:
-            self.ui.distal_pulse_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.distal_pulse_field.setEnabled(False)
-
-        # Set front trauma locations
-        if mission_details.trauma_types.front_trauma_locations:
-            self.ui.front_trauma_locations_field.setText(
-                mission_details.trauma_types.front_trauma_locations,
-            )
-        else:
-            self.ui.front_trauma_locations_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.front_trauma_locations_field.setEnabled(False)
-
-        # Set rear trauma locations
-        if mission_details.trauma_types.rear_trauma_locations:
-            self.ui.rear_trauma_locations_field.setText(
-                mission_details.trauma_types.rear_trauma_locations,
-            )
-        else:
-            self.ui.rear_trauma_locations_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.rear_trauma_locations_field.setEnabled(False)
+        # Enum text fields
+        enum_text_fields = [
+            (self.ui.patient_extraction_field, trauma.patient_extraction),
+            (self.ui.type_of_fracture_field, trauma.fracture_type),
+            (self.ui.distal_pulse_field, trauma.distal_pulse_status),
+        ]
+        # Set all enum text fields
+        for enum_field, enum_value in enum_text_fields:
+            set_enum_textfield(enum_field, enum_value)
 
     def _populate_medical_actions_section(self, mission_details: MissionDetails) -> None:
         """Populates the medical actions section by data of mission details."""
-        # Set suction action
-        set_checkbox(
-            self.ui.suction_action_before_checkBox,
-            value=mission_details.medical_actions.suction.before_ems,
-        )
-        set_checkbox(
-            self.ui.suction_action_after_checkBox,
-            value=mission_details.medical_actions.suction.after_ems,
-        )
+        actions = mission_details.medical_actions
 
-        # Set CPR action
-        set_checkbox(
-            self.ui.cpr_action_before_checkBox,
-            value=mission_details.medical_actions.cpr.before_ems,
-        )
-        set_checkbox(
-            self.ui.cpr_action_after_checkBox,
-            value=mission_details.medical_actions.cpr.after_ems,
-        )
-
-        # Set dressing action
-        set_checkbox(
-            self.ui.dressing_action_before_checkBox,
-            value=mission_details.medical_actions.dressing.before_ems,
-        )
-        set_checkbox(
-            self.ui.dressing_action_after_checkBox,
-            value=mission_details.medical_actions.dressing.after_ems,
-        )
-
-        # Set airway tube action
-        set_checkbox(
-            self.ui.airway_tube_action_before_checkBox,
-            value=mission_details.medical_actions.airway_tube.before_ems,
-        )
-        set_checkbox(
-            self.ui.airway_tube_action_after_checkBox,
-            value=mission_details.medical_actions.airway_tube.after_ems,
-        )
-
-        # Set cardiac massage action
-        set_checkbox(
-            self.ui.cardiac_massage_action_before_checkBox,
-            value=mission_details.medical_actions.cardiac_massage.before_ems,
-        )
-        set_checkbox(
-            self.ui.cardiac_massage_action_after_checkBox,
-            value=mission_details.medical_actions.cardiac_massage.after_ems,
-        )
-
-        # Set assisted ventilation action
-        set_checkbox(
-            self.ui.assisted_ventilation_action_before_checkBox,
-            value=mission_details.medical_actions.assisted_ventilation.before_ems,
-        )
-        set_checkbox(
-            self.ui.assisted_ventilation_action_after_checkBox,
-            value=mission_details.medical_actions.assisted_ventilation.after_ems,
-        )
-
-        # Set vital signs assessment action
-        set_checkbox(
-            self.ui.vital_sign_action_before_checkBox,
-            value=mission_details.medical_actions.vital_signs.before_ems,
-        )
-        set_checkbox(
-            self.ui.vital_sign_action_after_checkBox,
-            value=mission_details.medical_actions.vital_signs.after_ems,
-        )
-
-        # Set medical consultation action
-        set_checkbox(
-            self.ui.consultation_action_before_checkBox,
-            value=mission_details.medical_actions.consultation.before_ems,
-        )
-        set_checkbox(
-            self.ui.consultation_action_after_checkBox,
-            value=mission_details.medical_actions.consultation.after_ems,
-        )
-
-        # Set defibrillation action
-        set_checkbox(
-            self.ui.biography_action_before_checkBox,
-            value=mission_details.medical_actions.biography.before_ems,
-        )
-        set_checkbox(
-            self.ui.biography_action_after_checkBox,
-            value=mission_details.medical_actions.biography.after_ems,
-        )
-
-        # Set patient monitoring action
-        set_checkbox(
-            self.ui.monitoring_action_before_checkBox,
-            value=mission_details.medical_actions.monitoring.before_ems,
-        )
-        set_checkbox(
-            self.ui.monitoring_action_after_checkBox,
-            value=mission_details.medical_actions.monitoring.after_ems,
-        )
-
-        # Set IV access action
-        set_checkbox(
-            self.ui.iv_action_before_checkBox,
-            value=mission_details.medical_actions.iv_access.before_ems,
-        )
-        set_checkbox(
-            self.ui.iv_action_after_checkBox,
-            value=mission_details.medical_actions.iv_access.after_ems,
-        )
-
-        # Set oxygen therapy action
-        set_checkbox(
-            self.ui.oxygen_action_before_checkBox,
-            value=mission_details.medical_actions.oxygen_therapy.before_ems,
-        )
-        set_checkbox(
-            self.ui.oxygen_action_after_checkBox,
-            value=mission_details.medical_actions.oxygen_therapy.after_ems,
-        )
-
-        # Set complete bed rest action
-        set_checkbox(
-            self.ui.cbr_action_before_checkBox,
-            value=mission_details.medical_actions.cbr.before_ems,
-        )
-        set_checkbox(
-            self.ui.cbr_action_after_checkBox,
-            value=mission_details.medical_actions.cbr.after_ems,
-        )
-
-        # Set head immobilization action
-        set_checkbox(
-            self.ui.head_fix_action_before_checkBox,
-            value=mission_details.medical_actions.head_immobilization.before_ems,
-        )
-        set_checkbox(
-            self.ui.head_fix_action_after_checkBox,
-            value=mission_details.medical_actions.head_immobilization.after_ems,
-        )
-
-        # Set limb immobilization action
-        set_checkbox(
-            self.ui.limb_fix_action_before_checkBox,
-            value=mission_details.medical_actions.limb_immobilization.before_ems,
-        )
-        set_checkbox(
-            self.ui.limb_fix_action_after_checkBox,
-            value=mission_details.medical_actions.limb_immobilization.after_ems,
-        )
-
-        # Set spinal immobilization action
-        set_checkbox(
-            self.ui.spinal_fix_action_before_checkBox,
-            value=mission_details.medical_actions.spinal_immobilization.before_ems,
-        )
-        set_checkbox(
-            self.ui.spinal_fix_action_after_checkBox,
-            value=mission_details.medical_actions.spinal_immobilization.after_ems,
-        )
+        # Checkboxes
+        checkbox_fields = [
+            (self.ui.suction_action_before_checkBox, actions.suction.before_ems),
+            (self.ui.cpr_action_before_checkBox, actions.cpr.before_ems),
+            (self.ui.dressing_action_before_checkBox, actions.dressing.before_ems),
+            (
+                self.ui.airway_tube_action_before_checkBox,
+                actions.airway_tube.before_ems,
+            ),
+            (
+                self.ui.cardiac_massage_action_before_checkBox,
+                actions.cardiac_massage.before_ems,
+            ),
+            (
+                self.ui.assisted_ventilation_action_before_checkBox,
+                actions.assisted_ventilation.before_ems,
+            ),
+            (
+                self.ui.vital_sign_action_before_checkBox,
+                actions.vital_signs.before_ems,
+            ),
+            (
+                self.ui.consultation_action_before_checkBox,
+                actions.consultation.before_ems,
+            ),
+            (self.ui.biography_action_before_checkBox, actions.biography.before_ems),
+            (
+                self.ui.monitoring_action_before_checkBox,
+                actions.monitoring.before_ems,
+            ),
+            (self.ui.iv_action_before_checkBox, actions.iv_access.before_ems),
+            (
+                self.ui.oxygen_action_before_checkBox,
+                actions.oxygen_therapy.before_ems,
+            ),
+            (self.ui.cbr_action_before_checkBox, actions.cbr.before_ems),
+            (
+                self.ui.head_fix_action_before_checkBox,
+                actions.head_immobilization.before_ems,
+            ),
+            (
+                self.ui.limb_fix_action_before_checkBox,
+                actions.limb_immobilization.before_ems,
+            ),
+            (
+                self.ui.spinal_fix_action_before_checkBox,
+                actions.spinal_immobilization.before_ems,
+            ),
+        ]
+        # Set all checkboxes
+        for checkbox, check_value in checkbox_fields:
+            set_checkbox(checkbox, value=check_value)
 
     def _setup_drugs_list_table(self) -> None:
         """Setups the drugs list table with appropriate row labels and initial configuration."""
@@ -1444,81 +1027,32 @@ class MissionsDetailsTab(QWidget):
         # Resize columns to content
         self.ui.consumable_list_table_view.resizeColumnsToContents()
 
-    def _populate_medical_center_section(self, mission_details: MissionDetails) -> None:  # noqa: PLR0912
+    def _populate_medical_center_section(self, mission_details: MissionDetails) -> None:
         """Populates the medical center section by data of mission details."""
-        # Set receiving physician code
-        if mission_details.medical_center.receiving_physician_code is not None:
-            self.ui.receiving_physician_code_field.setText(
-                mission_details.medical_center.receiving_physician_code,
-            )
-        else:
-            self.ui.receiving_physician_code_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.receiving_physician_code_field.setEnabled(False)
+        center = mission_details.medical_center
 
-        # Set physician code
-        if mission_details.medical_center.physician_code is not None:
-            self.ui.physician_code_field.setText(
-                mission_details.medical_center.physician_code,
-            )
-        else:
-            self.ui.physician_code_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.physician_code_field.setEnabled(False)
-
-        # Set physician code 1050
-        if mission_details.medical_center.physician_1050_code is not None:
-            self.ui.physician_code_1050_field.setText(
-                mission_details.medical_center.physician_1050_code,
-            )
-        else:
-            self.ui.physician_code_1050_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.physician_code_1050_field.setEnabled(False)
-
-        # Set physician order
-        if mission_details.medical_center.physician_order is not None:
-            self.ui.physician_order_field.setText(
-                mission_details.medical_center.physician_order,
-            )
-        else:
-            self.ui.physician_order_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.physician_order_field.setEnabled(False)
-
-        # Set physician order secondary
-        if mission_details.medical_center.physician_order_secondary is not None:
-            self.ui.physician_order_secondary_field.setText(
-                mission_details.medical_center.physician_order_secondary,
-            )
-        else:
-            self.ui.physician_order_secondary_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.physician_order_secondary_field.setEnabled(False)
-
-        # Set receiving physician name
-        if mission_details.medical_center.receiving_physician_name is not None:
-            self.ui.receiving_physician_name_field.setText(
-                mission_details.medical_center.receiving_physician_name,
-            )
-        else:
-            self.ui.receiving_physician_name_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.receiving_physician_name_field.setEnabled(False)
-
-        # Set handover datetime
-        if mission_details.medical_center.handover_datetime is not None:
-            self.ui.handover_time_field.setText(
-                mission_details.medical_center.handover_datetime,
-            )
-        else:
-            self.ui.handover_time_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
-            )
-            self.ui.handover_time_field.setEnabled(False)
+        # Text fields
+        text_fields = [
+            (
+                self.ui.receiving_physician_code_field,
+                center.receiving_physician_code,
+            ),
+            (self.ui.physician_code_field, center.physician_code),
+            (
+                self.ui.physician_code_1050_field,
+                center.physician_1050_code,
+            ),
+            (self.ui.physician_order_field, center.physician_order),
+            (
+                self.ui.physician_order_secondary_field,
+                center.physician_order_secondary,
+            ),
+            (
+                self.ui.receiving_physician_name_field,
+                center.receiving_physician_name,
+            ),
+            (self.ui.handover_time_field, center.handover_datetime),
+        ]
+        # Set all text fields
+        for field, value in text_fields:
+            set_textfield(field, value)

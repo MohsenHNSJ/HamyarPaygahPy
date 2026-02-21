@@ -1,9 +1,10 @@
 """Utility functions related to Qt UI."""
 
 # pylint: disable=E0611
-from datetime import date, time, timedelta
+from datetime import time, timedelta
 from enum import Enum
 
+import jdatetime  # type: ignore[import-untyped]
 from PySide6.QtWidgets import QCheckBox, QLineEdit, QPlainTextEdit
 
 NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
@@ -18,7 +19,7 @@ def set_checkbox(checkbox: QCheckBox, *, value: bool) -> None:
 
 def set_textfield(
     textfield: QLineEdit | QPlainTextEdit,
-    value: int | str | timedelta | time | date | None,
+    value: int | str | timedelta | time | jdatetime.date | None,
 ) -> None:
     """Sets the text field with value, if None or zero, disables it."""
     if value is not None and (not isinstance(value, int) or value != 0):
