@@ -226,8 +226,8 @@ warn_return_any = true
 warn_unreachable = true
 # Warns about per-module sections in the config file that do not match any files processed when invoking mypy.
 warn_unused_configs = true
-# Disable warns about unneeded # type: ignore comments
-warn_unused_ignores = false
+# Warns about unneeded # type: ignore comments
+warn_unused_ignores = true
 
 # Pytest settings
 [tool.pytest.ini_options]
