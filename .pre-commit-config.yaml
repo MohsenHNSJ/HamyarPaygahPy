@@ -29,6 +29,7 @@ repos:
     rev: v3.21.2
     hooks:
       - id: pyupgrade
+        args: ["--py3-plus"]
 
     # Add trailing commas to calls and literals.
   - repo: https://github.com/asottile/add-trailing-comma
