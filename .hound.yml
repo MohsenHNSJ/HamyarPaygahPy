@@ -2,30 +2,20 @@
 # Mark a pull request as failed if any issues are found
 fail_on_violations: true
 
-# Enable ShellCheck style checking
-shellcheck:
+# Enabled linters
+shellcheck: # ShellCheck style checking
+  enabled: true
+jshint: # JavaScript style checking
   enabled: true
 
-# Enable JavaScript style checking
-jshint:
-  enabled: true
-
-# Disable RuboCop's Ruby style checking
-rubocop:
+# Disabled linters (Not relevant to the project)
+rubocop: # RuboCop's Ruby style checking
   enabled: false
-
-# Disable CoffeeScript style checking
-coffeescript:
+coffeescript: # CoffeeScript style checking
   enabled: false
-
-# Disable SCSS style checking
-scss:
+scss: # SCSS style checking
   enabled: false
-
-# Disable Haml style checking
-haml:
+haml: # Haml style checking
   enabled: false
-
-# Disable Swift style checking
-swiftlint:
+swiftlint: # Swift style checking
   enabled: false
