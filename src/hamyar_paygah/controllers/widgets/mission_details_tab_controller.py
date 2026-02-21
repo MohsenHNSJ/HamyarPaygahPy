@@ -20,13 +20,6 @@ from qasync import asyncSlot  # type: ignore[import-untyped]
 import hamyar_paygah.new_ui.widgets.mission_details_tab as ui_mdt
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.models.mission_details_model import MissionDetails
-from hamyar_paygah.models.mission_details_submodels.pupils_lungs_heart_model import (
-    BreathingRhythm,
-    HeartRhythm,
-    HeartSound,
-    LungSound,
-    PupilStatus,
-)
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_date
 from hamyar_paygah.utils.qt_utils import set_checkbox, set_enum_textfield, set_textfield
@@ -48,10 +41,6 @@ if TYPE_CHECKING:
 # region constants
 NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
 """Text to show when an information is not yet registered by EMS"""
-IRREGULAR_PERSIAN_TEXT: str = "نامنظم"
-"""Text to show when status is irregular"""
-NORMAL_PERSIAN_TEXT: str = "طبیعی"
-"""Text to show when status is normal"""
 COLOR_WARNING = QColor("#FFF59D")  # soft yellow
 """Color to use for warning values that are approaching critical thresholds."""
 COLOR_CRITICAL = QColor("#EF9A9A")  # soft red
@@ -739,111 +728,61 @@ class MissionsDetailsTab(QWidget):
         for checkbox, check_value in checkbox_fields:
             set_checkbox(checkbox, value=check_value)
 
-    def _populate_pupils_lungs_heart_section(self, mission_details: MissionDetails) -> None:  # noqa: C901, PLR0912, PLR0915
+    def _populate_pupils_lungs_heart_section(self, mission_details: MissionDetails) -> None:
         """Populates the pupils, lungs and heart section by data of mission details."""
+        status = mission_details.pupils_lungs_heart
+        # Set pupils status
         # Set right pupil status
-        if mission_details.pupils_lungs_heart.pupils.right is not None:
-            right_pupil_status = mission_details.pupils_lungs_heart.pupils.right
-            if right_pupil_status == PupilStatus.NORMAL:
-                self.ui.right_eye_examine_field.setText(NORMAL_PERSIAN_TEXT)
-            elif right_pupil_status == PupilStatus.DILATED:
-                self.ui.right_eye_examine_field.setText("گشاد شده")
-            elif right_pupil_status == PupilStatus.MIOTIC:
-                self.ui.right_eye_examine_field.setText("منقبض شده")
-            elif right_pupil_status == PupilStatus.NO_RESPONSE:
-                self.ui.right_eye_examine_field.setText("بدون پاسخ به نور")
-        else:
-            self.ui.right_eye_examine_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
+        if status.pupils.right is not None:
+            set_enum_textfield(
+                self.ui.right_eye_examine_field,
+                status.pupils.right,
             )
-            self.ui.right_eye_examine_field.setEnabled(False)
 
         # Set left pupil status
-        if mission_details.pupils_lungs_heart.pupils.left is not None:
-            left_pupil_status = mission_details.pupils_lungs_heart.pupils.left
-            if left_pupil_status == PupilStatus.NORMAL:
-                self.ui.left_eye_examine_field.setText(NORMAL_PERSIAN_TEXT)
-            elif left_pupil_status == PupilStatus.DILATED:
-                self.ui.left_eye_examine_field.setText("گشاد شده")
-            elif left_pupil_status == PupilStatus.MIOTIC:
-                self.ui.left_eye_examine_field.setText("منقبض شده")
-            elif left_pupil_status == PupilStatus.NO_RESPONSE:
-                self.ui.left_eye_examine_field.setText("بدون پاسخ به نور")
-        else:
-            self.ui.left_eye_examine_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.left_eye_examine_field.setEnabled(False)
+        if status.pupils.left is not None:
+            set_enum_textfield(
+                self.ui.left_eye_examine_field,
+                status.pupils.left,
+            )
 
         # Set lung sounds
         # Right Lung
-        if mission_details.pupils_lungs_heart.lungs.right.sound is not None:
-            right_lung_sound = mission_details.pupils_lungs_heart.lungs.right.sound
-            if right_lung_sound == LungSound.NORMAL:
-                self.ui.right_lung_sound_field.setText(NORMAL_PERSIAN_TEXT)
-            elif right_lung_sound == LungSound.RALES:
-                self.ui.right_lung_sound_field.setText("رال")
-            elif right_lung_sound == LungSound.WHEEZE:
-                self.ui.right_lung_sound_field.setText("ویز")
-        else:
-            self.ui.right_lung_sound_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.right_lung_sound_field.setEnabled(False)
+        if status.lungs.right.sound is not None:
+            set_enum_textfield(
+                self.ui.right_lung_sound_field,
+                status.lungs.right.sound,
+            )
+
         # Left Lung
-        if mission_details.pupils_lungs_heart.lungs.left.sound is not None:
-            left_lung_sound = mission_details.pupils_lungs_heart.lungs.left.sound
-            if left_lung_sound == LungSound.NORMAL:
-                self.ui.left_lung_sound_field.setText(NORMAL_PERSIAN_TEXT)
-            elif left_lung_sound == LungSound.RALES:
-                self.ui.left_lung_sound_field.setText("رال")
-            elif left_lung_sound == LungSound.WHEEZE:
-                self.ui.left_lung_sound_field.setText("ویز")
-        else:
-            self.ui.left_lung_sound_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.left_lung_sound_field.setEnabled(False)
+        if status.lungs.left.sound is not None:
+            set_enum_textfield(
+                self.ui.left_lung_sound_field,
+                status.lungs.left.sound,
+            )
 
         # Set breathing rhythm
         # Right Lung
-        if mission_details.pupils_lungs_heart.lungs.right.rhythm is not None:
-            breathing_rhythm = mission_details.pupils_lungs_heart.lungs.right.rhythm
-            if breathing_rhythm == BreathingRhythm.REGULAR:
-                self.ui.right_lung_rhythm_field.setText("منظم")
-            elif breathing_rhythm == BreathingRhythm.IRREGULAR:
-                self.ui.right_lung_rhythm_field.setText(IRREGULAR_PERSIAN_TEXT)
-        else:
-            self.ui.right_lung_rhythm_field.setText(
-                NOT_REGISTERED_PERSIAN_TEXT,
+        if status.lungs.right.rhythm is not None:
+            set_enum_textfield(
+                self.ui.right_lung_rhythm_field,
+                status.lungs.right.rhythm,
             )
-            self.ui.right_lung_rhythm_field.setEnabled(False)
+
         # Left Lung
-        if mission_details.pupils_lungs_heart.lungs.left.rhythm is not None:
-            breathing_rhythm = mission_details.pupils_lungs_heart.lungs.left.rhythm
-            if breathing_rhythm == BreathingRhythm.REGULAR:
-                self.ui.left_lung_rhythm_field.setText("منظم")
-            elif breathing_rhythm == BreathingRhythm.IRREGULAR:
-                self.ui.left_lung_rhythm_field.setText(IRREGULAR_PERSIAN_TEXT)
-        else:
-            self.ui.left_lung_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.left_lung_rhythm_field.setEnabled(False)
+        if status.lungs.left.rhythm is not None:
+            set_enum_textfield(
+                self.ui.left_lung_rhythm_field,
+                status.lungs.left.rhythm,
+            )
 
         # Set heart sound
-        if mission_details.pupils_lungs_heart.heart.sound is not None:
-            heart_sound = mission_details.pupils_lungs_heart.heart.sound
-            if heart_sound == HeartSound.NORMAL:
-                self.ui.heart_sound_field.setText(NORMAL_PERSIAN_TEXT)
-            elif heart_sound == HeartSound.ABNORMAL:
-                self.ui.heart_sound_field.setText("صدای اضافی")
-        else:
-            self.ui.heart_sound_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.heart_sound_field.setEnabled(False)
+        if status.heart.sound is not None:
+            set_enum_textfield(self.ui.heart_sound_field, status.heart.sound)
 
         # Set heart rhythm
-        if mission_details.pupils_lungs_heart.heart.rhythm is not None:
-            heart_rhythm = mission_details.pupils_lungs_heart.heart.rhythm
-            if heart_rhythm == HeartRhythm.REGULAR:
-                self.ui.heart_rhythm_field.setText("منظم")
-            elif heart_rhythm == HeartRhythm.IRREGULAR:
-                self.ui.heart_rhythm_field.setText(IRREGULAR_PERSIAN_TEXT)
-        else:
-            self.ui.heart_rhythm_field.setText(NOT_REGISTERED_PERSIAN_TEXT)
-            self.ui.heart_rhythm_field.setEnabled(False)
+        if status.heart.rhythm is not None:
+            set_enum_textfield(self.ui.heart_rhythm_field, status.heart.rhythm)
 
     def _populate_trauma_types_section(self, mission_details: MissionDetails) -> None:
         """Populates the trauma types section by data of mission details."""
