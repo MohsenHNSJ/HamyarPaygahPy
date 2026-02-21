@@ -26,7 +26,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Intended Audience :: End Users/Desktop",
-    "Natural Language :: English",
     "Natural Language :: Persian",
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
     "Typing :: Typed",
