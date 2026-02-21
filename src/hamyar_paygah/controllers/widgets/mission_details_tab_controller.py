@@ -15,14 +15,18 @@ from PySide6.QtWidgets import (
     QTextEdit,
     QWidget,
 )
-from qasync import asyncSlot  # type: ignore[import-untyped]
 
 import hamyar_paygah.new_ui.widgets.mission_details_tab as ui_mdt
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.models.mission_details_model import MissionDetails
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_date
-from hamyar_paygah.utils.qt_utils import set_checkbox, set_enum_textfield, set_textfield
+from hamyar_paygah.utils.qt_utils import (
+    set_checkbox,
+    set_enum_textfield,
+    set_textfield,
+    typed_async_slot,
+)
 from hamyar_paygah.view_models.consumables_table_model import ConsumablesTableModel
 
 if TYPE_CHECKING:
@@ -163,7 +167,7 @@ class MissionsDetailsTab(QWidget):
         # Set up drugs list table
         self._setup_drugs_list_table()
 
-    @asyncSlot()  # type: ignore[misc]
+    @typed_async_slot()
     async def on_search_button_clicked(self) -> None:
         """Loads the mission details from server and populates the fields."""
         # Clear the current data

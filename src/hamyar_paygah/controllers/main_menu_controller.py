@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QCalendar, QDate, QSortFilterProxyModel, Qt, Slot
 from PySide6.QtWidgets import QMainWindow
-from qasync import asyncSlot  # type: ignore[import-untyped]
 
 import hamyar_paygah.new_ui.main_menu as main_menu_ui
 from hamyar_paygah.config.server_config import load_server_address
@@ -15,6 +14,7 @@ from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.missions_list_service import get_missions_list
 from hamyar_paygah.utils.date_utils import convert_persian_q_date_to_gregorian_pythonic_date
+from hamyar_paygah.utils.qt_utils import typed_async_slot
 from hamyar_paygah.view_models.mission_table_model import MissionTableModel
 
 if TYPE_CHECKING:
@@ -78,7 +78,7 @@ class MainMenu(QMainWindow):
             # If so, set the from date the same as to date
             self.ui.from_date_picker.setDate(new_date)
 
-    @asyncSlot()  # type: ignore[misc]
+    @typed_async_slot()
     async def on_load_button_clicked(self) -> None:
         """Loads the list of missions from server and populates the table."""
         # Convert from date and to date to normal pythonic dates
