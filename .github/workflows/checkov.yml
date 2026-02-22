@@ -4,6 +4,8 @@ name: Checkov IaC Security Scan
 on:
   push: # Run on every Push
   pull_request: # Run on every PR
+  schedule:
+    - cron: "0 3 * * 1" # Every Monday at 03:00 UTC
 
 permissions:
   contents: read # Read access to the repository contents
@@ -58,4 +60,9 @@ jobs:
 
       - name: Run Checkov on YAML and Docker files
         run: |
-          checkov -d . --quiet --compact
+          checkov -d . -o sarif --output-file-path results.sarif --quiet --compact
+
+      - name: Upload SARIF report
+        uses: github/codeql-action/upload-sarif@9e907b5e64f6b83e7804b09294d44122997950d6 # v4.32.3
+        with:
+          sarif_file: results.sarif

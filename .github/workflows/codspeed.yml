@@ -65,10 +65,9 @@ jobs:
           aiohttp: true
           pytest-asyncio: true
           pytest-codspeed: true
-          pydantic: true
 
       - name: Run benchmark
         uses: CodSpeedHQ/action@4deb3275dd364fb96fb074c953133d29ec96f80f # v4.10.6
         with:
-          mode: "simulation" # Run the benchmarks with CPU simulation measurements.
+          mode: "simulation" # Deterministic CPU simulation for stable CI benchmarks
           run: pytest tests/ --codspeed -rA
