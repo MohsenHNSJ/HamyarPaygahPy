@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read # Read access to the repository contents
+  security-events: write # required to fetch internal or private CodeQL packs
 
 jobs:
   checkov:
