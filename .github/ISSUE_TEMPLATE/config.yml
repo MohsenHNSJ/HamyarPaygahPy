@@ -1,2 +1,15 @@
 ---
 blank_issues_enabled: false
+
+contact_links:
+  - name: 📖 Documentation
+    url: https://hamyarpaygahpy.readthedocs.io/en/latest/
+    about: Check the documentation before opening an issue.
+
+  - name: 💬 Discussions
+    url: https://github.com/MohsenHNSJ/HamyarPaygahPy/discussions
+    about: Ask questions, share ideas, or start conversations.
+
+  - name: 🔐 Report a security vulnerability
+    url: https://github.com/MohsenHNSJ/HamyarPaygahPy/security/advisories/new
+    about: Please report security vulnerabilities privately.
