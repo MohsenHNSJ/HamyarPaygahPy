@@ -22,7 +22,6 @@ formats:
 
 submodules:
   include: all
-  exclude: []
   recursive: true
 
 # Optionally, but recommended,

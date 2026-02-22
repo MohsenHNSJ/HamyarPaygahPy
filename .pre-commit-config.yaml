@@ -29,6 +29,7 @@ repos:
     rev: v3.21.2
     hooks:
       - id: pyupgrade
+        args: ["--py3-plus"]
 
     # Add trailing commas to calls and literals.
   - repo: https://github.com/asottile/add-trailing-comma
@@ -130,7 +131,7 @@ repos:
 
     # Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.1
+    rev: v0.15.2
     hooks:
       # Run the linter
       - id: ruff

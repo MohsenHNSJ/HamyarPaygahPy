@@ -6,14 +6,15 @@ version: "3.0"
 # Define where Safety CLI should scan in the target directory.
 scanning-settings:
   max-depth: 6 # Integer that sets the maximum folder depth Safety CLI should scan to in the target directory.
-  exclude: [".nox/"] # A list of paths and files that Safety CLI should exclude from the scan.
-  include-files: []
+  exclude: [".nox/", "tests/"] # A list of paths and files that Safety CLI should exclude from the scan.
+  include-files: ["requirements.txt", "*.py", "pyproject.toml", "poetry.lock"]
   system:
-    targets: []
+    targets: ["src/"]
 
 report: # defines rules for which types and specific vulnerabilities Safety CLI should report on
   dependency-vulnerabilities: # Set to false if you want to completely disable dependency vulnerability reporting.
     enabled: true
+    severity-threshold: low
 
 fail-scan-with-exit-code: # Defines rules for when Safety CLI should return non-zero (failing) exit codes
   dependency-vulnerabilities:

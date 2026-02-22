@@ -138,12 +138,12 @@ class AccidentType(Enum):
 class IllnessType(Enum):
     """Primary medical conditions or symptoms reported during an emergency mission."""
 
+    WEAKNESS_FATIGUE = "Zaf_Bihali"
+    """General weakness, fatigue, or lethargy without a specific diagnosis."""
     CARDIAC = "Ghalbi"
     """Cardiac-related condition such as chest pain, arrhythmia, or heart failure."""
     RESPIRATORY = "Tanafosi"
     """Respiratory distress or breathing-related condition."""
-    WEAKNESS_FATIGUE = "Zaf_Bihali"
-    """General weakness, fatigue, or lethargy without a specific diagnosis."""
     STROKE = "SakteMaghzi"
     """Cerebrovascular accident (stroke) or acute neurological deficit."""
     PSYCHIATRIC_DISORDER = "EkhtelalRavani"
