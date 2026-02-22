@@ -7,9 +7,11 @@ General Disclaimer
 
 This software is provided **“as is”**, without warranty of any kind,
 express or implied.
-The developer makes no representations or guarantees regarding the accuracy,
-reliability, completeness, security, or suitability of this software for
-any purpose.
+
+To the maximum extent permitted by applicable law, the developer makes
+no representations or warranties regarding the accuracy, reliability,
+completeness, security, availability, or suitability of this software
+for any purpose.
 
 Use of this software is entirely at the user's own risk.
 
@@ -28,21 +30,32 @@ No guarantee is made that this software:
 - Will meet operational, regulatory, or organizational requirements
 - Will be free of security vulnerabilities
 - Will be suitable for production or mission-critical environments
-
+- Is suitable for production, safety-critical, medical, emergency,
+military, life-support, or other mission-critical environments.
 
 Limitation of Liability
 -----------------------
 
-In no event shall the developer be liable for any direct, indirect, incidental,
-special, consequential, or punitive damages, including but not
-limited to loss of data,
-loss of service, loss of revenue, operational failure, or legal consequences,
-arising
-from or related to the use, misuse, or inability to use this software.
+To the maximum extent permitted by applicable law, in no event shall the
+developer be liable for any direct, indirect, incidental, special,
+consequential, exemplary, or punitive damages, including but not
+limited to loss of data, loss of revenue, loss of service, operational
+failure, regulatory consequences, or other damages arising out of or
+relating to the use, misuse, or inability to use this software.
 
 This limitation applies regardless of the theory of liability,
-whether in contract,
-tort, negligence, strict liability, or otherwise.
+whether in contract, tort (including negligence), strict liability,
+or otherwise, even if advised of the possibility of such damages.
+
+
+No Professional Advice
+----------------------
+
+This software does not constitute legal, medical, operational,
+regulatory, or professional advice.
+
+Any decisions made based on information produced by this software are
+made solely at the user's discretion and responsibility.
 
 
 Authorized Use Only
@@ -64,8 +77,8 @@ Any use outside of these boundaries is undertaken solely by the user and at
 their own responsibility.
 
 
-No Responsibility for Misuse
-----------------------------
+User Responsibility and Lawful Use
+----------------------------------
 
 The developer bears no responsibility for:
 - Actions taken by users of this software
@@ -87,14 +100,23 @@ The developer assumes no responsibility for:
 - Changes, failures, or restrictions imposed by external services
 
 
-Changes and Availability
-------------------------
+Changes, Support, and Availability
+----------------------------------
 
 The developer reserves the right to modify, suspend, or
 discontinue this software at any time, with or without notice.
 
-No obligation exists to provide updates, fixes, support, or
-continued availability.
+No obligation exists to provide updates, patches, maintenance,
+technical support, or continued availability.
+
+
+Jurisdictional Limitations
+--------------------------
+
+Some jurisdictions do not allow the exclusion of certain warranties
+or the limitation of certain liabilities. In such cases, the above
+disclaimers and limitations shall apply to the maximum extent permitted
+by applicable law.
 
 
 Governing Documents

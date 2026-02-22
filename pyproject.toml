@@ -7,7 +7,7 @@ requires = ["poetry-core==2.2.1"]
 
 [project]
 name = "hamyar_paygah" # PyPI package name
-version = "0.4.0" # Base version
+version = "0.5.0" # Base version
 description = "Application for EMS overseers to gather information from EMS servers."
 license = "MIT"
 readme = "README.rst"
@@ -17,6 +17,7 @@ maintainers = [{ name = "MohsenHNSJ", email = "mohsenhasannezhad@outlook.com" }]
 keywords = ["EMS", "Hamyar", "Paygah"]
 license-files = ["LICENSE"]
 classifiers = [
+    "Environment :: X11 Applications :: Qt",
     "Framework :: aiohttp",
     "Framework :: AsyncIO",
     "Framework :: Pydantic :: 2",
@@ -25,8 +26,8 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Intended Audience :: End Users/Desktop",
-    "Natural Language :: English",
     "Natural Language :: Persian",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
     "Typing :: Typed",
 ]
 dependencies = ["aiohttp == 3.13.3", "anyio == 4.12.1", "lxml == 6.0.2", "jdatetime == 5.2.0", "PySide6 == 6.10.1", "qasync == 0.28.0" ]
@@ -66,7 +67,7 @@ pytest-aiohttp = "1.1.0"
 pytest-asyncio = "1.3.0"
 pytest-codspeed = "4.3.0"
 rst2html = "2020.7.4"
-ruff = "0.15.1"
+ruff = "0.15.2"
 safety = "3.7.0"
 types-lxml = "2026.2.16"
 # Other requirements constraints to keep dependencies up-to-date
@@ -77,7 +78,7 @@ authlib = "1.6.8"
 certifi = "2026.1.4"
 cryptography = "46.0.5"
 cssselect = "1.4.0"
-filelock = "3.24.2"
+filelock = "3.24.3"
 identify = "2.6.16"
 librt = "0.8.1"
 marshmallow = "4.2.2"
@@ -86,8 +87,8 @@ packaging = "26.0"
 pathspec = "1.0.4"
 platformdirs = "4.9.2"
 pycparser = "3.0"
-regex = "2026.1.15"
-rich = "14.3.2"
+regex = "2026.2.19"
+rich = "14.3.3"
 ruamel-yaml = "0.19.1"
 ruamel-yaml-clibz = "0.3.7"
 soupsieve = "2.8.3"
@@ -130,7 +131,6 @@ docstring-code-format = true
 [tool.ruff.lint]
 extend-select = [
     "A",     # flake8-builtins
-    "AIR",   # Airflow
     "ANN",   # flake8-annotations
     "ARG",   # flake8-unused-arguments
     "ASYNC", # flake8-async
@@ -140,7 +140,6 @@ extend-select = [
     "COM",   # flake8-commas
     "C4",    # flake8-comprehensions
     "C90",   # mccabe
-    "DJ",    # flake8-django
     "DOC",   # pydoclint
     "DTZ",   # flake8-datetimez
     "E",     # pycodestyle
@@ -149,7 +148,6 @@ extend-select = [
     "EXE",   # flake8-executable
     "F",     # pyflakes
     "FA",    # flake8-future-annotations
-    "FAST",  # FastAPI
     "FBT",   # flake8-boolean-trap
     "FLY",   # flynt
     "FURB",  # refurb
@@ -161,8 +159,6 @@ extend-select = [
     "ISC",   # flake8-implicit-str-concat
     "LOG",   # flake8-logging
     "N",     # pep8-naming
-    "NPY",   # NumPy-specific rules
-    "PD",    # pandas-vet
     "PERF",  # perflint
     "PGH",   # pygrep-hooks
     "PIE",   # flake8-pie
@@ -231,8 +227,8 @@ warn_return_any = true
 warn_unreachable = true
 # Warns about per-module sections in the config file that do not match any files processed when invoking mypy.
 warn_unused_configs = true
-# Disable warns about unneeded # type: ignore comments
-warn_unused_ignores = false
+# Warns about unneeded # type: ignore comments
+warn_unused_ignores = true
 
 # Pytest settings
 [tool.pytest.ini_options]

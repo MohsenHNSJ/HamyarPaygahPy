@@ -35,3 +35,7 @@ ignore:
   - .github/actions/setup-poetry-env
   - megalinter-reports
   - .vscode
+  - dist
+  - build
+  - .pytest_cache
+  - __pycache__

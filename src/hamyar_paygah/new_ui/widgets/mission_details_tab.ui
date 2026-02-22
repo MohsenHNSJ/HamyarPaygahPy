@@ -614,7 +614,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="refusal_form_code_field"/>
+           <widget class="QLineEdit" name="refusal_form_code_field">
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

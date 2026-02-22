@@ -26,6 +26,45 @@ documentation, or other code submissions, constitutes acceptance of these terms.
 Contributions are voluntary and made at the contributor's own risk.
 The maintainers reserve exclusive authority over all contributions.
 
+Project Philosophy
+------------------
+
+This project values:
+
+* Code clarity over cleverness.
+* Strong typing and static analysis.
+* High test coverage.
+* Explicit over implicit behavior.
+
+Quick Start
+-----------
+
+1. Fork the repository.
+2. Clone your fork locally.
+3. Open the project in VS Code using Dev Containers.
+4. Install pre-commit hooks:
+
+   .. code-block:: sh
+
+       pre-commit install
+
+5. Create a branch from ``test``.
+6. Make your changes and add tests.
+7. Run:
+
+   .. code-block:: sh
+
+       nox -t test
+
+8. Open a pull request targeting ``test``.
+
+
+CI Status
+---------
+
+All pull requests must pass the automated CI checks before review.
+
+
 General Guidelines
 ------------------
 
@@ -44,8 +83,7 @@ Security and Sensitive Issues
 **Do not submit security vulnerabilities through issues or pull requests.**
 All security-related concerns must be reported according to `SECURITY.md`_.
 
-Failure to follow security reporting procedures may result in immediate rejection of the submission
-and/or reporting to relevant authorities.
+Failure to follow the security reporting procedure may result in rejection of the submission.
 
 Scope of Contributions
 ----------------------
@@ -143,19 +181,6 @@ Convert the output ``.ui`` files to ``.py`` files using the following command:
 .. code-block:: sh
 
     pyside6-uic path/to/input.ui -o path/to/output.py
-
-Extract translate able strings from ``.ui`` files into ``.ts`` files using the following command:
-.. code-block:: sh
-
-    pyside6-lupdate path/to/input.ui -ts path/to/output.ts
-
-Translate the ``.ts`` files using Qt Linguist application :code:`pyside6-linguist`
-
-Then compile the translated ``.ts`` files into binary ``.qm`` files using the following command:
-.. code-block:: sh
-
-    pyside6-lrelease path/to/input.ts -qm path/to/output.qm
-
 
 Possible issues
 ---------------
@@ -283,10 +308,25 @@ here are some high-level guidelines for code that might not be enforced by linte
   for example, it might be better to name a function :code:`read` instead of :code:`image_read` in the module :code:`my_package/image.py`.
   Consider the module name-space and check if it's flattened in :code:`__init__.py`.
 
+Commit Messages
+---------------
+
+Use clear, descriptive commit messages.
+
+Format:
+
+    type(scope): short description
+
+Examples:
+
+* feat(ui): add mission filter dropdown
+* fix(api): handle timeout exception
+* docs: clarify setup instructions
+
 Pull Requests
 -------------
 
-Open a `pull request`_ and target the ``dev`` branch to submit changes to this project.
+Open a `pull request`_ and target the ``test`` branch to submit changes to this project.
 
 Don't target the ``main`` branch, as it's reserved for releases.
 

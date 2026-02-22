@@ -127,9 +127,6 @@ def get_enum_from_boolean_flags(  # noqa: UP047
         namespaces (dict[str, str]): SOAP namespaces.
         enum_type (type[E]): Enum type to extract.
 
-    Raises:
-        ValueError: If multiple True values are found.
-
     Returns:
         E | None: Extracted enum value or None.
     """
@@ -137,13 +134,8 @@ def get_enum_from_boolean_flags(  # noqa: UP047
     # Iterate through the Enum to find the result
     for member in enum_type:
         value = get_text(document, member.value, namespaces)
-
         # if it's the correct value, save it
         if value is not None and value.lower() == "true":
-            # If we already have a result, show error
-            if result is not None:
-                print("Multiple choices detected!")
-                raise ValueError
             result = member
 
     return result
