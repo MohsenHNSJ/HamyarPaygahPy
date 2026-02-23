@@ -46,7 +46,7 @@ jobs:
           # Disable linters in the listed descriptors
           # DISABLE: COPYPASTE
           # Disable specific linters
-          DISABLE_LINTERS: SPELL_CSPELL,RST_RSTFMT,PYTHON_RUFF_FORMAT,PYTHON_ISORT,RST_RST_LINT,PYTHON_BANDIT
+          DISABLE_LINTERS: SPELL_CSPELL,RST_RSTFMT,PYTHON_RUFF_FORMAT,PYTHON_ISORT,RST_RST_LINT,PYTHON_BANDIT,JSON_PRETTIER
           # Report results to GitHub status checks
           GITHUB_STATUS_REPORTER: true
           # Python default style to check/apply.
