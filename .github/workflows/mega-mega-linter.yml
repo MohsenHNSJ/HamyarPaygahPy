@@ -44,9 +44,9 @@ jobs:
         env:
           # https://megalinter.io/latest/configuration/
           # Disable linters in the listed descriptors
-          DISABLE: COPYPASTE
+          # DISABLE: COPYPASTE
           # Disable specific linters
-          DISABLE_LINTERS: JSON_PRETTIER,YAML_PRETTIER
+          # DISABLE_LINTERS: JSON_PRETTIER,YAML_PRETTIER
           # Report results to GitHub status checks
           GITHUB_STATUS_REPORTER: true
           # Python default style to check/apply.
