@@ -201,6 +201,9 @@ class RegionAnalyzerTab(QWidget):
 
         return grouped_missions
 
+    def _sorted_counter(self, counter: Counter[Any]) -> list[tuple[str, int]]:
+        return counter.most_common()
+
     async def _summarize_missions(  # noqa: C901, PLR0912, PLR0915
         self,
         missions_list: list[Mission],
@@ -317,59 +320,23 @@ class RegionAnalyzerTab(QWidget):
                 total_chief_complaints[mission_details.location_and_emergency.chief_complaint] += 1
 
         # Sort the consumables list
-        sorted_total_consumables = sorted(
-            total_consumables.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_total_consumables = self._sorted_counter(total_consumables)
         # Sort the drugs list
-        sorted_total_drugs = sorted(
-            total_drugs.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_total_drugs = self._sorted_counter(total_drugs)
         # Sort caller numbers list
-        sorted_caller_numbers = sorted(
-            total_caller_numbers.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_caller_numbers = self._sorted_counter(total_caller_numbers)
         # Sort location types
-        sorted_location_types = sorted(
-            total_location_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_location_types = self._sorted_counter(total_location_types)
         # Sorted accident types
-        sorted_accident_types = sorted(
-            total_accident_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_accident_types = self._sorted_counter(total_accident_types)
         # Sorted illness types
-        sorted_illness_types = sorted(
-            total_illness_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_illness_types = self._sorted_counter(total_illness_types)
         # Sorted vehicle types
-        sorted_vehicle_types = sorted(
-            total_vehicle_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_vehicle_types = self._sorted_counter(total_vehicle_types)
         # Sorted injury types
-        sorted_injury_types = sorted(
-            total_injury_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_injury_types = self._sorted_counter(total_injury_types)
         # Sorted chief complaints
-        sorted_chief_complaints = sorted(
-            total_chief_complaints.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_chief_complaints = self._sorted_counter(total_chief_complaints)
 
         return {
             "total_patients": total_patients,
