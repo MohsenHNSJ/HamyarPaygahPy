@@ -53,6 +53,8 @@ async def main(app: QApplication) -> None:
     if not server_url:
         # Connect the dialog's accepted signal to load and show the main window
         server_config_dialog.accepted.connect(main_menu.show)
+        # Connect the dialog's rejected signal to close the application
+        server_config_dialog.rejected.connect(app.quit)
 
         # Show the prompt dialog to get server address from user
         server_config_dialog.open()

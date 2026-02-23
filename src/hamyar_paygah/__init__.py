@@ -1,7 +1,7 @@
 """Hamyar Paygah.
 --------------------------
 
-Application for EMS overseers to gather information from EMS servers.
+Desktop GUI application for EMS server oversight and data aggregation.
 
 :copyright: (c) 2026-present MohsenHNSJ
 :license: MIT, see LICENSE for more details
@@ -9,7 +9,6 @@ Application for EMS overseers to gather information from EMS servers.
 """  # noqa: D205
 
 # ---- Package metadata (optional but professional) -----------------
-__application__ = True
 __app_name__ = "Hamyar Paygah"
 __author__ = "MohsenHNSJ"
 __description__ = "Desktop GUI application to access EMS server data."
