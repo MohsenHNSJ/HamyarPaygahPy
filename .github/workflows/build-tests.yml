@@ -66,6 +66,19 @@ jobs:
         run: |
           echo "poetry cache hit: ${{ steps.cache-poetry.outputs.cache-hit }}"
 
+      - name: Cache Nox
+        id: cache-nox
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: .nox
+          key: ${{ runner.os }}-nox-${{ hashFiles('**/pyproject.toml', '**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nox-
+
+      - name: Print Nox cache status
+        run: |
+          echo "nox cache hit: ${{ steps.cache-nox.outputs.cache-hit }}"
+
       - name: Set up the environment
         uses: ./.github/actions/setup-poetry-env
         with:

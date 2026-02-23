@@ -1,6 +1,7 @@
 ---
 version: 2
 updates:
+  # Github Actions update
   - package-ecosystem: github-actions
     assignees:
       - "MohsenHNSJ"
@@ -12,6 +13,7 @@ updates:
       interval: daily
     target-branch: "test"
 
+    # Python dependencies (workflows only)
   - package-ecosystem: pip
     assignees:
       - "MohsenHNSJ"
@@ -24,6 +26,7 @@ updates:
     target-branch: "test"
     versioning-strategy: increase
 
+    # Python dependencies (documentation only)
   - package-ecosystem: pip
     assignees:
       - "MohsenHNSJ"
@@ -36,6 +39,7 @@ updates:
     target-branch: "test"
     versioning-strategy: increase
 
+    # Python dependencies (all)
   - package-ecosystem: pip
     allow:
       - dependency-type: "all"
@@ -50,6 +54,7 @@ updates:
     target-branch: "test"
     versioning-strategy: increase
 
+    # Dockerfile / Container updates
   - package-ecosystem: docker
     assignees:
       - "MohsenHNSJ"
@@ -61,6 +66,7 @@ updates:
       interval: daily
     target-branch: "test"
 
+    # Dev container updates
   - package-ecosystem: devcontainers
     assignees:
       - "MohsenHNSJ"

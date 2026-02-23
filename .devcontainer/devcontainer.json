@@ -30,7 +30,8 @@
       ],
       "settings": {
         "autoDocstring.docstringFormat": "google",
-        "autopep8.showNotifications": "onError"
+        "autopep8.showNotifications": "onError",
+        "editor.formatOnSave": true
       }
     }
   },

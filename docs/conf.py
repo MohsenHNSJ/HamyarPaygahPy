@@ -59,6 +59,7 @@ nitpick_ignore: set[tuple[str, str]] = {
     (PY_CLASS, "etree._Element"),  # C extension.
     (PY_CLASS, "lxml.etree._Element"),  # C extension.
     (PY_CLASS, "jdatetime.datetime"),  # C extension.
+    (PY_CLASS, "jdatetime.date"),  # C extension.
 }
 # Project name
 project = "Hamyar Paygah"

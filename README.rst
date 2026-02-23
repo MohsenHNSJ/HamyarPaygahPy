@@ -131,14 +131,6 @@ Versioning follows Semantic Versioning.
 Executables are automatically built using GitHub workflows.
 They are not digitally signed.
 
-Screenshots
------------
-
-.. image:: docs/_static/images/SCREENSHOT_1.png
-   :alt: Application screenshot
-   :align: center
-
-
 Roadmap
 -------
 
