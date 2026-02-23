@@ -32,6 +32,9 @@ if TYPE_CHECKING:
 
     from hamyar_paygah.models.mission_details_model import MissionDetails
 
+COUNT_PERSIAN_TEXT: str = "تعداد"
+"""Persian text for the word (count)"""
+
 
 class RegionAnalyzerTab(QWidget):
     """Tab that analyzes a region and shows its details."""
@@ -616,7 +619,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(consumables_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(consumables_list):
             name_item = QTableWidgetItem(name)
@@ -642,7 +645,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(drugs_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(drugs_list):
             name_item = QTableWidgetItem(name)
@@ -673,7 +676,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(numbers_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["شماره", "تعداد"])
+        table.setHorizontalHeaderLabels(["شماره", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(numbers_list):
             name_item = QTableWidgetItem(name)
@@ -704,7 +707,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(location_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع محل فوریت", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع محل فوریت", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(location_types_list):
             name_item = QTableWidgetItem(name)
@@ -734,7 +737,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(accident_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع حادثه", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع حادثه", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(accident_types_list):
             name_item = QTableWidgetItem(name)
@@ -764,7 +767,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(illness_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع بیماری", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع بیماری", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(illness_types_list):
             name_item = QTableWidgetItem(name)
@@ -794,7 +797,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(vehicle_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع خودرو", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع خودرو", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(vehicle_types_list):
             name_item = QTableWidgetItem(name)
@@ -824,7 +827,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(injury_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نقش مصدوم", "تعداد"])
+        table.setHorizontalHeaderLabels(["نقش مصدوم", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(injury_types_list):
             name_item = QTableWidgetItem(name)
@@ -854,7 +857,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(chief_complaints_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["شکایت اصلی", "تعداد"])
+        table.setHorizontalHeaderLabels(["شکایت اصلی", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(chief_complaints_list):
             name_item = QTableWidgetItem(name)
