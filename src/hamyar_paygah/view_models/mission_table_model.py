@@ -8,7 +8,7 @@ from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
 from PySide6.QtWidgets import QWidget
 
 from hamyar_paygah.models.mission_model import Mission
-from hamyar_paygah.utils.date_utils import convert_string_iso_date_to_string_persian_date
+from hamyar_paygah.utils.date_utils import convert_iso_datetime_to_persian_string
 
 
 class MissionTableModel(QAbstractTableModel):
@@ -28,7 +28,7 @@ class MissionTableModel(QAbstractTableModel):
             ("شماره مددجو", lambda m: m.patient_id),
             ("کد آمبولانس", lambda m: m.ambulance_code),
             ("نام بیمارستان", lambda m: m.hospital_name),
-            ("تاریخ", lambda m: convert_string_iso_date_to_string_persian_date(m.date)),
+            ("تاریخ", lambda m: convert_iso_datetime_to_persian_string(m.date)),
             ("آدرس", lambda m: m.address),
             ("نتیجه", lambda m: m.result),
         ]

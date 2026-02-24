@@ -357,6 +357,7 @@
     "pyupgrade",
     "pyupio",
     "qasync",
+    "qdate",
     "QLCD",
     "qube",
     "Raftegi",
