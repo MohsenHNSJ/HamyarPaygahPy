@@ -47,7 +47,7 @@ mypy_commands: list[str] = [
     "docs/conf.py",
 ]
 # MyPy requirements
-mypy_requirements: list[str] = ["mypy", "pytest", "pydantic"]
+mypy_requirements: list[str] = ["mypy", "pytest"]
 # endregion MYPY
 
 # region PYTEST
@@ -55,7 +55,6 @@ mypy_requirements: list[str] = ["mypy", "pytest", "pydantic"]
 pytest_requirements: list[str] = [
     "pytest",
     "coverage",
-    "pydantic",
     "pytest-asyncio",
     "pytest-aiohttp",
     "pytest-codspeed",

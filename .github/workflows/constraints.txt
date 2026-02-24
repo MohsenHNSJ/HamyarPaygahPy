@@ -9,7 +9,6 @@ pip==26.0.1
 pipx==1.8.0
 poetry==2.3.2
 pre-commit==4.5.1
-pydantic==2.12.5
 pyinstaller==6.19.0
 pytest==9.0.2
 pytest-aiohttp==1.1.0

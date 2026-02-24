@@ -35,10 +35,6 @@ inputs:
     required: false
     description: "Whether to install Pytest-Codspeed plugin"
     default: "false"
-  pydantic:
-    required: false
-    description: "Whether to install Pydantic"
-    default: "false"
   checkov:
     required: false
     description: "Whether to install Checkov"
@@ -147,12 +143,6 @@ runs:
       shell: bash
       if: ${{ inputs.pytest-codspeed == 'true' }}
       run: pip install --constraint=.github/workflows/constraints.txt pytest-codspeed
-
-    - name: Install Pydantic
-      shell: bash
-      if: ${{ inputs.pydantic == 'true' }}
-      run: |
-        pip install --constraint=.github/workflows/constraints.txt pydantic
 
     - name: Install Checkov
       shell: bash
