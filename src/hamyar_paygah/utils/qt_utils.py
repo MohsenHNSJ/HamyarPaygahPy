@@ -15,9 +15,18 @@ NOT_REGISTERED_PERSIAN_TEXT: str = "ثبت نشده"
 
 
 def set_checkbox(checkbox: QCheckBox, *, value: bool) -> None:
-    """Sets the checkbox state and enables it if value is True, otherwise disables it."""
-    checkbox.setChecked(value)
+    """Set a checkbox state and enabled status.
+
+    The checkbox is checked and enabled if ``value`` is ``True``.
+    If ``value`` is ``False``, the checkbox is unchecked and disabled.
+
+    Args:
+        checkbox: The QCheckBox instance to modify.
+        value: Determines both the checked state and whether the
+            checkbox is enabled.
+    """
     checkbox.setEnabled(value)
+    checkbox.setChecked(value)
 
 
 def set_textfield(

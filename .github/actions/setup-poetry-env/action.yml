@@ -35,6 +35,10 @@ inputs:
     required: false
     description: "Whether to install Pytest-Codspeed plugin"
     default: "false"
+  pytest-qt:
+    required: false
+    description: "Whether to install pytest-Qt plugin"
+    default: "false"
   checkov:
     required: false
     description: "Whether to install Checkov"
@@ -143,6 +147,11 @@ runs:
       shell: bash
       if: ${{ inputs.pytest-codspeed == 'true' }}
       run: pip install --constraint=.github/workflows/constraints.txt pytest-codspeed
+
+    - name: Install Pytest-Qt plugin
+      shell: bash
+      if: ${{ inputs.pytest-qt == 'true' }}
+      run: pip install --constraint=.github/workflows/constraints.txt pytest-qt
 
     - name: Install Checkov
       shell: bash

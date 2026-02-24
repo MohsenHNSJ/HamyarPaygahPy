@@ -58,6 +58,7 @@ pytest_requirements: list[str] = [
     "pytest-asyncio",
     "pytest-aiohttp",
     "pytest-codspeed",
+    "pytest-qt",
 ]
 # Benchmark commands
 benchmark_commands: list[str] = ["pytest", "tests/", "--codspeed", "-rA"]
