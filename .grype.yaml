@@ -26,7 +26,7 @@ output: "table"
 
 # write output report to a file (default is to write to stdout)
 # same as --file; GRYPE_FILE env var
-file: "reports/grype-report.json"
+# file: "reports/grype-report.json"
 
 # a list of globs to exclude from scanning, for example:
 # exclude:
