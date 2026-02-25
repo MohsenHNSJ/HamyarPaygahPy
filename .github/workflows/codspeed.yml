@@ -65,6 +65,7 @@ jobs:
           aiohttp: true
           pytest-asyncio: true
           pytest-codspeed: true
+          pytest-qt: true
 
       - name: Run benchmark
         uses: CodSpeedHQ/action@2ac572851726409c88c02a307f1ea2632a9ea59b # v4.11.0
