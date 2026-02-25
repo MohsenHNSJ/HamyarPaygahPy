@@ -9,8 +9,8 @@ from unittest.mock import Mock, patch
 
 import jdatetime  # type: ignore[import-untyped]
 import pytest
-import pytestqt
-import pytestqt.qtbot
+import pytestqt  # type: ignore[import-not-found]
+import pytestqt.qtbot  # type: ignore[import-not-found]
 from PySide6.QtWidgets import QCheckBox, QLineEdit, QPlainTextEdit
 
 from hamyar_paygah.utils.qt_utils import (
