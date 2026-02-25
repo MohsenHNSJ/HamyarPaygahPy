@@ -66,9 +66,12 @@ jobs:
           pytest-asyncio: true
           pytest-codspeed: true
           pytest-qt: true
+          qt-deps: true
 
       - name: Run benchmark
         uses: CodSpeedHQ/action@2ac572851726409c88c02a307f1ea2632a9ea59b # v4.11.0
+        env:
+          QT_QPA_PLATFORM: offscreen # Don't try to open real windows for Qt, pretend only.
         with:
           mode: "simulation" # Deterministic CPU simulation for stable CI benchmarks
           run: pytest tests/ --codspeed -rA

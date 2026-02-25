@@ -68,8 +68,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           nox: true
+          qt-deps: true
 
       - name: Run Nox
+        env:
+          QT_QPA_PLATFORM: offscreen # Don't try to open real windows for Qt, pretend only.
         run: |
           nox -s test-${{ matrix.python-version }}
 

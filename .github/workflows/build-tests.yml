@@ -83,7 +83,10 @@ jobs:
         uses: ./.github/actions/setup-poetry-env
         with:
           nox: true
+          qt-deps: true
 
       - name: Run Nox
+        env:
+          QT_QPA_PLATFORM: offscreen # Don't try to open real windows for Qt, pretend only.
         run: |
           nox --python=3.13

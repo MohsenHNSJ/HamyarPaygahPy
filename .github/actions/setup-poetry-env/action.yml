@@ -51,6 +51,10 @@ inputs:
     required: false
     description: "Whether to install UPX"
     default: "false"
+  qt-deps:
+    required: false
+    description: "Wether to install Qt system dependencies"
+    default: "false"
 
 runs:
   using: "composite"
@@ -174,3 +178,29 @@ runs:
 
         Write-Host "UPX location:"
         Get-Command upx | Select-Object -Property Source
+
+    - name: Install Qt system dependencies
+      shell: powershell
+      if: ${{ inputs.qt-deps == 'true' }}
+      run: |
+        sudo apt-get update
+        sudo apt-get --no-install-recommends install -y \
+        x11-apps \
+        libgl1 \
+        libglx-mesa0 \
+        libegl1 \
+        libx11-6 \
+        libx11-xcb1 \
+        libxkbcommon0 \
+        libxkbcommon-x11-0 \
+        libxcb1 \
+        libxcb-cursor0 \
+        libxcb-icccm4 \
+        libxcb-keysyms1 \
+        libxcb-render-util0 \
+        libxcursor1 \
+        libxcb-shape0 \
+        libxcb-xfixes0 \
+        libfontconfig1 \
+        libfreetype6 \
+        libdbus-1-3 \
