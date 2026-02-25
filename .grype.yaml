@@ -118,7 +118,7 @@ log:
 
   # location to write the log file (default is not to have a log file)
   # same as GRYPE_LOG_FILE env var
-  file: "reports/grype-log.json"
+  # file: "reports/grype-log.json"
 
 match:
   # sets the matchers below to use cpes when trying to find
