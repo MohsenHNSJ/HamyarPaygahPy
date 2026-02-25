@@ -7,16 +7,21 @@ import jdatetime  # type: ignore[import-untyped]
 
 
 def convert_date_to_datetime(date_string: str | None) -> datetime.datetime | None:
-    """Converts a Jalali date string (YYYY/MM/DD) to gregorian datetime.
+    """Convert a Jalali date string to a Gregorian datetime object.
+
+    The input must be in the format ``YYYY/MM/DD``. If ``None`` or an
+    empty string is provided, ``None`` is returned.
 
     Args:
-        date_string (str): Jalali date string
+        date_string: Jalali date string in ``YYYY/MM/DD`` format.
 
     Returns:
-        datetime.datetime: Gregorian datetime object
+        A ``datetime.datetime`` object representing the corresponding
+        Gregorian date at midnight, or ``None`` if the input is ``None``
+        or empty.
     """
     # If input is `None`, return `None`
-    if not date_string:
+    if date_string is None or not date_string.strip():
         return None
 
     # Split the input to values
@@ -36,16 +41,23 @@ def convert_date_and_time_to_datetime(
     date_string: str | None,
     time_string: str | None,
 ) -> datetime.datetime | None:
-    """Converts jalali date and time strings into a gregorian datetime.
+    """Convert Jalali date and time strings to a Gregorian datetime.
+
+    The date must be in ``YYYY/MM/DD`` format and the time must be in
+    ``HH:MM`` format. If either value is ``None`` or equals ``"-"``,
+    ``None`` is returned.
 
     Args:
-        date_string (str): Jalali date
-        time_string (str): Jalali time
+        date_string: Jalali date string in ``YYYY/MM/DD`` format.
+        time_string: Jalali time string in ``HH:MM`` format.
 
     Returns:
-        datetime.datetime: gregorian datetime object.
+        A ``datetime.datetime`` object representing the corresponding
+        Gregorian date and time, or ``None`` if inputs are missing or
+        marked as invalid.
     """
     # If inputs are `None` or invalid, return `None`
+    # Sometimes the server may respond in "-" instead of `None`
     if date_string is None or time_string is None or date_string == "-" or time_string == "-":
         return None
     # Split the input values
@@ -62,22 +74,27 @@ def convert_date_and_time_to_datetime(
     )
 
     # Return the gregorian date
-    return jalali_datetime.togregorian()  # type: ignore[no-any-return]
+    gregorian: datetime.datetime = jalali_datetime.togregorian()
+    return gregorian
 
 
 def is_valid_server_address(server_address: str | None) -> bool:
-    """Validate the server address format.
+    """Check whether a server address has a valid HTTP/HTTPS URL structure.
 
     The address must:
     - Be a non-empty string
-    - Start with ``http://`` or ``https://``
-    - Contain a valid network location (host)
+    - Use the ``http`` or ``https`` scheme
+    - Contain a network location component (host)
+
+    This function validates only the structural format of the URL.
+    It does not verify DNS resolution or server reachability.
 
     Args:
         server_address: Server address entered by the user.
 
     Returns:
-        ``True`` if the address appears valid, otherwise ``False``.
+        ``True`` if the address appears structurally valid,
+        otherwise ``False``.
     """
     # If server address is empty return False
     if not server_address:
@@ -85,6 +102,8 @@ def is_valid_server_address(server_address: str | None) -> bool:
 
     # Strip empty spaces
     address: str = server_address.strip()
+    if not address:
+        return False
 
     # Must explicitly specify scheme
     if not address.startswith(("http://", "https://")):
@@ -94,4 +113,4 @@ def is_valid_server_address(server_address: str | None) -> bool:
     parsed = urlparse(address)
 
     # Ensure scheme and hostname exist
-    return not (not parsed.scheme or not parsed.netloc)
+    return bool(parsed.scheme and parsed.netloc)

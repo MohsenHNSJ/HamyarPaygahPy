@@ -142,8 +142,8 @@ def test_set_enum_textfield(
 
     set_enum_textfield(
         widget,
-        enum_value,
-    )  # type: ignore[arg-type]
+        enum_value,  # type: ignore[arg-type]
+    )
 
     assert widget.text() == expected_text
     assert widget.isEnabled() is expected_enabled
