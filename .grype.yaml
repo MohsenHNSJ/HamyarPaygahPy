@@ -37,7 +37,7 @@ file: "reports/grype-report.json"
 
 # os and/or architecture to use when referencing container images (e.g. "windows/armv6" or "arm64")
 # same as --platform; GRYPE_PLATFORM env var
-platform: "linux/amd64"
+# platform: "linux/amd64"
 
 # If using SBOM input, automatically generate CPEs when packages have none
 # add-cpes-if-none: false
