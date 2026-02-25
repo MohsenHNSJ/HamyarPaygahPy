@@ -180,7 +180,7 @@ runs:
         Get-Command upx | Select-Object -Property Source
 
     - name: Install Qt system dependencies
-      shell: powershell
+      shell: bash
       if: ${{ inputs.qt-deps == 'true' }}
       run: |
         sudo apt-get update
