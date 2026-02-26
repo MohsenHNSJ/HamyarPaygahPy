@@ -24,7 +24,7 @@ from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.services.missions_list_service import get_missions_list
-from hamyar_paygah.utils.date_utils import convert_persian_q_date_to_gregorian_pythonic_date
+from hamyar_paygah.utils.date_utils import qdate_to_datetime
 from hamyar_paygah.utils.qt_utils import typed_async_slot
 
 if TYPE_CHECKING:
@@ -126,10 +126,10 @@ class RegionAnalyzerTab(QWidget):
         self._clear_data()
 
         # Convert from date and to date to normal pythonic dates
-        pythonic_from_date: datetime = convert_persian_q_date_to_gregorian_pythonic_date(
+        pythonic_from_date: datetime = qdate_to_datetime(
             self.ui.from_date_picker.date(),
         )
-        pythonic_to_date: datetime = convert_persian_q_date_to_gregorian_pythonic_date(
+        pythonic_to_date: datetime = qdate_to_datetime(
             self.ui.to_date_picker.date(),
         )
 

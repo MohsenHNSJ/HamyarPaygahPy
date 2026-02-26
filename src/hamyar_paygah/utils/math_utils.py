@@ -9,7 +9,7 @@ def calculate_time_delta(
 ) -> datetime.timedelta | None:
     """Calculates the period of time between start and end.
 
-    Returns None if either is None. Counts for the midnight but in Asayar.
+    Returns None if either is None. Counts for the midnight bug in Asayar.
 
     Args:
         start_time (datetime.time | None): Starting time of the period

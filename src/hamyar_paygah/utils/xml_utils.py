@@ -12,78 +12,104 @@ from lxml import etree
 E = TypeVar("E", bound=Enum)
 
 
-def get_text(document: etree._Element, tag: str, namespaces: dict[str, str]) -> str | None:
-    """Retrieve the text content of a child element by tag.
+def get_text(
+    document: etree._Element,
+    tag: str,
+    namespaces: dict[str, str],
+    prefix: str = "a",
+) -> str | None:
+    """Return the text content of a direct child element.
 
     Args:
-        document (_Element): The parent XML element containing the tag.
-        tag (str): The tag name of the child element (without namespace prefix).
-        namespaces (dict[str, str]): Namespace mapping for XPath.
+        document: Parent XML element containing the child.
+        tag: Child element tag name (without namespace prefix).
+        namespaces: Mapping of namespace prefixes to URIs.
+        prefix: Namespace prefix used in lookup. Defaults to "a".
 
     Returns:
-        str | None: The text content of the element, or None if not present.
+        str | None:
+            The element text if found and valid. Returns None if
+            - The element does not exist.
+            - The element text is None.
+            - The element text is "-" or "#".
     """
     element: etree._Element | None = document.find(
-        path=f"a:{tag}",
+        path=f"{prefix}:{tag}",
         namespaces=namespaces,
     )
-    # If element has data, check the data
-    if element is not None:
-        # If it's invalid, return None
-        if element.text in {"-", "#"}:
-            return None
-        # Else, return data
-        return element.text
-    # Else, return None
-    return None
+
+    if element is None:
+        return None
+
+    text: str | None = element.text
+    # If the text is invalid, return None
+    if text in {"-", "#"}:
+        return None
+
+    return text
 
 
 def get_integer(document: etree._Element, tag: str, namespaces: dict[str, str]) -> int | None:
-    """Retrieves the integer content of a child element by tag.
+    """Return the integer value of a child element's text content.
+
+    The function retrieves the element text using ``get_text`` and attempts
+    to convert it to an integer. If direct conversion fails, it extracts the
+    first integer sequence found in the text.
 
     Args:
-        document (etree._Element): The parent XML element containing the tag.
-        tag (str): The tag name of the child element (without namespace prefix).
-        namespaces (dict[str, str]): Namespace mapping for XPath.
+        document: Parent XML element containing the child.
+        tag: Child element tag name (without namespace prefix).
+        namespaces: Mapping of namespace prefixes to URIs.
 
     Returns:
-        int | None: The integer value if content is not None, otherwise None.
+        int | None:
+            The parsed integer if found. Returns `None` if
+            - The element does not exist.
+            - The element text is None or empty.
+            - No integer value can be extracted.
     """
-    result: int | None = None
-
     # Get the text content
     text: str | None = get_text(document, tag, namespaces)
+
+    if text is None:
+        return None
+
+    # Strip whitespace
+    text = text.strip()
 
     # If input is empty, return None
     if not text:
-        return result
+        return None
 
     # Try to extract the number regularly
     try:
-        result = int(text)
+        return int(text)
     # If the input is a mix of numbers and alphabets, extract numbers
     except ValueError:
         match = re.search(r"\d+", text)
-        result = int(match.group()) if match else None
-
-    return result
+        return int(match.group()) if match else None
 
 
 def get_bool(document: etree._Element, tag: str, namespaces: dict[str, str]) -> bool:
-    """Retrieves the boolean content of a child element by tag.
+    """Return the boolean value of a child element's text content.
+
+    The function retrieves the element text using ``get_text`` and returns
+    True only if the text is exactly "true" (case-insensitive).
+    All other values, including missing or empty elements, return False.
 
     Args:
-        document (etree._Element): The parent XML element containing the tag.
-        tag (str): The tag name of the child element (without namespace prefix).
-        namespaces (dict[str, str]): Namespace mapping for XPath.
+        document: Parent XML element containing the child.
+        tag: Child element tag name (without namespace prefix).
+        namespaces: Mapping of namespace prefixes to URIs.
 
     Returns:
-        bool: The boolean value if content is not None, otherwise False.
+        bool:
+            True if the element text equals "true" (case-insensitive).
+            Otherwise, False.
     """
     # Get the text content
     text: str | None = get_text(document, tag, namespaces)
-    # Check if the content is true and return the result
-    return text == "true"
+    return text is not None and text.strip().lower() == "true"
 
 
 def get_time(
@@ -91,23 +117,40 @@ def get_time(
     tag: str,
     namespaces: dict[str, str],
 ) -> datetime.time | None:
-    """Retrieves the time content of a child element by tag.
+    """Return the time value of a child element's text content.
+
+    The function retrieves the element text using ``get_text`` and attempts
+    to parse it using the format "%H:%M:%S".
 
     Args:
-        document (etree._Element): The parent XML element containing the tag.
-        tag (str): The tag name of the child element (without namespace prefix).
-        namespaces (dict[str, str]): Namespace mapping for XPath.
+        document: Parent XML element containing the child.
+        tag: Child element tag name (without namespace prefix).
+        namespaces: Mapping of namespace prefixes to URIs.
 
     Returns:
-        datetime.time | None: The time value if content is not None, otherwise None.
+        datetime.time:
+            A ``datetime.time`` object if parsing succeeds.
+            Returns `None` if:
+            - The element does not exist.
+            - The element text is None.
+            - The text does not match the "%H:%M:%S" format.
     """
     # Get the text content
     text: str | None = get_text(document, tag, namespaces)
     # If time is not provided by server, return None
-    if text == "-" or text is None:
+    if text is None:
         return None
+
+    # Strip whitespace
+    text = text.strip()
+    if not text:
+        return None
+
     # Else, convert the string to time
-    return datetime.datetime.strptime(text, "%H:%M:%S").time()  # noqa: DTZ007
+    try:
+        return datetime.datetime.strptime(text, "%H:%M:%S").time()  # noqa: DTZ007
+    except ValueError:
+        return None
 
 
 def get_enum_from_boolean_flags(  # noqa: UP047
@@ -115,27 +158,32 @@ def get_enum_from_boolean_flags(  # noqa: UP047
     namespaces: dict[str, str],
     enum_type: type[E],
 ) -> E | None:
-    """Retrieve a single enum value from boolean SOAP flags.
+    """Extract an enum member from boolean SOAP flag elements.
 
-    Iterates over the provided enum and returns the member whose
-    corresponding XML tag value is 'true'.
+    Iterates over all members of ``enum_type`` and evaluates the XML
+    element whose tag name matches ``member.value`` using ``get_bool()``.
 
-    Returns None if no matching value is found.
+    If one or more flags evaluate to ``True``, the last matching enum
+    member in iteration order is returned. If no flags evaluate to
+    ``True``, ``None`` is returned.
+
+    This function assumes that each enum member's value corresponds
+    to the XML tag name of a boolean flag element.
 
     Args:
-        document (etree._Element): XML SOAP response.
-        namespaces (dict[str, str]): SOAP namespaces.
-        enum_type (type[E]): Enum type to extract.
+        document: XML SOAP response element.
+        namespaces: Namespace mapping used for XPath lookups.
+        enum_type: Enum type whose members map to boolean flag tags.
 
     Returns:
-        E | None: Extracted enum value or None.
+        E | None:
+            The matching enum member, or ``None`` if no flag is set.
     """
     result: E | None = None
     # Iterate through the Enum to find the result
     for member in enum_type:
-        value = get_text(document, member.value, namespaces)
-        # if it's the correct value, save it
-        if value is not None and value.lower() == "true":
+        if get_bool(document, member.value, namespaces):
+            # if it's the correct value, save it
             result = member
 
     return result
