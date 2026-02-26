@@ -1,6 +1,8 @@
 """Services to get missions list from server."""
 
+import asyncio
 import lzma
+from collections.abc import Callable
 from datetime import datetime, timedelta
 
 import aiohttp
@@ -10,6 +12,8 @@ from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.services.parsers import parse_to_missions_list
 
 CACHE_DIR = Path("cache/missions_list")
+
+HTTP_OK_STATUS = 200
 
 
 async def _fetch_missions_list(
@@ -88,6 +92,13 @@ async def _fetch_missions_list(
             headers=headers,
         ) as response,
     ):
+        # Raise error on bad status response
+        if response.status != HTTP_OK_STATUS:
+            error_message: str = (
+                f"Server returned status {response.status} with response:\n{response.text()}"
+            )
+            raise aiohttp.ClientError(error_message)
+
         response_text: str = await response.text()
         return response_text
 
@@ -129,6 +140,7 @@ async def get_missions_list(
     from_date: datetime,
     to_date: datetime,
     region_id: int,
+    progress_callback: Callable[[int, int], None] | None = None,
 ) -> list[Mission]:
     """Fetch missions list with caching mechanism.
 
@@ -143,6 +155,8 @@ async def get_missions_list(
         from_date (datetime.datetime): The start date of the missions query.
         to_date (datetime.datetime): The end date of the missions query.
         region_id (int): The region ID to filter missions by.
+        progress_callback: Optional function that receives two ints:
+        processed_days, total_days.
 
     Returns:
         list[Mission]: A list of `Mission` objects parsed from the server response
@@ -157,7 +171,14 @@ async def get_missions_list(
     current_request_date = from_date.date()
     final_request_date = to_date.date()
 
+    # Count the days for progress callback
+    total_days = (final_request_date - current_request_date).days + 1
+    processed_days = 0
+
     while current_request_date <= final_request_date:
+        # Allow cancellation between iterations
+        await asyncio.sleep(0)
+
         # Create a minimal datetime object for the current date
         request_date_time = datetime.combine(
             current_request_date,
@@ -198,6 +219,12 @@ async def get_missions_list(
         # Parse the raw data into Mission objects and add to the list
         missions = parse_to_missions_list(raw_data)
         missions_list.extend(missions)
+
+        # Add to progress counter
+        processed_days += 1
+        # If a callback is assigned, notify the callback of progress
+        if progress_callback:
+            progress_callback(processed_days, total_days)
 
         # Move to the next date
         current_request_date += timedelta(days=1)
