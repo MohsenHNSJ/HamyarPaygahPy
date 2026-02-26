@@ -34,6 +34,7 @@ def xml_document() -> etree._Element:
         <a:text_dash>-</a:text_dash>
         <a:text_hash>#</a:text_hash>
         <a:empty></a:empty>
+        <a:whitespace>   </a:whitespace>
         <a:integer_pure>42</a:integer_pure>
         <a:integer_mixed>abc123xyz</a:integer_mixed>
         <a:integer_zero>0</a:integer_zero>
@@ -99,6 +100,7 @@ def test_get_text_with_custom_prefix() -> None:
         ("empty", None),  # element.text is None
         ("missing", None),  # element does not exist
         ("integer_zero", 0),  # valid zero value
+        ("whitespace", None),  # whitespace
     ],
 )
 def test_get_integer(
@@ -145,6 +147,7 @@ def test_get_bool(
         ("time_invalid_value", None),
         ("empty", None),
         ("missing", None),
+        ("whitespace", None),
     ],
 )
 def test_get_time(

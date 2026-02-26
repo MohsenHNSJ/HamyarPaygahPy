@@ -153,7 +153,7 @@ async def test_typed_async_slot_wraps_asyncslot() -> None:
     """Unit test for typed_async_slot decorator."""
     mock_decorator = Mock()
 
-    async def sample_function() -> None:
+    async def sample_function() -> None:  # pragma: no cover (Intentionally is not executed)
         return None
 
     mock_decorator.return_value = sample_function
