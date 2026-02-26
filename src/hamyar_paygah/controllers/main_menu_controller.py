@@ -1,10 +1,12 @@
 """Controller for main menu UI."""
 
-# pylint: disable=E0611,I1101,R0903,C0103
+# pylint: disable=E0611,I1101,R0903,C0103,W0718
+import asyncio
 from typing import TYPE_CHECKING
 
+from aiohttp import ClientError
 from PySide6.QtCore import QCalendar, QDate, QSortFilterProxyModel, Qt, Slot
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QProgressDialog
 
 import hamyar_paygah.new_ui.main_menu as main_menu_ui
 from hamyar_paygah.config.server_config import load_server_address
@@ -14,7 +16,7 @@ from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.missions_list_service import get_missions_list
 from hamyar_paygah.utils.date_utils import qdate_to_datetime
-from hamyar_paygah.utils.qt_utils import typed_async_slot
+from hamyar_paygah.utils.qt_utils import show_error_dialog, typed_async_slot
 from hamyar_paygah.view_models.mission_table_model import MissionTableModel
 
 if TYPE_CHECKING:
@@ -89,17 +91,63 @@ class MainMenu(QMainWindow):
             self.ui.to_date_picker.date(),
         )
 
-        # TODO@MohsenHNSJ: Show a loading progress or something  # noqa: TD003
-        # TODO@MohsenHNSJ: Use try, catch and except the common errors # noqa: TD003
+        # Create and show a progress bar
+        total_days = (pythonic_to_date.date() - pythonic_from_date.date()).days + 1
+        progress_bar = QProgressDialog(
+            "در حال دریافت اطلاعات از سرور...",
+            "لغو",
+            0,
+            total_days,
+            self,
+        )
+        progress_bar.setWindowModality(Qt.WindowModality.ApplicationModal)
+        progress_bar.setMinimumDuration(0)  # Show immediately
+        progress_bar.setValue(0)
+        progress_bar.show()
 
-        # Get missions list from server
-        missions_list: list[Mission] = await get_missions_list(
-            str(load_server_address()),
-            pythonic_from_date,
-            pythonic_to_date,
-            self.ui.region_picker.currentData(),
+        # Define the progress bar update function
+        def progress_callback(processed: int, total: int) -> None:
+            progress_bar.setMaximum(total)
+            progress_bar.setValue(processed)
+
+        # Create task to get the list of missions
+        task_get_missions_list = asyncio.create_task(
+            get_missions_list(
+                str(load_server_address()),
+                pythonic_from_date,
+                pythonic_to_date,
+                self.ui.region_picker.currentData(),
+                progress_callback=progress_callback,
+            ),
         )
 
+        # Connect cancel button to task.cancel()
+        progress_bar.canceled.connect(task_get_missions_list.cancel)
+
+        try:
+            # Get missions list from server
+            missions_list: list[Mission] = await task_get_missions_list
+        except asyncio.CancelledError:
+            progress_bar.close()
+            return  # User cancelled, silent exit
+        except ClientError as e:
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای اینترنت",
+                f"مشکل در دریافت اطلاعات از سرور:\n{e}",
+            )
+            return
+        except Exception as e:  # noqa: BLE001
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای ناشناخته",
+                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}",
+            )
+            return
+        finally:
+            progress_bar.close()
         # Populate and setup the table
         self._populate_and_setup_table_view(missions_list)
 

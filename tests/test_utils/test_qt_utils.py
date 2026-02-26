@@ -1,7 +1,7 @@
 """Unit tests for qt_utils module."""
 
 # ruff: noqa: S101
-# pylint: disable=E0611
+# pylint: disable=E0611,W0613
 import os
 from datetime import time, timedelta
 from enum import Enum
@@ -11,13 +11,14 @@ import jdatetime  # type: ignore[import-untyped]
 import pytest
 import pytestqt  # type: ignore[import-not-found]
 import pytestqt.qtbot  # type: ignore[import-not-found]
-from PySide6.QtWidgets import QCheckBox, QLineEdit, QPlainTextEdit
+from PySide6.QtWidgets import QCheckBox, QLineEdit, QMessageBox, QPlainTextEdit, QWidget
 
 from hamyar_paygah.utils.qt_utils import (
     NOT_REGISTERED_PERSIAN_TEXT,
     set_checkbox,
     set_enum_textfield,
     set_textfield,
+    show_error_dialog,
     typed_async_slot,
 )
 
@@ -173,3 +174,29 @@ async def test_typed_async_slot_wraps_asyncslot() -> None:
         mock_decorator.assert_called_once_with(sample_function)
 
         assert decorated is sample_function
+
+
+def test_show_error_dialog_calls_exec_correctly(
+    qtbot: pytestqt.qtbot.QtBot,  # noqa: ARG001
+) -> None:
+    """Test that show_error_dialog creates a QMessageBox and calls exec."""
+    parent = QWidget()
+
+    title = "Error Title"
+    message = "Something went wrong"
+
+    with (
+        patch.object(QMessageBox, "exec", return_value=None) as mock_exec,
+        patch.object(QMessageBox, "setWindowTitle") as mock_set_title,
+        patch.object(QMessageBox, "setText") as mock_set_text,
+        patch.object(QMessageBox, "setIcon") as mock_set_icon,
+    ):
+        show_error_dialog(parent, title, message)
+
+        # Check that the exec() method was called
+        mock_exec.assert_called_once()
+
+        # Check that the dialog was configured correctly
+        mock_set_title.assert_called_once_with(title)
+        mock_set_text.assert_called_once_with(message)
+        mock_set_icon.assert_called_once_with(QMessageBox.Icon.Critical)

@@ -6,7 +6,7 @@ from datetime import time, timedelta
 from typing import Any, TypeVar, cast
 
 import jdatetime  # type: ignore[import-untyped]
-from PySide6.QtWidgets import QCheckBox, QLineEdit, QPlainTextEdit
+from PySide6.QtWidgets import QCheckBox, QLineEdit, QMessageBox, QPlainTextEdit, QWidget
 from qasync import asyncSlot  # type: ignore[import-untyped]
 
 from hamyar_paygah.models.mission_details_submodels.location_and_emergency_model import (
@@ -153,3 +153,32 @@ def typed_async_slot(*args: Any, **kwargs: Any) -> Callable[[F], F]:  # noqa: AN
         function it decorates.
     """
     return cast("Callable[[F], F]", asyncSlot(*args, **kwargs))
+
+
+def show_error_dialog(parent: QWidget, title: str, message: str) -> None:
+    """Display an error dialog with a critical icon.
+
+    This function creates a modal error dialog attached to the given parent
+    widget. The dialog displays a title and a message to inform the user of
+    an error. Execution is blocked until the user closes the dialog.
+
+    Args:
+        parent (PySide6.QtWidgets.QWidget): The parent widget for the dialog. The dialog will
+            be centered on this widget.
+        title (str): The title displayed in the window's title bar.
+        message (str): The error message to display in the dialog body.
+
+    Returns:
+        None
+
+    Notes:
+        - This function uses a modal dialog; it will block interaction with
+          other windows until closed.
+        - For non-blocking dialogs, consider using `dialog.show()` instead
+          of `dialog.exec()`.
+    """
+    dialog = QMessageBox(parent)
+    dialog.setWindowTitle(title)
+    dialog.setText(message)
+    dialog.setIcon(QMessageBox.Icon.Critical)
+    dialog.exec()
