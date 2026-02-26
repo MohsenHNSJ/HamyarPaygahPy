@@ -44,8 +44,7 @@ def set_checkbox(checkbox: QCheckBox, *, value: bool) -> None:
 
     Args:
         checkbox: The QCheckBox instance to modify.
-        value: Determines both the checked state and whether the
-            checkbox is enabled.
+        value: Determines both the checked state and whether the checkbox is enabled.
     """
     checkbox.setEnabled(value)
     checkbox.setChecked(value)
@@ -59,7 +58,7 @@ def set_textfield(
 
     This function updates the text of a QLineEdit or QPlainTextEdit widget.
     - If `value` is None or zero (for integers), the field is disabled and
-      filled with a placeholder text (`NOT_REGISTERED_PERSIAN_TEXT`).
+    filled with a placeholder text (`NOT_REGISTERED_PERSIAN_TEXT`).
     - Otherwise, the field is updated with `str(value)` and will be enabled.
 
     Args:
