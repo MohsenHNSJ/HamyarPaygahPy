@@ -15,7 +15,7 @@ __description__ = "Desktop GUI application to access EMS server data."
 __copyright__ = "Copyright 2026-present MohsenHNSJ"
 __license__ = "MIT"
 __title__ = "HamyarPaygahPy"
-__version__ = "0.5.1"
+__version__ = "0.6.0"
 
 # ---- Runtime flags (optional, but sometimes useful) ----------------
 __all__: tuple[str, ...] = ()  # Explicitly declare: no public API
