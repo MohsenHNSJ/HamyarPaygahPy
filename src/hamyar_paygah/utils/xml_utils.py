@@ -27,7 +27,8 @@ def get_text(
         prefix: Namespace prefix used in lookup. Defaults to "a".
 
     Returns:
-        The element text if found and valid. Returns None if:
+        str | None:
+            The element text if found and valid. Returns None if
             - The element does not exist.
             - The element text is None.
             - The element text is "-" or "#".
@@ -61,7 +62,8 @@ def get_integer(document: etree._Element, tag: str, namespaces: dict[str, str]) 
         namespaces: Mapping of namespace prefixes to URIs.
 
     Returns:
-        The parsed integer if found. Returns None if:
+        int | None:
+            The parsed integer if found. Returns `None` if
             - The element does not exist.
             - The element text is None or empty.
             - No integer value can be extracted.
@@ -101,8 +103,9 @@ def get_bool(document: etree._Element, tag: str, namespaces: dict[str, str]) -> 
         namespaces: Mapping of namespace prefixes to URIs.
 
     Returns:
-        True if the element text equals "true" (case-insensitive).
-        Otherwise, False.
+        bool:
+            True if the element text equals "true" (case-insensitive).
+            Otherwise, False.
     """
     # Get the text content
     text: str | None = get_text(document, tag, namespaces)
@@ -125,8 +128,9 @@ def get_time(
         namespaces: Mapping of namespace prefixes to URIs.
 
     Returns:
-        A ``datetime.time`` object if parsing succeeds.
-        Returns None if:
+        datetime.time:
+            A ``datetime.time`` object if parsing succeeds.
+            Returns `None` if:
             - The element does not exist.
             - The element text is None.
             - The text does not match the "%H:%M:%S" format.
@@ -172,7 +176,8 @@ def get_enum_from_boolean_flags(  # noqa: UP047
         enum_type: Enum type whose members map to boolean flag tags.
 
     Returns:
-        The matching enum member, or ``None`` if no flag is set.
+        E | None:
+            The matching enum member, or ``None`` if no flag is set.
     """
     result: E | None = None
     # Iterate through the Enum to find the result
