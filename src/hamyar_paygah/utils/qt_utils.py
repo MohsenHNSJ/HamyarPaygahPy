@@ -163,8 +163,8 @@ def show_error_dialog(parent: QWidget, title: str, message: str) -> None:
     an error. Execution is blocked until the user closes the dialog.
 
     Args:
-        parent (QWidget): The parent widget for the dialog. The dialog will
-        be centered on this widget.
+        parent (PySide6.QtWidgets.QWidget): The parent widget for the dialog. The dialog will
+            be centered on this widget.
         title (str): The title displayed in the window's title bar.
         message (str): The error message to display in the dialog body.
 
