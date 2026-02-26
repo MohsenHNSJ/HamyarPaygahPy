@@ -1,11 +1,14 @@
 ---
 # MegaLinter GitHub Action configuration file
 # More info at https://megalinter.io
-name: Run MegaLinter
+name: Run Mega-MegaLinter
 
+# This action only runs on "dev" and "main" branch as it takes too much time and only on PR.
 on:
-  push: # Run on every Push
-  pull_request: # Run on every PR
+  pull_request:
+    branches:
+      - main
+      - dev
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -14,8 +17,8 @@ concurrency:
 permissions: read-all
 
 jobs:
-  mega-linter:
-    name: MegaLinter
+  mega-mega-linter:
+    name: Mega-MegaLinter
     runs-on: ubuntu-latest
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push, comment issues & post new PR
@@ -32,18 +35,18 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      # MegaLinter
-      - name: MegaLinter
+      # Mega-MegaLinter
+      - name: Mega-MegaLinter
         id: ml
         # You can override MegaLinter flavor used to have faster performances
         # More info at https://megalinter.io/latest/flavors/
-        uses: oxsecurity/megalinter/flavors/ci_light@42bb470545e359597e7f12156947c436e4e3fb9a # v9.3.0
+        uses: oxsecurity/megalinter@42bb470545e359597e7f12156947c436e4e3fb9a # v9.3.0
         env:
           # https://megalinter.io/latest/configuration/
           # Disable linters in the listed descriptors
-          DISABLE: COPYPASTE
+          # DISABLE: COPYPASTE
           # Disable specific linters
-          DISABLE_LINTERS: JSON_PRETTIER,YAML_PRETTIER
+          DISABLE_LINTERS: SPELL_CSPELL,RST_RSTFMT,PYTHON_RUFF_FORMAT,PYTHON_ISORT,RST_RST_LINT,PYTHON_BANDIT,JSON_PRETTIER,PYTHON_PYRIGHT,PYTHON_PYLINT,PYTHON_FLAKE8,REPOSITORY_KICS,SPELL_LYCHEE,BASH_EXEC
           # Report results to GitHub status checks
           GITHUB_STATUS_REPORTER: true
           # Python default style to check/apply.

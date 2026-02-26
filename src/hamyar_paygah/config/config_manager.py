@@ -81,7 +81,7 @@ def set_config_value(key: str, value: Any) -> None:  # noqa: ANN401
             JSON-serializable.
     """
     # Load the configuration file
-    config = load_config()
+    config: dict[str, Any] = load_config()
     # Add or Replace the desired key
     config[key] = value
     # Over-write the configuration file

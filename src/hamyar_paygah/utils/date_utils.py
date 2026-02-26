@@ -8,12 +8,23 @@ import jdatetime  # type: ignore[import-untyped]
 from PySide6.QtCore import QDate
 
 
-def convert_string_iso_date_to_string_persian_date(string_iso_datetime: str) -> str:
-    """Converts the input ISO-8601 datetime string to Persian datetime string and returns it.
+def convert_iso_datetime_to_persian_string(string_iso_datetime: str) -> str:
+    """Convert an ISO-8601 datetime string to a Persian datetime string.
 
-    This function also removed milliseconds.
+    The input string must be in a format supported by
+    ``datetime.datetime.fromisoformat``. Microseconds are removed
+    before conversion.
+
+    Args:
+        string_iso_datetime: A datetime string in ISO-8601 format.
+
+    Returns:
+        A string representation of the corresponding Persian datetime
+        without microseconds.
+
+    Raises:
+        ValueError: If the input string is not a valid ISO-8601 datetime.
     """
-    # Convert string input to datetime
     gregorian_datetime = datetime.datetime.fromisoformat(string_iso_datetime)
 
     # Remove redundant milliseconds
@@ -27,42 +38,42 @@ def convert_string_iso_date_to_string_persian_date(string_iso_datetime: str) -> 
     return str(persian_datetime)
 
 
-def convert_persian_q_date_to_gregorian_pythonic_date(persian_q_date: QDate) -> datetime.datetime:
-    """Converts Persian date in QDate format to Pythonic gregorian datetime object.
+def qdate_to_datetime(gregorian_date: QDate) -> datetime.datetime:
+    """Convert a QDate to a datetime.datetime object.
+
+    The returned datetime has time set to 00:00:00.
 
     Args:
-        persian_q_date (PySide6.QtCore.QDate): Persian date in QDate format.
+        gregorian_date: A valid QDate instance.
 
     Returns:
-        datetime.datetime: Pythonic datetime object in gregorian format.
+        A datetime.datetime representing the same date.
     """
-    # Convert Persian QDate to gregorian QDate
-    gregorian_date: QDate = persian_q_date
-
-    # Convert QDate to normal pythonic datetime object
-    pythonic_datetime: datetime.datetime = datetime.datetime(
+    return datetime.datetime(
         gregorian_date.year(),
         gregorian_date.month(),
         gregorian_date.day(),
     )
 
-    # Return pythonic datetime
-    return pythonic_datetime
 
-
-def convert_gregorian_date_to_persian_date(
+def gregorian_to_persian(
     gregorian_date: datetime.datetime | None,
 ) -> jdatetime.datetime | None:
-    """Converts gregorian date to jalali date.
+    """Convert a Gregorian datetime to a Jalali (Persian) datetime.
 
     Args:
-        gregorian_date (datetime.datetime | None): Gregorian date
+        gregorian_date: A Gregorian ``datetime.datetime`` instance
+            or ``None``.
 
     Returns:
-        jdatetime.datetime | None: Jalali date or None if the input is also None.
+        A ``jdatetime.datetime`` representing the same moment in the
+        Jalali calendar, or ``None`` if the input is ``None``.
+
+    Raises:
+        TypeError: If the input is not ``None`` and not a
+            ``datetime.datetime`` instance.
     """
-    if gregorian_date is not None:
-        # Convert to jalali and return
-        return jdatetime.datetime.fromgregorian(datetime=gregorian_date)
-    # Else, return None
-    return None
+    if gregorian_date is None:
+        return None
+
+    return jdatetime.datetime.fromgregorian(datetime=gregorian_date)

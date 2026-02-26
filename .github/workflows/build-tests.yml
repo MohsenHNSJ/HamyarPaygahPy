@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2
+        uses: step-security/harden-runner@a90bcbc6539c36a85cdfeb73f7e2f433735f215b # v2.15.0
         with:
           egress-policy: audit # Monitor outbound connections
 
@@ -66,11 +66,27 @@ jobs:
         run: |
           echo "poetry cache hit: ${{ steps.cache-poetry.outputs.cache-hit }}"
 
+      - name: Cache Nox
+        id: cache-nox
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: .nox
+          key: ${{ runner.os }}-nox-${{ hashFiles('**/pyproject.toml', '**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nox-
+
+      - name: Print Nox cache status
+        run: |
+          echo "nox cache hit: ${{ steps.cache-nox.outputs.cache-hit }}"
+
       - name: Set up the environment
         uses: ./.github/actions/setup-poetry-env
         with:
           nox: true
+          qt-deps: true
 
       - name: Run Nox
+        env:
+          QT_QPA_PLATFORM: offscreen # Don't try to open real windows for Qt, pretend only.
         run: |
           nox --python=3.13

@@ -24,13 +24,16 @@ from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.services.missions_list_service import get_missions_list
-from hamyar_paygah.utils.date_utils import convert_persian_q_date_to_gregorian_pythonic_date
+from hamyar_paygah.utils.date_utils import qdate_to_datetime
 from hamyar_paygah.utils.qt_utils import typed_async_slot
 
 if TYPE_CHECKING:
     from datetime import datetime
 
     from hamyar_paygah.models.mission_details_model import MissionDetails
+
+COUNT_PERSIAN_TEXT: str = "تعداد"
+"""Persian text for the word (count)"""
 
 
 class RegionAnalyzerTab(QWidget):
@@ -123,10 +126,10 @@ class RegionAnalyzerTab(QWidget):
         self._clear_data()
 
         # Convert from date and to date to normal pythonic dates
-        pythonic_from_date: datetime = convert_persian_q_date_to_gregorian_pythonic_date(
+        pythonic_from_date: datetime = qdate_to_datetime(
             self.ui.from_date_picker.date(),
         )
-        pythonic_to_date: datetime = convert_persian_q_date_to_gregorian_pythonic_date(
+        pythonic_to_date: datetime = qdate_to_datetime(
             self.ui.to_date_picker.date(),
         )
 
@@ -197,6 +200,9 @@ class RegionAnalyzerTab(QWidget):
                 grouped_missions[mission.ambulance_code].append(mission)
 
         return grouped_missions
+
+    def _sorted_counter(self, counter: Counter[Any]) -> list[tuple[str, int]]:
+        return counter.most_common()
 
     async def _summarize_missions(  # noqa: C901, PLR0912, PLR0915
         self,
@@ -314,59 +320,23 @@ class RegionAnalyzerTab(QWidget):
                 total_chief_complaints[mission_details.location_and_emergency.chief_complaint] += 1
 
         # Sort the consumables list
-        sorted_total_consumables = sorted(
-            total_consumables.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_total_consumables = self._sorted_counter(total_consumables)
         # Sort the drugs list
-        sorted_total_drugs = sorted(
-            total_drugs.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_total_drugs = self._sorted_counter(total_drugs)
         # Sort caller numbers list
-        sorted_caller_numbers = sorted(
-            total_caller_numbers.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_caller_numbers = self._sorted_counter(total_caller_numbers)
         # Sort location types
-        sorted_location_types = sorted(
-            total_location_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_location_types = self._sorted_counter(total_location_types)
         # Sorted accident types
-        sorted_accident_types = sorted(
-            total_accident_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_accident_types = self._sorted_counter(total_accident_types)
         # Sorted illness types
-        sorted_illness_types = sorted(
-            total_illness_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_illness_types = self._sorted_counter(total_illness_types)
         # Sorted vehicle types
-        sorted_vehicle_types = sorted(
-            total_vehicle_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_vehicle_types = self._sorted_counter(total_vehicle_types)
         # Sorted injury types
-        sorted_injury_types = sorted(
-            total_injury_types.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_injury_types = self._sorted_counter(total_injury_types)
         # Sorted chief complaints
-        sorted_chief_complaints = sorted(
-            total_chief_complaints.items(),
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        sorted_chief_complaints = self._sorted_counter(total_chief_complaints)
 
         return {
             "total_patients": total_patients,
@@ -616,7 +586,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(consumables_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(consumables_list):
             name_item = QTableWidgetItem(name)
@@ -642,7 +612,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(drugs_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(drugs_list):
             name_item = QTableWidgetItem(name)
@@ -673,7 +643,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(numbers_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["شماره", "تعداد"])
+        table.setHorizontalHeaderLabels(["شماره", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(numbers_list):
             name_item = QTableWidgetItem(name)
@@ -704,7 +674,7 @@ class RegionAnalyzerTab(QWidget):
 
         table.setRowCount(len(location_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع محل فوریت", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع محل فوریت", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(location_types_list):
             name_item = QTableWidgetItem(name)
@@ -734,7 +704,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(accident_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع حادثه", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع حادثه", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(accident_types_list):
             name_item = QTableWidgetItem(name)
@@ -764,7 +734,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(illness_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع بیماری", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع بیماری", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(illness_types_list):
             name_item = QTableWidgetItem(name)
@@ -794,7 +764,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(vehicle_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نوع خودرو", "تعداد"])
+        table.setHorizontalHeaderLabels(["نوع خودرو", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(vehicle_types_list):
             name_item = QTableWidgetItem(name)
@@ -824,7 +794,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(injury_types_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["نقش مصدوم", "تعداد"])
+        table.setHorizontalHeaderLabels(["نقش مصدوم", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(injury_types_list):
             name_item = QTableWidgetItem(name)
@@ -854,7 +824,7 @@ class RegionAnalyzerTab(QWidget):
     ) -> None:
         table.setRowCount(len(chief_complaints_list))
         table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["شکایت اصلی", "تعداد"])
+        table.setHorizontalHeaderLabels(["شکایت اصلی", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(chief_complaints_list):
             name_item = QTableWidgetItem(name)

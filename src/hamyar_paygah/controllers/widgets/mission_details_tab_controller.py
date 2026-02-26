@@ -20,7 +20,7 @@ import hamyar_paygah.new_ui.widgets.mission_details_tab as ui_mdt
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.models.mission_details_model import MissionDetails
 from hamyar_paygah.services.mission_details_service import get_mission_details
-from hamyar_paygah.utils.date_utils import convert_gregorian_date_to_persian_date
+from hamyar_paygah.utils.date_utils import gregorian_to_persian
 from hamyar_paygah.utils.qt_utils import (
     set_checkbox,
     set_enum_textfield,
@@ -265,7 +265,7 @@ class MissionsDetailsTab(QWidget):
         set_textfield(
             self.ui.last_update_field,
             str(
-                convert_gregorian_date_to_persian_date(
+                gregorian_to_persian(
                     info.document_request_time,
                 ),
             ),
@@ -357,7 +357,7 @@ class MissionsDetailsTab(QWidget):
             set_textfield(field, value)
 
         # Special cases
-        jalali_mission_date: jdatetime.datetime | None = convert_gregorian_date_to_persian_date(
+        jalali_mission_date: jdatetime.datetime | None = gregorian_to_persian(
             mission_details.times_and_distances.mission_date,
         )
         if jalali_mission_date is not None:

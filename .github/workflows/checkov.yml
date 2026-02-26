@@ -4,9 +4,12 @@ name: Checkov IaC Security Scan
 on:
   push: # Run on every Push
   pull_request: # Run on every PR
+  schedule:
+    - cron: "0 3 * * 1" # Every Monday at 03:00 UTC
 
 permissions:
   contents: read # Read access to the repository contents
+  security-events: write # required to fetch internal or private CodeQL packs
 
 jobs:
   checkov:
@@ -15,7 +18,7 @@ jobs:
 
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2
+        uses: step-security/harden-runner@a90bcbc6539c36a85cdfeb73f7e2f433735f215b # v2.15.0
         with:
           egress-policy: audit # Monitor outbound connections
 
@@ -58,4 +61,9 @@ jobs:
 
       - name: Run Checkov on YAML and Docker files
         run: |
-          checkov -d . --quiet --compact
+          checkov -d . -o sarif --output-file-path results.sarif --quiet --compact
+
+      - name: Upload SARIF report
+        uses: github/codeql-action/upload-sarif@89a39a4e59826350b863aa6b6252a07ad50cf83e # v4.32.4
+        with:
+          sarif_file: results.sarif

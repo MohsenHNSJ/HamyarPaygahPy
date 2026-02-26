@@ -1,6 +1,6 @@
 """Server configuration.
 
-Handles loading snd saving the EMS server configuration.
+Handles loading and saving the EMS server configuration.
 """
 
 from __future__ import annotations

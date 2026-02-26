@@ -29,8 +29,7 @@ class ConsumablesTableModel(QAbstractTableModel):
         # Sort descending by quantity
         self._items = sorted(
             items.items(),
-            key=lambda x: x[1],
-            reverse=True,
+            key=lambda x: (-x[1], x[0]),
         )
 
         self.endResetModel()

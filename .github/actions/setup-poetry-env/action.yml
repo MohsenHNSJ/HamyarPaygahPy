@@ -35,9 +35,9 @@ inputs:
     required: false
     description: "Whether to install Pytest-Codspeed plugin"
     default: "false"
-  pydantic:
+  pytest-qt:
     required: false
-    description: "Whether to install Pydantic"
+    description: "Whether to install pytest-Qt plugin"
     default: "false"
   checkov:
     required: false
@@ -50,6 +50,10 @@ inputs:
   upx:
     required: false
     description: "Whether to install UPX"
+    default: "false"
+  qt-deps:
+    required: false
+    description: "Wether to install Qt system dependencies"
     default: "false"
 
 runs:
@@ -148,11 +152,10 @@ runs:
       if: ${{ inputs.pytest-codspeed == 'true' }}
       run: pip install --constraint=.github/workflows/constraints.txt pytest-codspeed
 
-    - name: Install Pydantic
+    - name: Install Pytest-Qt plugin
       shell: bash
-      if: ${{ inputs.pydantic == 'true' }}
-      run: |
-        pip install --constraint=.github/workflows/constraints.txt pydantic
+      if: ${{ inputs.pytest-qt == 'true' }}
+      run: pip install --constraint=.github/workflows/constraints.txt pytest-qt
 
     - name: Install Checkov
       shell: bash
@@ -175,3 +178,29 @@ runs:
 
         Write-Host "UPX location:"
         Get-Command upx | Select-Object -Property Source
+
+    - name: Install Qt system dependencies
+      shell: bash
+      if: ${{ inputs.qt-deps == 'true' }}
+      run: |
+        sudo apt-get update
+        sudo apt-get --no-install-recommends install -y \
+        x11-apps \
+        libgl1 \
+        libglx-mesa0 \
+        libegl1 \
+        libx11-6 \
+        libx11-xcb1 \
+        libxkbcommon0 \
+        libxkbcommon-x11-0 \
+        libxcb1 \
+        libxcb-cursor0 \
+        libxcb-icccm4 \
+        libxcb-keysyms1 \
+        libxcb-render-util0 \
+        libxcursor1 \
+        libxcb-shape0 \
+        libxcb-xfixes0 \
+        libfontconfig1 \
+        libfreetype6 \
+        libdbus-1-3 \

@@ -73,7 +73,7 @@ async def _fetch_mission_details(
         response_text: str = await response.text()
 
         # if server response is empty, raise an error
-        if response_text == "":
+        if not response_text.strip():
             raise aiohttp.ServerConnectionError
         return response_text
 
