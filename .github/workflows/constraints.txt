@@ -6,7 +6,7 @@ mypy==1.19.1
 nox==2026.2.9
 nox-poetry==1.2.0
 pip==26.0.1
-pipx==1.8.0
+pipx==1.10.1
 poetry==2.3.2
 pre-commit==4.5.1
 pyinstaller==6.19.0
