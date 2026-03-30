@@ -135,7 +135,7 @@ class MainMenu(QMainWindow):
             show_error_dialog(
                 self,
                 "خطای اینترنت",
-                f"مشکل در دریافت اطلاعات از سرور:\n{e}",
+                f"مشکل در دریافت اطلاعات از سرور:\n{e}\nType: {type(e)}",
             )
             return
         except Exception as e:  # noqa: BLE001
@@ -143,7 +143,7 @@ class MainMenu(QMainWindow):
             show_error_dialog(
                 self,
                 "خطای ناشناخته",
-                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}",
+                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}\nType: {type(e)}",
             )
             return
         finally:
