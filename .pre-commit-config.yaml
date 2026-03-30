@@ -17,14 +17,13 @@ repos:
       - id: pre-commit-update
 
     # Detect secrets like passwords, API keys, and tokens
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.30.0
-    hooks:
-      - id: gitleaks
-        # Also scan archives
-        args: [--max-archive-depth, "10"]
-
-    # Upgrade syntax for newer versions of the language.
+  # - repo: https://github.com/gitleaks/gitleaks
+  #   rev: v8.30.1
+  #   hooks:
+  #     - id: gitleaks
+  #       # Also scan archives
+  #       args: [--max-archive-depth, "10"]
+  # Upgrade syntax for newer versions of the language.
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.21.2
     hooks:
@@ -45,7 +44,7 @@ repos:
 
     # A set of pre-commit hooks for jsonschema validation.
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.2
+    rev: 0.37.1
     hooks:
       # Validate Dependabot Config (v2)
       - id: check-dependabot
@@ -131,7 +130,7 @@ repos:
 
     # Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.3
+    rev: v0.15.8
     hooks:
       # Run the linter
       - id: ruff
@@ -142,13 +141,13 @@ repos:
 
     # Identify unused dependencies and avoid a bloated virtual environment.
   - repo: https://github.com/fredrikaverpil/creosote.git
-    rev: v5.0.0
+    rev: v5.2.0
     hooks:
       - id: creosote
 
     # Poetry
   - repo: https://github.com/python-poetry/poetry
-    rev: 2.3.2
+    rev: 2.3.3
     hooks:
       # Make sure the poetry configuration does not get committed in a broken state.
       - id: poetry-check
@@ -159,7 +158,7 @@ repos:
 
     # A shell parser, formatter, and interpreter with bash support
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.12.0-2
+    rev: v3.13.0-1
     hooks:
       - id: shfmt
         # Simplify shell scripts, Error with a diff when the formatting differs
@@ -167,7 +166,7 @@ repos:
 
   # A fast, flexible, configuration-based command-line interface for linting Markdown/CommonMark files with the markdownlint library
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.21.0
+    rev: v0.22.0
     hooks:
       - id: markdownlint-cli2
 

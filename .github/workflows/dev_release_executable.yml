@@ -44,7 +44,7 @@ jobs:
 
       - name: Cache pip
         id: cache-pip
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: ${{ steps.pip-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
@@ -68,7 +68,7 @@ jobs:
 
       - name: Cache Poetry
         id: cache-poetry
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: ${{ steps.poetry-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -138,7 +138,7 @@ jobs:
             src\hamyar_paygah\main.py
 
       - name: Upload build artifact (Folder)
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: HamyarPaygah # Artifact name
           path: dist\ # Path to collect
@@ -147,7 +147,7 @@ jobs:
 
       - name: Publish or edit the draft notes
         id: create_draft_release
-        uses: release-drafter/release-drafter@6db134d15f3909ccc9eefd369f02bd1e9cffdf97 # v6.2.0
+        uses: release-drafter/release-drafter@139054aeaa9adc52ab36ddf67437541f039b88e2 # v7.1.1
         with:
           publish: false
           tag: ${{ steps.check-version.outputs.tag }}

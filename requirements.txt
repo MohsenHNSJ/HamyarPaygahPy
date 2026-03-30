@@ -1,4 +1,4 @@
-aiohttp==3.13.3
+aiohttp==3.13.4
 anyio==4.12.1
 jdatetime==5.2.0
 lxml==6.0.2
