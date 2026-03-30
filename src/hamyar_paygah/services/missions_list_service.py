@@ -95,7 +95,7 @@ async def _fetch_missions_list(
         # Raise error on bad status response
         if response.status != HTTP_OK_STATUS:
             error_message: str = (
-                f"Server returned status {response.status} with response:\n{response.text()}"
+                f"Server returned status {response.status} with response:\n{await response.text()}"
             )
             raise aiohttp.ClientError(error_message)
 
