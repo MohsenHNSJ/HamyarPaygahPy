@@ -521,6 +521,8 @@
     "--max-line-length=100",
     "--disable=fixme"
   ],
+  "python-envs.defaultEnvManager": "ms-python.python:poetry",
+  "python-envs.defaultPackageManager": "ms-python.python:poetry",
   "python.analysis.autoImportCompletions": true,
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.extraPaths": [
