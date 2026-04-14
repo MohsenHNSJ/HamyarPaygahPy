@@ -4,6 +4,7 @@
 
 import asyncio
 from collections import Counter
+from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
 from aiohttp import ClientError
@@ -253,11 +254,12 @@ class RegionAnalyzerTab(QWidget):
     def _sorted_counter(self, counter: Counter[Any]) -> list[tuple[str, int]]:
         return counter.most_common()
 
-    async def _summarize_missions(  # noqa: C901, PLR0912, PLR0915
+    async def _process_missions(  # noqa: C901, PLR0912, PLR0915
         self,
         missions_list: list[Mission],
+        progress_callback: Callable[[int], None],
     ) -> dict[str, int | list[tuple[str, int]] | Counter[Any]]:
-        """Compute basic statistics from the missions list."""
+        """Process missions asynchronously with progress reporting."""
         # Get total patients
         total_patients: int = len(missions_list)
 
@@ -294,7 +296,10 @@ class RegionAnalyzerTab(QWidget):
         total_chief_complaints: Counter[Any] = Counter()
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
-        for mission in missions_list:
+        for i, mission in enumerate(missions_list, start=1):
+            # Allow cancellation to be raised here
+            await asyncio.sleep(0)
+
             mission_details: MissionDetails = await get_mission_details(
                 str(load_server_address()),
                 mission.id,  # type: ignore[arg-type]
@@ -368,6 +373,9 @@ class RegionAnalyzerTab(QWidget):
             if mission_details.location_and_emergency.chief_complaint is not None:
                 total_chief_complaints[mission_details.location_and_emergency.chief_complaint] += 1
 
+            # ---- Update progress ----
+            progress_callback(i)
+
         # Sort the consumables list
         sorted_total_consumables = self._sorted_counter(total_consumables)
         # Sort the drugs list
@@ -409,12 +417,77 @@ class RegionAnalyzerTab(QWidget):
             "total_chief_complaints": sorted_chief_complaints,
         }
 
+    async def _summarize_missions(
+        self,
+        missions_list: list[Mission],
+    ) -> dict[str, int | list[tuple[str, int]] | Counter[Any]] | None:
+        """Compute basic statistics from the missions list."""
+        # Create and show a progress bar
+        total_missions = len(missions_list)
+        progress_bar = QProgressDialog(
+            "در حال دریافت اطلاعات ماموریت ها از سرور ...",  # noqa: RUF001
+            "لغو",
+            0,
+            total_missions,
+            self,
+        )
+        progress_bar.setWindowModality(Qt.WindowModality.ApplicationModal)
+        progress_bar.setMinimumDuration(0)  # Show immediately
+        progress_bar.setValue(0)
+        progress_bar.show()
+
+        # Define the progress bar update function
+        def progress_callback(processed: int) -> None:
+            progress_bar.setValue(processed)
+
+        # Create task to get the details of missions
+        task_process_missions = asyncio.create_task(
+            self._process_missions(
+                missions_list,
+                progress_callback,
+            ),
+        )
+
+        # Connect cancel button to task.cancel()
+        progress_bar.canceled.connect(task_process_missions.cancel)
+
+        try:
+            # Get processed missions with details
+            processed_missions = await task_process_missions
+        except asyncio.CancelledError:
+            progress_bar.close()
+            return None  # User cancelled, silent exit
+        except ClientError as e:
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای اینترنت",
+                f"مشکل در دریافت اطلاعات ماموریت‌ها از سرور:\n{e}\nType: {type(e)}",  # noqa: RUF001
+            )
+            return None
+        except Exception as e:  # noqa: BLE001
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای ناشناخته",
+                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}\nType: {type(e)}",
+            )
+            return None
+        finally:
+            progress_bar.close()
+
+        return processed_missions
+
     async def _build_tabs(self, missions_list: list[Mission]) -> None:
         """Build dynamic tabs per ambulance and one overall tab."""
         # Create overall summary tab
-        overall_summary_widget: QWidget = await self._create_summary_widget(
+        overall_summary_widget: QWidget | None = await self._create_summary_widget(
             missions_list,
         )
+        # Check if data is available
+        if overall_summary_widget is None:
+            # If not, do nothing
+            return
         self.ui.analysis_tab_container.addTab(
             overall_summary_widget,
             "کل منطقه",
@@ -428,18 +501,27 @@ class RegionAnalyzerTab(QWidget):
 
         for ambulance_code in sorted(grouped_missions.keys()):
             ambulance_missions: list[Mission] = grouped_missions[ambulance_code]
-            ambulance_summary_widget: QWidget = await self._create_summary_widget(
+            ambulance_summary_widget: QWidget | None = await self._create_summary_widget(
                 ambulance_missions,
             )
+            # Check if data is available
+            if ambulance_summary_widget is None:
+                # If not, do nothing
+                continue
             self.ui.analysis_tab_container.addTab(
                 ambulance_summary_widget,
                 f"{ambulance_code}",
             )
 
-    async def _create_summary_widget(self, missions_list: list[Mission]) -> QWidget:
+    async def _create_summary_widget(self, missions_list: list[Mission]) -> QWidget | None:
         """Create a simple summary display widget for a mission list."""
         # Get summary stats from the missions list
         stats = await self._summarize_missions(missions_list)
+
+        # Check if data is available
+        if stats is None:
+            # If not, do nothing
+            return None
 
         # Setup UI
         widget = QWidget()
