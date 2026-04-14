@@ -75,3 +75,7 @@ class MissionTableModel(QAbstractTableModel):
             return self._columns[section][0]
 
         return section + 1
+
+    def get_mission(self, row: int) -> Mission:
+        """Return mission by row index."""
+        return self._missions_list[row]

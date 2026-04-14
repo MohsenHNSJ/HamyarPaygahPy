@@ -1001,3 +1001,11 @@ class MissionsDetailsTab(QWidget):
         # Set all text fields
         for field, value in text_fields:
             set_textfield(field, value)
+
+    def set_mission_and_search(self, mission_id: int, patient_id: int) -> None:
+        """Fill inputs and trigger search."""
+        self.ui.mission_id_line_edit.setText(str(mission_id))
+        self.ui.patient_id_line_edit.setText(str(patient_id))
+
+        # Trigger search
+        self.ui.search_button.click()
