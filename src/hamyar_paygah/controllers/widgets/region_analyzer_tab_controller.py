@@ -2,14 +2,17 @@
 
 # pylint: disable=E0611,I1101,R0903,C0103
 
+import asyncio
 from collections import Counter
 from typing import TYPE_CHECKING, Any
 
+from aiohttp import ClientError
 from PySide6.QtCore import QCalendar, QDate, Qt, Slot
 from PySide6.QtWidgets import (
     QCheckBox,
     QLineEdit,
     QPlainTextEdit,
+    QProgressDialog,
     QTableWidget,
     QTableWidgetItem,
     QTabWidget,
@@ -25,7 +28,7 @@ from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.services.missions_list_service import get_missions_list
 from hamyar_paygah.utils.date_utils import qdate_to_datetime
-from hamyar_paygah.utils.qt_utils import typed_async_slot
+from hamyar_paygah.utils.qt_utils import show_error_dialog, typed_async_slot
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -133,17 +136,63 @@ class RegionAnalyzerTab(QWidget):
             self.ui.to_date_picker.date(),
         )
 
-        # TODO@MohsenHNSJ: Show a loading progress or something  # noqa: TD003
-        # TODO@MohsenHNSJ: Use try, catch and except the common errors # noqa: TD003
+        # Create and show a progress bar
+        total_days = (pythonic_to_date.date() - pythonic_from_date.date()).days + 1
+        progress_bar = QProgressDialog(
+            "در حال دریافت اطلاعات از سرور ...",
+            "لغو",
+            0,
+            total_days,
+            self,
+        )
+        progress_bar.setWindowModality(Qt.WindowModality.ApplicationModal)
+        progress_bar.setMinimumDuration(0)  # Show immediately
+        progress_bar.setValue(0)
+        progress_bar.show()
 
-        # Get missions list from server
-        missions_list: list[Mission] = await get_missions_list(
-            str(load_server_address()),
-            pythonic_from_date,
-            pythonic_to_date,
-            self.ui.region_picker.currentData(),
+        # Define the progress bar update function
+        def progress_callback(processed: int, total: int) -> None:
+            progress_bar.setMaximum(total)
+            progress_bar.setValue(processed)
+
+        # Create task to get the list of missions
+        task_get_missions_list = asyncio.create_task(
+            get_missions_list(
+                str(load_server_address()),
+                pythonic_from_date,
+                pythonic_to_date,
+                self.ui.region_picker.currentData(),
+                progress_callback=progress_callback,
+            ),
         )
 
+        # Connect cancel button to task.cancel()
+        progress_bar.canceled.connect(task_get_missions_list.cancel)
+
+        try:
+            # Get missions list from server
+            missions_list: list[Mission] = await task_get_missions_list
+        except asyncio.CancelledError:
+            progress_bar.close()
+            return  # User cancelled, silent exit
+        except ClientError as e:
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای اینترنت",
+                f"مشکل در دریافت اطلاعات از سرور:\n{e}\nType: {type(e)}",
+            )
+            return
+        except Exception as e:  # noqa: BLE001
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای ناشناخته",
+                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}\nType: {type(e)}",
+            )
+            return
+        finally:
+            progress_bar.close()
         # Build the tabs with the retrieved missions list
         await self._build_tabs(missions_list)
 
