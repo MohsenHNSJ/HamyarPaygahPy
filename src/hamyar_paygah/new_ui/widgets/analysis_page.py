@@ -1,5 +1,5 @@
 # pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201,C0302,C0325
-# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001, PLR2004, C901
+# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001, PLR2004, C901, PLR0912
 # mypy: ignore-errors
 # type: ignore[all]
 # -*- coding: utf-8 -*-
@@ -874,6 +874,56 @@ class Ui_analysis_page:
             self.missions_per_chief_complain_groupBox,
         )
 
+        self.missions_address_groupBox = QGroupBox(self.section_9)
+        self.missions_address_groupBox.setObjectName(
+            "missions_address_groupBox",
+        )
+        self.missions_address_groupBox.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.horizontalLayout_19 = QHBoxLayout(self.missions_address_groupBox)
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.missions_address_tableWidget = QTableWidget(
+            self.missions_address_groupBox,
+        )
+        if self.missions_address_tableWidget.columnCount() < 2:
+            self.missions_address_tableWidget.setColumnCount(2)
+        self.missions_address_tableWidget.setObjectName(
+            "missions_address_tableWidget",
+        )
+        self.missions_address_tableWidget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.missions_address_tableWidget.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.missions_address_tableWidget.setDragDropOverwriteMode(False)
+        self.missions_address_tableWidget.setAlternatingRowColors(True)
+        self.missions_address_tableWidget.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
+        )
+        self.missions_address_tableWidget.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_address_tableWidget.setVerticalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_address_tableWidget.setHorizontalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_address_tableWidget.setSortingEnabled(True)
+        self.missions_address_tableWidget.setWordWrap(True)
+        self.missions_address_tableWidget.setColumnCount(2)
+        self.missions_address_tableWidget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.missions_address_tableWidget.verticalHeader().setVisible(False)
+
+        self.horizontalLayout_19.addWidget(self.missions_address_tableWidget)
+
+        self.horizontalLayout_17.addWidget(self.missions_address_groupBox)
+
         self.verticalLayout.addWidget(self.section_9)
 
         self.retranslateUi(analysis_page)
@@ -1020,6 +1070,13 @@ class Ui_analysis_page:
             QCoreApplication.translate(
                 "analysis_page",
                 "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0634\u06a9\u0627\u06cc\u062a \u0627\u0635\u0644\u06cc",
+                None,
+            ),
+        )
+        self.missions_address_groupBox.setTitle(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u0622\u062f\u0631\u0633 \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0647\u0627",
                 None,
             ),
         )

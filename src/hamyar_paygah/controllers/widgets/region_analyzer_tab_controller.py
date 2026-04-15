@@ -294,6 +294,7 @@ class RegionAnalyzerTab(QWidget):
         total_vehicle_types: Counter[Any] = Counter()
         total_injury_types: Counter[Any] = Counter()
         total_chief_complaints: Counter[Any] = Counter()
+        missions_address: Counter[Any] = Counter()
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
         for i, mission in enumerate(missions_list, start=1):
@@ -373,6 +374,10 @@ class RegionAnalyzerTab(QWidget):
             if mission_details.location_and_emergency.chief_complaint is not None:
                 total_chief_complaints[mission_details.location_and_emergency.chief_complaint] += 1
 
+            # Get missions address
+            if mission_details.location_and_emergency.address is not None:
+                missions_address[mission_details.location_and_emergency.address] += 1
+
             # ---- Update progress ----
             progress_callback(i)
 
@@ -394,6 +399,8 @@ class RegionAnalyzerTab(QWidget):
         sorted_injury_types = self._sorted_counter(total_injury_types)
         # Sorted chief complaints
         sorted_chief_complaints = self._sorted_counter(total_chief_complaints)
+        # Sorted missions address
+        sorted_missions_address = self._sorted_counter(missions_address)
 
         return {
             "total_patients": total_patients,
@@ -415,6 +422,7 @@ class RegionAnalyzerTab(QWidget):
             "total_vehicle_types": sorted_vehicle_types,
             "total_injury_types": sorted_injury_types,
             "total_chief_complaints": sorted_chief_complaints,
+            "missions_address": sorted_missions_address,
         }
 
     async def _summarize_missions(
@@ -622,6 +630,12 @@ class RegionAnalyzerTab(QWidget):
         self._populate_chief_complaints_table(
             ui.missions_per_chief_complain_tableWidget,
             stats["total_chief_complaints"],  # type: ignore[arg-type]
+        )
+
+        # Populate missions address table
+        self._populate_missions_address_table(
+            ui.missions_address_tableWidget,
+            stats["missions_address"],  # type: ignore[arg-type]
         )
 
         return widget
@@ -958,6 +972,36 @@ class RegionAnalyzerTab(QWidget):
         table.setHorizontalHeaderLabels(["شکایت اصلی", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(chief_complaints_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_missions_address_table(
+        self,
+        table: QTableWidget,
+        addresses_list: list[tuple[Any, int]],
+    ) -> None:
+        table.setRowCount(len(addresses_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["آدرس", COUNT_PERSIAN_TEXT])
+
+        for row, (name, quantity) in enumerate(addresses_list):
             name_item = QTableWidgetItem(name)
             name_item.setTextAlignment(
                 Qt.AlignCenter,  # type: ignore[attr-defined]
