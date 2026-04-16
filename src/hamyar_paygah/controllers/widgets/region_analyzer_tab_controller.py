@@ -563,11 +563,14 @@ class RegionAnalyzerTab(QWidget):
         ui.missions_count_field.setText(str(stats["total_missions"]))
 
         # Set average time to arrive field
+        temp_seconds = float(
+            stats["average_time_to_arrive"],  # type: ignore[arg-type]
+        )
         ui.average_arriving_time_field.setText(
             str(
                 timedelta(
                     0,
-                    float(stats["average_time_to_arrive"]),
+                    temp_seconds,
                     0,
                     0,
                     0,
