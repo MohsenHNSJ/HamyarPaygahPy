@@ -2,14 +2,17 @@
 
 # pylint: disable=E0611,I1101,R0903,R0912,R0915,C0301,C0302,R0911
 # region imports
+import asyncio
 from typing import TYPE_CHECKING
 
+from aiohttp import ClientError
 from PySide6.QtCore import QSortFilterProxyModel, Qt
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QCheckBox,
     QLineEdit,
     QPlainTextEdit,
+    QProgressDialog,
     QTableWidget,
     QTableWidgetItem,
     QTextEdit,
@@ -25,6 +28,7 @@ from hamyar_paygah.utils.qt_utils import (
     set_checkbox,
     set_enum_textfield,
     set_textfield,
+    show_error_dialog,
     typed_async_slot,
 )
 from hamyar_paygah.view_models.consumables_table_model import ConsumablesTableModel
@@ -172,12 +176,56 @@ class MissionsDetailsTab(QWidget):
         """Loads the mission details from server and populates the fields."""
         # Clear the current data
         self._clear_data()
-        # Get mission details from server
-        mission_details: MissionDetails = await get_mission_details(
-            str(load_server_address()),
-            int(self.ui.mission_id_line_edit.text()),
-            int(self.ui.patient_id_line_edit.text()),
+
+        # Create and show a progress bar
+        progress_bar = QProgressDialog(
+            "در حال دریافت اطلاعات از سرور ...",
+            "لغو",
+            0,
+            0,
+            self,
         )
+        progress_bar.setWindowModality(Qt.WindowModality.ApplicationModal)
+        progress_bar.setMinimumDuration(0)  # Show immediately
+        progress_bar.setValue(0)
+        progress_bar.show()
+
+        # Create task o get mission details from server
+        task_get_mission_details = asyncio.create_task(
+            get_mission_details(
+                str(load_server_address()),
+                int(self.ui.mission_id_line_edit.text()),
+                int(self.ui.patient_id_line_edit.text()),
+            ),
+        )
+
+        # Connect cancel button to task.cancel()
+        progress_bar.canceled.connect(task_get_mission_details.cancel)
+
+        try:
+            # Get mission details from server
+            mission_details: MissionDetails = await task_get_mission_details
+        except asyncio.CancelledError:
+            progress_bar.close()
+            return  # User cancelled, silent exit
+        except ClientError as e:
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای اینترنت",
+                f"مشکل در دریافت اطلاعات از سرور:\n{e}\nType: {type(e)}",
+            )
+            return
+        except Exception as e:  # noqa: BLE001
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای ناشناخته",
+                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}\nType: {type(e)}",
+            )
+            return
+        finally:
+            progress_bar.close()
 
         # Define a list of functions that populate tabs
         tab_populators = [
@@ -953,3 +1001,11 @@ class MissionsDetailsTab(QWidget):
         # Set all text fields
         for field, value in text_fields:
             set_textfield(field, value)
+
+    def set_mission_and_search(self, mission_id: int, patient_id: int) -> None:
+        """Fill inputs and trigger search."""
+        self.ui.mission_id_line_edit.setText(str(mission_id))
+        self.ui.patient_id_line_edit.setText(str(patient_id))
+
+        # Trigger search
+        self.ui.search_button.click()

@@ -2,11 +2,11 @@
 
 # pylint: disable=E0611,I1101,R0903,C0103,W0718
 import asyncio
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from aiohttp import ClientError
-from PySide6.QtCore import QCalendar, QDate, QSortFilterProxyModel, Qt, Slot
-from PySide6.QtWidgets import QMainWindow, QProgressDialog
+from PySide6.QtCore import QCalendar, QDate, QModelIndex, QPoint, QSortFilterProxyModel, Qt, Slot
+from PySide6.QtWidgets import QMainWindow, QMenu, QProgressDialog
 
 import hamyar_paygah.new_ui.main_menu as main_menu_ui
 from hamyar_paygah.config.server_config import load_server_address
@@ -49,8 +49,8 @@ class MainMenu(QMainWindow):
         self._populate_region_picker()
 
         # Add the mission details tab
-        mission_details_tab: QWidget = MissionsDetailsTab()
-        self.ui.tab_widget.addTab(mission_details_tab, "گزارش ماموریت")
+        self._mission_details_tab: MissionsDetailsTab = MissionsDetailsTab()
+        self.ui.tab_widget.addTab(self._mission_details_tab, "گزارش ماموریت")
 
         # Add the region analyzer tab
         region_analyzer_tab: QWidget = RegionAnalyzerTab()
@@ -244,4 +244,69 @@ class MainMenu(QMainWindow):
         self.ui.missions_list_table.setColumnWidth(
             7,
             int(minimum_section_size * 3),
+        )
+
+        # Set up context menu
+        self.ui.missions_list_table.setContextMenuPolicy(
+            Qt.ContextMenuPolicy.CustomContextMenu,
+        )
+        self.ui.missions_list_table.customContextMenuRequested.connect(
+            self._on_mission_table_context_menu,
+        )
+        # Handle double click to open mission details
+        self.ui.missions_list_table.doubleClicked.connect(
+            self._open_mission_details_from_index,
+        )
+
+    def _on_mission_table_context_menu(self, pos: QPoint) -> None:
+        table = self.ui.missions_list_table
+        index = table.indexAt(pos)
+
+        if not index.isValid():
+            return
+
+        menu = QMenu(self)
+
+        action_show_details = menu.addAction("مشاهده جزئیات ماموریت")
+        action = menu.exec(table.viewport().mapToGlobal(pos))
+
+        if action == action_show_details:
+            self._open_mission_details_from_index(index)
+
+    def _open_mission_details_from_index(self, proxy_index: QModelIndex) -> None:
+        proxy_model: QSortFilterProxyModel = cast(
+            "QSortFilterProxyModel",
+            self.ui.missions_list_table.model(),
+        )
+        source_index = proxy_model.mapToSource(proxy_index)
+
+        source_model: MissionTableModel = cast(
+            "MissionTableModel",
+            proxy_model.sourceModel(),
+        )
+
+        mission = source_model.get_mission(source_index.row())
+
+        if mission.id is None or mission.patient_id is None:
+            show_error_dialog(
+                self,
+                "اطلاعات ناقص",
+                "چنین ماموریتی اطلاعات کافی برای نمایش جزئیات را ندارد.",
+            )
+            return
+
+        self._navigate_to_mission_details(
+            mission_id=mission.id,
+            patient_id=mission.patient_id,
+        )
+
+    def _navigate_to_mission_details(self, mission_id: int, patient_id: int) -> None:
+        """Navigate to mission details tab and trigger search."""
+        # Switch tab (safer than index-based)
+        self.ui.tab_widget.setCurrentWidget(self._mission_details_tab)
+
+        # Fill + trigger search via tab API
+        self._mission_details_tab.set_mission_and_search(
+            mission_id=mission_id,
+            patient_id=patient_id,
         )
