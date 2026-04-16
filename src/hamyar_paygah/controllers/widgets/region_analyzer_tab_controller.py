@@ -5,6 +5,7 @@
 import asyncio
 from collections import Counter
 from collections.abc import Callable
+from datetime import timedelta
 from typing import TYPE_CHECKING, Any
 
 from aiohttp import ClientError
@@ -295,6 +296,11 @@ class RegionAnalyzerTab(QWidget):
         total_injury_types: Counter[Any] = Counter()
         total_chief_complaints: Counter[Any] = Counter()
         missions_address: Counter[Any] = Counter()
+        total_time_to_arrive: timedelta = timedelta(0, 0, 0, 0, 0, 0, 0)
+
+        # Control variables
+        empty_time_to_arrives: int = 0
+
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
         for i, mission in enumerate(missions_list, start=1):
@@ -378,6 +384,14 @@ class RegionAnalyzerTab(QWidget):
             if mission_details.location_and_emergency.address is not None:
                 missions_address[mission_details.location_and_emergency.address] += 1
 
+            # Check if mission has arrival time
+            if mission_details.times_and_distances.time_to_arrive is not None:
+                # Add time to arrive to total tim to arrive
+                total_time_to_arrive += mission_details.times_and_distances.time_to_arrive
+            # Else, omit this from average calculations
+            else:
+                empty_time_to_arrives += 1
+
             # ---- Update progress ----
             progress_callback(i)
 
@@ -402,6 +416,11 @@ class RegionAnalyzerTab(QWidget):
         # Sorted missions address
         sorted_missions_address = self._sorted_counter(missions_address)
 
+        # Calculate average time to arrive
+        average_time_to_arrive: int = (
+            total_time_to_arrive / (total_missions - empty_time_to_arrives)
+        ).seconds
+
         return {
             "total_patients": total_patients,
             "total_missions": total_missions,
@@ -423,6 +442,7 @@ class RegionAnalyzerTab(QWidget):
             "total_injury_types": sorted_injury_types,
             "total_chief_complaints": sorted_chief_complaints,
             "missions_address": sorted_missions_address,
+            "average_time_to_arrive": average_time_to_arrive,
         }
 
     async def _summarize_missions(
@@ -541,6 +561,21 @@ class RegionAnalyzerTab(QWidget):
 
         # Set missions count field
         ui.missions_count_field.setText(str(stats["total_missions"]))
+
+        # Set average time to arrive field
+        ui.average_arriving_time_field.setText(
+            str(
+                timedelta(
+                    0,
+                    float(stats["average_time_to_arrive"]),
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                ),
+            ),
+        )
 
         # Populate the missions per hospital table
         self._populate_mission_per_hospital_table(

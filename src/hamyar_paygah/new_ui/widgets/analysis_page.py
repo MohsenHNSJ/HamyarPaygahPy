@@ -64,7 +64,7 @@ class Ui_analysis_page:
     def setupUi(self, analysis_page):
         if not analysis_page.objectName():
             analysis_page.setObjectName("analysis_page")
-        analysis_page.resize(700, 2500)
+        analysis_page.resize(1099, 2500)
         sizePolicy = QSizePolicy(
             QSizePolicy.Policy.MinimumExpanding,
             QSizePolicy.Policy.MinimumExpanding,
@@ -141,6 +141,36 @@ class Ui_analysis_page:
         self.horizontalLayout.addWidget(self.total_vehicle_accident_field)
 
         self.verticalLayout.addWidget(self.section_1)
+
+        self.widget = QWidget(analysis_page)
+        self.widget.setObjectName("widget")
+        self.horizontalLayout_20 = QHBoxLayout(self.widget)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.average_arriving_time_label = QLabel(self.widget)
+        self.average_arriving_time_label.setObjectName(
+            "average_arriving_time_label",
+        )
+        self.average_arriving_time_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.average_arriving_time_label.setAlignment(
+            Qt.AlignmentFlag.AlignLeading
+            | Qt.AlignmentFlag.AlignLeft
+            | Qt.AlignmentFlag.AlignVCenter,
+        )
+
+        self.horizontalLayout_20.addWidget(self.average_arriving_time_label)
+
+        self.average_arriving_time_field = QLineEdit(self.widget)
+        self.average_arriving_time_field.setObjectName(
+            "average_arriving_time_field",
+        )
+        self.average_arriving_time_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.average_arriving_time_field.setReadOnly(True)
+
+        self.horizontalLayout_20.addWidget(self.average_arriving_time_field)
+
+        self.verticalLayout.addWidget(self.widget)
 
         self.section_2 = QWidget(analysis_page)
         self.section_2.setObjectName("section_2")
@@ -958,6 +988,13 @@ class Ui_analysis_page:
             QCoreApplication.translate(
                 "analysis_page",
                 "\u062a\u0639\u062f\u0627\u062f \u062a\u0635\u0627\u062f\u0641:",
+                None,
+            ),
+        )
+        self.average_arriving_time_label.setText(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u0645\u06cc\u0627\u0646\u06af\u06cc\u0646 \u0632\u0645\u0627\u0646 \u0631\u0633\u06cc\u062f\u0646 \u0628\u0631 \u0628\u0627\u0644\u06cc\u0646 \u0628\u06cc\u0645\u0627\u0631:",
                 None,
             ),
         )
