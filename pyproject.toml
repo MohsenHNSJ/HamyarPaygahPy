@@ -7,7 +7,7 @@ requires = ["poetry-core==2.2.1"]
 
 [project]
 name = "hamyar_paygah" # PyPI package name
-version = "0.7.0" # Base version
+version = "0.8.0" # Base version
 description = "Application for EMS overseers to gather information from EMS servers."
 license = "MIT"
 readme = "README.rst"
@@ -29,7 +29,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
     "Typing :: Typed",
 ]
-dependencies = ["aiohttp == 3.13.4", "anyio == 4.12.1", "lxml == 6.0.2", "jdatetime == 5.2.0", "PySide6 == 6.10.1", "qasync == 0.28.0" ]
+dependencies = ["aiohttp == 3.13.5", "anyio == 4.12.1", "lxml == 6.0.2", "jdatetime == 5.2.0", "PySide6 == 6.10.1", "qasync == 0.28.0" ]
 
 
 [project.urls]

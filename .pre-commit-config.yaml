@@ -61,7 +61,7 @@ repos:
 
     # Static checker for GitHub Actions workflow files
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.11
+    rev: v1.7.12
     hooks:
       - id: actionlint
 
@@ -130,7 +130,7 @@ repos:
 
     # Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.8
+    rev: v0.15.10
     hooks:
       # Run the linter
       - id: ruff
@@ -147,7 +147,7 @@ repos:
 
     # Poetry
   - repo: https://github.com/python-poetry/poetry
-    rev: 2.3.3
+    rev: 2.3.4
     hooks:
       # Make sure the poetry configuration does not get committed in a broken state.
       - id: poetry-check
@@ -158,7 +158,7 @@ repos:
 
     # A shell parser, formatter, and interpreter with bash support
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.13.0-1
+    rev: v3.13.1-1
     hooks:
       - id: shfmt
         # Simplify shell scripts, Error with a diff when the formatting differs

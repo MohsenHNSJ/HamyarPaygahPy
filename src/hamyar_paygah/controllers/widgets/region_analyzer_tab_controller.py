@@ -2,14 +2,19 @@
 
 # pylint: disable=E0611,I1101,R0903,C0103
 
+import asyncio
 from collections import Counter
+from collections.abc import Callable
+from datetime import timedelta
 from typing import TYPE_CHECKING, Any
 
+from aiohttp import ClientError
 from PySide6.QtCore import QCalendar, QDate, Qt, Slot
 from PySide6.QtWidgets import (
     QCheckBox,
     QLineEdit,
     QPlainTextEdit,
+    QProgressDialog,
     QTableWidget,
     QTableWidgetItem,
     QTabWidget,
@@ -25,7 +30,7 @@ from hamyar_paygah.models.region_model import Region
 from hamyar_paygah.services.mission_details_service import get_mission_details
 from hamyar_paygah.services.missions_list_service import get_missions_list
 from hamyar_paygah.utils.date_utils import qdate_to_datetime
-from hamyar_paygah.utils.qt_utils import typed_async_slot
+from hamyar_paygah.utils.qt_utils import show_error_dialog, typed_async_slot
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -133,17 +138,63 @@ class RegionAnalyzerTab(QWidget):
             self.ui.to_date_picker.date(),
         )
 
-        # TODO@MohsenHNSJ: Show a loading progress or something  # noqa: TD003
-        # TODO@MohsenHNSJ: Use try, catch and except the common errors # noqa: TD003
+        # Create and show a progress bar
+        total_days = (pythonic_to_date.date() - pythonic_from_date.date()).days + 1
+        progress_bar = QProgressDialog(
+            "در حال دریافت اطلاعات از سرور ...",
+            "لغو",
+            0,
+            total_days,
+            self,
+        )
+        progress_bar.setWindowModality(Qt.WindowModality.ApplicationModal)
+        progress_bar.setMinimumDuration(0)  # Show immediately
+        progress_bar.setValue(0)
+        progress_bar.show()
 
-        # Get missions list from server
-        missions_list: list[Mission] = await get_missions_list(
-            str(load_server_address()),
-            pythonic_from_date,
-            pythonic_to_date,
-            self.ui.region_picker.currentData(),
+        # Define the progress bar update function
+        def progress_callback(processed: int, total: int) -> None:
+            progress_bar.setMaximum(total)
+            progress_bar.setValue(processed)
+
+        # Create task to get the list of missions
+        task_get_missions_list = asyncio.create_task(
+            get_missions_list(
+                str(load_server_address()),
+                pythonic_from_date,
+                pythonic_to_date,
+                self.ui.region_picker.currentData(),
+                progress_callback=progress_callback,
+            ),
         )
 
+        # Connect cancel button to task.cancel()
+        progress_bar.canceled.connect(task_get_missions_list.cancel)
+
+        try:
+            # Get missions list from server
+            missions_list: list[Mission] = await task_get_missions_list
+        except asyncio.CancelledError:
+            progress_bar.close()
+            return  # User cancelled, silent exit
+        except ClientError as e:
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای اینترنت",
+                f"مشکل در دریافت اطلاعات از سرور:\n{e}\nType: {type(e)}",
+            )
+            return
+        except Exception as e:  # noqa: BLE001
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای ناشناخته",
+                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}\nType: {type(e)}",
+            )
+            return
+        finally:
+            progress_bar.close()
         # Build the tabs with the retrieved missions list
         await self._build_tabs(missions_list)
 
@@ -204,11 +255,12 @@ class RegionAnalyzerTab(QWidget):
     def _sorted_counter(self, counter: Counter[Any]) -> list[tuple[str, int]]:
         return counter.most_common()
 
-    async def _summarize_missions(  # noqa: C901, PLR0912, PLR0915
+    async def _process_missions(  # noqa: C901, PLR0912, PLR0915
         self,
         missions_list: list[Mission],
+        progress_callback: Callable[[int], None],
     ) -> dict[str, int | list[tuple[str, int]] | Counter[Any]]:
-        """Compute basic statistics from the missions list."""
+        """Process missions asynchronously with progress reporting."""
         # Get total patients
         total_patients: int = len(missions_list)
 
@@ -243,9 +295,18 @@ class RegionAnalyzerTab(QWidget):
         total_vehicle_types: Counter[Any] = Counter()
         total_injury_types: Counter[Any] = Counter()
         total_chief_complaints: Counter[Any] = Counter()
+        missions_address: Counter[Any] = Counter()
+        total_time_to_arrive: timedelta = timedelta(0, 0, 0, 0, 0, 0, 0)
+
+        # Control variables
+        empty_time_to_arrives: int = 0
+
         # Iterate through each mission in the list and get mission details
         # for processing deeper statistics
-        for mission in missions_list:
+        for i, mission in enumerate(missions_list, start=1):
+            # Allow cancellation to be raised here
+            await asyncio.sleep(0)
+
             mission_details: MissionDetails = await get_mission_details(
                 str(load_server_address()),
                 mission.id,  # type: ignore[arg-type]
@@ -319,6 +380,21 @@ class RegionAnalyzerTab(QWidget):
             if mission_details.location_and_emergency.chief_complaint is not None:
                 total_chief_complaints[mission_details.location_and_emergency.chief_complaint] += 1
 
+            # Get missions address
+            if mission_details.location_and_emergency.address is not None:
+                missions_address[mission_details.location_and_emergency.address] += 1
+
+            # Check if mission has arrival time
+            if mission_details.times_and_distances.time_to_arrive is not None:
+                # Add time to arrive to total tim to arrive
+                total_time_to_arrive += mission_details.times_and_distances.time_to_arrive
+            # Else, omit this from average calculations
+            else:
+                empty_time_to_arrives += 1
+
+            # ---- Update progress ----
+            progress_callback(i)
+
         # Sort the consumables list
         sorted_total_consumables = self._sorted_counter(total_consumables)
         # Sort the drugs list
@@ -337,6 +413,13 @@ class RegionAnalyzerTab(QWidget):
         sorted_injury_types = self._sorted_counter(total_injury_types)
         # Sorted chief complaints
         sorted_chief_complaints = self._sorted_counter(total_chief_complaints)
+        # Sorted missions address
+        sorted_missions_address = self._sorted_counter(missions_address)
+
+        # Calculate average time to arrive
+        average_time_to_arrive: int = (
+            total_time_to_arrive / (total_missions - empty_time_to_arrives)
+        ).seconds
 
         return {
             "total_patients": total_patients,
@@ -358,14 +441,81 @@ class RegionAnalyzerTab(QWidget):
             "total_vehicle_types": sorted_vehicle_types,
             "total_injury_types": sorted_injury_types,
             "total_chief_complaints": sorted_chief_complaints,
+            "missions_address": sorted_missions_address,
+            "average_time_to_arrive": average_time_to_arrive,
         }
+
+    async def _summarize_missions(
+        self,
+        missions_list: list[Mission],
+    ) -> dict[str, int | list[tuple[str, int]] | Counter[Any]] | None:
+        """Compute basic statistics from the missions list."""
+        # Create and show a progress bar
+        total_missions = len(missions_list)
+        progress_bar = QProgressDialog(
+            "در حال دریافت اطلاعات ماموریت ها از سرور ...",  # noqa: RUF001
+            "لغو",
+            0,
+            total_missions,
+            self,
+        )
+        progress_bar.setWindowModality(Qt.WindowModality.ApplicationModal)
+        progress_bar.setMinimumDuration(0)  # Show immediately
+        progress_bar.setValue(0)
+        progress_bar.show()
+
+        # Define the progress bar update function
+        def progress_callback(processed: int) -> None:
+            progress_bar.setValue(processed)
+
+        # Create task to get the details of missions
+        task_process_missions = asyncio.create_task(
+            self._process_missions(
+                missions_list,
+                progress_callback,
+            ),
+        )
+
+        # Connect cancel button to task.cancel()
+        progress_bar.canceled.connect(task_process_missions.cancel)
+
+        try:
+            # Get processed missions with details
+            processed_missions = await task_process_missions
+        except asyncio.CancelledError:
+            progress_bar.close()
+            return None  # User cancelled, silent exit
+        except ClientError as e:
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای اینترنت",
+                f"مشکل در دریافت اطلاعات ماموریت‌ها از سرور:\n{e}\nType: {type(e)}",  # noqa: RUF001
+            )
+            return None
+        except Exception as e:  # noqa: BLE001
+            progress_bar.close()
+            show_error_dialog(
+                self,
+                "خطای ناشناخته",
+                f"جهت رفع مشکل، اطلاعات زیر را به توسعه دهنده بفرستید:\n{e}\nType: {type(e)}",
+            )
+            return None
+        finally:
+            progress_bar.close()
+
+        return processed_missions
 
     async def _build_tabs(self, missions_list: list[Mission]) -> None:
         """Build dynamic tabs per ambulance and one overall tab."""
         # Create overall summary tab
-        overall_summary_widget: QWidget = await self._create_summary_widget(
+        overall_summary_widget: QWidget | None = await self._create_summary_widget(
             missions_list,
         )
+        # Check if data is available
+        if overall_summary_widget is None:
+            # If not, do nothing
+            return
         self.ui.analysis_tab_container.addTab(
             overall_summary_widget,
             "کل منطقه",
@@ -379,18 +529,27 @@ class RegionAnalyzerTab(QWidget):
 
         for ambulance_code in sorted(grouped_missions.keys()):
             ambulance_missions: list[Mission] = grouped_missions[ambulance_code]
-            ambulance_summary_widget: QWidget = await self._create_summary_widget(
+            ambulance_summary_widget: QWidget | None = await self._create_summary_widget(
                 ambulance_missions,
             )
+            # Check if data is available
+            if ambulance_summary_widget is None:
+                # If not, do nothing
+                continue
             self.ui.analysis_tab_container.addTab(
                 ambulance_summary_widget,
                 f"{ambulance_code}",
             )
 
-    async def _create_summary_widget(self, missions_list: list[Mission]) -> QWidget:
+    async def _create_summary_widget(self, missions_list: list[Mission]) -> QWidget | None:
         """Create a simple summary display widget for a mission list."""
         # Get summary stats from the missions list
         stats = await self._summarize_missions(missions_list)
+
+        # Check if data is available
+        if stats is None:
+            # If not, do nothing
+            return None
 
         # Setup UI
         widget = QWidget()
@@ -402,6 +561,24 @@ class RegionAnalyzerTab(QWidget):
 
         # Set missions count field
         ui.missions_count_field.setText(str(stats["total_missions"]))
+
+        # Set average time to arrive field
+        temp_seconds = float(
+            stats["average_time_to_arrive"],  # type: ignore[arg-type]
+        )
+        ui.average_arriving_time_field.setText(
+            str(
+                timedelta(
+                    0,
+                    temp_seconds,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                ),
+            ),
+        )
 
         # Populate the missions per hospital table
         self._populate_mission_per_hospital_table(
@@ -491,6 +668,12 @@ class RegionAnalyzerTab(QWidget):
         self._populate_chief_complaints_table(
             ui.missions_per_chief_complain_tableWidget,
             stats["total_chief_complaints"],  # type: ignore[arg-type]
+        )
+
+        # Populate missions address table
+        self._populate_missions_address_table(
+            ui.missions_address_tableWidget,
+            stats["missions_address"],  # type: ignore[arg-type]
         )
 
         return widget
@@ -827,6 +1010,36 @@ class RegionAnalyzerTab(QWidget):
         table.setHorizontalHeaderLabels(["شکایت اصلی", COUNT_PERSIAN_TEXT])
 
         for row, (name, quantity) in enumerate(chief_complaints_list):
+            name_item = QTableWidgetItem(name)
+            name_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            quantity_item = QTableWidgetItem()
+            quantity_item.setData(
+                Qt.DisplayRole,  # type: ignore[attr-defined]
+                quantity,
+            )
+
+            quantity_item.setTextAlignment(
+                Qt.AlignCenter,  # type: ignore[attr-defined]
+            )
+
+            table.setItem(row, 0, name_item)
+            table.setItem(row, 1, quantity_item)
+
+        table.resizeColumnsToContents()
+
+    def _populate_missions_address_table(
+        self,
+        table: QTableWidget,
+        addresses_list: list[tuple[Any, int]],
+    ) -> None:
+        table.setRowCount(len(addresses_list))
+        table.setColumnCount(2)
+        table.setHorizontalHeaderLabels(["آدرس", COUNT_PERSIAN_TEXT])
+
+        for row, (name, quantity) in enumerate(addresses_list):
             name_item = QTableWidgetItem(name)
             name_item.setTextAlignment(
                 Qt.AlignCenter,  # type: ignore[attr-defined]
