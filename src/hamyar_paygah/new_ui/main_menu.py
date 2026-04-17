@@ -1,5 +1,5 @@
-# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201
-# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001, PLR0912
+# pylint: disable=C0114,E0611,W0611,C0115,C0103,R0205,C0116,R0915,C0301,W1406,W0201,C0302,C0325
+# ruff: noqa: UP009, RUF100, F401, D100, N801, D101, N803, ANN001, UP004, N802, D102, ANN201,UP025,N806,PGH003,PLR0915, E501, Q003, FBT003, ERA001, PLR2004, C901, PLR0912
 # mypy: ignore-errors
 # type: ignore[all]
 # -*- coding: utf-8 -*-
@@ -73,13 +73,23 @@ class Ui_main_window:
         if not main_window.objectName():
             main_window.setObjectName("main_window")
         main_window.setWindowModality(Qt.WindowModality.NonModal)
-        main_window.resize(800, 700)
-        main_window.setMinimumSize(QSize(800, 600))
+        main_window.resize(1280, 720)
+        main_window.setMinimumSize(QSize(1280, 720))
         main_window.setAcceptDrops(False)
         main_window.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         main_window.setLocale(QLocale(QLocale.Persian, QLocale.Iran))
         self.central_widget = QWidget(main_window)
         self.central_widget.setObjectName("central_widget")
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding,
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.central_widget.sizePolicy().hasHeightForWidth(),
+        )
+        self.central_widget.setSizePolicy(sizePolicy)
         self.vertical_layout = QVBoxLayout(self.central_widget)
         self.vertical_layout.setObjectName("vertical_layout")
         self.tab_widget = QTabWidget(self.central_widget)
@@ -231,7 +241,7 @@ class Ui_main_window:
         main_window.setCentralWidget(self.central_widget)
         self.menu_bar = QMenuBar(main_window)
         self.menu_bar.setObjectName("menu_bar")
-        self.menu_bar.setGeometry(QRect(0, 0, 800, 19))
+        self.menu_bar.setGeometry(QRect(0, 0, 1280, 19))
         main_window.setMenuBar(self.menu_bar)
         self.status_bar = QStatusBar(main_window)
         self.status_bar.setObjectName("status_bar")
