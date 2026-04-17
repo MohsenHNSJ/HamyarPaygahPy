@@ -72,7 +72,7 @@ class Ui_mission_details_tab:
     def setupUi(self, mission_details_tab):
         if not mission_details_tab.objectName():
             mission_details_tab.setObjectName("mission_details_tab")
-        mission_details_tab.resize(750, 700)
+        mission_details_tab.resize(1200, 700)
         sizePolicy = QSizePolicy(
             QSizePolicy.Policy.Expanding,
             QSizePolicy.Policy.Expanding,
@@ -83,7 +83,7 @@ class Ui_mission_details_tab:
             mission_details_tab.sizePolicy().hasHeightForWidth(),
         )
         mission_details_tab.setSizePolicy(sizePolicy)
-        mission_details_tab.setMinimumSize(QSize(750, 700))
+        mission_details_tab.setMinimumSize(QSize(1200, 700))
         mission_details_tab.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         mission_details_tab.setLocale(QLocale(QLocale.Persian, QLocale.Iran))
         self.verticalLayout_2 = QVBoxLayout(mission_details_tab)
@@ -163,6 +163,7 @@ class Ui_mission_details_tab:
 
         self.last_update_field = QLineEdit(self.pre_information_section_1)
         self.last_update_field.setObjectName("last_update_field")
+        self.last_update_field.setMaximumSize(QSize(200, 16777215))
         self.last_update_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.last_update_field.setReadOnly(True)
 
@@ -176,10 +177,51 @@ class Ui_mission_details_tab:
 
         self.base_station_field = QLineEdit(self.pre_information_section_1)
         self.base_station_field.setObjectName("base_station_field")
+        self.base_station_field.setMaximumSize(QSize(16777215, 16777215))
         self.base_station_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.base_station_field.setReadOnly(True)
 
         self.horizontalLayout_5.addWidget(self.base_station_field)
+
+        self.document_serial_number_label = QLabel(
+            self.pre_information_section_1,
+        )
+        self.document_serial_number_label.setObjectName(
+            "document_serial_number_label",
+        )
+        self.document_serial_number_label.setTextFormat(
+            Qt.TextFormat.PlainText,
+        )
+
+        self.horizontalLayout_5.addWidget(self.document_serial_number_label)
+
+        self.document_serial_number_field = QLineEdit(
+            self.pre_information_section_1,
+        )
+        self.document_serial_number_field.setObjectName(
+            "document_serial_number_field",
+        )
+        self.document_serial_number_field.setMaximumSize(QSize(150, 16777215))
+        self.document_serial_number_field.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.document_serial_number_field.setReadOnly(True)
+
+        self.horizontalLayout_5.addWidget(self.document_serial_number_field)
+
+        self.ambulance_code_label = QLabel(self.pre_information_section_1)
+        self.ambulance_code_label.setObjectName("ambulance_code_label")
+        self.ambulance_code_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_5.addWidget(self.ambulance_code_label)
+
+        self.ambulance_code_field = QLineEdit(self.pre_information_section_1)
+        self.ambulance_code_field.setObjectName("ambulance_code_field")
+        self.ambulance_code_field.setMaximumSize(QSize(100, 16777215))
+        self.ambulance_code_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.ambulance_code_field.setReadOnly(True)
+
+        self.horizontalLayout_5.addWidget(self.ambulance_code_field)
 
         self.verticalLayout.addWidget(self.pre_information_section_1)
 
@@ -190,31 +232,6 @@ class Ui_mission_details_tab:
         self.pre_information_section_2.setMaximumSize(QSize(16777215, 50))
         self.horizontalLayout_4 = QHBoxLayout(self.pre_information_section_2)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.document_serial_number_label = QLabel(
-            self.pre_information_section_2,
-        )
-        self.document_serial_number_label.setObjectName(
-            "document_serial_number_label",
-        )
-        self.document_serial_number_label.setTextFormat(
-            Qt.TextFormat.PlainText,
-        )
-
-        self.horizontalLayout_4.addWidget(self.document_serial_number_label)
-
-        self.document_serial_number_field = QLineEdit(
-            self.pre_information_section_2,
-        )
-        self.document_serial_number_field.setObjectName(
-            "document_serial_number_field",
-        )
-        self.document_serial_number_field.setAlignment(
-            Qt.AlignmentFlag.AlignCenter,
-        )
-        self.document_serial_number_field.setReadOnly(True)
-
-        self.horizontalLayout_4.addWidget(self.document_serial_number_field)
-
         self.caller_number_label = QLabel(self.pre_information_section_2)
         self.caller_number_label.setObjectName("caller_number_label")
         self.caller_number_label.setTextFormat(Qt.TextFormat.PlainText)
@@ -223,6 +240,7 @@ class Ui_mission_details_tab:
 
         self.caller_number_field = QLineEdit(self.pre_information_section_2)
         self.caller_number_field.setObjectName("caller_number_field")
+        self.caller_number_field.setMaximumSize(QSize(150, 16777215))
         self.caller_number_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.caller_number_field.setReadOnly(True)
 
@@ -230,32 +248,13 @@ class Ui_mission_details_tab:
 
         self.backup_number_field = QLineEdit(self.pre_information_section_2)
         self.backup_number_field.setObjectName("backup_number_field")
+        self.backup_number_field.setMaximumSize(QSize(150, 16777215))
         self.backup_number_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.backup_number_field.setReadOnly(True)
 
         self.horizontalLayout_4.addWidget(self.backup_number_field)
 
-        self.ambulance_code_label = QLabel(self.pre_information_section_2)
-        self.ambulance_code_label.setObjectName("ambulance_code_label")
-        self.ambulance_code_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_4.addWidget(self.ambulance_code_label)
-
-        self.ambulance_code_field = QLineEdit(self.pre_information_section_2)
-        self.ambulance_code_field.setObjectName("ambulance_code_field")
-        self.ambulance_code_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.ambulance_code_field.setReadOnly(True)
-
-        self.horizontalLayout_4.addWidget(self.ambulance_code_field)
-
-        self.verticalLayout.addWidget(self.pre_information_section_2)
-
-        self.information_section_1 = QWidget(self.information_tab)
-        self.information_section_1.setObjectName("information_section_1")
-        self.information_section_1.setMaximumSize(QSize(16777215, 40))
-        self.horizontalLayout_3 = QHBoxLayout(self.information_section_1)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.patient_name_label = QLabel(self.information_section_1)
+        self.patient_name_label = QLabel(self.pre_information_section_2)
         self.patient_name_label.setObjectName("patient_name_label")
         sizePolicy2 = QSizePolicy(
             QSizePolicy.Policy.Preferred,
@@ -270,38 +269,40 @@ class Ui_mission_details_tab:
         self.patient_name_label.setMaximumSize(QSize(55, 30))
         self.patient_name_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_3.addWidget(self.patient_name_label)
+        self.horizontalLayout_4.addWidget(self.patient_name_label)
 
-        self.patient_name_field = QLineEdit(self.information_section_1)
+        self.patient_name_field = QLineEdit(self.pre_information_section_2)
         self.patient_name_field.setObjectName("patient_name_field")
+        self.patient_name_field.setMaximumSize(QSize(16777215, 16777215))
         self.patient_name_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.patient_name_field.setReadOnly(True)
 
-        self.horizontalLayout_3.addWidget(self.patient_name_field)
+        self.horizontalLayout_4.addWidget(self.patient_name_field)
 
-        self.age_label = QLabel(self.information_section_1)
+        self.age_label = QLabel(self.pre_information_section_2)
         self.age_label.setObjectName("age_label")
         self.age_label.setMaximumSize(QSize(25, 30))
         self.age_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_3.addWidget(self.age_label)
+        self.horizontalLayout_4.addWidget(self.age_label)
 
-        self.age_field = QLineEdit(self.information_section_1)
+        self.age_field = QLineEdit(self.pre_information_section_2)
         self.age_field.setObjectName("age_field")
+        self.age_field.setMaximumSize(QSize(75, 16777215))
         self.age_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.age_field.setReadOnly(True)
 
-        self.horizontalLayout_3.addWidget(self.age_field)
+        self.horizontalLayout_4.addWidget(self.age_field)
 
-        self.nationality_label = QLabel(self.information_section_1)
+        self.nationality_label = QLabel(self.pre_information_section_2)
         self.nationality_label.setObjectName("nationality_label")
         self.nationality_label.setMaximumSize(QSize(30, 30))
         self.nationality_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_3.addWidget(self.nationality_label)
+        self.horizontalLayout_4.addWidget(self.nationality_label)
 
         self.iranian_nationality_checkBox = QCheckBox(
-            self.information_section_1,
+            self.pre_information_section_2,
         )
         self.iranian_nationality_checkBox.setObjectName(
             "iranian_nationality_checkBox",
@@ -317,10 +318,10 @@ class Ui_mission_details_tab:
         )
         self.iranian_nationality_checkBox.setCheckable(True)
 
-        self.horizontalLayout_3.addWidget(self.iranian_nationality_checkBox)
+        self.horizontalLayout_4.addWidget(self.iranian_nationality_checkBox)
 
         self.foreign_nationality_checkBox = QCheckBox(
-            self.information_section_1,
+            self.pre_information_section_2,
         )
         self.foreign_nationality_checkBox.setObjectName(
             "foreign_nationality_checkBox",
@@ -332,41 +333,36 @@ class Ui_mission_details_tab:
             Qt.FocusPolicy.NoFocus,
         )
 
-        self.horizontalLayout_3.addWidget(self.foreign_nationality_checkBox)
+        self.horizontalLayout_4.addWidget(self.foreign_nationality_checkBox)
 
-        self.verticalLayout.addWidget(self.information_section_1)
-
-        self.information_section_2 = QWidget(self.information_tab)
-        self.information_section_2.setObjectName("information_section_2")
-        self.information_section_2.setMaximumSize(QSize(16777215, 40))
-        self.horizontalLayout_2 = QHBoxLayout(self.information_section_2)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.gender_label = QLabel(self.information_section_2)
+        self.gender_label = QLabel(self.pre_information_section_2)
         self.gender_label.setObjectName("gender_label")
         self.gender_label.setMaximumSize(QSize(45, 22))
         self.gender_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_2.addWidget(self.gender_label)
+        self.horizontalLayout_4.addWidget(self.gender_label)
 
-        self.is_male_checkBox = QCheckBox(self.information_section_2)
+        self.is_male_checkBox = QCheckBox(self.pre_information_section_2)
         self.is_male_checkBox.setObjectName("is_male_checkBox")
         self.is_male_checkBox.setEnabled(True)
         self.is_male_checkBox.setMaximumSize(QSize(40, 16777215))
         self.is_male_checkBox.setMouseTracking(False)
         self.is_male_checkBox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
-        self.horizontalLayout_2.addWidget(self.is_male_checkBox)
+        self.horizontalLayout_4.addWidget(self.is_male_checkBox)
 
-        self.is_female_checkBox = QCheckBox(self.information_section_2)
+        self.is_female_checkBox = QCheckBox(self.pre_information_section_2)
         self.is_female_checkBox.setObjectName("is_female_checkBox")
         self.is_female_checkBox.setEnabled(True)
         self.is_female_checkBox.setMaximumSize(QSize(45, 16777215))
         self.is_female_checkBox.setMouseTracking(False)
         self.is_female_checkBox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
-        self.horizontalLayout_2.addWidget(self.is_female_checkBox)
+        self.horizontalLayout_4.addWidget(self.is_female_checkBox)
 
-        self.is_gender_unknown_checkbox = QCheckBox(self.information_section_2)
+        self.is_gender_unknown_checkbox = QCheckBox(
+            self.pre_information_section_2,
+        )
         self.is_gender_unknown_checkbox.setObjectName(
             "is_gender_unknown_checkbox",
         )
@@ -375,28 +371,29 @@ class Ui_mission_details_tab:
         self.is_gender_unknown_checkbox.setMouseTracking(False)
         self.is_gender_unknown_checkbox.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
-        self.horizontalLayout_2.addWidget(self.is_gender_unknown_checkbox)
+        self.horizontalLayout_4.addWidget(self.is_gender_unknown_checkbox)
 
-        self.national_code_label = QLabel(self.information_section_2)
-        self.national_code_label.setObjectName("national_code_label")
-        self.national_code_label.setMaximumSize(QSize(45, 16777215))
-        self.national_code_label.setTextFormat(Qt.TextFormat.PlainText)
-
-        self.horizontalLayout_2.addWidget(self.national_code_label)
-
-        self.national_code_field = QLineEdit(self.information_section_2)
-        self.national_code_field.setObjectName("national_code_field")
-        self.national_code_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.national_code_field.setReadOnly(True)
-
-        self.horizontalLayout_2.addWidget(self.national_code_field)
-
-        self.verticalLayout.addWidget(self.information_section_2)
+        self.verticalLayout.addWidget(self.pre_information_section_2)
 
         self.result_section = QWidget(self.information_tab)
         self.result_section.setObjectName("result_section")
         self.horizontalLayout_29 = QHBoxLayout(self.result_section)
         self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.national_code_label = QLabel(self.result_section)
+        self.national_code_label.setObjectName("national_code_label")
+        self.national_code_label.setMaximumSize(QSize(45, 16777215))
+        self.national_code_label.setTextFormat(Qt.TextFormat.PlainText)
+
+        self.horizontalLayout_29.addWidget(self.national_code_label)
+
+        self.national_code_field = QLineEdit(self.result_section)
+        self.national_code_field.setObjectName("national_code_field")
+        self.national_code_field.setMaximumSize(QSize(150, 16777215))
+        self.national_code_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.national_code_field.setReadOnly(True)
+
+        self.horizontalLayout_29.addWidget(self.national_code_field)
+
         self.mission_result_label = QLabel(self.result_section)
         self.mission_result_label.setObjectName("mission_result_label")
         self.mission_result_label.setTextFormat(Qt.TextFormat.PlainText)
@@ -3312,6 +3309,7 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.last_update_field.setText("")
         self.base_station_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
@@ -3319,10 +3317,19 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.base_station_field.setText("")
         self.document_serial_number_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0634\u0645\u0627\u0631\u0647 \u0633\u0631\u06cc\u0627\u0644 \u067e\u0631\u0648\u0646\u062f\u0647:",
+                None,
+            ),
+        )
+        self.document_serial_number_field.setText("")
+        self.ambulance_code_label.setText(
+            QCoreApplication.translate(
+                "mission_details_tab",
+                "\u06a9\u062f \u0622\u0645\u0628\u0648\u0644\u0627\u0646\u0633:",
                 None,
             ),
         )
@@ -3333,13 +3340,7 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
-        self.ambulance_code_label.setText(
-            QCoreApplication.translate(
-                "mission_details_tab",
-                "\u06a9\u062f \u0622\u0645\u0628\u0648\u0644\u0627\u0646\u0633:",
-                None,
-            ),
-        )
+        self.caller_number_field.setText("")
         self.patient_name_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
@@ -3347,6 +3348,7 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.patient_name_field.setText("")
         self.age_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
@@ -3410,6 +3412,7 @@ class Ui_mission_details_tab:
                 None,
             ),
         )
+        self.national_code_field.setText("")
         self.mission_result_label.setText(
             QCoreApplication.translate(
                 "mission_details_tab",
@@ -3800,9 +3803,7 @@ class Ui_mission_details_tab:
             ),
         )
         self.mission_data_tab_widget.setTabText(
-            self.mission_data_tab_widget.indexOf(
-                self.location_and_emergency_tab,
-            ),
+            self.mission_data_tab_widget.indexOf(self.location_and_emergency_tab),
             QCoreApplication.translate(
                 "mission_details_tab",
                 "\u0645\u062d\u0644 \u0648 \u0646\u0648\u0639 \u0641\u0648\u0631\u06cc\u062a",

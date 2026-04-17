@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
+    <width>1200</width>
     <height>700</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>750</width>
+    <width>1200</width>
     <height>700</height>
    </size>
   </property>
@@ -182,6 +182,15 @@
           </item>
           <item>
            <widget class="QLineEdit" name="last_update_field">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -202,6 +211,70 @@
           </item>
           <item>
            <widget class="QLineEdit" name="base_station_field">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="document_serial_number_label">
+            <property name="text">
+             <string>شماره سریال پرونده:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="document_serial_number_field">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="ambulance_code_label">
+            <property name="text">
+             <string>کد آمبولانس:</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::TextFormat::PlainText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ambulance_code_field">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -223,26 +296,6 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QLabel" name="document_serial_number_label">
-            <property name="text">
-             <string>شماره سریال پرونده:</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::TextFormat::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="document_serial_number_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLabel" name="caller_number_label">
             <property name="text">
              <string>شماره تماس:</string>
@@ -254,6 +307,15 @@
           </item>
           <item>
            <widget class="QLineEdit" name="caller_number_field">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -264,6 +326,12 @@
           </item>
           <item>
            <widget class="QLineEdit" name="backup_number_field">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -272,38 +340,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="ambulance_code_label">
-            <property name="text">
-             <string>کد آمبولانس:</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::TextFormat::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ambulance_code_field">
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="information_section_1" native="true">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QLabel" name="patient_name_label">
             <property name="sizePolicy">
@@ -328,6 +364,15 @@
           </item>
           <item>
            <widget class="QLineEdit" name="patient_name_field">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -354,6 +399,12 @@
           </item>
           <item>
            <widget class="QLineEdit" name="age_field">
+            <property name="maximumSize">
+             <size>
+              <width>75</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -428,18 +479,6 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="information_section_2" native="true">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="gender_label">
             <property name="maximumSize">
@@ -522,6 +561,12 @@
             </property>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="result_section" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_29">
           <item>
            <widget class="QLabel" name="national_code_label">
             <property name="maximumSize">
@@ -540,6 +585,15 @@
           </item>
           <item>
            <widget class="QLineEdit" name="national_code_field">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -548,12 +602,6 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="result_section" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_29">
           <item>
            <widget class="QLabel" name="mission_result_label">
             <property name="text">
