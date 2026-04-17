@@ -44,6 +44,15 @@
       </item>
       <item>
        <widget class="QLineEdit" name="missions_count_field">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
@@ -67,6 +76,12 @@
       </item>
       <item>
        <widget class="QLineEdit" name="patients_count_field">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
@@ -87,6 +102,12 @@
       </item>
       <item>
        <widget class="QLineEdit" name="total_vehicle_accident_field">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
@@ -95,12 +116,6 @@
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="widget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_20">
       <item>
        <widget class="QLabel" name="average_arriving_time_label">
         <property name="text">
@@ -116,6 +131,15 @@
       </item>
       <item>
        <widget class="QLineEdit" name="average_arriving_time_field">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
@@ -124,138 +148,6 @@
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="section_2" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QGroupBox" name="missions_per_result_groupBox">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>400</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>تعداد ماموریت به تفکیک نتیجه</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QTableWidget" name="missions_per_result_tableWidget">
-           <property name="editTriggers">
-            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
-           </property>
-           <property name="showDropIndicator" stdset="0">
-            <bool>false</bool>
-           </property>
-           <property name="dragDropOverwriteMode">
-            <bool>false</bool>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-           </property>
-           <property name="verticalScrollMode">
-            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
-           </property>
-           <property name="horizontalScrollMode">
-            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-           <property name="columnCount">
-            <number>2</number>
-           </property>
-           <property name="supportedDragActions">
-            <set>Qt::DropAction::IgnoreAction</set>
-           </property>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <column/>
-           <column/>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="missions_per_hospital_groupBox">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>400</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>تعداد ماموریت به تفکیک بیمارستان</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QTableWidget" name="missions_per_hospital_tableWidget">
-           <property name="editTriggers">
-            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
-           </property>
-           <property name="showDropIndicator" stdset="0">
-            <bool>false</bool>
-           </property>
-           <property name="dragDropOverwriteMode">
-            <bool>false</bool>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-           </property>
-           <property name="verticalScrollMode">
-            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
-           </property>
-           <property name="horizontalScrollMode">
-            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-           <property name="columnCount">
-            <number>2</number>
-           </property>
-           <property name="supportedDragActions">
-            <set>Qt::DropAction::IgnoreAction</set>
-           </property>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <column/>
-           <column/>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="section_3" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QLabel" name="total_iranian_patient_label">
         <property name="text">
@@ -268,6 +160,12 @@
       </item>
       <item>
        <widget class="QLineEdit" name="total_iranian_patient_field">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
@@ -288,6 +186,15 @@
       </item>
       <item>
        <widget class="QLineEdit" name="total_foreign_patient_field">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
@@ -366,7 +273,193 @@
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="section_2" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>600</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QGroupBox" name="missions_per_result_groupBox">
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>تعداد ماموریت به تفکیک نتیجه</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QTableWidget" name="missions_per_result_tableWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+           </property>
+           <property name="verticalScrollMode">
+            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="columnCount">
+            <number>2</number>
+           </property>
+           <property name="supportedDragActions">
+            <set>Qt::DropAction::IgnoreAction</set>
+           </property>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <column/>
+           <column/>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="missions_per_hospital_groupBox">
+        <property name="title">
+         <string>تعداد ماموریت به تفکیک بیمارستان</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QTableWidget" name="missions_per_hospital_tableWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+           </property>
+           <property name="verticalScrollMode">
+            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="columnCount">
+            <number>2</number>
+           </property>
+           <property name="supportedDragActions">
+            <set>Qt::DropAction::IgnoreAction</set>
+           </property>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <column/>
+           <column/>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="missions_per_chief_complain_groupBox">
+        <property name="title">
+         <string>تعداد ماموریت به تفکیک شکایت اصلی</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_18">
+         <item>
+          <widget class="QTableWidget" name="missions_per_chief_complain_tableWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+           </property>
+           <property name="verticalScrollMode">
+            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="columnCount">
+            <number>2</number>
+           </property>
+           <property name="supportedDragActions">
+            <set>Qt::DropAction::IgnoreAction</set>
+           </property>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <column/>
+           <column/>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="section_5" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>500</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
        <widget class="QGroupBox" name="consumables_list_groupBox">
@@ -479,12 +572,6 @@
         </layout>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="section_6" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_8">
       <item>
        <widget class="QGroupBox" name="caller_numbers_groupBox">
         <property name="title">
@@ -539,6 +626,18 @@
         </layout>
        </widget>
       </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="section_7" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>500</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_11">
       <item>
        <widget class="QGroupBox" name="missions_per_type_of_location_groupBox">
         <property name="title">
@@ -593,12 +692,6 @@
         </layout>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="section_7" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_11">
       <item>
        <widget class="QGroupBox" name="missions_per_accident_type_groupBox">
         <property name="title">
@@ -712,9 +805,21 @@
    </item>
    <item>
     <widget class="QWidget" name="section_8" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>500</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_14">
       <item>
        <widget class="QGroupBox" name="missions_per_vehicle_type_groupBox">
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="title">
          <string>تعداد ماموریت به تفکیک نوع وسیله نقلیه</string>
         </property>
@@ -769,6 +874,12 @@
       </item>
       <item>
        <widget class="QGroupBox" name="missions_per_injured_type_groupBox">
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="title">
          <string>تعداد ماموریت به تفکیک نقش مصدوم در تصادف</string>
         </property>
@@ -778,66 +889,6 @@
         <layout class="QHBoxLayout" name="horizontalLayout_15">
          <item>
           <widget class="QTableWidget" name="missions_per_injured_type_tableWidget">
-           <property name="editTriggers">
-            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
-           </property>
-           <property name="showDropIndicator" stdset="0">
-            <bool>false</bool>
-           </property>
-           <property name="dragDropOverwriteMode">
-            <bool>false</bool>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-           </property>
-           <property name="verticalScrollMode">
-            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
-           </property>
-           <property name="horizontalScrollMode">
-            <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-           <property name="columnCount">
-            <number>2</number>
-           </property>
-           <property name="supportedDragActions">
-            <set>Qt::DropAction::IgnoreAction</set>
-           </property>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <column/>
-           <column/>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="section_9" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_17">
-      <item>
-       <widget class="QGroupBox" name="missions_per_chief_complain_groupBox">
-        <property name="title">
-         <string>تعداد ماموریت به تفکیک شکایت اصلی</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_18">
-         <item>
-          <widget class="QTableWidget" name="missions_per_chief_complain_tableWidget">
            <property name="editTriggers">
             <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
            </property>
@@ -939,6 +990,11 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="section_9" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_17"/>
     </widget>
    </item>
   </layout>

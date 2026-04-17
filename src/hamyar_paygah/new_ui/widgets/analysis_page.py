@@ -96,6 +96,7 @@ class Ui_analysis_page:
 
         self.missions_count_field = QLineEdit(self.section_1)
         self.missions_count_field.setObjectName("missions_count_field")
+        self.missions_count_field.setMaximumSize(QSize(50, 16777215))
         self.missions_count_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.missions_count_field.setReadOnly(True)
 
@@ -114,6 +115,7 @@ class Ui_analysis_page:
 
         self.patients_count_field = QLineEdit(self.section_1)
         self.patients_count_field.setObjectName("patients_count_field")
+        self.patients_count_field.setMaximumSize(QSize(50, 16777215))
         self.patients_count_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.patients_count_field.setReadOnly(True)
 
@@ -133,6 +135,7 @@ class Ui_analysis_page:
         self.total_vehicle_accident_field.setObjectName(
             "total_vehicle_accident_field",
         )
+        self.total_vehicle_accident_field.setMaximumSize(QSize(50, 16777215))
         self.total_vehicle_accident_field.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
@@ -140,13 +143,7 @@ class Ui_analysis_page:
 
         self.horizontalLayout.addWidget(self.total_vehicle_accident_field)
 
-        self.verticalLayout.addWidget(self.section_1)
-
-        self.widget = QWidget(analysis_page)
-        self.widget.setObjectName("widget")
-        self.horizontalLayout_20 = QHBoxLayout(self.widget)
-        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
-        self.average_arriving_time_label = QLabel(self.widget)
+        self.average_arriving_time_label = QLabel(self.section_1)
         self.average_arriving_time_label.setObjectName(
             "average_arriving_time_label",
         )
@@ -157,174 +154,63 @@ class Ui_analysis_page:
             | Qt.AlignmentFlag.AlignVCenter,
         )
 
-        self.horizontalLayout_20.addWidget(self.average_arriving_time_label)
+        self.horizontalLayout.addWidget(self.average_arriving_time_label)
 
-        self.average_arriving_time_field = QLineEdit(self.widget)
+        self.average_arriving_time_field = QLineEdit(self.section_1)
         self.average_arriving_time_field.setObjectName(
             "average_arriving_time_field",
+        )
+        self.average_arriving_time_field.setMaximumSize(
+            QSize(16777215, 16777215),
         )
         self.average_arriving_time_field.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
         self.average_arriving_time_field.setReadOnly(True)
 
-        self.horizontalLayout_20.addWidget(self.average_arriving_time_field)
+        self.horizontalLayout.addWidget(self.average_arriving_time_field)
 
-        self.verticalLayout.addWidget(self.widget)
-
-        self.section_2 = QWidget(analysis_page)
-        self.section_2.setObjectName("section_2")
-        self.horizontalLayout_2 = QHBoxLayout(self.section_2)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.missions_per_result_groupBox = QGroupBox(self.section_2)
-        self.missions_per_result_groupBox.setObjectName(
-            "missions_per_result_groupBox",
-        )
-        self.missions_per_result_groupBox.setMaximumSize(QSize(16777215, 400))
-        self.missions_per_result_groupBox.setAlignment(
-            Qt.AlignmentFlag.AlignCenter,
-        )
-        self.verticalLayout_3 = QVBoxLayout(self.missions_per_result_groupBox)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.missions_per_result_tableWidget = QTableWidget(
-            self.missions_per_result_groupBox,
-        )
-        if self.missions_per_result_tableWidget.columnCount() < 2:
-            self.missions_per_result_tableWidget.setColumnCount(2)
-        self.missions_per_result_tableWidget.setObjectName(
-            "missions_per_result_tableWidget",
-        )
-        self.missions_per_result_tableWidget.setEditTriggers(
-            QAbstractItemView.EditTrigger.NoEditTriggers,
-        )
-        self.missions_per_result_tableWidget.setProperty(
-            "showDropIndicator",
-            False,
-        )
-        self.missions_per_result_tableWidget.setDragDropOverwriteMode(False)
-        self.missions_per_result_tableWidget.setAlternatingRowColors(True)
-        self.missions_per_result_tableWidget.setSelectionMode(
-            QAbstractItemView.SelectionMode.SingleSelection,
-        )
-        self.missions_per_result_tableWidget.setSelectionBehavior(
-            QAbstractItemView.SelectionBehavior.SelectRows,
-        )
-        self.missions_per_result_tableWidget.setVerticalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_per_result_tableWidget.setHorizontalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_per_result_tableWidget.setSortingEnabled(True)
-        self.missions_per_result_tableWidget.setColumnCount(2)
-        self.missions_per_result_tableWidget.setSupportedDragActions(
-            Qt.DropAction.IgnoreAction,
-        )
-        self.missions_per_result_tableWidget.verticalHeader().setVisible(False)
-
-        self.verticalLayout_3.addWidget(self.missions_per_result_tableWidget)
-
-        self.horizontalLayout_2.addWidget(self.missions_per_result_groupBox)
-
-        self.missions_per_hospital_groupBox = QGroupBox(self.section_2)
-        self.missions_per_hospital_groupBox.setObjectName(
-            "missions_per_hospital_groupBox",
-        )
-        self.missions_per_hospital_groupBox.setMaximumSize(
-            QSize(16777215, 400),
-        )
-        self.missions_per_hospital_groupBox.setAlignment(
-            Qt.AlignmentFlag.AlignCenter,
-        )
-        self.verticalLayout_2 = QVBoxLayout(
-            self.missions_per_hospital_groupBox,
-        )
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.missions_per_hospital_tableWidget = QTableWidget(
-            self.missions_per_hospital_groupBox,
-        )
-        if self.missions_per_hospital_tableWidget.columnCount() < 2:
-            self.missions_per_hospital_tableWidget.setColumnCount(2)
-        self.missions_per_hospital_tableWidget.setObjectName(
-            "missions_per_hospital_tableWidget",
-        )
-        self.missions_per_hospital_tableWidget.setEditTriggers(
-            QAbstractItemView.EditTrigger.NoEditTriggers,
-        )
-        self.missions_per_hospital_tableWidget.setProperty(
-            "showDropIndicator",
-            False,
-        )
-        self.missions_per_hospital_tableWidget.setDragDropOverwriteMode(False)
-        self.missions_per_hospital_tableWidget.setAlternatingRowColors(True)
-        self.missions_per_hospital_tableWidget.setSelectionMode(
-            QAbstractItemView.SelectionMode.SingleSelection,
-        )
-        self.missions_per_hospital_tableWidget.setSelectionBehavior(
-            QAbstractItemView.SelectionBehavior.SelectRows,
-        )
-        self.missions_per_hospital_tableWidget.setVerticalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_per_hospital_tableWidget.setHorizontalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_per_hospital_tableWidget.setSortingEnabled(True)
-        self.missions_per_hospital_tableWidget.setColumnCount(2)
-        self.missions_per_hospital_tableWidget.setSupportedDragActions(
-            Qt.DropAction.IgnoreAction,
-        )
-        self.missions_per_hospital_tableWidget.verticalHeader().setVisible(False)
-
-        self.verticalLayout_2.addWidget(self.missions_per_hospital_tableWidget)
-
-        self.horizontalLayout_2.addWidget(self.missions_per_hospital_groupBox)
-
-        self.verticalLayout.addWidget(self.section_2)
-
-        self.section_3 = QWidget(analysis_page)
-        self.section_3.setObjectName("section_3")
-        self.horizontalLayout_3 = QHBoxLayout(self.section_3)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.total_iranian_patient_label = QLabel(self.section_3)
+        self.total_iranian_patient_label = QLabel(self.section_1)
         self.total_iranian_patient_label.setObjectName(
             "total_iranian_patient_label",
         )
         self.total_iranian_patient_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_3.addWidget(self.total_iranian_patient_label)
+        self.horizontalLayout.addWidget(self.total_iranian_patient_label)
 
-        self.total_iranian_patient_field = QLineEdit(self.section_3)
+        self.total_iranian_patient_field = QLineEdit(self.section_1)
         self.total_iranian_patient_field.setObjectName(
             "total_iranian_patient_field",
         )
+        self.total_iranian_patient_field.setMaximumSize(QSize(50, 16777215))
         self.total_iranian_patient_field.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
         self.total_iranian_patient_field.setReadOnly(True)
 
-        self.horizontalLayout_3.addWidget(self.total_iranian_patient_field)
+        self.horizontalLayout.addWidget(self.total_iranian_patient_field)
 
-        self.total_foreign_patient_label = QLabel(self.section_3)
+        self.total_foreign_patient_label = QLabel(self.section_1)
         self.total_foreign_patient_label.setObjectName(
             "total_foreign_patient_label",
         )
         self.total_foreign_patient_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_3.addWidget(self.total_foreign_patient_label)
+        self.horizontalLayout.addWidget(self.total_foreign_patient_label)
 
-        self.total_foreign_patient_field = QLineEdit(self.section_3)
+        self.total_foreign_patient_field = QLineEdit(self.section_1)
         self.total_foreign_patient_field.setObjectName(
             "total_foreign_patient_field",
         )
+        self.total_foreign_patient_field.setMaximumSize(QSize(50, 16777215))
         self.total_foreign_patient_field.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
         self.total_foreign_patient_field.setReadOnly(True)
 
-        self.horizontalLayout_3.addWidget(self.total_foreign_patient_field)
+        self.horizontalLayout.addWidget(self.total_foreign_patient_field)
 
-        self.verticalLayout.addWidget(self.section_3)
+        self.verticalLayout.addWidget(self.section_1)
 
         self.section_4 = QWidget(analysis_page)
         self.section_4.setObjectName("section_4")
@@ -389,8 +275,176 @@ class Ui_analysis_page:
 
         self.verticalLayout.addWidget(self.section_4)
 
+        self.section_2 = QWidget(analysis_page)
+        self.section_2.setObjectName("section_2")
+        self.section_2.setMinimumSize(QSize(0, 600))
+        self.horizontalLayout_2 = QHBoxLayout(self.section_2)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.missions_per_result_groupBox = QGroupBox(self.section_2)
+        self.missions_per_result_groupBox.setObjectName(
+            "missions_per_result_groupBox",
+        )
+        self.missions_per_result_groupBox.setMinimumSize(QSize(400, 0))
+        self.missions_per_result_groupBox.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_3 = QVBoxLayout(self.missions_per_result_groupBox)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.missions_per_result_tableWidget = QTableWidget(
+            self.missions_per_result_groupBox,
+        )
+        if self.missions_per_result_tableWidget.columnCount() < 2:
+            self.missions_per_result_tableWidget.setColumnCount(2)
+        self.missions_per_result_tableWidget.setObjectName(
+            "missions_per_result_tableWidget",
+        )
+        self.missions_per_result_tableWidget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.missions_per_result_tableWidget.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.missions_per_result_tableWidget.setDragDropOverwriteMode(False)
+        self.missions_per_result_tableWidget.setAlternatingRowColors(True)
+        self.missions_per_result_tableWidget.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
+        )
+        self.missions_per_result_tableWidget.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_per_result_tableWidget.setVerticalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_result_tableWidget.setHorizontalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_result_tableWidget.setSortingEnabled(True)
+        self.missions_per_result_tableWidget.setColumnCount(2)
+        self.missions_per_result_tableWidget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.missions_per_result_tableWidget.verticalHeader().setVisible(False)
+
+        self.verticalLayout_3.addWidget(self.missions_per_result_tableWidget)
+
+        self.horizontalLayout_2.addWidget(self.missions_per_result_groupBox)
+
+        self.missions_per_hospital_groupBox = QGroupBox(self.section_2)
+        self.missions_per_hospital_groupBox.setObjectName(
+            "missions_per_hospital_groupBox",
+        )
+        self.missions_per_hospital_groupBox.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.verticalLayout_2 = QVBoxLayout(
+            self.missions_per_hospital_groupBox,
+        )
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.missions_per_hospital_tableWidget = QTableWidget(
+            self.missions_per_hospital_groupBox,
+        )
+        if self.missions_per_hospital_tableWidget.columnCount() < 2:
+            self.missions_per_hospital_tableWidget.setColumnCount(2)
+        self.missions_per_hospital_tableWidget.setObjectName(
+            "missions_per_hospital_tableWidget",
+        )
+        self.missions_per_hospital_tableWidget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.missions_per_hospital_tableWidget.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.missions_per_hospital_tableWidget.setDragDropOverwriteMode(False)
+        self.missions_per_hospital_tableWidget.setAlternatingRowColors(True)
+        self.missions_per_hospital_tableWidget.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
+        )
+        self.missions_per_hospital_tableWidget.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_per_hospital_tableWidget.setVerticalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_hospital_tableWidget.setHorizontalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_hospital_tableWidget.setSortingEnabled(True)
+        self.missions_per_hospital_tableWidget.setColumnCount(2)
+        self.missions_per_hospital_tableWidget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.missions_per_hospital_tableWidget.verticalHeader().setVisible(False)
+
+        self.verticalLayout_2.addWidget(self.missions_per_hospital_tableWidget)
+
+        self.horizontalLayout_2.addWidget(self.missions_per_hospital_groupBox)
+
+        self.missions_per_chief_complain_groupBox = QGroupBox(self.section_2)
+        self.missions_per_chief_complain_groupBox.setObjectName(
+            "missions_per_chief_complain_groupBox",
+        )
+        self.missions_per_chief_complain_groupBox.setAlignment(
+            Qt.AlignmentFlag.AlignCenter,
+        )
+        self.horizontalLayout_18 = QHBoxLayout(
+            self.missions_per_chief_complain_groupBox,
+        )
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.missions_per_chief_complain_tableWidget = QTableWidget(
+            self.missions_per_chief_complain_groupBox,
+        )
+        if self.missions_per_chief_complain_tableWidget.columnCount() < 2:
+            self.missions_per_chief_complain_tableWidget.setColumnCount(2)
+        self.missions_per_chief_complain_tableWidget.setObjectName(
+            "missions_per_chief_complain_tableWidget",
+        )
+        self.missions_per_chief_complain_tableWidget.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers,
+        )
+        self.missions_per_chief_complain_tableWidget.setProperty(
+            "showDropIndicator",
+            False,
+        )
+        self.missions_per_chief_complain_tableWidget.setDragDropOverwriteMode(
+            False,
+        )
+        self.missions_per_chief_complain_tableWidget.setAlternatingRowColors(
+            True,
+        )
+        self.missions_per_chief_complain_tableWidget.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection,
+        )
+        self.missions_per_chief_complain_tableWidget.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows,
+        )
+        self.missions_per_chief_complain_tableWidget.setVerticalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_chief_complain_tableWidget.setHorizontalScrollMode(
+            QAbstractItemView.ScrollMode.ScrollPerPixel,
+        )
+        self.missions_per_chief_complain_tableWidget.setSortingEnabled(True)
+        self.missions_per_chief_complain_tableWidget.setColumnCount(2)
+        self.missions_per_chief_complain_tableWidget.setSupportedDragActions(
+            Qt.DropAction.IgnoreAction,
+        )
+        self.missions_per_chief_complain_tableWidget.verticalHeader().setVisible(False)
+
+        self.horizontalLayout_18.addWidget(
+            self.missions_per_chief_complain_tableWidget,
+        )
+
+        self.horizontalLayout_2.addWidget(
+            self.missions_per_chief_complain_groupBox,
+        )
+
+        self.verticalLayout.addWidget(self.section_2)
+
         self.section_5 = QWidget(analysis_page)
         self.section_5.setObjectName("section_5")
+        self.section_5.setMinimumSize(QSize(0, 500))
         self.horizontalLayout_5 = QHBoxLayout(self.section_5)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.consumables_list_groupBox = QGroupBox(self.section_5)
@@ -481,13 +535,7 @@ class Ui_analysis_page:
 
         self.horizontalLayout_5.addWidget(self.drugs_list_groupBox)
 
-        self.verticalLayout.addWidget(self.section_5)
-
-        self.section_6 = QWidget(analysis_page)
-        self.section_6.setObjectName("section_6")
-        self.horizontalLayout_8 = QHBoxLayout(self.section_6)
-        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.caller_numbers_groupBox = QGroupBox(self.section_6)
+        self.caller_numbers_groupBox = QGroupBox(self.section_5)
         self.caller_numbers_groupBox.setObjectName("caller_numbers_groupBox")
         self.caller_numbers_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.horizontalLayout_9 = QHBoxLayout(self.caller_numbers_groupBox)
@@ -530,9 +578,16 @@ class Ui_analysis_page:
 
         self.horizontalLayout_9.addWidget(self.caller_numbers_tableWidget)
 
-        self.horizontalLayout_8.addWidget(self.caller_numbers_groupBox)
+        self.horizontalLayout_5.addWidget(self.caller_numbers_groupBox)
 
-        self.missions_per_type_of_location_groupBox = QGroupBox(self.section_6)
+        self.verticalLayout.addWidget(self.section_5)
+
+        self.section_7 = QWidget(analysis_page)
+        self.section_7.setObjectName("section_7")
+        self.section_7.setMinimumSize(QSize(0, 500))
+        self.horizontalLayout_11 = QHBoxLayout(self.section_7)
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.missions_per_type_of_location_groupBox = QGroupBox(self.section_7)
         self.missions_per_type_of_location_groupBox.setObjectName(
             "missions_per_type_of_location_groupBox",
         )
@@ -587,16 +642,10 @@ class Ui_analysis_page:
             self.missions_per_type_of_location_tableWidget,
         )
 
-        self.horizontalLayout_8.addWidget(
+        self.horizontalLayout_11.addWidget(
             self.missions_per_type_of_location_groupBox,
         )
 
-        self.verticalLayout.addWidget(self.section_6)
-
-        self.section_7 = QWidget(analysis_page)
-        self.section_7.setObjectName("section_7")
-        self.horizontalLayout_11 = QHBoxLayout(self.section_7)
-        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
         self.missions_per_accident_type_groupBox = QGroupBox(self.section_7)
         self.missions_per_accident_type_groupBox.setObjectName(
             "missions_per_accident_type_groupBox",
@@ -719,11 +768,15 @@ class Ui_analysis_page:
 
         self.section_8 = QWidget(analysis_page)
         self.section_8.setObjectName("section_8")
+        self.section_8.setMinimumSize(QSize(0, 500))
         self.horizontalLayout_14 = QHBoxLayout(self.section_8)
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
         self.missions_per_vehicle_type_groupBox = QGroupBox(self.section_8)
         self.missions_per_vehicle_type_groupBox.setObjectName(
             "missions_per_vehicle_type_groupBox",
+        )
+        self.missions_per_vehicle_type_groupBox.setMaximumSize(
+            QSize(250, 16777215),
         )
         self.missions_per_vehicle_type_groupBox.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
@@ -784,6 +837,9 @@ class Ui_analysis_page:
         self.missions_per_injured_type_groupBox.setObjectName(
             "missions_per_injured_type_groupBox",
         )
+        self.missions_per_injured_type_groupBox.setMaximumSize(
+            QSize(250, 16777215),
+        )
         self.missions_per_injured_type_groupBox.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
@@ -839,72 +895,7 @@ class Ui_analysis_page:
             self.missions_per_injured_type_groupBox,
         )
 
-        self.verticalLayout.addWidget(self.section_8)
-
-        self.section_9 = QWidget(analysis_page)
-        self.section_9.setObjectName("section_9")
-        self.horizontalLayout_17 = QHBoxLayout(self.section_9)
-        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.missions_per_chief_complain_groupBox = QGroupBox(self.section_9)
-        self.missions_per_chief_complain_groupBox.setObjectName(
-            "missions_per_chief_complain_groupBox",
-        )
-        self.missions_per_chief_complain_groupBox.setAlignment(
-            Qt.AlignmentFlag.AlignCenter,
-        )
-        self.horizontalLayout_18 = QHBoxLayout(
-            self.missions_per_chief_complain_groupBox,
-        )
-        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
-        self.missions_per_chief_complain_tableWidget = QTableWidget(
-            self.missions_per_chief_complain_groupBox,
-        )
-        if self.missions_per_chief_complain_tableWidget.columnCount() < 2:
-            self.missions_per_chief_complain_tableWidget.setColumnCount(2)
-        self.missions_per_chief_complain_tableWidget.setObjectName(
-            "missions_per_chief_complain_tableWidget",
-        )
-        self.missions_per_chief_complain_tableWidget.setEditTriggers(
-            QAbstractItemView.EditTrigger.NoEditTriggers,
-        )
-        self.missions_per_chief_complain_tableWidget.setProperty(
-            "showDropIndicator",
-            False,
-        )
-        self.missions_per_chief_complain_tableWidget.setDragDropOverwriteMode(
-            False,
-        )
-        self.missions_per_chief_complain_tableWidget.setAlternatingRowColors(
-            True,
-        )
-        self.missions_per_chief_complain_tableWidget.setSelectionMode(
-            QAbstractItemView.SelectionMode.SingleSelection,
-        )
-        self.missions_per_chief_complain_tableWidget.setSelectionBehavior(
-            QAbstractItemView.SelectionBehavior.SelectRows,
-        )
-        self.missions_per_chief_complain_tableWidget.setVerticalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_per_chief_complain_tableWidget.setHorizontalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_per_chief_complain_tableWidget.setSortingEnabled(True)
-        self.missions_per_chief_complain_tableWidget.setColumnCount(2)
-        self.missions_per_chief_complain_tableWidget.setSupportedDragActions(
-            Qt.DropAction.IgnoreAction,
-        )
-        self.missions_per_chief_complain_tableWidget.verticalHeader().setVisible(False)
-
-        self.horizontalLayout_18.addWidget(
-            self.missions_per_chief_complain_tableWidget,
-        )
-
-        self.horizontalLayout_17.addWidget(
-            self.missions_per_chief_complain_groupBox,
-        )
-
-        self.missions_address_groupBox = QGroupBox(self.section_9)
+        self.missions_address_groupBox = QGroupBox(self.section_8)
         self.missions_address_groupBox.setObjectName(
             "missions_address_groupBox",
         )
@@ -952,7 +943,14 @@ class Ui_analysis_page:
 
         self.horizontalLayout_19.addWidget(self.missions_address_tableWidget)
 
-        self.horizontalLayout_17.addWidget(self.missions_address_groupBox)
+        self.horizontalLayout_14.addWidget(self.missions_address_groupBox)
+
+        self.verticalLayout.addWidget(self.section_8)
+
+        self.section_9 = QWidget(analysis_page)
+        self.section_9.setObjectName("section_9")
+        self.horizontalLayout_17 = QHBoxLayout(self.section_9)
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
 
         self.verticalLayout.addWidget(self.section_9)
 
@@ -977,6 +975,7 @@ class Ui_analysis_page:
                 None,
             ),
         )
+        self.missions_count_field.setText("")
         self.patients_count_label.setText(
             QCoreApplication.translate(
                 "analysis_page",
@@ -998,20 +997,7 @@ class Ui_analysis_page:
                 None,
             ),
         )
-        self.missions_per_result_groupBox.setTitle(
-            QCoreApplication.translate(
-                "analysis_page",
-                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0646\u062a\u06cc\u062c\u0647",
-                None,
-            ),
-        )
-        self.missions_per_hospital_groupBox.setTitle(
-            QCoreApplication.translate(
-                "analysis_page",
-                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0628\u06cc\u0645\u0627\u0631\u0633\u062a\u0627\u0646",
-                None,
-            ),
-        )
+        self.average_arriving_time_field.setText("")
         self.total_iranian_patient_label.setText(
             QCoreApplication.translate(
                 "analysis_page",
@@ -1026,6 +1012,7 @@ class Ui_analysis_page:
                 None,
             ),
         )
+        self.total_foreign_patient_field.setText("")
         self.total_male_patients_label.setText(
             QCoreApplication.translate(
                 "analysis_page",
@@ -1044,6 +1031,27 @@ class Ui_analysis_page:
             QCoreApplication.translate(
                 "analysis_page",
                 "\u062c\u0646\u0633\u06cc\u062a \u0646\u0627\u0645\u0634\u062e\u0635:",
+                None,
+            ),
+        )
+        self.missions_per_result_groupBox.setTitle(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0646\u062a\u06cc\u062c\u0647",
+                None,
+            ),
+        )
+        self.missions_per_hospital_groupBox.setTitle(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0628\u06cc\u0645\u0627\u0631\u0633\u062a\u0627\u0646",
+                None,
+            ),
+        )
+        self.missions_per_chief_complain_groupBox.setTitle(
+            QCoreApplication.translate(
+                "analysis_page",
+                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0634\u06a9\u0627\u06cc\u062a \u0627\u0635\u0644\u06cc",
                 None,
             ),
         )
@@ -1100,13 +1108,6 @@ class Ui_analysis_page:
             QCoreApplication.translate(
                 "analysis_page",
                 "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0646\u0642\u0634 \u0645\u0635\u062f\u0648\u0645 \u062f\u0631 \u062a\u0635\u0627\u062f\u0641",
-                None,
-            ),
-        )
-        self.missions_per_chief_complain_groupBox.setTitle(
-            QCoreApplication.translate(
-                "analysis_page",
-                "\u062a\u0639\u062f\u0627\u062f \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0628\u0647 \u062a\u0641\u06a9\u06cc\u06a9 \u0634\u06a9\u0627\u06cc\u062a \u0627\u0635\u0644\u06cc",
                 None,
             ),
         )

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>700</height>
+    <height>650</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>1200</width>
-    <height>700</height>
+    <height>650</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -124,6 +124,13 @@
           <width>16777215</width>
           <height>22</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Sans Serif</family>
+          <pointsize>11</pointsize>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="text">
          <string>جستجو</string>
@@ -732,6 +739,12 @@
           </item>
           <item>
            <widget class="QLineEdit" name="mission_date_field">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -752,6 +765,12 @@
           </item>
           <item>
            <widget class="QLineEdit" name="mission_received_field">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
@@ -760,12 +779,6 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="times_section_1" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
           <item>
            <widget class="QGroupBox" name="staff_codes_groupBox">
             <property name="title">
@@ -785,7 +798,7 @@
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>5</number>
              </property>
              <item>
               <widget class="QLabel" name="senior_staff_label">
@@ -873,6 +886,9 @@
        <item>
         <widget class="QWidget" name="times_section_2" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QGroupBox" name="depart_from_station_groupBox">
             <property name="title">
@@ -886,7 +902,7 @@
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>9</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
@@ -963,6 +979,9 @@
        <item>
         <widget class="QWidget" name="times_section_3" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QGroupBox" name="arrive_at_emergency_groupBox">
             <property name="title">
@@ -976,7 +995,7 @@
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>9</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
@@ -1099,6 +1118,9 @@
        <item>
         <widget class="QWidget" name="times_section_5" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QGroupBox" name="arrive_at_hospital_groupBox">
             <property name="title">
@@ -1112,7 +1134,7 @@
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>9</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
@@ -1232,6 +1254,9 @@
        <item>
         <widget class="QWidget" name="times_section_7" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QGroupBox" name="mission_complete_groupBox">
             <property name="title">
@@ -1245,7 +1270,7 @@
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>9</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
@@ -1362,12 +1387,6 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="times_section_9" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_15">
           <item>
            <widget class="QLabel" name="overall_mission_time_label">
             <property name="text">
@@ -1409,6 +1428,11 @@
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="times_section_9" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_15"/>
         </widget>
        </item>
       </layout>
@@ -2165,6 +2189,12 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>110</height>
+             </size>
+            </property>
             <property name="title">
              <string>تاریخچه پزشکی</string>
             </property>
@@ -2379,7 +2409,7 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>175</height>
+              <height>150</height>
              </size>
             </property>
             <property name="title">
@@ -2409,7 +2439,7 @@
                <property name="alignment">
                 <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
-               <layout class="QGridLayout" name="gridLayout_4">
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -2422,7 +2452,7 @@
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
-                <item row="0" column="0">
+                <item>
                  <widget class="QLabel" name="right_eye_examine_label">
                   <property name="text">
                    <string>راست</string>
@@ -2432,7 +2462,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="1">
+                <item>
                  <widget class="QLineEdit" name="right_eye_examine_field">
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -2442,7 +2472,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="0">
+                <item>
                  <widget class="QLabel" name="left_eye_examine_label">
                   <property name="text">
                    <string>چپ</string>
@@ -2452,7 +2482,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1">
+                <item>
                  <widget class="QLineEdit" name="left_eye_examine_field">
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -2575,6 +2605,12 @@
              </item>
              <item>
               <widget class="QGroupBox" name="heart_group_box">
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="title">
                 <string>قلب</string>
                </property>
@@ -2642,6 +2678,12 @@
           </item>
           <item>
            <widget class="QGroupBox" name="trauma_types_group_box">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>75</height>
+             </size>
+            </property>
             <property name="title">
              <string>انواع تروما</string>
             </property>

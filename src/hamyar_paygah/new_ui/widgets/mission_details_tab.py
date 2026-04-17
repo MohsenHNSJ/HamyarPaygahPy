@@ -72,7 +72,7 @@ class Ui_mission_details_tab:
     def setupUi(self, mission_details_tab):
         if not mission_details_tab.objectName():
             mission_details_tab.setObjectName("mission_details_tab")
-        mission_details_tab.resize(1200, 700)
+        mission_details_tab.resize(1200, 650)
         sizePolicy = QSizePolicy(
             QSizePolicy.Policy.Expanding,
             QSizePolicy.Policy.Expanding,
@@ -83,7 +83,7 @@ class Ui_mission_details_tab:
             mission_details_tab.sizePolicy().hasHeightForWidth(),
         )
         mission_details_tab.setSizePolicy(sizePolicy)
-        mission_details_tab.setMinimumSize(QSize(1200, 700))
+        mission_details_tab.setMinimumSize(QSize(1200, 650))
         mission_details_tab.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         mission_details_tab.setLocale(QLocale(QLocale.Persian, QLocale.Iran))
         self.verticalLayout_2 = QVBoxLayout(mission_details_tab)
@@ -135,6 +135,11 @@ class Ui_mission_details_tab:
         self.search_button = QPushButton(self.search_parameters)
         self.search_button.setObjectName("search_button")
         self.search_button.setMaximumSize(QSize(16777215, 22))
+        font = QFont()
+        font.setFamilies(["Sans Serif"])
+        font.setPointSize(11)
+        font.setBold(False)
+        self.search_button.setFont(font)
 
         self.horizontalLayout.addWidget(self.search_button)
 
@@ -443,9 +448,9 @@ class Ui_mission_details_tab:
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.mission_summary_field = QPlainTextEdit(self.summary_section)
         self.mission_summary_field.setObjectName("mission_summary_field")
-        font = QFont()
-        font.setPointSize(11)
-        self.mission_summary_field.setFont(font)
+        font1 = QFont()
+        font1.setPointSize(11)
+        self.mission_summary_field.setFont(font1)
         self.mission_summary_field.setAcceptDrops(False)
         self.mission_summary_field.setLayoutDirection(
             Qt.LayoutDirection.RightToLeft,
@@ -477,6 +482,7 @@ class Ui_mission_details_tab:
 
         self.mission_date_field = QLineEdit(self.times_section_91)
         self.mission_date_field.setObjectName("mission_date_field")
+        self.mission_date_field.setMaximumSize(QSize(150, 16777215))
         self.mission_date_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.mission_date_field.setReadOnly(True)
 
@@ -490,23 +496,18 @@ class Ui_mission_details_tab:
 
         self.mission_received_field = QLineEdit(self.times_section_91)
         self.mission_received_field.setObjectName("mission_received_field")
+        self.mission_received_field.setMaximumSize(QSize(150, 16777215))
         self.mission_received_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.mission_received_field.setReadOnly(True)
 
         self.horizontalLayout_16.addWidget(self.mission_received_field)
 
-        self.verticalLayout_4.addWidget(self.times_section_91)
-
-        self.times_section_1 = QWidget(self.times_and_distances_tab)
-        self.times_section_1.setObjectName("times_section_1")
-        self.horizontalLayout_7 = QHBoxLayout(self.times_section_1)
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.staff_codes_groupBox = QGroupBox(self.times_section_1)
+        self.staff_codes_groupBox = QGroupBox(self.times_section_91)
         self.staff_codes_groupBox.setObjectName("staff_codes_groupBox")
         self.staff_codes_groupBox.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.horizontalLayout_30 = QHBoxLayout(self.staff_codes_groupBox)
         self.horizontalLayout_30.setObjectName("horizontalLayout_30")
-        self.horizontalLayout_30.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_30.setContentsMargins(0, 0, 0, 5)
         self.senior_staff_label = QLabel(self.staff_codes_groupBox)
         self.senior_staff_label.setObjectName("senior_staff_label")
         self.senior_staff_label.setTextFormat(Qt.TextFormat.PlainText)
@@ -546,26 +547,27 @@ class Ui_mission_details_tab:
 
         self.horizontalLayout_30.addWidget(self.second_staff_field)
 
-        self.horizontalLayout_7.addWidget(self.staff_codes_groupBox)
+        self.horizontalLayout_16.addWidget(self.staff_codes_groupBox)
 
-        self.refuel_odo_label = QLabel(self.times_section_1)
+        self.refuel_odo_label = QLabel(self.times_section_91)
         self.refuel_odo_label.setObjectName("refuel_odo_label")
 
-        self.horizontalLayout_7.addWidget(self.refuel_odo_label)
+        self.horizontalLayout_16.addWidget(self.refuel_odo_label)
 
-        self.refuel_odo_field = QLineEdit(self.times_section_1)
+        self.refuel_odo_field = QLineEdit(self.times_section_91)
         self.refuel_odo_field.setObjectName("refuel_odo_field")
         self.refuel_odo_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.refuel_odo_field.setReadOnly(True)
 
-        self.horizontalLayout_7.addWidget(self.refuel_odo_field)
+        self.horizontalLayout_16.addWidget(self.refuel_odo_field)
 
-        self.verticalLayout_4.addWidget(self.times_section_1)
+        self.verticalLayout_4.addWidget(self.times_section_91)
 
         self.times_section_2 = QWidget(self.times_and_distances_tab)
         self.times_section_2.setObjectName("times_section_2")
         self.horizontalLayout_8 = QHBoxLayout(self.times_section_2)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(-1, 0, -1, -1)
         self.depart_from_station_groupBox = QGroupBox(self.times_section_2)
         self.depart_from_station_groupBox.setObjectName(
             "depart_from_station_groupBox",
@@ -577,7 +579,7 @@ class Ui_mission_details_tab:
             self.depart_from_station_groupBox,
         )
         self.horizontalLayout_31.setObjectName("horizontalLayout_31")
-        self.horizontalLayout_31.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_31.setContentsMargins(0, 9, 0, 0)
         self.depart_from_station_odo_label = QLabel(
             self.depart_from_station_groupBox,
         )
@@ -651,6 +653,7 @@ class Ui_mission_details_tab:
         self.times_section_3.setObjectName("times_section_3")
         self.horizontalLayout_9 = QHBoxLayout(self.times_section_3)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(-1, 0, -1, -1)
         self.arrive_at_emergency_groupBox = QGroupBox(self.times_section_3)
         self.arrive_at_emergency_groupBox.setObjectName(
             "arrive_at_emergency_groupBox",
@@ -662,7 +665,7 @@ class Ui_mission_details_tab:
             self.arrive_at_emergency_groupBox,
         )
         self.horizontalLayout_32.setObjectName("horizontalLayout_32")
-        self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_32.setContentsMargins(0, 9, 0, 0)
         self.arrive_at_emergency_odo_label = QLabel(
             self.arrive_at_emergency_groupBox,
         )
@@ -780,6 +783,7 @@ class Ui_mission_details_tab:
         self.times_section_5.setObjectName("times_section_5")
         self.horizontalLayout_11 = QHBoxLayout(self.times_section_5)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.horizontalLayout_11.setContentsMargins(-1, 0, -1, -1)
         self.arrive_at_hospital_groupBox = QGroupBox(self.times_section_5)
         self.arrive_at_hospital_groupBox.setObjectName(
             "arrive_at_hospital_groupBox",
@@ -791,7 +795,7 @@ class Ui_mission_details_tab:
             self.arrive_at_hospital_groupBox,
         )
         self.horizontalLayout_33.setObjectName("horizontalLayout_33")
-        self.horizontalLayout_33.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_33.setContentsMargins(0, 9, 0, 0)
         self.arrive_at_hospital_odo_label = QLabel(
             self.arrive_at_hospital_groupBox,
         )
@@ -904,6 +908,7 @@ class Ui_mission_details_tab:
         self.times_section_7.setObjectName("times_section_7")
         self.horizontalLayout_13 = QHBoxLayout(self.times_section_7)
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        self.horizontalLayout_13.setContentsMargins(-1, 0, -1, -1)
         self.mission_complete_groupBox = QGroupBox(self.times_section_7)
         self.mission_complete_groupBox.setObjectName(
             "mission_complete_groupBox",
@@ -913,7 +918,7 @@ class Ui_mission_details_tab:
         )
         self.horizontalLayout_34 = QHBoxLayout(self.mission_complete_groupBox)
         self.horizontalLayout_34.setObjectName("horizontalLayout_34")
-        self.horizontalLayout_34.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_34.setContentsMargins(0, 9, 0, 0)
         self.mission_complete_odo_label = QLabel(
             self.mission_complete_groupBox,
         )
@@ -1021,21 +1026,15 @@ class Ui_mission_details_tab:
 
         self.horizontalLayout_14.addWidget(self.arrive_at_station_odo_field)
 
-        self.verticalLayout_4.addWidget(self.times_section_8)
-
-        self.times_section_9 = QWidget(self.times_and_distances_tab)
-        self.times_section_9.setObjectName("times_section_9")
-        self.horizontalLayout_15 = QHBoxLayout(self.times_section_9)
-        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
-        self.overall_mission_time_label = QLabel(self.times_section_9)
+        self.overall_mission_time_label = QLabel(self.times_section_8)
         self.overall_mission_time_label.setObjectName(
             "overall_mission_time_label",
         )
         self.overall_mission_time_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.horizontalLayout_15.addWidget(self.overall_mission_time_label)
+        self.horizontalLayout_14.addWidget(self.overall_mission_time_label)
 
-        self.overall_mission_time_field = QLineEdit(self.times_section_9)
+        self.overall_mission_time_field = QLineEdit(self.times_section_8)
         self.overall_mission_time_field.setObjectName(
             "overall_mission_time_field",
         )
@@ -1044,9 +1043,9 @@ class Ui_mission_details_tab:
         )
         self.overall_mission_time_field.setReadOnly(True)
 
-        self.horizontalLayout_15.addWidget(self.overall_mission_time_field)
+        self.horizontalLayout_14.addWidget(self.overall_mission_time_field)
 
-        self.overall_mission_distance_label = QLabel(self.times_section_9)
+        self.overall_mission_distance_label = QLabel(self.times_section_8)
         self.overall_mission_distance_label.setObjectName(
             "overall_mission_distance_label",
         )
@@ -1054,9 +1053,9 @@ class Ui_mission_details_tab:
             Qt.TextFormat.PlainText,
         )
 
-        self.horizontalLayout_15.addWidget(self.overall_mission_distance_label)
+        self.horizontalLayout_14.addWidget(self.overall_mission_distance_label)
 
-        self.overall_mission_distance_field = QLineEdit(self.times_section_9)
+        self.overall_mission_distance_field = QLineEdit(self.times_section_8)
         self.overall_mission_distance_field.setObjectName(
             "overall_mission_distance_field",
         )
@@ -1065,7 +1064,14 @@ class Ui_mission_details_tab:
         )
         self.overall_mission_distance_field.setReadOnly(True)
 
-        self.horizontalLayout_15.addWidget(self.overall_mission_distance_field)
+        self.horizontalLayout_14.addWidget(self.overall_mission_distance_field)
+
+        self.verticalLayout_4.addWidget(self.times_section_8)
+
+        self.times_section_9 = QWidget(self.times_and_distances_tab)
+        self.times_section_9.setObjectName("times_section_9")
+        self.horizontalLayout_15 = QHBoxLayout(self.times_section_9)
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
 
         self.verticalLayout_4.addWidget(self.times_section_9)
 
@@ -1726,6 +1732,7 @@ class Ui_mission_details_tab:
             self.medical_history_group_box.sizePolicy().hasHeightForWidth(),
         )
         self.medical_history_group_box.setSizePolicy(sizePolicy2)
+        self.medical_history_group_box.setMinimumSize(QSize(0, 110))
         self.medical_history_group_box.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
@@ -2015,7 +2022,7 @@ class Ui_mission_details_tab:
         self.examine_eye_lung_heart_group_box.setObjectName(
             "examine_eye_lung_heart_group_box",
         )
-        self.examine_eye_lung_heart_group_box.setMinimumSize(QSize(0, 175))
+        self.examine_eye_lung_heart_group_box.setMinimumSize(QSize(0, 150))
         self.examine_eye_lung_heart_group_box.setAlignment(
             Qt.AlignmentFlag.AlignCenter,
         )
@@ -2027,34 +2034,34 @@ class Ui_mission_details_tab:
         self.eye_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
         self.eye_group_box.setObjectName("eye_group_box")
         self.eye_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.gridLayout_4 = QGridLayout(self.eye_group_box)
-        self.gridLayout_4.setObjectName("gridLayout_4")
-        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2 = QHBoxLayout(self.eye_group_box)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.right_eye_examine_label = QLabel(self.eye_group_box)
         self.right_eye_examine_label.setObjectName("right_eye_examine_label")
         self.right_eye_examine_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.gridLayout_4.addWidget(self.right_eye_examine_label, 0, 0, 1, 1)
+        self.horizontalLayout_2.addWidget(self.right_eye_examine_label)
 
         self.right_eye_examine_field = QLineEdit(self.eye_group_box)
         self.right_eye_examine_field.setObjectName("right_eye_examine_field")
         self.right_eye_examine_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.right_eye_examine_field.setReadOnly(True)
 
-        self.gridLayout_4.addWidget(self.right_eye_examine_field, 0, 1, 1, 1)
+        self.horizontalLayout_2.addWidget(self.right_eye_examine_field)
 
         self.left_eye_examine_label = QLabel(self.eye_group_box)
         self.left_eye_examine_label.setObjectName("left_eye_examine_label")
         self.left_eye_examine_label.setTextFormat(Qt.TextFormat.PlainText)
 
-        self.gridLayout_4.addWidget(self.left_eye_examine_label, 1, 0, 1, 1)
+        self.horizontalLayout_2.addWidget(self.left_eye_examine_label)
 
         self.left_eye_examine_field = QLineEdit(self.eye_group_box)
         self.left_eye_examine_field.setObjectName("left_eye_examine_field")
         self.left_eye_examine_field.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.left_eye_examine_field.setReadOnly(True)
 
-        self.gridLayout_4.addWidget(self.left_eye_examine_field, 1, 1, 1, 1)
+        self.horizontalLayout_2.addWidget(self.left_eye_examine_field)
 
         self.horizontalLayout_23.addWidget(self.eye_group_box)
 
@@ -2122,6 +2129,7 @@ class Ui_mission_details_tab:
 
         self.heart_group_box = QGroupBox(self.examine_eye_lung_heart_group_box)
         self.heart_group_box.setObjectName("heart_group_box")
+        self.heart_group_box.setMaximumSize(QSize(250, 16777215))
         self.heart_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.gridLayout_7 = QGridLayout(self.heart_group_box)
         self.gridLayout_7.setObjectName("gridLayout_7")
@@ -2158,6 +2166,7 @@ class Ui_mission_details_tab:
 
         self.trauma_types_group_box = QGroupBox(self.widget)
         self.trauma_types_group_box.setObjectName("trauma_types_group_box")
+        self.trauma_types_group_box.setMinimumSize(QSize(0, 75))
         self.trauma_types_group_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.gridLayout_8 = QGridLayout(self.trauma_types_group_box)
         self.gridLayout_8.setObjectName("gridLayout_8")
