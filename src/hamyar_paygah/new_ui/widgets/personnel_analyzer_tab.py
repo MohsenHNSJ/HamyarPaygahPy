@@ -5,7 +5,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-# Form generated from reading UI file 'main_menu.ui'
+# Form generated from reading UI file 'personnel_analyzer_tab.ui'
 ##
 # Created by: Qt User Interface Compiler version 6.10.1
 ##
@@ -45,8 +45,6 @@ from PySide6.QtGui import (
     QTransform,
 )
 from PySide6.QtWidgets import (
-    QAbstractItemView,
-    QAbstractScrollArea,
     QAbstractSpinBox,
     QApplication,
     QComboBox,
@@ -54,61 +52,49 @@ from PySide6.QtWidgets import (
     QDateTimeEdit,
     QFrame,
     QHBoxLayout,
-    QHeaderView,
     QLabel,
-    QMainWindow,
-    QMenuBar,
     QPushButton,
+    QScrollArea,
     QSizePolicy,
-    QStatusBar,
-    QTableView,
     QTabWidget,
     QVBoxLayout,
     QWidget,
 )
 
 
-class Ui_main_window:
-    def setupUi(self, main_window):
-        if not main_window.objectName():
-            main_window.setObjectName("main_window")
-        main_window.setWindowModality(Qt.WindowModality.NonModal)
-        main_window.resize(1280, 720)
-        main_window.setMinimumSize(QSize(1280, 720))
-        main_window.setAcceptDrops(False)
-        main_window.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
-        main_window.setLocale(QLocale(QLocale.Persian, QLocale.Iran))
-        self.central_widget = QWidget(main_window)
-        self.central_widget.setObjectName("central_widget")
-        sizePolicy = QSizePolicy(
-            QSizePolicy.Policy.Expanding,
-            QSizePolicy.Policy.Expanding,
+class Ui_personnel_analyzer_tab:
+    def setupUi(self, personnel_analyzer_tab):
+        if not personnel_analyzer_tab.objectName():
+            personnel_analyzer_tab.setObjectName("personnel_analyzer_tab")
+        personnel_analyzer_tab.resize(1024, 768)
+        personnel_analyzer_tab.setLayoutDirection(
+            Qt.LayoutDirection.RightToLeft,
         )
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.central_widget.sizePolicy().hasHeightForWidth(),
+        personnel_analyzer_tab.setLocale(
+            QLocale(QLocale.Persian, QLocale.Iran),
         )
-        self.central_widget.setSizePolicy(sizePolicy)
-        self.vertical_layout = QVBoxLayout(self.central_widget)
-        self.vertical_layout.setObjectName("vertical_layout")
-        self.tab_widget = QTabWidget(self.central_widget)
-        self.tab_widget.setObjectName("tab_widget")
-        self.tab_widget.setTabShape(QTabWidget.TabShape.Rounded)
-        self.missions_list_tab = QWidget()
-        self.missions_list_tab.setObjectName("missions_list_tab")
-        self.missions_list_vertical_layout = QVBoxLayout(
-            self.missions_list_tab,
+        self.verticalLayout = QVBoxLayout(personnel_analyzer_tab)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.scrollArea = QScrollArea(personnel_analyzer_tab)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(
+            "scrollAreaWidgetContents",
         )
-        self.missions_list_vertical_layout.setObjectName(
-            "missions_list_vertical_layout",
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1004, 748))
+        self.verticalLayout_2 = QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.missions_list_search_filters = QWidget(
+            self.scrollAreaWidgetContents,
         )
-        self.missions_list_search_filters = QWidget(self.missions_list_tab)
         self.missions_list_search_filters.setObjectName(
             "missions_list_search_filters",
         )
-        self.horizontalLayout = QHBoxLayout(self.missions_list_search_filters)
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.horizontalLayout_2 = QHBoxLayout(
+            self.missions_list_search_filters,
+        )
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.from_date_label = QLabel(self.missions_list_search_filters)
         self.from_date_label.setObjectName("from_date_label")
         self.from_date_label.setMaximumSize(QSize(50, 16777215))
@@ -122,7 +108,7 @@ class Ui_main_window:
             Qt.TextInteractionFlag.NoTextInteraction,
         )
 
-        self.horizontalLayout.addWidget(self.from_date_label)
+        self.horizontalLayout_2.addWidget(self.from_date_label)
 
         self.from_date_picker = QDateEdit(self.missions_list_search_filters)
         self.from_date_picker.setObjectName("from_date_picker")
@@ -140,7 +126,7 @@ class Ui_main_window:
         self.from_date_picker.setCalendarPopup(True)
         self.from_date_picker.setTimeSpec(Qt.TimeSpec.LocalTime)
 
-        self.horizontalLayout.addWidget(self.from_date_picker)
+        self.horizontalLayout_2.addWidget(self.from_date_picker)
 
         self.to_date_label = QLabel(self.missions_list_search_filters)
         self.to_date_label.setObjectName("to_date_label")
@@ -150,7 +136,7 @@ class Ui_main_window:
             Qt.TextInteractionFlag.NoTextInteraction,
         )
 
-        self.horizontalLayout.addWidget(self.to_date_label)
+        self.horizontalLayout_2.addWidget(self.to_date_label)
 
         self.to_date_picker = QDateEdit(self.missions_list_search_filters)
         self.to_date_picker.setObjectName("to_date_picker")
@@ -167,7 +153,7 @@ class Ui_main_window:
         self.to_date_picker.setCalendarPopup(True)
         self.to_date_picker.setTimeSpec(Qt.TimeSpec.LocalTime)
 
-        self.horizontalLayout.addWidget(self.to_date_picker)
+        self.horizontalLayout_2.addWidget(self.to_date_picker)
 
         self.line = QFrame(self.missions_list_search_filters)
         self.line.setObjectName("line")
@@ -175,7 +161,7 @@ class Ui_main_window:
         self.line.setFrameShape(QFrame.Shape.VLine)
         self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.horizontalLayout.addWidget(self.line)
+        self.horizontalLayout_2.addWidget(self.line)
 
         self.region_label = QLabel(self.missions_list_search_filters)
         self.region_label.setObjectName("region_label")
@@ -185,7 +171,7 @@ class Ui_main_window:
             Qt.TextInteractionFlag.NoTextInteraction,
         )
 
-        self.horizontalLayout.addWidget(self.region_label)
+        self.horizontalLayout_2.addWidget(self.region_label)
 
         self.region_picker = QComboBox(self.missions_list_search_filters)
         self.region_picker.setObjectName("region_picker")
@@ -193,7 +179,7 @@ class Ui_main_window:
             QComboBox.SizeAdjustPolicy.AdjustToContents,
         )
 
-        self.horizontalLayout.addWidget(self.region_picker)
+        self.horizontalLayout_2.addWidget(self.region_picker)
 
         self.line_2 = QFrame(self.missions_list_search_filters)
         self.line_2.setObjectName("line_2")
@@ -201,114 +187,86 @@ class Ui_main_window:
         self.line_2.setFrameShape(QFrame.Shape.VLine)
         self.line_2.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.horizontalLayout.addWidget(self.line_2)
+        self.horizontalLayout_2.addWidget(self.line_2)
 
         self.load_button = QPushButton(self.missions_list_search_filters)
         self.load_button.setObjectName("load_button")
 
-        self.horizontalLayout.addWidget(self.load_button)
+        self.horizontalLayout_2.addWidget(self.load_button)
 
-        self.missions_list_vertical_layout.addWidget(
-            self.missions_list_search_filters,
-        )
+        self.verticalLayout_2.addWidget(self.missions_list_search_filters)
 
-        self.missions_list_table = QTableView(self.missions_list_tab)
-        self.missions_list_table.setObjectName("missions_list_table")
-        self.missions_list_table.setSizeAdjustPolicy(
-            QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents,
-        )
-        self.missions_list_table.setProperty("showDropIndicator", False)
-        self.missions_list_table.setDragDropOverwriteMode(False)
-        self.missions_list_table.setAlternatingRowColors(True)
-        self.missions_list_table.setSelectionBehavior(
-            QAbstractItemView.SelectionBehavior.SelectRows,
-        )
-        self.missions_list_table.setVerticalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_list_table.setHorizontalScrollMode(
-            QAbstractItemView.ScrollMode.ScrollPerPixel,
-        )
-        self.missions_list_table.setSortingEnabled(True)
-        self.missions_list_table.horizontalHeader().setMinimumSectionSize(80)
+        self.analysis_tab_container = QTabWidget(self.scrollAreaWidgetContents)
+        self.analysis_tab_container.setObjectName("analysis_tab_container")
 
-        self.missions_list_vertical_layout.addWidget(self.missions_list_table)
+        self.verticalLayout_2.addWidget(self.analysis_tab_container)
 
-        self.tab_widget.addTab(self.missions_list_tab, "")
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
-        self.vertical_layout.addWidget(self.tab_widget)
+        self.verticalLayout.addWidget(self.scrollArea)
 
-        main_window.setCentralWidget(self.central_widget)
-        self.menu_bar = QMenuBar(main_window)
-        self.menu_bar.setObjectName("menu_bar")
-        self.menu_bar.setGeometry(QRect(0, 0, 1280, 19))
-        main_window.setMenuBar(self.menu_bar)
-        self.status_bar = QStatusBar(main_window)
-        self.status_bar.setObjectName("status_bar")
-        main_window.setStatusBar(self.status_bar)
+        self.retranslateUi(personnel_analyzer_tab)
 
-        self.retranslateUi(main_window)
+        self.analysis_tab_container.setCurrentIndex(-1)
 
-        self.tab_widget.setCurrentIndex(0)
-
-        QMetaObject.connectSlotsByName(main_window)
+        QMetaObject.connectSlotsByName(personnel_analyzer_tab)
 
     # setupUi
 
-    def retranslateUi(self, main_window):
-        main_window.setWindowTitle(
+    def retranslateUi(self, personnel_analyzer_tab):
+        personnel_analyzer_tab.setWindowTitle(
             QCoreApplication.translate(
-                "main_window",
-                "\u0647\u0645\u06cc\u0627\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647",
+                "personnel_analyzer_tab",
+                "\u062a\u062d\u0644\u06cc\u0644 \u0645\u0646\u0637\u0642\u0647",
                 None,
             ),
         )
         self.from_date_label.setText(
             QCoreApplication.translate(
-                "main_window",
+                "personnel_analyzer_tab",
                 "\u0627\u0632 \u062a\u0627\u0631\u06cc\u062e:",
                 None,
             ),
         )
         self.from_date_picker.setDisplayFormat(
-            QCoreApplication.translate("main_window", "dd/MM/yyyy", None),
+            QCoreApplication.translate(
+                "personnel_analyzer_tab",
+                "dd/MM/yyyy",
+                None,
+            ),
         )
         self.to_date_label.setText(
             QCoreApplication.translate(
-                "main_window",
+                "personnel_analyzer_tab",
                 "\u062a\u0627 \u062a\u0627\u0631\u06cc\u062e:",
                 None,
             ),
         )
         self.to_date_picker.setDisplayFormat(
-            QCoreApplication.translate("main_window", "dd/MM/yyyy", None),
+            QCoreApplication.translate(
+                "personnel_analyzer_tab",
+                "dd/MM/yyyy",
+                None,
+            ),
         )
         self.region_label.setText(
             QCoreApplication.translate(
-                "main_window",
+                "personnel_analyzer_tab",
                 "\u0645\u0646\u0637\u0642\u0647:",
                 None,
             ),
         )
         self.region_picker.setPlaceholderText(
             QCoreApplication.translate(
-                "main_window",
+                "personnel_analyzer_tab",
                 "\u0639\u0628\u0627\u0633 \u0622\u0628\u0627\u062f",
                 None,
             ),
         )
         self.load_button.setText(
             QCoreApplication.translate(
-                "main_window",
+                "personnel_analyzer_tab",
                 "\u062f\u0631\u06cc\u0627\u0641\u062a",
-                None,
-            ),
-        )
-        self.tab_widget.setTabText(
-            self.tab_widget.indexOf(self.missions_list_tab),
-            QCoreApplication.translate(
-                "main_window",
-                "\u0644\u06cc\u0633\u062a \u0645\u0627\u0645\u0648\u0631\u06cc\u062a \u0647\u0627",
                 None,
             ),
         )

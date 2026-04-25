@@ -11,6 +11,7 @@ from PySide6.QtWidgets import QMainWindow, QMenu, QProgressDialog
 import hamyar_paygah.new_ui.main_menu as main_menu_ui
 from hamyar_paygah.config.server_config import load_server_address
 from hamyar_paygah.controllers.widgets.mission_details_tab_controller import MissionsDetailsTab
+from hamyar_paygah.controllers.widgets.personnel_analyzer_tab_controller import PersonnelAnalyzerTab
 from hamyar_paygah.controllers.widgets.region_analyzer_tab_controller import RegionAnalyzerTab
 from hamyar_paygah.models.mission_model import Mission
 from hamyar_paygah.models.region_model import Region
@@ -21,8 +22,6 @@ from hamyar_paygah.view_models.mission_table_model import MissionTableModel
 
 if TYPE_CHECKING:
     from datetime import datetime
-
-    from PySide6.QtWidgets import QWidget
 
 
 class MainMenu(QMainWindow):
@@ -53,8 +52,12 @@ class MainMenu(QMainWindow):
         self.ui.tab_widget.addTab(self._mission_details_tab, "گزارش ماموریت")
 
         # Add the region analyzer tab
-        region_analyzer_tab: QWidget = RegionAnalyzerTab()
+        region_analyzer_tab: RegionAnalyzerTab = RegionAnalyzerTab()
         self.ui.tab_widget.addTab(region_analyzer_tab, "تحلیل منطقه")
+
+        # Add the personnel analyzer tab
+        personnel_analyzer_tab: PersonnelAnalyzerTab = PersonnelAnalyzerTab()
+        self.ui.tab_widget.addTab(personnel_analyzer_tab, "تحلیل پرسنل")
 
     @Slot(QDate)
     def on_from_date_picker_userDateChanged(self, new_date: QDate) -> None:  # noqa: N802
